@@ -1,0 +1,16 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    i18n_domain="recensio.policy">
+
+  <five:registerPackage package="." initialize=".initialize" />
+
+  <genericsetup:registerProfile
+    name="default"
+    title="Recensio Policy"
+    directory="profiles/default"
+    description="Policy Profile for the Recensio project"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+
+</configure>
