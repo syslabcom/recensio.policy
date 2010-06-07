@@ -24,6 +24,8 @@ setup(name='recensio.policy',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'collective.xdv',
+          'recensio.theme',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
