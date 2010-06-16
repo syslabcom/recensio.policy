@@ -1,0 +1,22 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="osha.extranet">
+
+    <genericsetup:registerProfile
+        name="default"
+        title="Recensio Profile"
+        directory="profiles/default"
+        description=""
+        provides="Products.GenericSetup.interfaces.EXTENSION"
+        />
+
+    <genericsetup:importStep
+        name="recensio-setup-xdv"
+        title="Setup XDV"
+        description="Install and configure the Recensio XDV theme"
+        handler=".setuphandlers.setupXDVTheme">
+    </genericsetup:importStep>
+        
+</configure>
+
