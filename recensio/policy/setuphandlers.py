@@ -1,0 +1,23 @@
+from Products.CMFCore.utils import getToolByName
+from logging import getLogger
+from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
+import constants
+import os
+
+log = getLogger('esc.policy.setuphandlers.py')
+
+mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
+    'metadata.xml')
+
+def isNotRecensioProfile(self):
+    return self.readDataFile('recensio.policy_marker.txt') is None
+
+def importVocabularies(self):
+    if isNotRecensioProfile(self):
+        return
+    site = self.getSite()
+    pvm = getToolByName(site, 'portal_vocabularies')
+    vocabs = {}
+    for vocab_name, vocabulary in constants.vocabularies.items():
+        if not hasattr(pvm, vocab_name):
+            createSimpleVocabs(pvm, {vocab_name : vocabulary.items()})

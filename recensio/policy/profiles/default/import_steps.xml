@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step id="recensio_policy_vocabularies" version="20100616-01"
+            handler="recensio.policy.setuphandlers.importVocabularies"
+            description="Vocabularies for Recensio"
+            title="recensio_vocabularies" />
+</import-steps>
