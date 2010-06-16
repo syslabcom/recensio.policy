@@ -27,6 +27,7 @@ setup(name='recensio.policy',
           'collective.xdv',
           'recensio.theme',
           'Products.ATVocabularyManager',
+          'Products.LinguaPlone',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

@@ -4,6 +4,7 @@
     <dependencies>
         <dependency>profile-collective.xdv:default</dependency>
         <dependency>profile-recensio.theme:default</dependency>
+        <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
     </dependencies>
 </metadata>
