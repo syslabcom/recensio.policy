@@ -1,0 +1,9 @@
+<metadata>
+    <description>OSHA Extranet policy product</description>
+    <version>0.1</version>
+    <dependencies>
+        <dependency>profile-collective.xdv:default</dependency>
+        <dependency>profile-recensio.theme:default</dependency>
+    </dependencies>
+</metadata>
+
