@@ -6,8 +6,9 @@
 
   <five:registerPackage package="." initialize=".initialize" />
 
-  <include package="collective.xdv" />
-  
+  <include package="recensio.theme" />
+  <include package="Products.LinguaPlone" />
+
   <genericsetup:registerProfile
     name="default"
     title="Recensio Policy"
