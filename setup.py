@@ -26,6 +26,7 @@ setup(name='recensio.policy',
           'setuptools',
           'collective.xdv',
           'recensio.theme',
+          'Products.ATVocabularyManager',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
