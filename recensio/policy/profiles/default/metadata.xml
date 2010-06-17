@@ -2,10 +2,11 @@
     <description>Recensio policy product</description>
     <version>0.1</version>
     <dependencies>
-        <dependency>profile-collective.xdv:default</dependency>
-        <dependency>profile-recensio.theme:default</dependency>
-        <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
+        <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
+        <dependency>profile-collective.xdv:default</dependency>
+        <dependency>profile-recensio.contenttypes:default</dependency>
+        <dependency>profile-recensio.theme:default</dependency>
     </dependencies>
 </metadata>
 

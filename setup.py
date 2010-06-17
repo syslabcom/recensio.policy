@@ -28,7 +28,7 @@ setup(name='recensio.policy',
           'Products.LinguaPlone',
           'collective.xdv',
           'recensio.theme',
-          'recensio.content',
+          'recensio.contenttypes',
           'setuptools',
       ],
       entry_points="""
