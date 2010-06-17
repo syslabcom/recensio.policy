@@ -23,14 +23,13 @@ setup(name='recensio.policy',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
-          'setuptools',
-          'collective.xdv',
-          'recensio.theme',
           'Products.ATVocabularyManager',
           'Products.LinguaPlone',
-          # -*- Extra requirements: -*-
-          'recensio.theme',
           'Products.LinguaPlone',
+          'collective.xdv',
+          'recensio.theme',
+          'recensio.content',
+          'setuptools',
       ],
       entry_points="""
       # -*- Entry points: -*-
