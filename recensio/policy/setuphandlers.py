@@ -39,5 +39,5 @@ def configureSecurity(self):
     site = self.getSite()
     pcp = SecurityControlPanelAdapter(site)
     pcp.set_enable_self_reg(True)
-    pcp.set_enable_user_pwd_choice(True)
+    pcp.set_enable_user_pwd_choice(False)
     pcp.set_enable_user_folders(True)
