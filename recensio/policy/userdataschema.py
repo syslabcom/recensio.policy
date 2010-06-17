@@ -4,6 +4,7 @@
 from zope.interface import implements
 from zope import schema
 from plone.app.users.userdataschema import IUserDataSchemaProvider, IUserDataSchema
+# from quintagroup.formlib.captcha import Captcha
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory("recensio")
 
@@ -16,10 +17,6 @@ class UserDataSchemaProvider(object):
         return IRecensioUserDataSchema
 
 
-def validateAccept(value):
-    if not value == True:
-        return False
-    return True
 
 
 class IRecensioUserDataSchema(IUserDataSchema):
@@ -35,17 +32,22 @@ class IRecensioUserDataSchema(IUserDataSchema):
 
     # Note: the available languages should come from a vocabulary!
     preferred_language = schema.Choice(
-        title=_(u'label_preferred_language', default=u'Bevozugte Sprache'),
+        title=_(u'label_preferred_language', default=u'Preferred language'),
         description=_(u'description_preferred_language', default=u''),
         required=True,
-        values = [u'English', u'Deutsch', u'Français'],
+        values = [u'English', u'Deutsch', u'Francais'],
         )
 
-    declaration_of_identity = schema.Bool(
-        title=_(u'label_declaration_of_identity', default=u'Erklärung der eigenen Identität'),
+    declaration_of_identity = schema.Choice(
+        title=_(u'label_declaration_of_identity', default=u'Declaration of identity'),
         description=_(u'help_declaration_of_identity',
-                      default=u"Ich versichere, die in diesem Formular"
-                      " angegebene Person zu sein. "),
+                      default=u"I declare that I am indeed the person "
+                      "identified by the entries above. "),
         required=True,
-        constraint=validateAccept,
+        values = [u'OK'],
         )
+
+    # captcha = Captcha(
+    #     title=_(u'label_captcha', default=u'Enter the code as shown'),
+    #     description=_(u'description_captcha', default=u''),
+    # )
