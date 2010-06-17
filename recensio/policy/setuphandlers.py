@@ -1,6 +1,7 @@
 from Products.CMFCore.utils import getToolByName
 from logging import getLogger
 from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
+import transaction
 import constants
 import os
 
@@ -21,3 +22,13 @@ def importVocabularies(self):
     for vocab_name, vocabulary in constants.vocabularies.items():
         if not hasattr(pvm, vocab_name):
             createSimpleVocabs(pvm, {vocab_name : vocabulary.items()})
+
+def addLanguages(self):
+    if isNotRecensioProfile(self):
+        return
+    site = self.getSite()
+    lang = getToolByName(site, 'portal_languages')
+    for l in constants.languages:
+        lang.addSupportedLanguage(l)
+    transaction.savepoint(optimistic=True)
+
