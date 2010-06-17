@@ -11,12 +11,15 @@ log = getLogger('esc.policy.setuphandlers.py')
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
 
-def isNotRecensioProfile(self):
-    return self.readDataFile('recensio.policy_marker.txt') is None
+def guard(func):
+    def wrapper(self):
+        if self.readDataFile('recensio.policy_marker.txt') is None:
+            return
+        return func(self)
+    return wrapper
 
+@guard
 def importVocabularies(self):
-    if isNotRecensioProfile(self):
-        return
     site = self.getSite()
     pvm = getToolByName(site, 'portal_vocabularies')
     vocabs = {}
@@ -24,20 +27,30 @@ def importVocabularies(self):
         if not hasattr(pvm, vocab_name):
             createSimpleVocabs(pvm, {vocab_name : vocabulary.items()})
 
+@guard
 def addLanguages(self):
-    if isNotRecensioProfile(self):
-        return
     site = self.getSite()
     lang = getToolByName(site, 'portal_languages')
     for l in constants.languages:
         lang.addSupportedLanguage(l)
     transaction.savepoint(optimistic=True)
 
+@guard
 def configureSecurity(self):
-    if isNotRecensioProfile(self):
-        return
     site = self.getSite()
     pcp = SecurityControlPanelAdapter(site)
     pcp.set_enable_self_reg(True)
     pcp.set_enable_user_pwd_choice(False)
     pcp.set_enable_user_folders(True)
+
+@guard
+def setPermissions(self):
+    def setPermission(context, perm_name, roles):
+        perm = filter(lambda x: perm_name == x[0],
+                      context.ac_inherited_permissions(all=True))[0]
+        name, value = perm[:2]
+        permission = Permission(name, value, context)
+        permission.setRoles(roles)
+
+    user_folder = self.getSite().Members
+    user_folder.manage_setLocalRoles('Reviewers', ['Reader'])

@@ -12,4 +12,8 @@
             handler="recensio.policy.setuphandlers.configureSecurity"
             description="Security configuration for Recensio"
             title="recensio_security" />
+    <import-step id="recensio_policy_permission_settings" version="20100617-01"
+            handler="recensio.policy.setuphandlers.setPermissions"
+            description="Permission configuration for Recensio"
+            title="recensio_security" />
 </import-steps>
