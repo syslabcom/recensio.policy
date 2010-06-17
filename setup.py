@@ -25,7 +25,6 @@ setup(name='recensio.policy',
       install_requires=[
           'Products.ATVocabularyManager',
           'Products.LinguaPlone',
-          'Products.LinguaPlone',
           'collective.xdv',
           'recensio.theme',
           'recensio.contenttypes',
