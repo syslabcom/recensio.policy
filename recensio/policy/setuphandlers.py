@@ -4,6 +4,7 @@ from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
 import transaction
 import constants
 import os
+from plone.app.controlpanel.security import SecurityControlPanelAdapter
 
 log = getLogger('esc.policy.setuphandlers.py')
 
@@ -32,3 +33,11 @@ def addLanguages(self):
         lang.addSupportedLanguage(l)
     transaction.savepoint(optimistic=True)
 
+def configureSecurity(self):
+    if isNotRecensioProfile(self):
+        return
+    site = self.getSite()
+    pcp = SecurityControlPanelAdapter(site)
+    pcp.set_enable_self_reg(True)
+    pcp.set_enable_user_pwd_choice(True)
+    pcp.set_enable_user_folders(True)
