@@ -54,3 +54,13 @@ def setPermissions(self):
 
     user_folder = self.getSite().Members
     user_folder.manage_setLocalRoles('Reviewers', ['Reader'])
+
+@guard
+def configureContentRatings(context):
+    portal = context.getSite()
+    utility = getUtility(IRatingCategoryAssignment)
+    portal_types = []
+    categories_to_set = [utility._avalable_categories.by_token[''].value]
+    for type in portal_types:
+        utility.assign_categories(type, categories_to_set)
+
