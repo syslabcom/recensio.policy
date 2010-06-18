@@ -1,4 +1,6 @@
 from Products.CMFCore.utils import getToolByName
+from zope.component import getUtility
+from plone.contentratings.interfaces import IRatingCategoryAssignment
 from logging import getLogger
 from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
 import transaction
@@ -64,3 +66,29 @@ def configureContentRatings(context):
     for type in portal_types:
         utility.assign_categories(type, categories_to_set)
 
+@guard
+def setUpCollections(context):
+    portal = context.getSite()
+    def getOrAdd(context, type, name):
+        if name not in context.objectIds():
+            context.invokeFactory(type, name)
+        return context[name]
+    def configureCollection(collection, types, location):
+        criterion = collection.addCriterion(field='created', \
+            criterion_type='ATFriendlyDateCriteria')
+        criterion.setValue(31)
+        criterion.setOperation('less')
+        criterion.setDateRange('-')
+        criterion = collection.addCriterion(field='Type', \
+            criterion_type='ATPortalTypeCriterion')
+        criterion.setValue(types)
+        criterion = collection.addCriterion(field='path', \
+            criterion_type='ATRelativePathCriterion')
+        criterion.setLocation('/')
+
+    feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
+    new_rezensions = getOrAdd(feeds, 'Topic', 'new_rezenions')
+    configureCollection(new_rezensions, 'Rezension', '/')
+    new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
+    configureCollection(new_self_rezensions, 'Rezension', '/')
+    new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')

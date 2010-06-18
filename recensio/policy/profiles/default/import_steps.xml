@@ -16,4 +16,8 @@
             handler="recensio.policy.setuphandlers.configureContentRatings"
             description="Rating configuration for Recensio"
             title="recensio_rating" />
+    <import-step id="recensio_collection_settings" version="20100618-01"
+            handler="recensio.policy.setuphandlers.setUpCollections"
+            description="Collection configuration for Recensio"
+            title="recensio_collections" />
 </import-steps>
