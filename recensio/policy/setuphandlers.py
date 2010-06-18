@@ -62,7 +62,7 @@ def setPermissions(self):
 def configureContentRatings(context):
     portal = context.getSite()
     utility = getUtility(IRatingCategoryAssignment)
-    portal_types = []
+    portal_types = ['Rezension']
     categories_to_set = [utility._avalable_categories.by_token[''].value]
     for type in portal_types:
         utility.assign_categories(type, categories_to_set)
@@ -105,8 +105,11 @@ def setUpCollections(context):
     new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
     configureCollection(new_self_rezensions, 'Rezension', '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
-    criterion = new_discussions.addCriterion(field='last_comment_date',\
-        criterion_type='ATFriendlyDateCriteria')
-    criterion.setValue(31)
-    criterion.setOperation('less')
-    criterion.setDateRange('-')
+    try:
+        criterion = new_discussions.addCriterion(field='last_comment_date',\
+            criterion_type='ATFriendlyDateCriteria')
+        criterion.setValue(31)
+        criterion.setOperation('less')
+        criterion.setDateRange('-')
+    except BadRequest:
+        pass
