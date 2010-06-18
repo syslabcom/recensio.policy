@@ -95,7 +95,8 @@ def setUpCollections(context):
         try:
             criterion = collection.addCriterion(field='path', \
                 criterion_type='ATRelativePathCriterion')
-            criterion.setLocation('/')
+            criterion.setRelativePath('/')
+            criterion.setRecurse(True)
         except BadRequest:
             pass
 
