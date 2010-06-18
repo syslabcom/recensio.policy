@@ -6,6 +6,7 @@ from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
 import transaction
 import constants
 import os
+from zExceptions import BadRequest
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 
 log = getLogger('esc.policy.setuphandlers.py')
@@ -69,22 +70,34 @@ def configureContentRatings(context):
 @guard
 def setUpCollections(context):
     portal = context.getSite()
+    wftool = getToolByName(portal, 'portal_workflow')
     def getOrAdd(context, type, name):
         if name not in context.objectIds():
             context.invokeFactory(type, name)
+            new_object = context[name]
+            wftool.doActionFor(new_object, 'publish')
         return context[name]
     def configureCollection(collection, types, location):
-        criterion = collection.addCriterion(field='created', \
-            criterion_type='ATFriendlyDateCriteria')
-        criterion.setValue(31)
-        criterion.setOperation('less')
-        criterion.setDateRange('-')
-        criterion = collection.addCriterion(field='Type', \
-            criterion_type='ATPortalTypeCriterion')
-        criterion.setValue(types)
-        criterion = collection.addCriterion(field='path', \
-            criterion_type='ATRelativePathCriterion')
-        criterion.setLocation('/')
+        try:
+            criterion = collection.addCriterion(field='created', \
+                criterion_type='ATFriendlyDateCriteria')
+            criterion.setValue(31)
+            criterion.setOperation('less')
+            criterion.setDateRange('-')
+        except BadRequest:
+            pass
+        try:
+            criterion = collection.addCriterion(field='Type', \
+                criterion_type='ATPortalTypeCriterion')
+            criterion.setValue(types)
+        except BadRequest:
+            pass
+        try:
+            criterion = collection.addCriterion(field='path', \
+                criterion_type='ATRelativePathCriterion')
+            criterion.setLocation('/')
+        except BadRequest:
+            pass
 
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
     new_rezensions = getOrAdd(feeds, 'Topic', 'new_rezenions')
@@ -92,3 +105,8 @@ def setUpCollections(context):
     new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
     configureCollection(new_self_rezensions, 'Rezension', '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
+    criterion = new_discussions.addCriterion(field='last_comment_date',\
+        criterion_type='ATFriendlyDateCriteria')
+    criterion.setValue(31)
+    criterion.setOperation('less')
+    criterion.setDateRange('-')

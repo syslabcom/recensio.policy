@@ -31,6 +31,7 @@ setup(name='recensio.policy',
           'recensio.theme',
           'recensio.contenttypes',
           'setuptools',
+          'plone.app.discussion',
           'plone.contentratings',
       ],
       entry_points="""

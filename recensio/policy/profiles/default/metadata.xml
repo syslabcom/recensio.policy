@@ -8,6 +8,7 @@
         <dependency>profile-recensio.contenttypes:default</dependency>
         <dependency>profile-recensio.theme:default</dependency>
         <dependency>profile-plone.contentratings:default</dependency>
+        <dependency>profile-plone.app.discussion:default</dependency>
     </dependencies>
 </metadata>
 
