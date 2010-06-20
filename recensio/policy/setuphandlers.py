@@ -1,5 +1,6 @@
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
+from zope.interface import directlyProvides
 from plone.contentratings.interfaces import IRatingCategoryAssignment
 from logging import getLogger
 from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
@@ -8,6 +9,7 @@ import constants
 import os
 from zExceptions import BadRequest
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
+from recensio.policy.interfaces import IDiscussionCollections
 
 log = getLogger('esc.policy.setuphandlers.py')
 
@@ -106,6 +108,7 @@ def setUpCollections(context):
     new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
     configureCollection(new_self_rezensions, 'Rezension', '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
+    directlyProvides(new_discussions, IDiscussionCollections)
     try:
         criterion = new_discussions.addCriterion(field='last_comment_date',\
             criterion_type='ATFriendlyDateCriteria')
