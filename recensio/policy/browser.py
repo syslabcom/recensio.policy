@@ -44,17 +44,17 @@ class MailCollection(BrowserView):
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         if not mail_info.email_from_address:
-            self.errors(_('Plone site is not configured'))
+            self.errors.append(_('Plone site is not configured'))
         mail_to = user.getProperty('email') or 'do3ccqrv@googlemail.com'
         if not mail_to:
-            self.errors(_("You did not provide an e-mail prodess in your profile"))
+            self.errors.append(_("You did not provide an e-mail address in your profile"))
         self.mail_to = mail_to
         msg = ""
         for result in self.context.queryCatalog():
             msg += self.tmpl % {'Title' : result.Title,
                                 'Description' : result.Description,
-                                'created' : result.created,
-                                'last_comment_date' : result.last_comment_date}
+                                'created' : result.created.strftime('%d.%m.%Y'),
+                                'last_comment_date' : result.last_comment_date and result.last_comment_date.strftime('%d.%m.%Y')}
         if not self.errors:
             mailhost.send(msg, mail_from, mail_to, self.context.Title())
         return super(MailCollection, self).__call__()
