@@ -16,13 +16,13 @@
     template="templates/mail_collection.pt"
     />
 
-  <!--browser:page
+  <browser:page
       for="*"
       name="recensio_workflow_helper"
       class=".workflow.WorkflowHelper"
       permission="zope.Public"
       allowed_interface="recensio.policy.interfaces.IWorkflowHelper"
-      /-->
+      />
 
     <!-- Control panel -->
     <browser:page
