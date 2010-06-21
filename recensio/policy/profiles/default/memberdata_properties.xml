@@ -3,4 +3,5 @@
   <property name="academic_title" type="string"></property>
   <property name="preferred_language" type="string"></property>
   <property name="declaration_of_identity" type="string"></property>
+   <property name="captcha" type="string"></property>
 </object>

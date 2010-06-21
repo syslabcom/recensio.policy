@@ -4,7 +4,7 @@
 from zope.interface import implements
 from zope import schema
 from plone.app.users.userdataschema import IUserDataSchemaProvider, IUserDataSchema
-# from quintagroup.formlib.captcha import Captcha
+from collective.captcha.form import Captcha
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory("recensio")
 
@@ -15,8 +15,6 @@ class UserDataSchemaProvider(object):
         """
         """
         return IRecensioUserDataSchema
-
-
 
 
 class IRecensioUserDataSchema(IUserDataSchema):
@@ -47,7 +45,7 @@ class IRecensioUserDataSchema(IUserDataSchema):
         values = [u'OK'],
         )
 
-    # captcha = Captcha(
-    #     title=_(u'label_captcha', default=u'Enter the code as shown'),
-    #     description=_(u'description_captcha', default=u''),
-    # )
+    captcha = Captcha(
+             title=_(u'Type the code'),
+             description=_(u'Type the code from the picture shown below or '
+                           u'from the audio.'))
