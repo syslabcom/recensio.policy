@@ -1,0 +1,17 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    i18n_domain="recensio.policy">
+
+  <browser:page
+    for="Products.ATContentTypes.interfaces.topic.IATTopic"
+    name="mail_results"
+    class=".email.MailCollection"
+    layer="recensio.theme.interfaces.IRecensioLayer"
+    permission="zope2.View"
+    template="templates/mail_collection.pt"
+    />
+
+</configure>

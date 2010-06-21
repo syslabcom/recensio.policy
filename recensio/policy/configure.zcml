@@ -9,21 +9,14 @@
 
   <includeDependencies package="." />
 
+  <include package=".browser" />
+
   <genericsetup:registerProfile
     name="default"
     title="Recensio Policy"
     directory="profiles/default"
     description="Policy Profile for the Recensio project"
     provides="Products.GenericSetup.interfaces.EXTENSION"
-    />
-
-  <browser:page
-    for="Products.ATContentTypes.interfaces.topic.IATTopic"
-    name="mail_results"
-    class=".browser.MailCollection"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="zope2.View"
-    template="templates/mail_collection.pt"
     />
 
     <utility
