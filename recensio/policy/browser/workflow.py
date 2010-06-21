@@ -6,6 +6,7 @@ from zope.interface import implements
 from plone.registry.interfaces import IRegistry
 from plone.app.controlpanel.mail import IMailSchema
 from zope.component import queryUtility
+from zope.i18n import translate
 import logging
 
 from recensio.policy.interfaces import IWorkflowHelper, IRecensioSettings
@@ -67,9 +68,11 @@ class WorkflowHelper(BrowserView):
                 url=info.object.absolute_url())
 
         if msg:
+            subject = translate(title)
             try:
                 log.info('I am sending the following msg:\n%s' % msg)
-                mailhost.send(msg, mail_from, mail_to, title, immediate=True)
+                mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
+                    subject=subject, immediate=True)
             except Exception, err:
                 log.warn('Not possible to send email notification for '
                 'workflow change on %(url)s. Message:\n%(error)s' % dict(
