@@ -40,12 +40,15 @@ class WorkflowHelper(BrowserView):
         user_email = user.getProperty('email')
 
         registry = queryUtility(IRegistry)
-        settings = registry.forInterface(IRecensioSettings)
+        try:
+            settings = registry.forInterface(IRecensioSettings)
+        except KeyError:
+            settings = dict()
         
         msg = ''
         if info.transition.id == 'submit':
             title = _(u"label_item_submitted", default=u"Content was submitted")
-            mail_to = settings.review_submitted_email or mail_from
+            mail_to = getattr(settings, 'review_submitted_email', None) or mail_from
             msg = submit_notification_template % dict (
                 user=user.getUserName(),
                 portal_type=info.object.portal_type,
