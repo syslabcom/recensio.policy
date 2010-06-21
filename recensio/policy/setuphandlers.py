@@ -117,3 +117,25 @@ def setUpCollections(context):
         criterion.setDateRange('-')
     except BadRequest:
         pass
+
+@guard
+def addWorkflowScripts(context):
+    site = context.getSite()
+    pwt = getToolByName(site, 'portal_workflow')
+    spw = getattr(pwt, 'simple_publication_workflow')
+    spw_scripts = spw.scripts
+    id = 'handle_change'
+    if not getattr(spw_scripts, id, None):
+        spw_scripts.manage_addProduct['PythonScripts'].manage_addPythonScript(
+            id=id)
+    body = """
+rwh = context.restrictedTraverse('@@recensio_workflow_helper')
+rwh.handleTransition(info)
+"""
+    params = "info"
+    script = getattr(spw_scripts, id)
+    script.ZPythonScript_edit(params, body)
+    submit = getattr(spw.transitions, 'submit')
+    submit.after_script_name = id
+
+    

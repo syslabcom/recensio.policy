@@ -20,4 +20,8 @@
             handler="recensio.policy.setuphandlers.setUpCollections"
             description="Collection configuration for Recensio"
             title="recensio_collections" />
+    <import-step id="recensio_workflow_settings" version="20100621-01"
+            handler="recensio.policy.setuphandlers.addWorkflowScripts"
+            description="Workflow configuration for Recensio"
+            title="recensio_workflow" />
 </import-steps>
