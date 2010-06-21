@@ -26,4 +26,9 @@
     template="templates/mail_collection.pt"
     />
 
+    <utility
+        component=".vocabularies.AvailableUserLanguagesFactory"
+        name="recensio.policy.vocabularies.available_user_languages"
+        />
+
 </configure>

@@ -37,9 +37,11 @@ class IRecensioUserDataSchema(IUserDataSchema):
     # Note: the available languages should come from a vocabulary!
     preferred_language = schema.Choice(
         title=_(u'label_preferred_language', default=u'Preferred language'),
-        description=_(u'description_preferred_language', default=u''),
+        description=_(u'description_preferred_language', default=u'What '
+            'language do you prefer for receiving e-mails from us?'),
         required=True,
-        values = [u'English', u'Deutsch', u'Francais'],
+        vocabulary="recensio.policy.vocabularies.available_user_languages",
+        # values = [u'English', u'Deutsch', u'Francais'],
         )
 
     declaration_of_identity = schema.Choice(

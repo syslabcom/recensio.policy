@@ -102,3 +102,9 @@ languages = [u'sq',
              u'sv',
              u'tr',
              u'uk']
+
+USER_LANGUAGES = [
+        u'de',
+        u'fr',
+        u'en',
+        ]
