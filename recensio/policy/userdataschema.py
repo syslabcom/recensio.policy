@@ -8,6 +8,12 @@ from collective.captcha.form import Captcha
 from zope.i18nmessageid import MessageFactory
 _ = MessageFactory("recensio")
 
+UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES = (
+    'declaration_of_identity',
+    'captcha',
+    )
+
+
 class UserDataSchemaProvider(object):
     implements(IUserDataSchemaProvider)
 
@@ -22,7 +28,7 @@ class IRecensioUserDataSchema(IUserDataSchema):
     extra fields.
     """
     academic_title = schema.TextLine(
-        title=_(u'label_academic_title', default=u'Titel'),
+        title=_(u'label_academic_title', default=u'Academic title'),
         description=_(u'help_academic_title',
                       default=u""),
         required=False,
@@ -46,6 +52,7 @@ class IRecensioUserDataSchema(IUserDataSchema):
         )
 
     captcha = Captcha(
-             title=_(u'Type the code'),
-             description=_(u'Type the code from the picture shown below or '
-                           u'from the audio.'))
+        title=_(u'Type the code'),
+        description=_(u'Type the code from the picture shown below or '
+                   u'from the audio.'),
+        )
