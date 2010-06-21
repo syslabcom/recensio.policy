@@ -20,9 +20,9 @@ Please check it out a %(link)s.
 """
 
 publish_notification_template = dict(
-en="""Your item "%(title)s" at %(url)s has been approved and is now published.""",
-de="""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar.""",
-fr="""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar."""
+en=u"""Your item "%(title)s" at %(url)s has been approved and is now published.""",
+de=u"""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar.""",
+fr=u"""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar."""
 )
 
 class WorkflowHelper(BrowserView):
@@ -70,9 +70,9 @@ class WorkflowHelper(BrowserView):
         if msg:
             subject = translate(title)
             try:
-                log.info('I am sending the following msg:\n%s' % msg)
+                log.info(u'I am sending the following msg:\n%s' % msg)
                 mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
-                    subject=subject, immediate=True)
+                    subject=subject, charset='utf-8', immediate=True)
             except Exception, err:
                 log.warn('Not possible to send email notification for '
                 'workflow change on %(url)s. Message:\n%(error)s' % dict(
