@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from zope.interface import implements
@@ -11,11 +13,16 @@ from recensio.policy import recensioMessageFactory as _
 
 log = logging.getLogger('Recensio Workflow Helper:')
 
-submit_notification_template = """User %(user)s (%(email)s) has submitted a 
-%(portal_type)s for review.
+submit_notification_template = """User %(user)s (mailto:%(email)s) has submitted a %(portal_type)s for review.
 
 Please check it out a %(link)s.
 """
+
+publish_notification_template = dict(
+en="""Your item "%(title)s" at %(url)s has been approved and is now published.""",
+de="""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar.""",
+fr="""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar."""
+)
 
 class WorkflowHelper(BrowserView):
     """ Helper for the Recensio workflows
@@ -30,25 +37,39 @@ class WorkflowHelper(BrowserView):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
-        user_email = user.getProperty('email') or "NO EMAIL"
+        user_email = user.getProperty('email')
 
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRecensioSettings)
-
+        
+        msg = ''
         if info.transition.id == 'submit':
-            title = "Content submitted"
+            title = _(u"label_item_submitted", default=u"Content was submitted")
             mail_to = settings.review_submitted_email or mail_from
-
             msg = submit_notification_template % dict (
                 user=user.getUserName(),
                 portal_type=info.object.portal_type,
                 link=info.object.absolute_url(),
                 email=user_email
                 )
+
+        elif info.transition.id == 'publish' and info.old_state.id == 'pending':
+            owner = info.object.getOwner()
+            mail_to = owner.getProperty('email')
+            pref_lang = owner.getProperty('preferred_language', 'de')
+            title = _(u'label_item_published', default=u'Your item has been published')
+            template = publish_notification_template.get(pref_lang, None) or \
+                publish_notification_template.get('de')
+            msg = template % dict(title=info.object.Title(),
+                url=info.object.absolute_url())
+
+        if msg:
             try:
+                log.info('I am sending the following msg:\n%s' % msg)
                 mailhost.send(msg, mail_from, mail_to, title, immediate=True)
             except Exception, err:
                 log.warn('Not possible to send email notification for '
                 'workflow change on %(url)s. Message:\n%(error)s' % dict(
                     url=info.object.absolute_url(), error=str(err)))
+
 

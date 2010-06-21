@@ -135,7 +135,10 @@ rwh.handleTransition(info)
     params = "info"
     script = getattr(spw_scripts, id)
     script.ZPythonScript_edit(params, body)
+
     submit = getattr(spw.transitions, 'submit')
     submit.after_script_name = id
+    publish = getattr(spw.transitions, 'publish')
+    publish.after_script_name = id
 
     
