@@ -5,6 +5,8 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="recensio.policy">
 
+  <include package="plone.app.registry" />
+
   <browser:page
     for="Products.ATContentTypes.interfaces.topic.IATTopic"
     name="mail_results"
@@ -13,5 +15,21 @@
     permission="zope2.View"
     template="templates/mail_collection.pt"
     />
+
+  <!--browser:page
+      for="*"
+      name="recensio_workflow_helper"
+      class=".workflow.WorkflowHelper"
+      permission="zope.Public"
+      allowed_interface="recensio.policy.interfaces.IWorkflowHelper"
+      /-->
+
+    <!-- Control panel -->
+    <browser:page
+        name="recensio-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.RecensioSettingsControlPanel"
+        permission="cmf.ManagePortal"
+        />
 
 </configure>

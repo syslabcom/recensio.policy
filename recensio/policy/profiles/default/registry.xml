@@ -44,4 +44,5 @@
   </field>
   <value>True</value>
  </record>
+ <records interface="recensio.policy.interfaces.IRecensioSettings" />
 </registry>
