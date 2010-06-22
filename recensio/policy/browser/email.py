@@ -1,9 +1,12 @@
 from plone.app.controlpanel.mail import IMailSchema
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
+from plone.app.registry.browser import controlpanel
+from plone.registry.interfaces import IRegistry
+from zope.component import getUtility
 
-from recensio.policy.interfaces import IDiscussionCollections
 from recensio.policy import recensioMessageFactory
+from recensio.policy.interfaces import INewsletterSettings
 
 _ = recensioMessageFactory
 
@@ -25,13 +28,6 @@ Last discussed on: %(last_comment_date)s
 """
 
 class MailCollection(BrowserView):
-    tmpl = result_template
-    def __init__(self, context, request):
-        if IDiscussionCollections.providedBy(context):
-            self.tmpl = result_discussions_template
-        else:
-            self.tmpl = result_template
-        super(MailCollection, self).__init__(context, request)
 
     def __call__(self):
         self.errors = []
@@ -49,6 +45,10 @@ class MailCollection(BrowserView):
         if not mail_to:
             self.errors.append(_("You did not provide an e-mail address in your profile"))
         self.mail_to = mail_to
+        registry = getUtility(IRegistry)
+        settings = registry.forInterface(INewsletterSettings)
+
+        import pdb;pdb.set_trace()
         msg = ""
         for result in self.context.queryCatalog():
             msg += self.tmpl % {'Title' : result.Title,
@@ -59,3 +59,12 @@ class MailCollection(BrowserView):
             mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
                 subject=self.context.Title())
         return super(MailCollection, self).__call__()
+
+class NewsletterSettingsEditForm(controlpanel.RegistryEditForm):
+
+    schema = INewsletterSettings
+    label = _('Newsletter settings')
+    description = _('This is a technical configuration panel for newsletter settings.\nThe templates can access any object of a catalog result, but dates have been preformatted.')
+
+class NewsletterSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
+    form = NewsletterSettingsEditForm

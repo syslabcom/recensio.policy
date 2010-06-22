@@ -18,4 +18,16 @@
             <permission>Manage portal</permission>
     </configlet>
 
+    <configlet
+        title="Newsletter"
+        action_id="newsletter"
+        appId="recensio.policy"
+        category="Products"
+        condition_expr=""
+        icon_expr=""
+        url_expr="string:${portal_url}/@@newsletter-settings"
+        visible="True"
+        i18n:attributes="title">
+            <permission>Manage portal</permission>
+    </configlet>
 </object>

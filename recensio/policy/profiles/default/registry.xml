@@ -1,4 +1,5 @@
 <registry>
+ <records interface="recensio.policy.interfaces.INewsletterSettings" />
  <record field="anonymous_comments" interface="plone.app.discussion.interfaces.IDiscussionSettings" name="plone.app.discussion.interfaces.IDiscussionSettings.anonymous_comments">
   <field type="plone.registry.field.Bool">
    <default>False</default>
