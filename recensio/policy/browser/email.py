@@ -56,5 +56,6 @@ class MailCollection(BrowserView):
                                 'created' : result.created.strftime('%d.%m.%Y'),
                                 'last_comment_date' : result.last_comment_date and result.last_comment_date.strftime('%d.%m.%Y')}
         if not self.errors:
-            mailhost.send(msg, mail_from, mail_to, self.context.Title())
+            mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
+                subject=self.context.Title())
         return super(MailCollection, self).__call__()
