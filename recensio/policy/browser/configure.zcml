@@ -31,5 +31,12 @@
         class=".controlpanel.RecensioSettingsControlPanel"
         permission="cmf.ManagePortal"
         />
+  
+    <browser:page
+        name="newsletter-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".email.NewsletterSettingsControlPanel"
+        permission="cmf.ManagePortal"
+        />
 
 </configure>
