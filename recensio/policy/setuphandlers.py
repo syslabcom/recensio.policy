@@ -3,7 +3,8 @@ from zope.component import getUtility
 from zope.interface import directlyProvides
 from plone.contentratings.interfaces import IRatingCategoryAssignment
 from logging import getLogger
-from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
+from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs,\
+    createHierarchicalVocabs
 import transaction
 import constants
 import os
@@ -31,6 +32,7 @@ def importVocabularies(self):
     for vocab_name, vocabulary in constants.vocabularies.items():
         if not hasattr(pvm, vocab_name):
             createSimpleVocabs(pvm, {vocab_name : vocabulary.items()})
+    createHierarchicalVocabs(pvm, constants.hierarchical_vocabularies)
 
 @guard
 def addLanguages(self):
