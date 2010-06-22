@@ -48,7 +48,6 @@ class MailCollection(BrowserView):
         registry = getUtility(IRegistry)
         settings = registry.forInterface(INewsletterSettings)
 
-        import pdb;pdb.set_trace()
         msg = ""
         for result in self.context.queryCatalog():
             msg += self.tmpl % {'Title' : result.Title,
