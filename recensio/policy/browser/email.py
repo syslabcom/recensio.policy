@@ -16,9 +16,6 @@ class ValidationError(Exception):
     pass
 
 class MailCollection(BrowserView):
-    def __init__(self, a, b):
-        self.mail_to = ''
-        super(MailCollection, self).__init__(a, b)
 
     def __call__(self):
         self.errors = []
@@ -39,10 +36,9 @@ class MailCollection(BrowserView):
             if not mail_to:
                 self.errors.append(_("You did not provide an e-mail address in your profile"))
                 raise ValidationError()
-            self.mail_to = mail_to
             registry = getUtility(IRegistry)
             settings = registry.forInterface(INewsletterSettings)
-            if not settings.settings.mail_format:
+            if not settings.mail_format:
                 self.errors.append(_('Mailsettings not configured'))
                 raise ValidationError()
             msg = settings.prefix
@@ -56,14 +52,20 @@ class MailCollection(BrowserView):
                 for result in topic.queryCatalog():
                     for key in result.__record_schema__.keys():
                         if hasattr(getattr(result, key), 'strftime'):
-                            setattr(result, key, getattr(result, key).strftime(settings.mail_format))
+                            try:
+                                setattr(result, key, getattr(result, key).strftime(settings.mail_format))
+                            except ValueError:
+                                pass
                     msg += tmpl % result
+            msg += settings.suffix
             if self.errors:
                 raise ValidationError
             mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
-                subject=self.context.Title())
+                subject=settings.subject, charset='utf-8')
         except ValidationError:
             pass
+        except Exception, e:
+            self.errors.append(str(e.__class__) + ' ' + str(e))
         finally:
             messages = IStatusMessage(self.request)
             if self.errors:
