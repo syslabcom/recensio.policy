@@ -1,0 +1,27 @@
+<?zml version="1.0" encoding="UTF-8"?>
+<issue number="7" volume="9" year="2009"
+    tal:attributes="number view/number;volume view/volume;year view/year"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="Sehepunkte_frompublisher_081113.xsd">
+    <review tal:repeat="review view/reviews"
+            tal:attributes="id review/id"
+            id="5297">
+        <reviewer tal:repeat="reviewer review/reviewers">
+            <last_name tal:content="reviewer/last_name">Spurlock</last_name>
+            <first_name tal:content="reviewer/first_name">Scott</first_name>
+        </reviewer>
+        <book tal:repeat="book review/books">
+            <author_1_first_name tal:content="book/author/1/first_name">Roger A.</author_1_first_name>
+            <author_1_last_name tal:content="book/author/1/last_name">Mason</author_1_last_name>
+            <author_2_first_name tal:content="book/author/2/first_name">Martin S.</author_2_first_name>
+            <author_2_last_name tal:content="book/author/2/last_name">Smith</author_2_last_name>
+            <author_3_first_name tal:content="book/author/3/first_name" />
+            <author_3_last_name tal:content="book/author/3/last_name" />
+            <isbn tal:condition="book/isbn" tal:content="book/isbn">978-1-85928-408-7</isbn>
+            <subtitle tal:condition="book/subtitle" tal:content="book/subtitle" >A Critical Edition and Translation</subtitle>
+            <title tal:content="book/title" >A Dialogue on the Law of Kingship among the Scots</title>
+            <year tal:content="book/year">2004</year>
+        </book>
+        <filename tal:content="review/filename" >http://www.sehepunkte.de/export/rezension_5297.html</filename>
+    </review>
+</issue>
