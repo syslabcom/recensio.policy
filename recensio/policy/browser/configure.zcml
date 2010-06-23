@@ -8,12 +8,11 @@
   <include package="plone.app.registry" />
 
   <browser:page
-    for="Products.ATContentTypes.interfaces.topic.IATTopic"
+    for="recensio.policy.interfaces.INewsletterSource"
     name="mail_results"
     class=".email.MailCollection"
     layer="recensio.theme.interfaces.IRecensioLayer"
     permission="zope2.View"
-    template="templates/mail_collection.pt"
     />
 
   <browser:page
@@ -24,19 +23,19 @@
       allowed_interface="recensio.policy.interfaces.IWorkflowHelper"
       />
 
-    <!-- Control panel -->
-    <browser:page
-        name="recensio-settings"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        class=".controlpanel.RecensioSettingsControlPanel"
-        permission="cmf.ManagePortal"
-        />
-  
-    <browser:page
-        name="newsletter-settings"
-        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-        class=".email.NewsletterSettingsControlPanel"
-        permission="cmf.ManagePortal"
-        />
+  <!-- Control panel -->
+  <browser:page
+      name="recensio-settings"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".controlpanel.RecensioSettingsControlPanel"
+      permission="cmf.ManagePortal"
+      />
+
+  <browser:page
+      name="newsletter-settings"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".email.NewsletterSettingsControlPanel"
+      permission="cmf.ManagePortal"
+      />
 
 </configure>

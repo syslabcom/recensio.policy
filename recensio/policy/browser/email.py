@@ -1,4 +1,6 @@
 from plone.app.controlpanel.mail import IMailSchema
+from Products.ATContentTypes.interfaces import IATTopic
+from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from plone.app.registry.browser import controlpanel
@@ -6,58 +8,70 @@ from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
 
 from recensio.policy import recensioMessageFactory
-from recensio.policy.interfaces import INewsletterSettings
+from recensio.policy.interfaces import INewsletterSettings, IDiscussionCollections
 
 _ = recensioMessageFactory
 
-result_template = """%(Title)s
-
-%(Description)s
-
-Created on: %(created)s
--------------------------------------------------------------------------------
-
-"""
-result_discussions_template = """%(Title)s
-
-%(Description)s
-
-Last discussed on: %(last_comment_date)s
--------------------------------------------------------------------------------
-
-"""
+class ValidationError(Exception):
+    pass
 
 class MailCollection(BrowserView):
+    def __init__(self, a, b):
+        self.mail_to = ''
+        super(MailCollection, self).__init__(a, b)
 
     def __call__(self):
         self.errors = []
-        mailhost = getToolByName(self.context, 'MailHost')
-        root = getToolByName(self.context, 'portal_url').getPortalObject()
-        membership_tool = getToolByName(self.context, 'portal_membership')
-        if membership_tool.isAnonymousUser():
-            self.errors.append(_('You are not logged in'))
-        user = membership_tool.getAuthenticatedMember()
-        mail_info = IMailSchema(root)
-        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
-        if not mail_info.email_from_address:
-            self.errors.append(_('Plone site is not configured'))
-        mail_to = user.getProperty('email') or 'do3ccqrv@googlemail.com'
-        if not mail_to:
-            self.errors.append(_("You did not provide an e-mail address in your profile"))
-        self.mail_to = mail_to
-        registry = getUtility(IRegistry)
-        settings = registry.forInterface(INewsletterSettings)
-
-        msg = ""
-        for result in self.context.queryCatalog():
-            msg += self.tmpl % {'Title' : result.Title,
-                                'Description' : result.Description,
-                                'created' : result.created.strftime('%d.%m.%Y'),
-                                'last_comment_date' : result.last_comment_date and result.last_comment_date.strftime('%d.%m.%Y')}
-        if not self.errors:
+        try:
+            mailhost = getToolByName(self.context, 'MailHost')
+            root = getToolByName(self.context, 'portal_url').getPortalObject()
+            membership_tool = getToolByName(self.context, 'portal_membership')
+            if membership_tool.isAnonymousUser():
+                self.errors.append(_('You are not logged in'))
+                raise ValidationError()
+            user = membership_tool.getAuthenticatedMember()
+            mail_info = IMailSchema(root)
+            mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+            if not mail_info.email_from_address:
+                self.errors.append(_('Plone site is not configured'))
+                raise ValidationError()
+            mail_to = user.getProperty('email')
+            if not mail_to:
+                self.errors.append(_("You did not provide an e-mail address in your profile"))
+                raise ValidationError()
+            self.mail_to = mail_to
+            registry = getUtility(IRegistry)
+            settings = registry.forInterface(INewsletterSettings)
+            if not settings.settings.mail_format:
+                self.errors.append(_('Mailsettings not configured'))
+                raise ValidationError()
+            msg = settings.prefix
+            for topic in self.context.objectValues():
+                if not IATTopic.providedBy(topic):
+                    continue
+                if IDiscussionCollections.providedBy(topic):
+                    tmpl = settings.comment_result_template
+                else:
+                    tmpl = settings.standard_result_template
+                for result in topic.queryCatalog():
+                    for key in result.__record_schema__.keys():
+                        if hasattr(getattr(result, key), 'strftime'):
+                            setattr(result, key, getattr(result, key).strftime(settings.mail_format))
+                    msg += tmpl % result
+            if self.errors:
+                raise ValidationError
             mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
                 subject=self.context.Title())
-        return super(MailCollection, self).__call__()
+        except ValidationError:
+            pass
+        finally:
+            messages = IStatusMessage(self.request)
+            if self.errors:
+                for error in self.errors:
+                    messages.addStatusMessage(error, type='error')
+            else:
+                messages.addStatusMessage(u"Mail sending will be prepared. Mail will be sent to %s" % mail_to, type="info")
+            return self.request.response.redirect(self.context.absolute_url())
 
 class NewsletterSettingsEditForm(controlpanel.RegistryEditForm):
 
@@ -67,3 +81,4 @@ class NewsletterSettingsEditForm(controlpanel.RegistryEditForm):
 
 class NewsletterSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
     form = NewsletterSettingsEditForm
+
