@@ -10,7 +10,7 @@ import constants
 import os
 from zExceptions import BadRequest
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
-from recensio.policy.interfaces import IDiscussionCollections
+from recensio.policy.interfaces import IDiscussionCollections, INewsletterSource
 
 log = getLogger('esc.policy.setuphandlers.py')
 
@@ -105,6 +105,7 @@ def setUpCollections(context):
             pass
 
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
+    directlyProvides(feeds, INewsletterSource)
     new_rezensions = getOrAdd(feeds, 'Topic', 'new_rezenions')
     configureCollection(new_rezensions, 'Rezension', '/')
     new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
