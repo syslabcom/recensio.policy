@@ -24,4 +24,8 @@
             handler="recensio.policy.setuphandlers.addWorkflowScripts"
             description="Workflow configuration for Recensio"
             title="recensio_workflow" />
+    <import-step id="recensio_policy_catalog_indexes" version="20100623-01"
+            handler="recensio.policy.setuphandlers.addCatalogIndexes"
+            description="Catalog Indexes for Recensio"
+            title="recensio_indexes" />
 </import-steps>

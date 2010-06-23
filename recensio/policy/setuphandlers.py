@@ -12,7 +12,7 @@ from zExceptions import BadRequest
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from recensio.policy.interfaces import IDiscussionCollections, INewsletterSource
 
-log = getLogger('esc.policy.setuphandlers.py')
+log = getLogger('recensio.policy.setuphandlers.py')
 
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
@@ -144,4 +144,36 @@ rwh.handleTransition(info)
     publish = getattr(spw.transitions, 'publish')
     publish.after_script_name = id
 
-    
+@guard
+def addCatalogIndexes(context):
+    site = context.getSite()
+    cat = getToolByName(site, 'portal_catalog')
+
+    class extra(object):
+        def __init__(self, field_name, lexicon_id, index_type):
+            self.field_name = field_name
+            self.lexicon_id = lexicon_id
+            self.index_type = index_type
+
+    def addIndex(name, type, **kw):
+        if not name in cat.indexes():
+            log.debug('adding %s %s, kw=%s' %(type, name, kw))
+            cat.addIndex(name, type, **kw)
+        elif not filter(lambda x: x.getId() == name, cat.getIndexObjects())[0].meta_type == type:
+            cat.delIndex(name)
+            log.debug('adding %s %s, kw=%s' %(type, name, kw))
+            cat.addIndex(name, type, **kw)
+
+    addIndex('praesentationTextsprache', 'LanguageIndex')
+    addIndex('praesentiertenSchriftTextsprache', 'LanguageIndex')
+    addIndex('ddcRaum', 'FieldIndex')
+    addIndex('ddcZeit', 'FieldIndex')
+    addIndex('ddcSach', 'FieldIndex')
+    addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['rezensionAutor', 'authors', 'herausgeberSammelband']})
+    addIndex('titel_buch_aufsatz_zeitschrift', 'ZCTextIndex', extra=extra(field_name='titel,untertitel,kuerzelZeitschrift', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
+    addIndex('jahr', 'FieldIndex', extra={'indexed_attrs': ['erscheinungsjahr', 'gezaehltesJahr']})
+    addIndex('ort', 'FieldIndex', extra={'indexed_attrs': ['erscheinungsort']})
+    addIndex('verlag', 'FieldIndex')
+    addIndex('reihe', 'FieldIndex')
+    addIndex('isbn', 'FieldIndex')
+
