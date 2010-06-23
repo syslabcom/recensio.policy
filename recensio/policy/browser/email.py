@@ -50,13 +50,17 @@ class MailCollection(BrowserView):
                 else:
                     tmpl = settings.standard_result_template
                 for result in topic.queryCatalog():
+                    values = dict()
                     for key in result.__record_schema__.keys():
                         if hasattr(getattr(result, key), 'strftime'):
                             try:
-                                setattr(result, key, getattr(result, key).strftime(settings.mail_format))
+                                values[key] = getattr(result, key).strftime(settings.mail_format)
                             except ValueError:
                                 pass
-                    msg += tmpl % result
+                        else:
+                            values[key] = getattr(result, key)
+                    values['getURL'] = result.getURL()
+                    msg += tmpl % values
             msg += settings.suffix
             if self.errors:
                 raise ValidationError
