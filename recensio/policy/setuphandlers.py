@@ -123,10 +123,10 @@ def setUpCollections(context):
     except BadRequest:
         pass
 
-    internal_views = getOrdAdd(portal, 'Folder', 'internal views', \
+    internal_views = getOrAdd(portal, 'Folder', 'internal views', \
         publish = False)
     internal_views.setExcludeFromNav('True')
-    digitool_export = getOrdAdd(internal_views, 'Topic', 'Digitool Export')
+    digitool_export = getOrAdd(internal_views, 'Topic', 'Digitool Export')
     configureCollection(digitool_export, 'Rezension', '/')
     criterion = digitool_export.getCriterion('created_ATFriendlyDateCriteria')
     criterion.setValue(1)
