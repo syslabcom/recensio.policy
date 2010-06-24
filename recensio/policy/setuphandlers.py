@@ -75,12 +75,14 @@ def configureContentRatings(context):
 def setUpCollections(context):
     portal = context.getSite()
     wftool = getToolByName(portal, 'portal_workflow')
-    def getOrAdd(context, type, name):
+    def getOrAdd(context, type, name, publish = True):
         if name not in context.objectIds():
             context.invokeFactory(type, name)
             new_object = context[name]
-            wftool.doActionFor(new_object, 'publish')
+            if publish:
+                wftool.doActionFor(new_object, 'publish')
         return context[name]
+
     def configureCollection(collection, types, location):
         try:
             criterion = collection.addCriterion(field='created', \
@@ -120,6 +122,14 @@ def setUpCollections(context):
         criterion.setDateRange('-')
     except BadRequest:
         pass
+
+    internal_views = getOrdAdd(portal, 'Folder', 'internal views', \
+        publish = False)
+    internal_views.setExcludeFromNav('True')
+    digitool_export = getOrdAdd(internal_views, 'Topic', 'Digitool Export')
+    configureCollection(digitool_export, 'Rezension', '/')
+    criterion = digitool_export.getCriterion('created_ATFriendlyDateCriteria')
+    criterion.setValue(1)
 
 @guard
 def addWorkflowScripts(context):
@@ -176,4 +186,3 @@ def addCatalogIndexes(context):
     addIndex('verlag', 'FieldIndex')
     addIndex('reihe', 'FieldIndex')
     addIndex('isbn', 'FieldIndex')
-

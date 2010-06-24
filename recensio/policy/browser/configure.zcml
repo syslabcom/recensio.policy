@@ -16,6 +16,13 @@
     />
 
   <browser:page
+    for="Products.ATContentTypes.interfaces.topic.IATTopic"
+    name="digitool_export"
+    class=".digitool.DigiToolRepresentation"
+    permission="zope.Public"
+    />
+
+  <browser:page
       for="*"
       name="recensio_workflow_helper"
       class=".workflow.WorkflowHelper"
