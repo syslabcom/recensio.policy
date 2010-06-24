@@ -106,12 +106,15 @@ def setUpCollections(context):
         except BadRequest:
             pass
 
+    classic_reviews = (u'Rezension einer Monographie', u'Rezension einer Zeitschrift')
+    self_reviews = (u'Praesentation von Aufsatz in Sammelband', u'Praesentationen von Aufsatz in Zeitschrift', u'Praesentationen von Internetressourcen', u'Praesentationen von Monographien')
+
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
     directlyProvides(feeds, INewsletterSource)
     new_rezensions = getOrAdd(feeds, 'Topic', 'new_rezenions')
-    configureCollection(new_rezensions, 'Rezension', '/')
+    configureCollection(new_rezensions, classic_reviews, '/')
     new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
-    configureCollection(new_self_rezensions, 'Rezension', '/')
+    configureCollection(new_self_rezensions, self_reviews, '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
     directlyProvides(new_discussions, IDiscussionCollections)
     try:
@@ -127,7 +130,7 @@ def setUpCollections(context):
         publish = False)
     internal_views.setExcludeFromNav('True')
     digitool_export = getOrAdd(internal_views, 'Topic', 'Digitool Export')
-    configureCollection(digitool_export, 'Rezension', '/')
+    configureCollection(digitool_export, classic_reviews + self_reviews, '/')
     criterion = digitool_export.getCriterion('created_ATFriendlyDateCriteria')
     criterion.setValue(1)
 
