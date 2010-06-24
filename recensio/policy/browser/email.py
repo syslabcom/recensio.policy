@@ -49,18 +49,27 @@ class MailCollection(BrowserView):
                     tmpl = settings.comment_result_template
                 else:
                     tmpl = settings.standard_result_template
+                by_type = dict()
                 for result in topic.queryCatalog():
-                    values = dict()
-                    for key in result.__record_schema__.keys():
-                        if hasattr(getattr(result, key), 'strftime'):
-                            try:
-                                values[key] = getattr(result, key).strftime(settings.mail_format)
-                            except ValueError:
-                                pass
-                        else:
-                            values[key] = getattr(result, key)
-                    values['getURL'] = result.getURL()
-                    msg += tmpl % values
+                    if result.portal_type in by_type:
+                        by_type[result.portal_type].append(result)
+                    else:
+                        by_type[result.portal_type] = [result]
+                for portal_type in by_type.keys():
+                    msg += "\nTyp: %(portal_type)s\n%(separator)s" % dict(
+                        portal_type=portal_type, separator=settings.separator)
+                    for result in by_type[portal_type]:
+                        values = dict()
+                        for key in result.__record_schema__.keys():
+                            if hasattr(getattr(result, key), 'strftime'):
+                                try:
+                                    values[key] = getattr(result, key).strftime(settings.mail_format)
+                                except ValueError:
+                                    pass
+                            else:
+                                values[key] = getattr(result, key)
+                        values['getURL'] = result.getURL()
+                        msg += tmpl % values
             msg += settings.suffix
             if self.errors:
                 raise ValidationError

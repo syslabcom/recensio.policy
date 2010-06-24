@@ -59,6 +59,13 @@ Last discussed on: %(last_comment_date)s
 --------------------------------------------
 """))
 
+    separator = schema.Text(title=_(u'Separator'),
+                            description=_(u'The separator will be used to separate sections of the email '\
+                                'from each other.'),
+                            default=u"""*********************************************
+
+""")
+
 class IWorkflowHelper(Interface):
     
     def handleTransition(wf_variable):
