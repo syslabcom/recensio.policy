@@ -25,13 +25,14 @@ setup(name='recensio.policy',
       install_requires=[
           'Products.ATVocabularyManager',
           'Products.LinguaPlone',
+          'collective.captcha',
           'collective.xdv',
-          'recensio.theme',
-          'recensio.contenttypes',
-          'setuptools',
           'plone.app.discussion',
           'plone.contentratings',
-          'collective.captcha',
+          'recensio.contenttypes',
+          'recensio.theme',
+          'setuptools',
+          'wc.pageturner',
       ],
       entry_points="""
       # -*- Entry points: -*-
