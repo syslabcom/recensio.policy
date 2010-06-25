@@ -3,8 +3,8 @@ from zope.app.pagetemplate import ViewPageTemplateFile
 
 class Book(object):
     def __init__(self, obj):
-        self.isbn = obj.getIsbn()
-        self.subtitle = obj.getTitel()
+        self.isbn = getattr(obj, 'getIsbn', getattr(obj, 'getIssn', lambda: None))()
+        self.subtitle = obj.title
         self.title = obj.getUntertitel()
         self.year = obj.getErscheinungsjahr()
         self.author_1 = {'first_name' : '', 'last_name' : obj.getRezensionAutor()}
@@ -36,7 +36,7 @@ class Review(object):
     @property
     def books(self):
         return [Book(self.obj) for x in [range(1)]] # No multiple books support
-                                               # in our system
+                                                   # in our system
 
 class DigiToolRepresentation(BrowserView):
     template = ViewPageTemplateFile('templates/digitool.pt')

@@ -130,7 +130,7 @@ def setUpCollections(context):
         publish = False)
     internal_views.setExcludeFromNav('True')
     digitool_export = getOrAdd(internal_views, 'Topic', 'Digitool Export')
-    configureCollection(digitool_export, classic_reviews + self_reviews, '/')
+    configureCollection(digitool_export, tuple(set(classic_reviews + self_reviews) - set((u'Praesentationen von Internetressourcen',))), '/')
     criterion = digitool_export.getCriterion('created_ATFriendlyDateCriteria')
     criterion.setValue(1)
 
