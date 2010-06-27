@@ -7,6 +7,7 @@
         <dependency>profile-collective.xdv:default</dependency>
         <dependency>profile-recensio.contenttypes:default</dependency>
         <dependency>profile-recensio.theme:default</dependency>
+        <dependency>profile-recensio.imports:default</dependency>
         <dependency>profile-plone.contentratings:default</dependency>
         <dependency>profile-plone.app.discussion:default</dependency>
         <dependency>profile-wc.pageturner:default</dependency>
