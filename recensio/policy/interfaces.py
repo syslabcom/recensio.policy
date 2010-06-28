@@ -40,7 +40,7 @@ Mit freundlichen Grüßen,
     mail_format = schema.ASCIILine(title=_('Date Format'),
                                    description=_('strftime compatible date format specification, see http://docs.python.org/library/time.html#time.strftime'),
                                    default = "%d.%m.%Y")
-    standard_result_template = schema.Text(title = _('Rezension template'),
+    standard_result_template = schema.Text(title = _('Review template'),
                                            default = _(u"""%(Title)s (%(getURL)s)
 
 %(Description)s
@@ -50,7 +50,7 @@ Created on: %(created)s
 """))
     # This template will be used for IATTopics, that implement the
     # IDiscussionCollections Interface.
-    comment_result_template = schema.Text(title = _('Rezension template for Discussion based searches'),
+    comment_result_template = schema.Text(title = _('Review template for Discussion based searches'),
                                           default = _(u"""%(Title)s (%(getURL)s)
 
 %(Description)s

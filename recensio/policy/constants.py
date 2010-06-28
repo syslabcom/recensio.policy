@@ -52,7 +52,7 @@ vocabularies = \
                         u'public_private_partnership': u'Public Private Partnership',
                         u'unternehmen': u'Unternehmen',
                         u'verbaende': u'Verb\xe4nde',
-                        u'verlage_und_datenbankanbieter': u'Verlage und Datenbankanbieter',
+                        u'publishere_und_datenbankanbieter': u'Verlage und Datenbankanbieter',
                         u'weitere_institutionen': u'Weitere Institutionen'},
  'reference_values': {u'abkuerzungswerke': u'Abk\xfcrzungswerke',
                       u'anleitungen_und_handbuecher': u'Anleitungen und Handb\xfccher',

@@ -7,7 +7,7 @@ class Book(object):
         self.subtitle = obj.title
         self.title = obj.getUntertitel()
         self.year = obj.getErscheinungsjahr()
-        self.author_1 = {'first_name' : '', 'last_name' : obj.getRezensionAutor()}
+        self.author_1 = {'first_name' : '', 'last_name' : obj.getReviewAutor()}
         self.author_2 = {'first_name' : '', 'last_name' : ''}
         self.author_3 = {'first_name' : '', 'last_name' : ''}
 
@@ -30,7 +30,7 @@ class Review(object):
     @property
     def reviewers(self):
         for i in [range(1)]: # No multiple authors support in our system
-            yield {'last_name' : self.obj.getRezensionAutor(),
+            yield {'last_name' : self.obj.getReviewAutor(),
                    'first_name' : ''}
 
     @property

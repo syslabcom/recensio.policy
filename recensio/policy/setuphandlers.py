@@ -66,7 +66,7 @@ def setPermissions(self):
 def configureContentRatings(context):
     portal = context.getSite()
     utility = getUtility(IRatingCategoryAssignment)
-    portal_types = ['Rezension']
+    portal_types = ['Review']
     categories_to_set = [utility._avalable_categories.by_token[''].value]
     for type in portal_types:
         utility.assign_categories(type, categories_to_set)
@@ -106,15 +106,15 @@ def setUpCollections(context):
         except BadRequest:
             pass
 
-    classic_reviews = (u'Rezension einer Monographie', u'Rezension einer Zeitschrift')
+    classic_reviews = (u'Review einer Monographie', u'Review einer Zeitschrift')
     self_reviews = (u'Praesentation von Aufsatz in Sammelband', u'Praesentationen von Aufsatz in Zeitschrift', u'Praesentationen von Internetressourcen', u'Praesentationen von Monographien')
 
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
     directlyProvides(feeds, INewsletterSource)
-    new_rezensions = getOrAdd(feeds, 'Topic', 'new_rezenions')
-    configureCollection(new_rezensions, classic_reviews, '/')
-    new_self_rezensions = getOrAdd(feeds, 'Topic', 'new_self_rezensions')
-    configureCollection(new_self_rezensions, self_reviews, '/')
+    new_reviews = getOrAdd(feeds, 'Topic', 'new_rezenions')
+    configureCollection(new_reviews, classic_reviews, '/')
+    new_self_reviews = getOrAdd(feeds, 'Topic', 'new_self_reviews')
+    configureCollection(new_self_reviews, self_reviews, '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
     directlyProvides(new_discussions, IDiscussionCollections)
     try:
@@ -177,15 +177,15 @@ def addCatalogIndexes(context):
             log.debug('adding %s %s, kw=%s' %(type, name, kw))
             cat.addIndex(name, type, **kw)
 
-    addIndex('praesentationTextsprache', 'LanguageIndex')
-    addIndex('praesentiertenSchriftTextsprache', 'LanguageIndex')
-    addIndex('ddcRaum', 'FieldIndex')
-    addIndex('ddcZeit', 'FieldIndex')
-    addIndex('ddcSach', 'FieldIndex')
-    addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['rezensionAutor', 'authors', 'herausgeberSammelband']})
-    addIndex('titel_buch_aufsatz_zeitschrift', 'ZCTextIndex', extra=extra(field_name='titel,untertitel,kuerzelZeitschrift', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
-    addIndex('jahr', 'FieldIndex', extra={'indexed_attrs': ['erscheinungsjahr', 'gezaehltesJahr']})
-    addIndex('ort', 'FieldIndex', extra={'indexed_attrs': ['erscheinungsort']})
-    addIndex('verlag', 'FieldIndex')
-    addIndex('reihe', 'FieldIndex')
+    addIndex('languagePresentation', 'LanguageIndex')
+    addIndex('languageReview', 'LanguageIndex')
+    addIndex('ddcPlace', 'FieldIndex')
+    addIndex('ddcTime', 'FieldIndex')
+    addIndex('ddcSubject', 'FieldIndex')
+    addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['reviewAuthor', 'authors', 'herausgeberSammelband']})
+    addIndex('titel_buch_aufsatz_zeitschrift', 'ZCTextIndex', extra=extra(field_name='titel,subtitle,shortnameJournal', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
+    addIndex('jahr', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication', 'officialYearOfPublication']})
+    addIndex('ort', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication']})
+    addIndex('publisher', 'FieldIndex')
+    addIndex('series', 'FieldIndex')
     addIndex('isbn', 'FieldIndex')
