@@ -23,6 +23,6 @@
             <title tal:content="book/title" >A Dialogue on the Law of Kingship among the Scots</title>
             <year tal:content="book/year">2004</year>
         </book>
-        <filename tal:content="review/filename" >http://www.sehepunkte.de/export/rezension_5297.html</filename>
+        <filename tal:content="review/filename" >http://www.sehepunkte.de/export/review_5297.html</filename>
     </review>
 </issue>
