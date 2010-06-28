@@ -34,6 +34,7 @@ setup(name='recensio.policy',
           'recensio.theme',
           'setuptools',
           'wc.pageturner',
+          'collective.solr',
       ],
       entry_points="""
       # -*- Entry points: -*-
