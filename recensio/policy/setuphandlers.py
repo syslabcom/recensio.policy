@@ -106,8 +106,8 @@ def setUpCollections(context):
         except BadRequest:
             pass
 
-    classic_reviews = (u'Review einer Monographie', u'Review einer Zeitschrift')
-    self_reviews = (u'Praesentation von Aufsatz in Sammelband', u'Praesentationen von Aufsatz in Zeitschrift', u'Praesentationen von Internetressourcen', u'Praesentationen von Monographien')
+    classic_reviews = (u'Review Monograph', u'Review Journal')
+    self_reviews = (u'Presentation Collection', u'Presentation Article Review', u'Presentation Online Resource', u'Presentation Monograph')
 
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
     directlyProvides(feeds, INewsletterSource)
@@ -130,7 +130,7 @@ def setUpCollections(context):
         publish = False)
     internal_views.setExcludeFromNav('True')
     digitool_export = getOrAdd(internal_views, 'Topic', 'Digitool Export')
-    configureCollection(digitool_export, tuple(set(classic_reviews + self_reviews) - set((u'Praesentationen von Internetressourcen',))), '/')
+    configureCollection(digitool_export, tuple(set(classic_reviews + self_reviews) - set((u'Presentation Online Resource',))), '/')
     criterion = digitool_export.getCriterion('created_ATFriendlyDateCriteria')
     criterion.setValue(1)
 
@@ -182,7 +182,7 @@ def addCatalogIndexes(context):
     addIndex('ddcPlace', 'FieldIndex')
     addIndex('ddcTime', 'FieldIndex')
     addIndex('ddcSubject', 'FieldIndex')
-    addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['reviewAuthor', 'authors', 'herausgeberSammelband']})
+    addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['reviewAuthor', 'authors', 'editorCollectedEdition']})
     addIndex('titel_buch_aufsatz_zeitschrift', 'ZCTextIndex', extra=extra(field_name='titel,subtitle,shortnameJournal', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
     addIndex('jahr', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication', 'officialYearOfPublication']})
     addIndex('ort', 'FieldIndex', extra={'indexed_attrs': ['placeOfPublication']})
