@@ -185,7 +185,7 @@ def addCatalogIndexes(context):
     addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['reviewAuthor', 'authors', 'herausgeberSammelband']})
     addIndex('titel_buch_aufsatz_zeitschrift', 'ZCTextIndex', extra=extra(field_name='titel,subtitle,shortnameJournal', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
     addIndex('jahr', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication', 'officialYearOfPublication']})
-    addIndex('ort', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication']})
+    addIndex('ort', 'FieldIndex', extra={'indexed_attrs': ['placeOfPublication']})
     addIndex('publisher', 'FieldIndex')
     addIndex('series', 'FieldIndex')
     addIndex('isbn', 'FieldIndex')
