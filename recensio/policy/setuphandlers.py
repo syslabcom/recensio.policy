@@ -176,6 +176,11 @@ def addCatalogIndexes(context):
             cat.delIndex(name)
             log.debug('adding %s %s, kw=%s' %(type, name, kw))
             cat.addIndex(name, type, **kw)
+    
+    def addColumn(name):
+        if not name in cat.schema():
+            log.debug('adding metadata %s' % name)
+            cat.addColumn(name)
 
     addIndex('languagePresentation', 'LanguageIndex')
     addIndex('languageReview', 'LanguageIndex')
