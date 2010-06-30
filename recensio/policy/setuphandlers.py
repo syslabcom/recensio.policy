@@ -66,7 +66,11 @@ def setPermissions(self):
 def configureContentRatings(context):
     portal = context.getSite()
     utility = getUtility(IRatingCategoryAssignment)
-    portal_types = ['Review']
+    portal_types = ['Review Journal', 'Review Monograph',\
+                    'Presentation Online Resource',\
+                    'Presentation Article Review',\
+                    'Presentation Collection',\
+                    'Presentation Monograph']
     categories_to_set = [utility._avalable_categories.by_token[''].value]
     for type in portal_types:
         utility.assign_categories(type, categories_to_set)
