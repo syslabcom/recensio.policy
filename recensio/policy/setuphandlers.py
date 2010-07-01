@@ -1,3 +1,4 @@
+from AccessControl.Permission import Permission
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility
 from zope.interface import directlyProvides
@@ -61,6 +62,7 @@ def setPermissions(self):
 
     user_folder = self.getSite().Members
     user_folder.manage_setLocalRoles('Reviewers', ['Reader'])
+    setPermission(self.getSite(), 'Content Ratings: User Rate', ('Authenticated', ))
 
 @guard
 def configureContentRatings(context):
