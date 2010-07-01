@@ -16,7 +16,7 @@ class Book(object):
         for i in range(1): # We don't support multiple authors
             try:
                 retval[i]['first_name'] = ''
-                retval[i]['last_name'] = self.obj.getAutors()
+                retval[i]['last_name'] = self.obj.getAuthors()
             except IndexError:
                 pass
         return retval
