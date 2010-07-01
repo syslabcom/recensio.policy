@@ -7,7 +7,7 @@ class Book(object):
         self.subtitle = obj.title
         self.title = obj.getSubtitle()
         self.year = obj.getYearOfPublication()
-        self.author_1 = {'first_name' : '', 'last_name' : obj.getReviewAutor()}
+        self.author_1 = {'first_name' : '', 'last_name' : obj.getReviewAuthor()}
         self.author_2 = {'first_name' : '', 'last_name' : ''}
         self.author_3 = {'first_name' : '', 'last_name' : ''}
 
