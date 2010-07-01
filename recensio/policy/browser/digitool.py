@@ -5,8 +5,8 @@ class Book(object):
     def __init__(self, obj):
         self.isbn = getattr(obj, 'getIsbn', getattr(obj, 'getIssn', lambda: None))()
         self.subtitle = obj.title
-        self.title = obj.getUntertitel()
-        self.year = obj.getErscheinungsjahr()
+        self.title = obj.getSubtitle()
+        self.year = obj.getYearOfPublication()
         self.author_1 = {'first_name' : '', 'last_name' : obj.getReviewAutor()}
         self.author_2 = {'first_name' : '', 'last_name' : ''}
         self.author_3 = {'first_name' : '', 'last_name' : ''}
@@ -16,7 +16,7 @@ class Book(object):
         for i in range(1): # We don't support multiple authors
             try:
                 retval[i]['first_name'] = ''
-                retval[i]['last_name'] = self.obj.getAutorDesBuchs()
+                retval[i]['last_name'] = self.obj.getAutors()
             except IndexError:
                 pass
         return retval
