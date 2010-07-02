@@ -30,7 +30,7 @@ class Review(object):
     @property
     def reviewers(self):
         for i in [range(1)]: # No multiple authors support in our system
-            yield {'last_name' : self.obj.getReviewAutor(),
+            yield {'last_name' : self.obj.getAuthors(),
                    'first_name' : ''}
 
     @property
