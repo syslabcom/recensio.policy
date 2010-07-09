@@ -36,6 +36,9 @@ setup(name='recensio.policy',
           'wc.pageturner',
           'collective.solr',
       ],
+      extras_require = {
+        'test' : ['plone.app.testing']
+      },
       entry_points="""
       # -*- Entry points: -*-
 

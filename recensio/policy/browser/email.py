@@ -17,10 +17,13 @@ class ValidationError(Exception):
 
 class MailCollection(BrowserView):
 
+    def __init__(self, request, context):
+        super(BrowserView, self).__init__(request, context)
+        self.mailhost = getToolByName(self.context, 'MailHost')
+
     def __call__(self):
         self.errors = []
         try:
-            mailhost = getToolByName(self.context, 'MailHost')
             root = getToolByName(self.context, 'portal_url').getPortalObject()
             membership_tool = getToolByName(self.context, 'portal_membership')
             if membership_tool.isAnonymousUser():
@@ -41,8 +44,9 @@ class MailCollection(BrowserView):
             if not settings.mail_format:
                 self.errors.append(_('Mailsettings not configured'))
                 raise ValidationError()
-            msg = settings.prefix
+            sections = {}
             for topic in self.context.objectValues():
+                results_per_topic = {}
                 if not IATTopic.providedBy(topic):
                     continue
                 if IDiscussionCollections.providedBy(topic):
@@ -56,8 +60,7 @@ class MailCollection(BrowserView):
                     else:
                         by_type[result.portal_type] = [result]
                 for portal_type in by_type.keys():
-                    msg += "\nTyp: %(portal_type)s\n%(separator)s" % dict(
-                        portal_type=portal_type, separator=settings.separator)
+                    results_per_type = []
                     for result in by_type[portal_type]:
                         values = dict()
                         for key in result.__record_schema__.keys():
@@ -69,11 +72,19 @@ class MailCollection(BrowserView):
                             else:
                                 values[key] = getattr(result, key)
                         values['getURL'] = result.getURL()
-                        msg += tmpl % values
-            msg += settings.suffix
+                        results_per_type.append(tmpl % values)
+                    if results_per_type:
+                        results_per_topic[portal_type] = results_per_type
+                data = []
+                for type, results in results_per_topic.items():
+                    data.append('\nTyp: ' + type)
+                    for result in results:
+                        data.append(result)
+                sections[topic.id] = ''.join(data)
+            msg = settings.mail_template % sections
             if self.errors:
                 raise ValidationError
-            mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
+            self.mailhost.send(messageText=msg, mto=mail_to, mfrom=mail_from,
                 subject=settings.subject, charset='utf-8')
         except ValidationError:
             pass

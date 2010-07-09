@@ -22,18 +22,28 @@ class INewsletterSettings(Interface):
     """
     Configuration for the Newsletter
     """
-    prefix = schema.Text(title = _('Prefix'),
-                         description =_("The start of the e-mail"),
-                         default = _(u"""Willkommen zum aktuellen Newsletter.
-Unten sehen Sie, was sich im letzten Monat getan hat!
+    mail_template = schema.Text(title = _('Mail Template'), 
+                                description = _('The container for the complete template, Variable expansion will be applied. Provide the following slots: a b c'),
+                                default = u"""Liebe Abonnenten,
 
-"""))
-    suffix = schema.Text(title = _('Suffix'),
-                         description=_("The end of the e-mail"),
-                         default = _(u"""
-Mit freundlichen Grüßen,
+wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net
+informieren zu können.
 
-            Syslab.com"""))
+Angenehmes Stöbern und Entdecken wünscht Ihnen Ihre recensio.net-Redaktion.
+
+Neue Rezensionen ...
+
+$(new_reviews)s
+
+Neue Präsentationen ...
+
+$(new_presentations)s
+
+Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
+des vergangenen Monats:
+
+$(new_discussions)s
+""")
     subject = schema.TextLine(title = _('Subject'),
                               description=_("The subject of the e-mail. Thats what the user sees first when receiving the mail"),
                               default = _(u"""Recensio Newsletter"""))
