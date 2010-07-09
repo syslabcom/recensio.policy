@@ -3,13 +3,14 @@
     <version>1</version>
     <dependencies>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
+        <dependency>profile-Products.DataGridField:default</dependency>
         <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
         <dependency>profile-collective.xdv:default</dependency>
-        <dependency>profile-recensio.contenttypes:default</dependency>
-        <dependency>profile-recensio.theme:default</dependency>
-        <dependency>profile-recensio.imports:default</dependency>
-        <dependency>profile-plone.contentratings:default</dependency>
         <dependency>profile-plone.app.discussion:default</dependency>
+        <dependency>profile-plone.contentratings:default</dependency>
+        <dependency>profile-recensio.contenttypes:default</dependency>
+        <dependency>profile-recensio.imports:default</dependency>
+        <dependency>profile-recensio.theme:default</dependency>
         <dependency>profile-wc.pageturner:default</dependency>
     </dependencies>
 </metadata>
