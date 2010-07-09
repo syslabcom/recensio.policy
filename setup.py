@@ -25,6 +25,7 @@ setup(name='recensio.policy',
       install_requires=[
           'Products.ATVocabularyManager',
           'Products.LinguaPlone',
+          'Products.DataGridField',
           'collective.captcha',
           'collective.xdv',
           'plone.app.discussion',
