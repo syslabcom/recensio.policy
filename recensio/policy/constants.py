@@ -1,7 +1,15 @@
 # -*- coding: utf-8 -*-
 
 vocabularies = \
-{'bibliographic_source_values': {u'bibliothekskataloge_literaturdatenbanken_und_fachbibliographien': u'Bibliothekskataloge, Literaturdatenbanken und Fachbibliographien',
+{
+    'honorifics':{'frau':'Frau',
+                  'herr':'Herr',
+                  'frau_dr':'Frau Dr.',
+                  'herr_dr':'Herr Dr.',
+                  'frau_prof_dr':'Frau Prof. Dr.',
+                  'herr_prof_dr':'Herr Prof. Dr.',
+                  },
+    'bibliographic_source_values': {u'bibliothekskataloge_literaturdatenbanken_und_fachbibliographien': u'Bibliothekskataloge, Literaturdatenbanken und Fachbibliographien',
                                  u'fachportale_und_linksammlungen': u'Fachportale und Linksammlungen',
                                  u'nachrichtenmedien': u'Nachrichtenmedien',
                                  u'sammlungen_gesetzes-_und_vertragstexte': u'Sammlungen: Gesetzes- und Vertragstexte',
