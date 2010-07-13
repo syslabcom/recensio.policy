@@ -1,8 +1,9 @@
 <metadata>
     <description>Recensio policy product</description>
-    <version>1</version>
+    <version>2</version>
     <dependencies>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
+        <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
         <dependency>profile-Products.DataGridField:default</dependency>
         <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
         <dependency>profile-collective.xdv:default</dependency>
