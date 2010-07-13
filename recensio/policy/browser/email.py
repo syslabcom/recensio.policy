@@ -77,7 +77,7 @@ class MailCollection(BrowserView):
                         results_per_topic[portal_type] = results_per_type
                 data = []
                 for type, results in results_per_topic.items():
-                    data.append('\nTyp: ' + type)
+                    data.append('\nTyp: ' + type + '\n\n')
                     for result in results:
                         data.append(result)
                 sections[topic.id] = ''.join(data)

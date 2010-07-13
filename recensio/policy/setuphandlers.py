@@ -111,15 +111,21 @@ def setUpCollections(context):
             criterion.setRecurse(True)
         except BadRequest:
             pass
+        try:
+            criterion = collection.addCriterion(field='Language', \
+                criterion_type='ATSimpleStringCriterion')
+            criterion.setValue('all')
+        except BadRequest:
+            pass
 
     classic_reviews = (u'Review Monograph', u'Review Journal')
     self_reviews = (u'Presentation Collection', u'Presentation Article Review', u'Presentation Online Resource', u'Presentation Monograph')
 
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
     directlyProvides(feeds, INewsletterSource)
-    new_reviews = getOrAdd(feeds, 'Topic', 'new_rezenions')
+    new_reviews = getOrAdd(feeds, 'Topic', 'new_reviews')
     configureCollection(new_reviews, classic_reviews, '/')
-    new_self_reviews = getOrAdd(feeds, 'Topic', 'new_self_reviews')
+    new_self_reviews = getOrAdd(feeds, 'Topic', 'new_presentations')
     configureCollection(new_self_reviews, self_reviews, '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
     directlyProvides(new_discussions, IDiscussionCollections)

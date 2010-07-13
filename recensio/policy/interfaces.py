@@ -33,16 +33,16 @@ Angenehmes Stöbern und Entdecken wünscht Ihnen Ihre recensio.net-Redaktion.
 
 Neue Rezensionen ...
 
-$(new_reviews)s
+%(new_reviews)s
 
 Neue Präsentationen ...
 
-$(new_presentations)s
+%(new_presentations)s
 
 Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
 des vergangenen Monats:
 
-$(new_discussions)s
+%(new_discussions)s
 """)
     subject = schema.TextLine(title = _('Subject'),
                               description=_("The subject of the e-mail. Thats what the user sees first when receiving the mail"),
