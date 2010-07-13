@@ -1,11 +1,12 @@
 <metadata>
     <description>Recensio policy product</description>
-    <version>2</version>
+    <version>3</version>
     <dependencies>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
         <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
         <dependency>profile-Products.DataGridField:default</dependency>
         <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
+        <dependency>profile-collective.indexing:default</dependency>
         <dependency>profile-collective.xdv:default</dependency>
         <dependency>profile-plone.app.discussion:default</dependency>
         <dependency>profile-plone.contentratings:default</dependency>
