@@ -32,4 +32,8 @@
             handler="recensio.policy.setuphandlers.addCatalogIndexes"
             description="Catalog Indexes for Recensio"
             title="recensio_indexes" />
+    <import-step id="recensio_policy_activate_solr" version="20100714-01"
+            handler="recensio.policy.setuphandlers.activateSolr"
+            description="Solr, Engage!"
+            title="Solr, Engage!" />
 </import-steps>

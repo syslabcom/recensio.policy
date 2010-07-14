@@ -1,6 +1,6 @@
 from AccessControl.Permission import Permission
 from Products.CMFCore.utils import getToolByName
-from zope.component import getUtility
+from zope.component import getUtility, queryUtility
 from zope.interface import directlyProvides
 from plone.contentratings.interfaces import IRatingCategoryAssignment
 from logging import getLogger
@@ -12,6 +12,8 @@ import os
 from zExceptions import BadRequest
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from recensio.policy.interfaces import IDiscussionCollections, INewsletterSource
+
+from collective.solr.interfaces import ISolrConnectionConfig
 
 log = getLogger('recensio.policy.setuphandlers.py')
 
@@ -50,6 +52,11 @@ def configureSecurity(self):
     pcp.set_enable_self_reg(True)
     pcp.set_enable_user_pwd_choice(False)
     pcp.set_enable_user_folders(True)
+
+@guard
+def activateSolr(self):
+    manager = queryUtility(ISolrConnectionConfig)
+    manager.active = True
 
 @guard
 def setPermissions(self):
