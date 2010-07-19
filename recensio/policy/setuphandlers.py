@@ -201,7 +201,7 @@ def addCatalogIndexes(context):
             log.debug('adding metadata %s' % name)
             cat.addColumn(name)
 
-    addIndex('languagePresentation', 'LanguageIndex')
+    addIndex('languageReviewedText', 'LanguageIndex')
     addIndex('languageReview', 'LanguageIndex')
     addIndex('ddcPlace', 'FieldIndex')
     addIndex('ddcTime', 'FieldIndex')
