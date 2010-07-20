@@ -64,7 +64,7 @@ vocabularies = {
         u'sonstige_volltexte_und_quellen':u'Sonstige Volltexte und Quellen',
         },
 
-    'periodika_zeitschriften_und_fachzeitschriften': {
+    'periodicals_journals_magazines': {
         u'fachzeitschriften_und_jahrbuecher_mit_volltext':u'Fachzeitschriften und Jahrbücher (mit Volltext)',
         u'fachzeitschriften_und_jahrbuecher_ohne_volltext':u'Fachzeitschriften und Jahrbücher (ohne Volltext)',
         u'zeitungen_digitalisiert_mit_volltext':u'Zeitungen (digitalisiert) (mit Volltext)',
