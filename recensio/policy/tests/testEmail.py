@@ -469,4 +469,3 @@ des vergangenen Monats:
         for expected, real in zip(expected_mail.split('\n'),
                                   view.mailhost.sentMail.split('\n')):
             self.assertTrue(compare(expected, real), expected + '\n' + real)
-            print '\n' + expected + '\n' + real
