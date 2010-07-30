@@ -215,6 +215,7 @@ def addCatalogIndexes(context):
     addIndex('isbn', 'FieldIndex')
 
     addColumn('getAuthors')
+    addColumn('listAuthors')
     addColumn('getReviewAuthor')
     addColumn('getYearOfPublication')
     addColumn('getOfficialYearOfPublication')
