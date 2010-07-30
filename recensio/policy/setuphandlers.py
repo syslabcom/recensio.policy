@@ -216,6 +216,7 @@ def addCatalogIndexes(context):
 
     addColumn('getAuthors')
     addColumn('listAuthors')
-    addColumn('getReviewAuthor')
+    addColumn('getReviewAuthorFirstname')
+    addColumn('getReviewAuthorLastname')
     addColumn('getYearOfPublication')
     addColumn('getOfficialYearOfPublication')
