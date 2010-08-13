@@ -13,6 +13,9 @@
            provides=".userdataschema.IRecensioUserDataSchema"
            for="Products.CMFCore.interfaces.ISiteRoot"
            factory=".adapter.RecensioUserDataPanelAdapter" />
+  
+  <adapter factory=".indexer.ddcPlace" name="ddcPlace" />
+  <adapter factory=".indexer.ddcTime" name="ddcTime" />
 
     <browser:page
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
