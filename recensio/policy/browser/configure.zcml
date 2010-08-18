@@ -30,6 +30,13 @@
       allowed_interface="recensio.policy.interfaces.IWorkflowHelper"
       />
 
+  <browser:page
+      name="oai"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".oai.OAI"
+      permission="zope.Public"
+      />
+
   <!-- Control panel -->
   <browser:page
       name="recensio-settings"

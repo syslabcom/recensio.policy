@@ -7,6 +7,21 @@ from zope import schema
 
 from recensio.policy import recensioMessageFactory as _
 
+class IOAIUtility(Interface):
+    """
+    Utility that returns OAIProviders
+    """
+    def getOAIProvider(self, url):
+        """
+        Return OAIProvider for the given url provided as a string.
+        """
+
+    def getKnownOAIProviders(self):
+        """
+        Little Helper for testing/debugging.
+        Return a list of strings containing urls
+        """
+
 class INewsletterSource(IFolder):
     """
     Marker interfaces for folders that can have an action for sending

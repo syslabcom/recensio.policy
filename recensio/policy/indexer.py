@@ -57,6 +57,3 @@ def ddcPlace(obj):
 @indexer(Interface)
 def ddcTime(obj):
     return getSelfAndParents(obj, 'ddcTime')
-
-
-
