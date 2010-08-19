@@ -35,7 +35,7 @@ class TestOAI(unittest.TestCase):
  'dc_contributor': [],
  'dc_coverage': [],
  'dc_creator': ['Joshua Barnes', 'Lars Hernquist', u'Fran\xe7ois Schweizer'],
- 'dc_date': ['1991-08-01'],
+ 'dc_date': [datetime.datetime(1991, 8, 1, 0, 0)],
  'dc_description': [],
  'dc_format': [],
  'dc_identifier': ['doi:10.1038/scientificamerican0891-40'],
@@ -55,4 +55,3 @@ class TestOAI(unittest.TestCase):
 
         got = Reader()(root)
         self.assertEqual(expected, got)
-        import pdb;pdb.set_trace()

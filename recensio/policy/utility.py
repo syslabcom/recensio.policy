@@ -30,7 +30,7 @@ class Reader(object):
         container = etree.ETXPath('/{%s}OAI-PMH' % oai_ns)(element)[0]
         container_date = oai_parser('responseDate', container)[0]
         container_date = self.parseDate(container_date)
-        retval['retrieved'] = container_date
+        retval['oai_retrieved'] = container_date
         request = oai_parser('request', container)[0]
         errors = oai_parser('error', container)
         if errors:
@@ -95,7 +95,7 @@ class Reader(object):
         for elem in dc_parser('contributor', dcnode):
             retval['dc_contributor'].append(elem.text)
         for elem in dc_parser('date', dcnode):
-            retval['dc_date'].append(self.parseDate(elem.text))
+            retval['dc_date'].append(self.parseDate(elem))
         for elem in dc_parser('type', dcnode):
             retval['dc_type'].append(elem.text)
         for elem in dc_parser('format', dcnode):
