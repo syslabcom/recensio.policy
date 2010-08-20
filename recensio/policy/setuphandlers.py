@@ -10,8 +10,10 @@ import transaction
 import constants
 import os
 from zExceptions import BadRequest
+from plone.registry.interfaces import IRegistry
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from recensio.policy.interfaces import IDiscussionCollections, INewsletterSource
+from recensio.policy.interfaces import IRecensioSettings
 
 from collective.solr.interfaces import ISolrConnectionConfig
 
@@ -40,9 +42,15 @@ def importVocabularies(self):
 @guard
 def addLanguages(self):
     site = self.getSite()
-    lang = getToolByName(site, 'portal_languages')
-    for l in constants.languages:
-        lang.addSupportedLanguage(l)
+    # site languages
+    plt = getToolByName(site, 'portal_languages')
+    for l in constants.interface_languages:
+        plt.addSupportedLanguage(l)
+    # content languages
+    registry = queryUtility(IRegistry)
+    settings = registry.forInterface(IRecensioSettings)
+    langs = "\n".join(constants.languages)
+    setattr(settings, 'available_content_languages', langs)
     transaction.savepoint(optimistic=True)
 
 @guard

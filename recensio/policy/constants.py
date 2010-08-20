@@ -188,7 +188,7 @@ languages = [u'sq',
              u'tr',
              u'uk']
 
-USER_LANGUAGES = [
+interface_languages = [
         u'de',
         u'fr',
         u'en',

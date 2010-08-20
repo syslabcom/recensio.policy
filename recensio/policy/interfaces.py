@@ -105,10 +105,21 @@ class IRecensioSettings(Interface):
 
     review_submitted_email = schema.TextLine(
         title=_(u'label_review_submitted_email', default=u'E-mail '
-            'address for submitted reviews.'),
+            u'address for submitted reviews.'),
         description=_(u'description_review_submitted_email', default=u'Enter '
-            'an e-mail address to which notifications will be sent, if a user '
-            'submits a review for publication.'),
+            u'an e-mail address to which notifications will be sent, if a user '
+            u'submits a review for publication.'),
+        required=False,
+        default=u'',
+        )
+
+    available_content_languages = schema.Text(
+        title=_(u'label_available_content_languages', default=u'Available '
+            u'languages for content in the site.'),
+        description=_(u'description_available_content_languages',
+             default=u'Enter one language (2 letter code) per line. These '
+             u'languages will be used for the fields "Language of '
+             u'Presentation" and "Language of reviewed text".'),
         required=False,
         default=u'',
         )

@@ -3,7 +3,7 @@ from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
 from zope.app.component.hooks import getSite
-from constants import USER_LANGUAGES
+from constants import interface_languages
 
 class AvailableUserLanguages(object):
     """ Vocabulary that shows all languages that a user might
@@ -18,7 +18,7 @@ class AvailableUserLanguages(object):
 
         info = language_tool.getAvailableLanguageInformation()
         terms = [SimpleTerm(lang, lang, info.get(lang).get('native'))
-            for lang in USER_LANGUAGES]
+            for lang in interface_languages]
 
 
         return SimpleVocabulary(terms)
