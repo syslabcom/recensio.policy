@@ -46,6 +46,7 @@ def addLanguages(self):
     plt = getToolByName(site, 'portal_languages')
     for l in constants.interface_languages:
         plt.addSupportedLanguage(l)
+    plt.display_flags = 1
     # content languages
     registry = queryUtility(IRegistry)
     settings = registry.forInterface(IRecensioSettings)
