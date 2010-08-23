@@ -31,6 +31,14 @@
       />
 
   <browser:page
+      for="*"
+      name="recensioview"
+      class=".views.RecensioView"
+      permission="zope.Public"
+      allowed_interface="recensio.policy.interfaces.IRecensioView"
+      />
+
+  <browser:page
       name="oai"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".oai.OAI"
