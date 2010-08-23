@@ -24,4 +24,9 @@
         name="recensio.policy.vocabularies.available_user_languages"
         />
 
+    <utility
+        component=".vocabularies.AvailableContentLanguagesFactory"
+        name="recensio.policy.vocabularies.available_content_languages"
+        />
+
 </configure>

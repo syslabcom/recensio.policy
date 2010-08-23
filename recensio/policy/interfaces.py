@@ -123,3 +123,10 @@ class IRecensioSettings(Interface):
         required=False,
         default=u'',
         )
+
+
+class IRecensioView(Interface):
+
+    def getSupportedLanguages():
+        """ Get the languages defines in the recensio-setting which our
+        content types support."""
