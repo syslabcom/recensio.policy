@@ -191,10 +191,11 @@ def addCatalogIndexes(context):
     cat = getToolByName(site, 'portal_catalog')
 
     class extra(object):
-        def __init__(self, field_name, lexicon_id, index_type):
+        def __init__(self, field_name, lexicon_id, index_type, doc_attr=''):
             self.field_name = field_name
             self.lexicon_id = lexicon_id
             self.index_type = index_type
+            self.doc_attr = doc_attr
 
     def addIndex(name, type, **kw):
         if not name in cat.indexes():
@@ -216,6 +217,8 @@ def addCatalogIndexes(context):
     addIndex('ddcTime', 'FieldIndex')
     addIndex('ddcSubject', 'FieldIndex')
     addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['getAllAuthorData']})
+    addIndex('authorsFulltext', 'ZCTextIndex', extra=extra(field_name='getAllAuthorData',
+        doc_attr='getAllAuthorData', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
     addIndex('titleOrShortname', 'ZCTextIndex', extra=extra(field_name='titel,subtitle,shortnameJournal', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
     addIndex('year', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication', 'officialYearOfPublication']})
     addIndex('place', 'FieldIndex', extra={'indexed_attrs': ['placeOfPublication']})
