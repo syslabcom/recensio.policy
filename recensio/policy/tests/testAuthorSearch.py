@@ -21,7 +21,7 @@ class TestAuthorSearch(unittest.TestCase):
     def testAllAuthors(self):
         portal = self.layer['portal']
         request = self.layer['request']
-        request.set('ACTUAL_URL', 'test')
+        request['ACTUAL_URL'] = 'test'
         view = getMultiAdapter((portal, request), name='authorsearch')
         expected = (' \xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe\xd0\xb2', 'Dr. rer nat \xd0\xa5\xd1\x80\xd0\xb8\xd1\x81\xd1\x82\xd0\xbe \xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe\xd0\xb2', 'Fran\xc3\xa7ois Lam\xc3\xa8re', 'F\xc3\xbcrchtegott Huberm\xc3\xbcller', 'Harald Schmidt', 'Tadeusz Kot\xc5\x82owski')
         view()
@@ -32,6 +32,7 @@ class TestAuthorSearch(unittest.TestCase):
     def testLimitedAuthors(self):
         portal = self.layer['portal']
         request = self.layer['request']
+        request['ACTUAL_URL'] = 'test'
         request.set('authors', 'Schmidt')
         view = getMultiAdapter((portal, request), name='authorsearch')
         expected = ['Harald Schmidt']
