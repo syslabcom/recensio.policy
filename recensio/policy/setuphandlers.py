@@ -123,13 +123,6 @@ def setUpCollections(context):
         except BadRequest:
             pass
         try:
-            criterion = collection.addCriterion(field='path', \
-                criterion_type='ATRelativePathCriterion')
-            criterion.setRelativePath('/')
-            criterion.setRecurse(True)
-        except BadRequest:
-            pass
-        try:
             criterion = collection.addCriterion(field='Language', \
                 criterion_type='ATSimpleStringCriterion')
             criterion.setValue('all')
