@@ -217,8 +217,8 @@ def addCatalogIndexes(context):
     addIndex('ddcTime', 'FieldIndex')
     addIndex('ddcSubject', 'FieldIndex')
     addIndex('authors', 'KeywordIndex', extra={'indexed_attrs': ['getAllAuthorData']})
-    addIndex('authorsFulltext', 'ZCTextIndex', extra=extra(field_name='getAllAuthorData',
-        doc_attr='getAllAuthorData', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
+    addIndex('authorsFulltext', 'ZCTextIndex', extra=extra(field_name='getAllAuthorDataFulltext',
+        doc_attr='getAllAuthorDataFulltext', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
     addIndex('titleOrShortname', 'ZCTextIndex', extra=extra(field_name='titel,subtitle,shortnameJournal', lexicon_id='plone_lexicon', index_type='Okapi BM25 Rank'))
     addIndex('year', 'FieldIndex', extra={'indexed_attrs': ['yearOfPublication', 'officialYearOfPublication']})
     addIndex('place', 'FieldIndex', extra={'indexed_attrs': ['placeOfPublication']})
