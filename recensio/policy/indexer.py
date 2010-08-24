@@ -61,4 +61,4 @@ def ddcTime(obj):
 
 @indexer(Interface)
 def authorsFulltext(obj):
-    return obj.getAllAuthorData()
+    return obj.getAllAuthorDataFulltext()
