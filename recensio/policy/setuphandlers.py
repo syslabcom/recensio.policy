@@ -66,6 +66,8 @@ def configureSecurity(self):
 def activateSolr(self):
     manager = queryUtility(ISolrConnectionConfig)
     manager.active = True
+    manager.facets = [u'portal_type', u'ddcPlace', 'ddcTime', 'ddcSubject']
+    manager.required = []
 
 @guard
 def setPermissions(self):
