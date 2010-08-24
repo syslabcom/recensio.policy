@@ -2,6 +2,7 @@ from zope.interface import Interface
 from plone.indexer.decorator import indexer
 from Products.CMFCore.utils import getToolByName
 from plone.memoize import ram
+from recensio.contenttypes.interfaces.review import IReview
 
 def _getParentsMap_cachekey(method, obj, vocab):
     return (vocab,)
@@ -57,3 +58,7 @@ def ddcPlace(obj):
 @indexer(Interface)
 def ddcTime(obj):
     return getSelfAndParents(obj, 'ddcTime')
+
+@indexer(Interface)
+def authorsFulltext(obj):
+    return obj.getAllAuthorData()
