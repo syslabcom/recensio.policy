@@ -234,3 +234,11 @@ def addCatalogIndexes(context):
     addColumn('getReviewAuthorLastname')
     addColumn('getYearOfPublication')
     addColumn('getOfficialYearOfPublication')
+
+@guard
+def hideAllFolders(context):
+    site = context.getSite()
+    for id in ['Members', 'news', 'imports', 'RSS-feeds']:
+        ob = getattr(site, id)
+        ob.setExcludeFromNav(True)
+        ob.reindexObject()

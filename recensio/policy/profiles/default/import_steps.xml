@@ -36,4 +36,8 @@
             handler="recensio.policy.setuphandlers.activateSolr"
             description="Solr, Engage!"
             title="Solr, Engage!" />
+    <import-step id="recensio_policy_hide_navigation" version="20100824-01"
+            handler="recensio.policy.setuphandlers.hideAllFolders"
+            description="Hide all default Folders"
+            title="Hide all default Folders" />
 </import-steps>
