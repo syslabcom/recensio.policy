@@ -21,8 +21,9 @@ class TestAuthorSearch(unittest.TestCase):
     def testAllAuthors(self):
         portal = self.layer['portal']
         request = self.layer['request']
+        request.set('ACTUAL_URL', 'test')
         view = getMultiAdapter((portal, request), name='authorsearch')
-        expected = (u' \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432', u'Dr. rer nat \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432', u'Fran\xe7ois Lam\xe8re', u'F\xfcrchtegott Huberm\xfcller', u'Harald Schmidt', u'Tadeusz Kot\u0142owski')
+        expected = (' \xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe\xd0\xb2', 'Dr. rer nat \xd0\xa5\xd1\x80\xd0\xb8\xd1\x81\xd1\x82\xd0\xbe \xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe\xd0\xb2', 'Fran\xc3\xa7ois Lam\xc3\xa8re', 'F\xc3\xbcrchtegott Huberm\xc3\xbcller', 'Harald Schmidt', 'Tadeusz Kot\xc5\x82owski')
         view()
 
         got = view.authors
@@ -33,7 +34,7 @@ class TestAuthorSearch(unittest.TestCase):
         request = self.layer['request']
         request.set('authors', 'Schmidt')
         view = getMultiAdapter((portal, request), name='authorsearch')
-        expected = [u'Harald Schmidt']
+        expected = ['Harald Schmidt']
         view()
 
         got = view.authors
