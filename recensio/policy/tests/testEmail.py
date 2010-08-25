@@ -286,30 +286,6 @@ Test PresentationCollection No 9 (http://nohost...)
 
 Created on: ...
 --------------------------------------------
-Titel der Rezension 2009 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Titel Rezension 2010 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-2011.0 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Das Buch (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
 
 Typ: Presentation Online Resource
 
@@ -466,6 +442,7 @@ des vergangenen Monats:
         view.mailhost = MockMailHost()
 
         view()
-        for expected, real in zip(expected_mail.split('\n'),
-                                  view.mailhost.sentMail.split('\n')):
-            self.assertTrue(compare(expected, real), expected + '\n' + real)
+        for lineno, (expected, real) in enumerate(
+                                  zip(expected_mail.split('\n'),
+                                      view.mailhost.sentMail.split('\n'))):
+            self.assertTrue(compare(expected, real), "Error in Line %i:\nExp: '%s'\nGot: '%s'" % (lineno, expected, real))

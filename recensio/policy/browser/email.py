@@ -1,3 +1,4 @@
+import logging
 from plone.app.controlpanel.mail import IMailSchema
 from Products.ATContentTypes.interfaces import IATTopic
 from Products.statusmessages.interfaces import IStatusMessage
@@ -9,6 +10,8 @@ from zope.component import getUtility
 
 from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings, IDiscussionCollections
+
+log = logging.getLogger()
 
 _ = recensioMessageFactory
 
@@ -63,7 +66,7 @@ class MailCollection(BrowserView):
                     results_per_type = []
                     for result in by_type[portal_type]:
                         values = dict()
-                        for key in result.__record_schema__.keys():
+                        for key in result.keys():
                             if hasattr(getattr(result, key), 'strftime'):
                                 try:
                                     values[key] = getattr(result, key).strftime(settings.mail_format)
@@ -89,6 +92,7 @@ class MailCollection(BrowserView):
         except ValidationError:
             pass
         except Exception, e:
+            log.exception(e)
             self.errors.append(str(e.__class__) + ' ' + str(e))
         finally:
             messages = IStatusMessage(self.request)
@@ -97,7 +101,7 @@ class MailCollection(BrowserView):
                     messages.addStatusMessage(error, type='error')
             else:
                 messages.addStatusMessage(u"Mail sending will be prepared. Mail will be sent to %s" % mail_to, type="info")
-            return self.request.response.redirect(self.context.absolute_url())
+        return self.request.response.redirect(self.context.absolute_url())
 
 class NewsletterSettingsEditForm(controlpanel.RegistryEditForm):
 

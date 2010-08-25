@@ -128,6 +128,11 @@ def setUpCollections(context):
             criterion.setValue('all')
         except BadRequest:
             pass
+        try:
+            criterion = collection.addCriterion(field='modified', \
+                criterion_type='ATSortCriterion')
+        except BadRequest:
+            pass
 
     classic_reviews = (u'Review Monograph', u'Review Journal')
     self_reviews = (u'Presentation Collection', u'Presentation Article Review', u'Presentation Online Resource', u'Presentation Monograph')
