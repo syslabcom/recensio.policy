@@ -23,7 +23,7 @@ def reloadProfiles(br):
     profiles = ['profile-recensio.policy:default'] + ['profile-recensio.policy:%s' % x for x in additional_profiles]
     for profile in profiles:
         br.open(host + '/portal_setup/manage_importSteps')
-        br.getControl(name='context_id', index=0).value = ['profile-esc.policy:default']
+        br.getControl(name='context_id', index=0).value = [profile]
         br.getForm('profileform').submit()
         br.getControl('Import all steps').click()
 
@@ -33,7 +33,6 @@ def resetCatalog(br):
     assert 'Catalog Rebuilt' in br.contents
 
 def reset():
-    import pdb;pdb.set_trace()
     br = Browser(sys.argv[1])
     br.getLink('Log in').click()
     br.getControl(name='__ac_name').value = user
