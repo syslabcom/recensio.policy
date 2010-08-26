@@ -1,3 +1,4 @@
+import base64
 import sys
 from zc.testbrowser.browser import Browser
 from zope.i18nmessageid import MessageFactory
@@ -20,11 +21,12 @@ def initialize(context):
     """Initializer called when used as a Zope 2 product."""
 
 def reloadProfiles(br):
-    profiles = ['profile-recensio.policy:default'] + ['profile-recensio.policy:%s' % x for x in additional_profiles]
+    profiles = ['profile-recensio.policy:default'] + additional_profiles
     for profile in profiles:
         br.open(host + '/portal_setup/manage_importSteps')
         br.getControl(name='context_id', index=0).value = [profile]
         br.getForm('profileform').submit()
+        viewPage(br)
         br.getControl('Import all steps').click()
 
 def resetCatalog(br):
@@ -34,15 +36,13 @@ def resetCatalog(br):
 
 def reset():
     br = Browser(sys.argv[1])
-    br.getLink('Log in').click()
-    br.getControl(name='__ac_name').value = user
-    br.getControl(name='__ac_password').value = passwd
-    br.getControl('Log in').click()
+    base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
+    br.addHeader('Authorization', 'Basic %s' % base64string)
+    br.reload()
     reloadProfiles(br)
     resetCatalog(br)
 
 def createSite():
-    import base64
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br = Browser(sys.argv[1])
     br.addHeader('Authorization', 'Basic %s' % base64string)
