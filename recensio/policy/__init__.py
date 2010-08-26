@@ -1,6 +1,7 @@
 from zc.testbrowser.browser import Browser
 from zope.i18nmessageid import MessageFactory
 import patches
+import sys
 
 host = sys.argv[1]
 user = sys.argv[2]
