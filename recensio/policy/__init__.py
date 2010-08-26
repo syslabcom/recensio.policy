@@ -26,7 +26,6 @@ def reloadProfiles(br):
         br.open(host + '/portal_setup/manage_importSteps')
         br.getControl(name='context_id', index=0).value = [profile]
         br.getForm('profileform').submit()
-        viewPage(br)
         br.getControl('Import all steps').click()
 
 def resetCatalog(br):
