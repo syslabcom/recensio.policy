@@ -51,6 +51,8 @@ setup(name='recensio.policy',
 
       [z3c.autoinclude.plugin]
       target = plone
+      [console_scripts]
+      rest = recensio.policy:reset
       """,
       setup_requires=["PasteScript"],
       paster_plugins = ["ZopeSkel"],
