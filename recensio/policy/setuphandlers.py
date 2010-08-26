@@ -240,3 +240,16 @@ def hideAllFolders(context):
         ob = getattr(site, id)
         ob.setExcludeFromNav(True)
         ob.reindexObject()
+
+@guard
+def setupHomepage(context):
+    site = context.getSite()
+    fp = getattr(site, 'front-page', None)
+    if not fp:
+        log.error('Front page not found')
+        return
+    id = 'layout'
+    if fp.hasProperty(id):
+        fp._delProperty(id)
+    fp._setProperty(id=id, value='homepage-view', type='string')
+    log.debug('Homepage view was set on the front page')

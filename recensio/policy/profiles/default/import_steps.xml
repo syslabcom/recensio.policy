@@ -40,4 +40,8 @@
             handler="recensio.policy.setuphandlers.hideAllFolders"
             description="Hide all default Folders"
             title="Hide all default Folders" />
+    <import-step id="recensio_policy_setup_homepage" version="20100824-01"
+            handler="recensio.policy.setuphandlers.setupHomepage"
+            description="Set up the home page"
+            title="Set up the home page" />
 </import-steps>
