@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from AccessControl.Permission import Permission
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility, queryUtility
@@ -14,6 +15,11 @@ from plone.registry.interfaces import IRegistry
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from recensio.policy.interfaces import IDiscussionCollections, INewsletterSource
 from recensio.policy.interfaces import IRecensioSettings
+from plone.portlets.interfaces import IPortletManager, ILocalPortletAssignmentManager
+from plone.portlets.constants import CONTEXT_CATEGORY
+from plone.app.portlets.utils import assignment_mapping_from_key
+from plone.portlet.static import static
+
 
 from collective.solr.interfaces import ISolrConnectionConfig
 
@@ -21,6 +27,12 @@ log = getLogger('recensio.policy.setuphandlers.py')
 
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
+
+portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
+<p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
+ihre Rezensionsteile online als Pre- oder Post-Prints (»Rezensionen«)</p>
+<p>… präsentieren Autoren die Kernthesen ihrer Monographien und Aufsätze (»Präsentationen«).
+Nutzerkommentare lassen »lebendige Rezensionen« entstehen.</p>"""
 
 def guard(func):
     def wrapper(self):
@@ -253,3 +265,12 @@ def setupHomepage(context):
         fp._delProperty(id)
     fp._setProperty(id=id, value='homepage-view', type='string')
     log.debug('Homepage view was set on the front page')
+
+    # set up portlet
+    mapping = assignment_mapping_from_key(fp, 'plone.rightcolumn',
+        CONTEXT_CATEGORY, '/'.join(fp.getPhysicalPath()))
+    id = 'homepage-intro'
+    if id not in mapping:
+        mapping[id] = static.Assignment(header=u'Intro', text=portlet_hp_text,
+            omit_border=True)
+    
