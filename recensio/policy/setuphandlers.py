@@ -248,7 +248,7 @@ def addCatalogIndexes(context):
 @guard
 def hideAllFolders(context):
     site = context.getSite()
-    for id in ['Members', 'news', 'imports', 'RSS-feeds']:
+    for id in ['Members', 'news', 'events', 'imports', 'RSS-feeds']:
         ob = getattr(site, id)
         ob.setExcludeFromNav(True)
         ob.reindexObject()
@@ -297,4 +297,17 @@ def setViewsOnFolders(context):
         if fp.hasProperty(id):
             fp._delProperty(id)
         fp._setProperty(id=id, value='browse-topics', type='string')
-    
+
+@guard
+def hideImportedFolders(context):
+    portal = context.getSite()
+    ids = ['images', 'sample-reviews']
+    for id in ids:
+        folder = getattr(portal, id, None)
+        if not folder:
+            log.warning('Folder %s not found. Maybe some import step from recensio.contenttypes was not run' %id)
+        else:
+            folder.setExcludeFromNav(True)
+            folder.reindexObject()
+
+    autoren = getattr(portal, 'autoren', None)
