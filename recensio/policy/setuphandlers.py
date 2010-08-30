@@ -150,12 +150,20 @@ def setUpCollections(context):
     self_reviews = (u'Presentation Collection', u'Presentation Article Review', u'Presentation Online Resource', u'Presentation Monograph')
 
     feeds = getOrAdd(portal, 'Folder', 'RSS-feeds')
+    feeds.setTitle(u'RSS feeds')
+    feeds.reindexObject()
     directlyProvides(feeds, INewsletterSource)
     new_reviews = getOrAdd(feeds, 'Topic', 'new_reviews')
+    new_reviews.setTitle(u'Neue Rezensionen')
+    new_reviews.reindexObject()
     configureCollection(new_reviews, classic_reviews, '/')
     new_self_reviews = getOrAdd(feeds, 'Topic', 'new_presentations')
+    new_self_reviews.setTitle(u'Neue Präsentationen')
+    new_self_reviews.reindexObject()
     configureCollection(new_self_reviews, self_reviews, '/')
     new_discussions = getOrAdd(feeds, 'Topic', 'new_discussions')
+    new_discussions.setTitle(u'Neue Diskussionen')
+    new_discussions.reindexObject()
     directlyProvides(new_discussions, IDiscussionCollections)
     try:
         criterion = new_discussions.addCriterion(field='last_comment_date',\
