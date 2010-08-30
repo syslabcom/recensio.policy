@@ -48,6 +48,14 @@
             handler="recensio.policy.setuphandlers.setupHomepage"
             description="Set up the home page"
             title="Set up the home page" />
+    <import-step id="recensio_policy_make_content_german" version="20100824-01"
+            handler="recensio.policy.setuphandlers.makeImportedContentGerman"
+            description="Make imported content German"
+            title="Make imported content German" />
+    <import-step id="recensio_policy_publish_imported_content" version="20100824-01"
+            handler="recensio.policy.setuphandlers.publishImportedContent"
+            description="Publish imported content"
+            title="Publish imported content" />
     <import-step id="recensio_policy_set_default_views"
      version="20100826-01"
      handler="recensio.policy.setuphandlers.setViewsOnFolders"

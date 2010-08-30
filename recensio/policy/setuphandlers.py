@@ -19,6 +19,7 @@ from plone.portlets.interfaces import IPortletManager, ILocalPortletAssignmentMa
 from plone.portlets.constants import CONTEXT_CATEGORY
 from plone.app.portlets.utils import assignment_mapping_from_key
 from plone.portlet.static import static
+from Products.Archetypes.interfaces.base import IBaseFolder
 
 
 from collective.solr.interfaces import ISolrConnectionConfig
@@ -27,6 +28,10 @@ log = getLogger('recensio.policy.setuphandlers.py')
 
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
+
+imported_content = ['ansprechpartner', 'autoren', 'benutzerrichtlinien', 'copyright',
+        'konzept', 'mitmachen-bei-recensio.net', 'themen-epochen-regionen',
+        'zeitschriften', 'zitierhinweise', 'images']
 
 portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
@@ -319,3 +324,39 @@ def hideImportedFolders(context):
             folder.reindexObject()
 
     autoren = getattr(portal, 'autoren', None)
+
+@guard
+def makeImportedContentGerman(context):
+    portal = context.getSite()
+    for id in imported_content:
+        ob = getattr(portal, id, None)
+        if not ob:
+            log.error('Object %s not found. Please run import step "Recensio initial content"' % id)
+            continue
+        ob.setLanguage('de')
+        if IBaseFolder.providedBy(ob):
+            for item in ob.objectValues():
+                item.setLanguage('de')
+    portal.setLanguage('de')
+
+@guard
+def publishImportedContent(context):
+    portal = context.getSite()
+    pwt = getToolByName(portal, 'portal_workflow')
+    for id in imported_content:
+        ob = getattr(portal, id, None)
+        if not ob:
+            log.error('Object %s not found. Please run import step "Recensio initial content"' % id)
+            continue
+        try:
+            pwt.doActionFor(ob, 'publish')
+            ob.reindexObject()
+        except:
+            log.info('Could not publish %s' % ob.absolute_url())
+        if IBaseFolder.providedBy(ob):
+            for item in ob.objectValues():
+                try:
+                    pwt.doActionFor(item, 'publish')
+                    ob.reindexObject()
+                except:
+                    log.info('Could not publish %s' % item.absolute_url())
