@@ -44,4 +44,11 @@
             handler="recensio.policy.setuphandlers.setupHomepage"
             description="Set up the home page"
             title="Set up the home page" />
+    <import-step id="recensio_policy_set_default_views"
+     version="20100826-01"
+     handler="recensio.policy.setuphandlers.setViewsOnFolders"
+     title="Set layout property for some content folders">
+         <dependency step="content" />
+         setViewsOnFolders
+    </import-step>
 </import-steps>

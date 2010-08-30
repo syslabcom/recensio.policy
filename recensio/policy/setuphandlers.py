@@ -273,4 +273,28 @@ def setupHomepage(context):
     if id not in mapping:
         mapping[id] = static.Assignment(header=u'Intro', text=portlet_hp_text,
             omit_border=True)
+
+@guard
+def setViewsOnFolders(context):
+    portal = context.getSite()
+
+    autoren = getattr(portal, 'autoren', None)
+    if not autoren:
+        log.error('Folder "autoren" not found on portal. Please run recensio.contenttypes.initial_content')
+    else:
+        fp = getattr(autoren, 'index_html')
+        id = 'layout'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='authorsearch', type='string')
+
+    themen = getattr(portal, 'themen-epochen-regionen', None)
+    if not themen:
+        log.error('Folder "themen-epochen-regionen" not found on portal. Please run recensio.contenttypes.initial_content')
+    else:
+        fp = getattr(themen, 'index_html')
+        id = 'layout'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='browse-topics', type='string')
     
