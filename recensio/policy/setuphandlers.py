@@ -325,6 +325,13 @@ def hideImportedFolders(context):
 
     autoren = getattr(portal, 'autoren', None)
 
+
+def doSetLanguage(obj, language):
+    obj.setLanguage(language)
+    if IBaseFolder.providedBy(obj):
+        for item in obj.objectValues():
+            doSetLanguage(item, language)
+
 @guard
 def makeImportedContentGerman(context):
     portal = context.getSite()
@@ -333,30 +340,32 @@ def makeImportedContentGerman(context):
         if not ob:
             log.error('Object %s not found. Please run import step "Recensio initial content"' % id)
             continue
-        ob.setLanguage('de')
-        if IBaseFolder.providedBy(ob):
-            for item in ob.objectValues():
-                item.setLanguage('de')
+        if id not in ['images']:
+            language = 'de'
+        else:
+            language = ''
+        doSetLanguage(ob, language)
+        
     portal.setLanguage('de')
+
+
+def doPublish(obj, pwt):
+    try:
+        pwt.doActionFor(obj, 'publish')
+        obj.reindexObject()
+    except:
+        log.info('Could not publish %s' % obj.absolute_url())
+    if IBaseFolder.providedBy(obj):
+        for item in obj.objectValues():
+            doPublish(item, pwt)
 
 @guard
 def publishImportedContent(context):
     portal = context.getSite()
     pwt = getToolByName(portal, 'portal_workflow')
     for id in imported_content:
-        ob = getattr(portal, id, None)
-        if not ob:
+        obj = getattr(portal, id, None)
+        if not obj:
             log.error('Object %s not found. Please run import step "Recensio initial content"' % id)
             continue
-        try:
-            pwt.doActionFor(ob, 'publish')
-            ob.reindexObject()
-        except:
-            log.info('Could not publish %s' % ob.absolute_url())
-        if IBaseFolder.providedBy(ob):
-            for item in ob.objectValues():
-                try:
-                    pwt.doActionFor(item, 'publish')
-                    ob.reindexObject()
-                except:
-                    log.info('Could not publish %s' % item.absolute_url())
+        doPublish(obj, pwt)
