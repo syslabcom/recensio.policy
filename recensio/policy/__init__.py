@@ -32,6 +32,10 @@ def resetCatalog(br):
     br.open(host + '/portal_catalog/manage_catalogAdvanced')
     br.getControl('Clear and Rebuild').click()
     assert 'Catalog Rebuilt' in br.contents
+    br.open(host + '/@@solr-maintenance/clear')
+    assert 'solr index cleared.' in br.contents
+    br.open(host + '/@@solr-maintenance/reindex')
+    assert 'solr index rebuilt.' in br.contents
 
 def reset():
     br = Browser(sys.argv[1])
