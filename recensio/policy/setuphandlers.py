@@ -261,10 +261,11 @@ def addCatalogIndexes(context):
 @guard
 def hideAllFolders(context):
     site = context.getSite()
-    for id in ['Members', 'news', 'events', 'imports', 'RSS-feeds']:
-        ob = getattr(site, id)
-        ob.setExcludeFromNav(True)
-        ob.reindexObject()
+    for id in ['Members', 'news', 'events', 'imports', 'RSS-feeds', 'Images']:
+        ob = getattr(site, id, None)
+        if ob:
+            ob.setExcludeFromNav(True)
+            ob.reindexObject()
 
 @guard
 def setupHomepage(context):
