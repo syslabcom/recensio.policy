@@ -312,6 +312,16 @@ def setViewsOnFolders(context):
             fp._delProperty(id)
         fp._setProperty(id=id, value='browse-topics', type='string')
 
+    zeitschriften = getattr(portal, 'zeitschriften', None)
+    if not zeitschriften:
+        log.error('Folder "zeitschriften" not found on portal. Please run recensio.contenttypes.initial_content')
+    else:
+        fp = zeitschriften
+        id = 'layout'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='publications-view', type='string')
+
 @guard
 def hideImportedFolders(context):
     portal = context.getSite()
