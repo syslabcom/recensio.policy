@@ -18,6 +18,7 @@
   <adapter factory=".indexer.ddcTime" name="ddcTime" />
   <adapter factory=".indexer.authors" name="authors" />
   <adapter factory=".indexer.authorsFulltext" name="authorsFulltext" />
+  <adapter factory=".indexer.titleOrShortname" name="titleOrShortname" />
 
     <browser:page
         for="plone.app.layout.navigation.interfaces.INavigationRoot"

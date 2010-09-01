@@ -55,14 +55,28 @@ def getSelfAndParents(obj, name):
 def ddcPlace(obj):
     return getSelfAndParents(obj, 'ddcPlace')
 
-@indexer(Interface)
+@indexer(IReview)
 def ddcTime(obj):
     return getSelfAndParents(obj, 'ddcTime')
 
-@indexer(Interface)
+@indexer(IReview)
 def authorsFulltext(obj):
     return obj.getAllAuthorDataFulltext()
 
-@indexer(Interface)
+@indexer(IReview)
 def authors(obj):
     return obj.getAllAuthorData()
+
+@indexer(IReview)
+def titleOrShortname(obj):
+    values = []
+    
+    title = str(obj.Title())
+    values.append(title)
+
+    shortname = obj.getField('shortnameJournal')
+    if shortname:
+        values.append(str(shortname.getAccessor(obj)()))
+
+    return values
+    
