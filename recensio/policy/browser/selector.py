@@ -21,12 +21,17 @@ class RecensioLanguageSelector(TranslatableLanguageSelector):
         # Figure out the "closest" translation in the parent chain of the
         # context. We stop at both an INavigationRoot or an ISiteRoot to look
         # for translations.
+        # Exceptions: 1) If the object does not implement ITranslatable (= not
+        # LP-aware) or
+        # 2) if the object is set to be neutral
+        # then return this object and don't look for a translation.
         context = aq_inner(self.context)
         translations = {}
         chain = aq_chain(context)
         for item in chain:
             if ISiteRoot.providedBy(item) or \
-                not ITranslatable.providedBy(item):
+                not ITranslatable.providedBy(item) or \
+                not item.Language():
                 # We have a site root, which works as a fallback
                 for c in missing:
                     translations[c] = item
