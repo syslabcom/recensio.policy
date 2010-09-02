@@ -31,6 +31,11 @@ class TestEmailFormat(unittest.TestCase):
         vol = publication.vol
         vol.invokeFactory('Issue', id='issue', title='issue')
         issue = vol.issue
+        pt = getToolByName(portal, 'portal_types')
+        issueType = pt.getTypeInfo(issue)
+        # We are lazy here, allowing an issue to contain all documents
+        issueType.filter_content_types = False
+
         alsoProvides(request, IRecensioLayer)
         request['ACTUAL_URL'] = 'test'
         class FakeFile(file):
@@ -44,7 +49,7 @@ class TestEmailFormat(unittest.TestCase):
         found = 0
         for obj in issue.objectValues():
             if obj.title == 'Titel der Rezension 2009':
-                self.assertEquals('123456', obj.issn)
+                self.assertEquals('123456', obj.isbn)
                 self.assertEquals('2009', obj.yearOfPublication)
                 self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
                 self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
@@ -83,4 +88,26 @@ class TestEmailFormat(unittest.TestCase):
                 self.assertEquals(4, obj.pageEnd)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
-        self.assertEquals(4, found)
+            if obj.title == 'Das Buch 2':
+                self.assertEquals('3', obj.issn)
+                self.assertEquals('2000', obj.yearOfPublication)
+                self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
+                self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
+                self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
+                self.assertEquals(3, obj.pageStart)
+                self.assertEquals(4, obj.pageEnd)
+                self.assertEquals('Zitierschema', obj.customCitation)
+                found += 1
+ 
+            if obj.title == 'Das Buch 3':
+                self.assertEquals('4', obj.issn)
+                self.assertEquals('2000', obj.yearOfPublication)
+                self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
+                self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
+                self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
+                self.assertEquals(3, obj.pageStart)
+                self.assertEquals(4, obj.pageEnd)
+                self.assertEquals('Zitierschema', obj.customCitation)
+                found += 1
+
+        self.assertEquals(6, found)
