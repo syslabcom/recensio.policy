@@ -294,7 +294,7 @@ def setViewsOnFolders(context):
 
     autoren = getattr(portal, 'autoren', None)
     if not autoren:
-        log.error('Folder "autoren" not found on portal. Please run recensio.contenttypes.initial_content')
+        log.warning('Folder "autoren" not found on portal. Please run recensio.contenttypes.initial_content')
     else:
         fp = getattr(autoren, 'index_html')
         id = 'layout'
@@ -304,7 +304,7 @@ def setViewsOnFolders(context):
 
     themen = getattr(portal, 'themen-epochen-regionen', None)
     if not themen:
-        log.error('Folder "themen-epochen-regionen" not found on portal. Please run recensio.contenttypes.initial_content')
+        log.warning('Folder "themen-epochen-regionen" not found on portal. Please run recensio.contenttypes.initial_content')
     else:
         fp = getattr(themen, 'index_html')
         id = 'layout'
@@ -314,7 +314,7 @@ def setViewsOnFolders(context):
 
     zeitschriften = getattr(portal, 'zeitschriften', None)
     if not zeitschriften:
-        log.error('Folder "zeitschriften" not found on portal. Please run recensio.contenttypes.initial_content')
+        log.warning('Folder "zeitschriften" not found on portal. Please run recensio.contenttypes.initial_content')
     else:
         fp = zeitschriften
         id = 'layout'
@@ -349,7 +349,7 @@ def makeImportedContentGerman(context):
     for id in imported_content:
         ob = getattr(portal, id, None)
         if not ob:
-            log.error('Object %s not found. Please run import step "Recensio initial content"' % id)
+            log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
             continue
         if id not in ['images']:
             language = 'de'
@@ -377,6 +377,6 @@ def publishImportedContent(context):
     for id in imported_content:
         obj = getattr(portal, id, None)
         if not obj:
-            log.error('Object %s not found. Please run import step "Recensio initial content"' % id)
+            log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
             continue
         doPublish(obj, pwt)
