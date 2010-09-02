@@ -21,7 +21,8 @@ def initialize(context):
     """Initializer called when used as a Zope 2 product."""
 
 def reloadProfiles(br):
-    profiles = ['profile-recensio.policy:default'] + additional_profiles
+    profiles = ['profile-recensio.policy:default'] + additional_profiles +\
+               ['profile-recensio.policy:default']
     for profile in profiles:
         print "Trying to load profile %s" % profile
         br.open(host + '/portal_setup/manage_importSteps')
