@@ -54,8 +54,6 @@ class TestEmailFormat(unittest.TestCase):
                 self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
                 self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
                 self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
-                self.assertEquals(2, obj.pageStart)
-                self.assertEquals(5, obj.pageEnd)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
             if obj.title == 'Titel Rezension 2010':
@@ -69,17 +67,15 @@ class TestEmailFormat(unittest.TestCase):
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
             if obj.title == '2011':
-                self.assertEquals('653645', obj.issn)
+                self.assertEquals('653645', obj.isbn)
                 self.assertEquals('2011', obj.yearOfPublication)
                 self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
                 self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
                 self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
-                self.assertEquals(2, obj.pageStart)
-                self.assertEquals(4, obj.pageEnd)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
             if obj.title == 'Das Buch':
-                self.assertEquals('265742', obj.issn)
+                self.assertEquals('265742', obj.isbn)
                 self.assertEquals('2000', obj.yearOfPublication)
                 self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
                 self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
@@ -100,13 +96,8 @@ class TestEmailFormat(unittest.TestCase):
                 found += 1
  
             if obj.title == 'Das Buch 3':
-                self.assertEquals('4', obj.issn)
-                self.assertEquals('2000', obj.yearOfPublication)
                 self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
                 self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
-                self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
-                self.assertEquals(3, obj.pageStart)
-                self.assertEquals(4, obj.pageEnd)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
 
