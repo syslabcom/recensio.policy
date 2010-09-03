@@ -38,7 +38,7 @@ class INewsletterSettings(Interface):
     Configuration for the Newsletter
     """
     mail_template = schema.Text(title = _('Mail Template'), 
-                                description = _('The container for the complete template, Variable expansion will be applied. Provide the following slots: a b c'),
+                                description = _(u'description_mailsettings_mail_template', default=u'The container for the complete template, Variable expansion will be applied. Provide the following slots: a b c'),
                                 default = u"""Liebe Abonnenten,
 
 wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net
@@ -60,29 +60,29 @@ des vergangenen Monats:
 %(new_discussions)s
 """)
     subject = schema.TextLine(title = _('Subject'),
-                              description=_("The subject of the e-mail. Thats what the user sees first when receiving the mail"),
+                              description=_(u'description_mailsettings_subject', default=u"The subject of the e-mail. Thats what the user sees first when receiving the mail"),
                               default = _(u"""Recensio Newsletter"""))
     mail_format = schema.ASCIILine(title=_('Date Format'),
-                                   description=_('strftime compatible date format specification, see http://docs.python.org/library/time.html#time.strftime'),
+                                   description=_(u'description_mailsettings_date_format', default=u'strftime compatible date format specification, see http://docs.python.org/library/time.html#time.strftime'),
                                    default = "%d.%m.%Y")
     standard_result_template = schema.Text(title = _('Review template'),
-                                           default = _(u"""%(Title)s (%(getURL)s)
+                                           default = u"""%(Title)s (%(getURL)s)
 
 %(Description)s
 
 Created on: %(created)s
 --------------------------------------------
-"""))
+""")
     # This template will be used for IATTopics, that implement the
     # IDiscussionCollections Interface.
     comment_result_template = schema.Text(title = _('Review template for Discussion based searches'),
-                                          default = _(u"""%(Title)s (%(getURL)s)
+                                          default = u"""%(Title)s (%(getURL)s)
 
 %(Description)s
 
 Last discussed on: %(last_comment_date)s
 --------------------------------------------
-"""))
+""")
 
     separator = schema.Text(title=_(u'Separator'),
                             description=_(u'The separator will be used to separate sections of the email '\
