@@ -60,4 +60,14 @@
       permission="cmf.ManagePortal"
       />
 
+  <browser:viewlet
+    name="bottom_links"
+    manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+    class=".footer_viewlet.Footer"
+    template="templates/footer.pt"
+    permission="zope2.View"
+    />
+
+
+
 </configure>

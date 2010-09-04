@@ -1,0 +1,71 @@
+<div id="footer" tal:define="portal context/portal_url">
+   <img src="footer_bg_top.png" alt="grafisches Element" class='top'/>
+   <div class="column_footer">
+        <h2><a tal:attributes="href context/rezensionen/absolute_url" href="#">Rezensionen</a></h2>
+        <ul tal:repeat="index python:range(3)" class="easyticker">
+            <li tal:repeat="mag view/getPublications"
+                tal:attributes="style python: repeat['mag'].start and 'display: list-item' or 'display: None'">
+                <a href="#"
+                   tal:attributes="href mag/absolute_url"
+                   tal:content="mag/title">
+                    A magazine
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="column_footer">
+        <h2><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Monograph&portal_type:list=Presentation+Online+Resource&portal_type:list=Presentation+Article+Review&portal_type:list=Presentation+Collection">Präsentationen</a></h2>
+        <ul>
+        <li><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Monograph">Monographien</a></li>
+        <li><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Article+Review">Aufsätze</a></li>
+        <li><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Online+Resource">Internetressourcen</a></li>
+        </ul>   
+    </div>
+    <div class="column_footer">
+        <h2><a href="#" tal:attributes="href context/themen-epochen-regionen/absolute_url">Themen <span>&bull;</span> Epochen <span>&bull;</span> Regionen</a></h2>
+        <ul>
+        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%220e24ed42bf9f792b38ea9370de206d15%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">Alte Geschichte</a></li>
+        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%2252e0cac224c4233f181d8e11002f9e8e%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">Mittelalter</a></li>
+        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%22228d07b98f105c1526a5a8d0bf469fc3%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">Neuzeit bis 1900</a></li>
+        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%223bd69464c24b14f191b4f2f46ec5c6c3%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">20. Jahrhundert</a></li>
+        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%226df99d99b114e36bb060448348da6f22%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">21. Jahrhundert</a></li>
+        </ul>
+    </div>
+    <div class="column_footer">
+        <h2><a href="#" tal:attributes="href context/konzept/mitmachen-bei-recensio.net/absolute_url" >mitmachen bei recensio.net</a></h2>
+        <!--ul>
+        <li><a href="#">als Redaktion</a></li>
+        <li><a href="#">als Autor</a></li>
+        <li><a href="#">als Nutzer</a></li>
+        </ul-->   
+    </div>
+
+    <div class="column_footer">
+        <h2><a href="/RSS-feeds" tal:attributes="href context/RSS-feeds/absolute_url">RSS feeds</a></h2>
+        <ul>
+            <li tal:define="feed string:${context/RSS-feeds/new_reviews/absolute_url}/RSS">
+                <a href="#" tal:attributes="href feed">
+                    <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
+                </a>
+                <a href="#" tal:attributes="href feed">Neue Rezensionen</a>
+            </li>
+            <li tal:define="feed string:${context/RSS-feeds/new_presentations/absolute_url}/RSS">
+                <a href="#" tal:attributes="href feed">
+                    <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
+                </a>
+                <a href="#" tal:attributes="href feed">Neue Präsentationen</a>
+            </li>
+            <li tal:define="feed string:${context/RSS-feeds/new_discussions/absolute_url}/RSS">
+                <a href="#" tal:attributes="href feed">
+                    <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
+                </a>
+                <a href="#" tal:attributes="href feed">Neue Diskussionen</a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="clear"></div>
+    
+    <img src="footer_bg_bottom.png" alt="grafisches Element" class='bottom' /> 
+</div>
+
