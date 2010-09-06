@@ -28,6 +28,7 @@ class MailCollection(BrowserView):
 
     def getNewReviews(self):
         magazines = {}
+        import pdb;pdb.set_trace()
         for result in self.context.new_reviews.queryCatalog():
             obj = result.getObject()
             mag_title = obj.get_publication_title()

@@ -49,7 +49,7 @@ Zeitschrift 1
 
 Zeitschrift 2
 
-     (http://nohost...)
+    test title (http://nohost...)
 
     ----------------------------------------
 
