@@ -30,394 +30,88 @@ Angenehmes Stöbern und Entdecken wünscht Ihnen Ihre recensio.net-Redaktion.
 
 Neue Rezensionen ...
 
+Zeitschrift 1
 
-Typ: Review Monograph
+    Test ReviewMonograph No 0 (http://nohost...)
 
-Test ReviewMonograph No 0 (http://nohost...)
+    ----------------------------------------
 
+    Test ReviewMonograph No 1 (http://nohost...)
 
+    ----------------------------------------
 
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 1 (http://nohost...)
+    Test ReviewMonograph No 2 (http://nohost...)
 
+    ----------------------------------------
 
+    Weitere Ergebnisse finden Sie hier:
+    http://nohost/plone/RSS-feeds/new_reviews
 
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 2 (http://nohost...)
+Zeitschrift 2
 
+     (http://nohost...)
 
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 3 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 4 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 5 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 6 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 7 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 8 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewMonograph No 9 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-
-Typ: Review Journal
-
-Test ReviewJournal No 0 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 1 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 2 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 3 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 4 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 5 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 6 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 7 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 8 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test ReviewJournal No 9 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
+    ----------------------------------------
 
 
 Neue Präsentationen ...
 
+    Präsentationen von Aufsätzen
 
-Typ: Presentation Article Review
+        Test PresentationArticleReview No 0 (http://nohost...)
 
-Test PresentationArticleReview No 0 (http://nohost...)
+        ------------------------------------
 
+        Test PresentationArticleReview No 1 (http://nohost...)
 
+        ------------------------------------
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 1 (http://nohost...)
+        Test PresentationArticleReview No 2 (http://nohost...)
 
+        ------------------------------------
 
+        Weitere Ergebnisse finden Sie hier:
+        http://nohost/plone/RSS-feeds/new_presentations
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 2 (http://nohost...)
+    Präsentationen von Internetressourcen
 
+        Test PresentationOnlineResource No 0 (http://nohost...)
 
+        ------------------------------------
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 3 (http://nohost...)
+        Test PresentationOnlineResource No 1 (http://nohost...)
 
+        ------------------------------------
 
+        Test PresentationOnlineResource No 2 (http://nohost...)
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 4 (http://nohost...)
+        ------------------------------------
 
+        Weitere Ergebnisse finden Sie hier:
+        http://nohost/plone/RSS-feeds/new_presentations
 
+    Präsentationen von Monographien
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 5 (http://nohost...)
+        Test PresentationMonograph No 0 (http://nohost...)
 
+        ------------------------------------
 
+        Test PresentationMonograph No 1 (http://nohost...)
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 6 (http://nohost...)
+        ------------------------------------
 
+        Test PresentationMonograph No 2 (http://nohost...)
 
+        ------------------------------------
 
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 7 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 8 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationArticleReview No 9 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-
-Typ: Presentation Collection
-
-Test PresentationCollection No 0 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 1 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 2 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 3 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 4 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 5 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 6 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 7 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 8 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationCollection No 9 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-
-Typ: Presentation Online Resource
-
-Test PresentationOnlineResource No 0 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 1 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 2 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 3 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 4 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 5 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 6 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 7 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 8 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationOnlineResource No 9 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-
-Typ: Presentation Monograph
-
-Test PresentationMonograph No 0 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 1 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 2 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 3 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 4 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 5 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 6 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 7 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 8 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
-Test PresentationMonograph No 9 (http://nohost...)
-
-
-
-Created on: ...
---------------------------------------------
+        Weitere Ergebnisse finden Sie hier:
+        http://nohost/plone/RSS-feeds/new_presentations
 
 
 Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
 des vergangenen Monats:
 
-
+None
 
 '''
         portal = self.layer['portal']
@@ -445,4 +139,4 @@ des vergangenen Monats:
         for lineno, (expected, real) in enumerate(
                                   zip(expected_mail.split('\n'),
                                       view.mailhost.sentMail.split('\n'))):
-            self.assertTrue(compare(expected, real), "Error in Line %i:\nExp: '%s'\nGot: '%s'" % (lineno, expected, real))
+            self.assertTrue(compare(expected, real), "Error in Line %i:\nExp:\n%s\nGot:\n%s" % (lineno, '\n'.join(expected_mail.split('\n')[lineno-2:lineno+3]), '\n'.join(view.mailhost.sentMail.split('\n')[lineno-2:lineno+3])))

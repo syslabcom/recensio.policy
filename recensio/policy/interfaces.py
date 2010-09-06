@@ -50,8 +50,8 @@ Neue Rezensionen ...
 
 %(new_reviews)s
 
-Neue Präsentationen ...
 
+Neue Präsentationen ...
 %(new_presentations)s
 
 Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
