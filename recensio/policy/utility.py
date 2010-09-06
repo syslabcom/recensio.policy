@@ -8,6 +8,12 @@ from oaipmh.metadata import MetadataRegistry
 
 from recensio.policy.interfaces import IOAIUtility
 
+from copy import deepcopy
+from ZTUtils import make_query
+from recensio.contenttypes.config import PORTAL_TYPES
+
+browsing_facets = ['ddcPlace', 'ddcTime', 'ddcSubject']
+
 class Reader(object):
 
     def parser(self, ns):
@@ -140,4 +146,53 @@ class OAIUtility(object):
 
     def getKnownOAIProviders(self):
         return self.known_providers.keys()
+
+
+def getSelectedQuery(selected, params=None):
+    """ construct a query that gets faceting info with the specified fields selected,
+        i.e. set as fq (filter query) fields. Selected should be a dict with field
+        (=attribute) names mapped to lists of values
+    """
+    if not params:
+        params = {'facet': 'true', 
+                  'facet.field': browsing_facets }
+    for field, values in selected.items():
+        for name in values:
+            params.setdefault('fq', []).append('%s:"%s"' % (field, name.encode('utf-8')))
+    return make_query(params, doseq=True)
+
+
+def convertFacets(fields, context=None, request={}, filter=None):
+    """ convert facet info to a form easy to process in templates """
+    info = []
+    params = request.copy()   # request needs to be a dict, i.e. request.form
+    facets = browsing_facets
+    params['facet.field'] = facets = list(facets)
+    fq = params.get('fq', [])
+    if isinstance(fq, basestring):
+        fq = params['fq'] = [fq]
+    selected = set([facet.split(':', 1)[0].strip('+') for facet in fq ])
+    selected = selected.intersection(set(browsing_facets))
+    for field, values in fields.items():
+        counts = []
+        second = lambda a, b: cmp(b[1], a[1])
+        for name, count in sorted(values.items(), cmp=second):
+            p = deepcopy(params)
+            #p.setdefault('fq', []).append('%s:"%s"' % (field, name.encode('utf-8')))
+            if filter is None or filter(name, count):
+                counts.append(dict(name=name, count=count,
+                    query=getSelectedQuery({field: [name]}, params=p)))
+        if counts:
+            info.append(dict(title=field, counts=counts))
+    if facets:          # sort according to given facets (if available)
+        def pos(item):
+            try:
+                return facets.index(item)
+            except ValueError:
+                return len(facets)      # position the item at the end
+        func = lambda a, b: cmp(pos(a), pos(b))
+    else:               # otherwise sort by title
+        func = lambda a, b: cmp(a['title'], b['title'])
+    return sorted(info, cmp=func)
+
 
