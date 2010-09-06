@@ -40,7 +40,6 @@ setup(name='recensio.policy',
           'recensio.theme',
           'recensio.translations',
           'setuptools',
-          'wc.pageturner',
           'collective.solr',
       ],
       extras_require = {
