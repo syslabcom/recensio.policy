@@ -120,6 +120,7 @@ def setUpCollections(context):
         if name not in context.objectIds():
             context.invokeFactory(type, name)
             new_object = context[name]
+            new_object.setLanguage('')
             if publish:
                 wftool.doActionFor(new_object, 'publish')
         return context[name]
