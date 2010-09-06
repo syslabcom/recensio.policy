@@ -18,7 +18,6 @@
         <dependency>profile-plone.contentratings:default</dependency>
         <dependency>profile-plone.app.discussion:default</dependency>
         <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
-        <dependency>profile-wc.pageturner:default</dependency>
     </dependencies>
 </metadata>
 
