@@ -87,6 +87,11 @@ def activateSolr(self):
     manager.required = []
 
 @guard
+def activateTestSolr(self):
+    manager = queryUtility(ISolrConnectionConfig)
+    manager.port = 8984
+
+@guard
 def setPermissions(self):
     def setPermission(context, perm_name, roles):
         perm = filter(lambda x: perm_name == x[0],

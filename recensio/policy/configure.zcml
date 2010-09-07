@@ -19,6 +19,14 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
+ <genericsetup:registerProfile
+    name="test"
+    title="Recensio Test Policy"
+    directory="profiles/test"
+    description="Policy Profile for the Recensio project"
+    provides="Products.GenericSetup.interfaces.EXTENSION"
+    />
+
     <utility
         component=".vocabularies.AvailableUserLanguagesFactory"
         name="recensio.policy.vocabularies.available_user_languages"

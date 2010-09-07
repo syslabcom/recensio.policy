@@ -54,7 +54,13 @@ class MailCollection(BrowserView):
         return retval
 
     def getComments(self):
-        pass
+        retval = ''
+        for result in self.context.new_discussions.queryCatalog():
+            retval += '\n%s (%s Kommentar%s)\n(%s)\n' % (result.Title, \
+                result.total_comments, \
+                result.total_comments != '1' and 's' or '', \
+                result.getURL())
+        return retval
 
     def getNewPresentations(self):
         presentations = {u'Präsentationen von Monographien' : [],

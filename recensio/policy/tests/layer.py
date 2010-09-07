@@ -28,7 +28,7 @@ class RecensioPolicy(PloneSandboxLayer):
         wftool = getToolByName(portal, 'portal_workflow')
         wftool.setDefaultChain('plone_workflow')
         applyProfile(portal, 'Products.CMFPlone:plone-content')
-        applyProfile(portal, 'recensio.policy:default')
+        applyProfile(portal, 'recensio.policy:test')
         applyProfile(portal, 'recensio.contenttypes:example_content')
 
 RECENSIO_FIXTURE = RecensioPolicy()

@@ -56,7 +56,6 @@ Neue Präsentationen ...
 
 Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
 des vergangenen Monats:
-
 %(new_discussions)s
 """)
     subject = schema.TextLine(title = _('Subject'),

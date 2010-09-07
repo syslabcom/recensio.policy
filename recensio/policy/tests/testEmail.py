@@ -111,7 +111,8 @@ Neue Präsentationen ...
 Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
 des vergangenen Monats:
 
-None
+test title (1 Kommentar)
+(http://nohost...)
 
 '''
         portal = self.layer['portal']
