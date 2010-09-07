@@ -24,11 +24,11 @@
     <div class="column_footer">
         <h2><a href="#" tal:attributes="href context/themen-epochen-regionen/absolute_url | nothing">Themen <span>&bull;</span> Epochen <span>&bull;</span> Regionen</a></h2>
         <ul>
-        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%220e24ed42bf9f792b38ea9370de206d15%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">Alte Geschichte</a></li>
-        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%2252e0cac224c4233f181d8e11002f9e8e%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">Mittelalter</a></li>
-        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%22228d07b98f105c1526a5a8d0bf469fc3%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">Neuzeit bis 1900</a></li>
-        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%223bd69464c24b14f191b4f2f46ec5c6c3%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">20. Jahrhundert</a></li>
-        <li><a href="/themen-epochen-regionen?fq:list=ddcTime%3A%226df99d99b114e36bb060448348da6f22%22&facet.field:list=ddcPlace&facet.field:list=ddcTime&facet.field:list=ddcSubject&doseq:boolean=True">21. Jahrhundert</a></li>
+            <li tal:repeat="link view/drill_down_views">
+                <a href="#"
+                    tal:attributes="href link/url"
+                    tal:content="link/title">Topic</a>
+            </li>
         </ul>
     </div>
     <div class="column_footer">
