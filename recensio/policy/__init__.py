@@ -12,7 +12,7 @@ def viewPage(br):
 def initialize(context):
     """Initializer called when used as a Zope 2 product."""
 
-def reloadProfiles(br):
+def reloadProfiles(br, additional_profiles = []):
     profiles = ['profile-recensio.policy:default'] + additional_profiles +\
                ['profile-recensio.policy:default']
     for profile in profiles:
@@ -49,7 +49,7 @@ def reset():
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br.addHeader('Authorization', 'Basic %s' % base64string)
     br.reload()
-    reloadProfiles(br)
+    reloadProfiles(br, additional_profiles)
     resetCatalog(br)
 
 def createSite():
