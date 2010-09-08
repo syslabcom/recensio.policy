@@ -4,14 +4,6 @@ from zc.testbrowser.browser import Browser
 from zope.i18nmessageid import MessageFactory
 import patches
 
-try:
-    host = sys.argv[1]
-    user = sys.argv[2]
-    passwd = sys.argv[3]
-    additional_profiles = sys.argv[4:]
-except:
-    pass
-
 recensioMessageFactory = MessageFactory('recensio')
 
 def viewPage(br):
@@ -46,6 +38,13 @@ def resetCatalog(br):
     print "All solr tasks done"
 
 def reset():
+    try:
+        host = sys.argv[1]
+        user = sys.argv[2]
+        passwd = sys.argv[3]
+        additional_profiles = sys.argv[4:]
+    except:
+        pass
     br = Browser(sys.argv[1])
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br.addHeader('Authorization', 'Basic %s' % base64string)
@@ -54,13 +53,21 @@ def reset():
     resetCatalog(br)
 
 def createSite():
+    profile = ['recensio.policy:default']
+    try:
+        host = sys.argv[1]
+        user = sys.argv[2]
+        passwd = sys.argv[3]
+        profile = [sys.argv[4]]
+    except:
+        pass
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br = Browser(sys.argv[1])
     print "Trying to create new plone site"
     br.addHeader('Authorization', 'Basic %s' % base64string)
     br.getControl('Create a new Plone site').click()
     br.getControl(name = 'site_id').value = 'recensio'
-    br.getControl(name = 'extension_ids:list', index=2).value = ['recensio.policy:default']
+    br.getControl(name = 'extension_ids:list', index=2).value = profile
     br.getControl('Create Plone Site').click()
     print "Plone site created"
 
