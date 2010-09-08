@@ -12,7 +12,7 @@ def viewPage(br):
 def initialize(context):
     """Initializer called when used as a Zope 2 product."""
 
-def reloadProfiles(br, additional_profiles = []):
+def reloadProfiles(br, host, additional_profiles = []):
     profiles = ['profile-recensio.policy:default'] + additional_profiles +\
                ['profile-recensio.policy:default']
     for profile in profiles:
@@ -23,7 +23,7 @@ def reloadProfiles(br, additional_profiles = []):
         br.getControl('Import all steps').click()
         print "Profile %s loaded" % profile
 
-def resetCatalog(br):
+def resetCatalog(br, host):
     print "Trying to reindex catalog"
     br.open(host + '/portal_catalog/manage_catalogAdvanced')
     br.getControl('Clear and Rebuild').click()
@@ -49,8 +49,8 @@ def reset():
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br.addHeader('Authorization', 'Basic %s' % base64string)
     br.reload()
-    reloadProfiles(br, additional_profiles)
-    resetCatalog(br)
+    reloadProfiles(br, host, additional_profiles)
+    resetCatalog(br, host)
 
 def createSite():
     profile = ['recensio.policy:default']
