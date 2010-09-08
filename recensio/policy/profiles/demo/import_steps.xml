@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<import-steps>
+    <import-step id="recensio_policy_activate_demo_solr" version="20100714-01"
+            handler="recensio.policy.setuphandlers.activateDemoSolr"
+            description="Solr, Engage!"
+            title="Solr, Engage!" />
+</import-steps>
