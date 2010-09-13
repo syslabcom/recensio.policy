@@ -157,7 +157,6 @@ vocabularies = {
 languages = [u'sq',
              u'hy',
              u'az',
-             u'bs',
              u'bg',
              u'ca',
              u'hr',
