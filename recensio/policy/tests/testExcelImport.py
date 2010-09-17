@@ -80,7 +80,6 @@ class TestEmailFormat(unittest.TestCase):
                 self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
                 self.assertEquals(3, obj.pageStart)
                 self.assertEquals(4, obj.pageEnd)
-                self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
             if obj.title == 'Das Buch 2':
                 self.assertEquals('3', obj.issn)
