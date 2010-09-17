@@ -153,6 +153,64 @@ class MailCollection(BrowserView):
                 messages.addStatusMessage(u"Mail sending will be prepared. Mail will be sent to %s" % mail_to, type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
+class MailUncommented(BrowserView):
+    subject = 'Ihre Rezension auf Rezensio.net'
+    msg_template = u'''Hallo %(name)s,
+
+Bis jetzt hat noch niemand auf Ihre Veröffentlichung geantwortet.
+Das ist schade!
+
+Vielleicht möchten Sie sich ihre Rezension mit ein wenig Abstand nochmal
+anschauen und sehen, ob Sie was überarbeiten können, um mehr Aufmerksamkeit
+der Recensio.net Besucher zu bekommen.
+
+Auf Ihre Rezension kommen Sie übrigens über diesen Link:
+%(url)s
+
+Mit freundlichen Grüßen,
+
+       Ihr Rezensio.net Team
+'''
+
+    def __init__(self, request, context):
+        super(BrowserView, self).__init__(request, context)
+        self.mailhost = getToolByName(self.context, 'MailHost')
+
+
+    def __call__(self):
+        for result in self.context.discussion_three_months_old.queryCatalog():
+            if result.total_comments == '0':
+                self.sendMail(result)
+
+    def sendMail(self, result):
+        msg = self.formatMessage(result)
+        mail_to = self.findRecipient(result)
+        mail_from = self.findSender()
+        self.mailhost.send(messageText=msg, mto=mail_to,
+                           mfrom=mail_from,
+                           subject=self.subject, charset='utf-8')
+
+    def formatMessage(self, result):
+        title = result.Title
+        owner_name = result.Creator
+        url = result.getURL()
+
+        return self.msg_template % {'name' : owner_name,
+                                    'url' : url,
+                                    'title' : title}
+
+    def findRecipient(self, result):
+        membership_tool = getToolByName(self.context, 'portal_membership')
+        owner = membership_tool.getMemberById(result.Creator).getUser()
+        return owner.getProperty('email')
+
+    def findSender(self):
+        root = getToolByName(self.context, 'portal_url').getPortalObject()
+        membership_tool = getToolByName(self.context, 'portal_membership')
+        mail_info = IMailSchema(root)
+        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        return mail_from
+
 class NewsletterSettingsEditForm(controlpanel.RegistryEditForm):
 
     schema = INewsletterSettings

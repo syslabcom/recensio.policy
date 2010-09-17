@@ -145,7 +145,7 @@ def setUpCollections(context):
         except BadRequest:
             pass
         try:
-            criterion = collection.addCriterion(field='Type', \
+            criterion = collection.addCriterion(field='portal_type', \
                 criterion_type='ATPortalTypeCriterion')
             criterion.setValue(types)
         except BadRequest:
@@ -173,6 +173,12 @@ def setUpCollections(context):
     new_reviews.setTitle(u'Neue Rezensionen')
     new_reviews.reindexObject()
     configureCollection(new_reviews, classic_reviews, '/')
+    uncommented = getOrAdd(feeds, 'Topic', 'discussion_three_months_old')
+    uncommented.setTitle('Für Besucher unsichtbar, Presentationen genau 3 Monate alt. Für interne Zwecke gedacht')
+    configureCollection(uncommented, self_reviews, '/')
+    crit = uncommented['crit__created_ATFriendlyDateCriteria']
+    crit.setValue(90)
+    crit.setOperation('within_day')
     new_self_reviews = getOrAdd(feeds, 'Topic', 'new_presentations')
     new_self_reviews.setTitle(u'Neue Präsentationen')
     new_self_reviews.reindexObject()

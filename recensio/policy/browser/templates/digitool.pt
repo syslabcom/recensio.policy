@@ -7,6 +7,10 @@
     <review tal:repeat="review view/reviews"
             tal:attributes="id review/id"
             id="5297">
+        BV Nummer
+        URL PDF
+        URL Thumbnail Cover
+        URL Deeplinking
         <reviewer tal:repeat="reviewer review/reviewers">
             <last_name tal:content="reviewer/last_name">Spurlock</last_name>
             <first_name tal:content="reviewer/first_name">Scott</first_name>
@@ -21,6 +25,7 @@
             <isbn tal:condition="book/isbn" tal:content="book/isbn">978-1-85928-408-7</isbn>
             <subtitle tal:condition="book/subtitle" tal:content="book/subtitle" >A Critical Edition and Translation</subtitle>
             <title tal:content="book/title" >A Dialogue on the Law of Kingship among the Scots</title>
+            jahr von titel und rezensat
             <year tal:content="book/year">2004</year>
         </book>
         <filename tal:content="review/filename" >http://www.sehepunkte.de/export/review_5297.html</filename>

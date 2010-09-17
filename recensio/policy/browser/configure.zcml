@@ -16,6 +16,15 @@
     />
 
   <browser:page
+    for="recensio.policy.interfaces.INewsletterSource"
+    name="mail_uncommented_presentations"
+    class=".email.MailUncommented"
+    layer="recensio.theme.interfaces.IRecensioLayer"
+    permission="zope2.View"
+    />
+
+
+  <browser:page
     for="Products.ATContentTypes.interfaces.topic.IATTopic"
     name="digitool_export"
     class=".digitool.DigiToolRepresentation"
