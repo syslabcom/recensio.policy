@@ -61,7 +61,6 @@ class TestEmailFormat(unittest.TestCase):
                 self.assertEquals('2010', obj.yearOfPublication)
                 self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
                 self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
-                self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
                 self.assertEquals(3, obj.pageStart)
                 self.assertEquals(5, obj.pageEnd)
                 self.assertEquals('Zitierschema', obj.customCitation)
