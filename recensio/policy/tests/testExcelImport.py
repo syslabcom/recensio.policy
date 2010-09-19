@@ -8,7 +8,7 @@ compare = lambda x, y:OutputChecker().check_output(x, y, ELLIPSIS)
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 
-from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_ID, TEST_USER_NAME
 from plone.app.testing import setRoles
 
 from plone.app.controlpanel.mail import IMailSchema
@@ -22,8 +22,9 @@ class TestEmailFormat(unittest.TestCase):
 
     def testFormat(self):
         portal = self.layer['portal']
-        request = self.layer['request']
+        setRoles(portal, TEST_USER_ID, ['Manager'])
         setRoles(portal, TEST_USER_NAME, ['Manager'])
+        request = self.layer['request']
         reviews = portal.reviews
         reviews.invokeFactory('Publication', id='pub', title='pub')
         publication = reviews.pub
