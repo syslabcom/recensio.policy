@@ -178,9 +178,12 @@ Mit freundlichen Grüßen,
 
 
     def __call__(self):
+        count = 0
         for result in self.context.discussion_three_months_old.queryCatalog():
             if result.total_comments == '0':
+                count += 1
                 self.sendMail(result)
+        return "Sent %i mails" % count
 
     def sendMail(self, result):
         msg = self.formatMessage(result)
