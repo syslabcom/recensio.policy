@@ -34,6 +34,16 @@ class IRecensioUserDataSchema(IUserDataSchema):
         required=False,
         )
 
+    firstname = schema.TextLine(
+        title=_(u'label_firstname', default=u'First name'),
+        required=True,
+        )
+
+    lastname = schema.TextLine(
+        title=_(u'label_lastname', default=u'Last name'),
+        required=True,
+        )
+
     # Note: the available languages should come from a vocabulary!
     preferred_language = schema.Choice(
         title=_(u'label_preferred_language', default=u'Preferred language'),

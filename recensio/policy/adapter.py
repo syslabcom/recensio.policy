@@ -20,3 +20,17 @@ class RecensioUserDataPanelAdapter(UserDataPanelAdapter):
             return self.context.setMemberProperties({'preferred_language': value})
     preferred_language = property(get_preferred_language, set_preferred_language)
 
+
+    def get_firstname(self):
+        return self._getProperty("firstname")
+    def set_firstname(self, value):
+        if value is not None:
+            return self.context.setMemberProperties({"firstname": value})
+    firstname = property(get_firstname, set_firstname)
+
+    def get_lastname(self):
+        return self._getProperty("lastname")
+    def set_lastname(self, value):
+        if value is not None:
+            return self.context.setMemberProperties({"lastname": value})
+    lastname = property(get_lastname, set_lastname)
