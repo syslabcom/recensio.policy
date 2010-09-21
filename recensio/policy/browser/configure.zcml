@@ -77,6 +77,16 @@
     permission="zope2.View"
     />
 
+  <browser:viewlet
+    name="plone.comments2"
+    for="Products.CMFCore.interfaces.IContentish"
+    layer="recensio.theme.interfaces.IRecensioLayer"
+    manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+    view="plone.app.layout.globals.interfaces.IViewView"
+    class=".comments.CommentsViewlet"
+    permission="zope2.View"
+    />
+
 
 
 </configure>
