@@ -59,7 +59,6 @@ recensio.net ist ein DFG-gef\xf6rdertes Angebot der Bayerischen Staatsbibliothek
         view.mailhost = MockMailHost()
 
         view()
-        import pdb;pdb.set_trace()
         for lineno, (expected, real) in enumerate(
                                   zip(expected_mail.split('\n'),
                                       view.mailhost.sentMail.split('\n'))):
