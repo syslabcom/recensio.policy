@@ -33,11 +33,22 @@
     </div>
     <div class="column_footer">
         <h2><a href="#" tal:attributes="href context/konzept/mitmachen-bei-recensio.net/absolute_url | nothing" >mitmachen bei recensio.net</a></h2>
-        <!--ul>
-        <li><a href="#">als Redaktion</a></li>
-        <li><a href="#">als Autor</a></li>
-        <li><a href="#">als Nutzer</a></li>
-        </ul-->   
+        <ul tal:define="member context/@@plone_portal_state/member;
+                        isAnon context/@@plone_portal_state/anonymous;
+                        homefolder context/portal_membership/getHomeUrl">
+            <li><a href="#"
+                   tal:condition="not: isAnon"
+                   tal:attributes="href string:${homefolder}"
+                   i18n:translate="">Manage your presentations</a></li>
+            <li><a href="#"
+                   tal:condition="not: isAnon"
+                   tal:attributes="href string:%{homefolder}/folder_factories"
+                   i18n:translate="">Create new presentation</a></li>
+            <li><a href="#"
+                   tal:condition="isAnon"
+                   tal:attributes="href string:${portal}/@@register"
+                   i18n:translate="">Register and create new presentations</a></li>
+        </ul>
     </div>
 
     <div class="column_footer">
