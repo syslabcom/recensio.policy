@@ -153,6 +153,48 @@ class MailCollection(BrowserView):
                 messages.addStatusMessage(u"Mail sending will be prepared. Mail will be sent to %s" % mail_to, type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
+class MailNewPublication(BrowserView):
+    msg_template = u'''Sehr geehrter Herr %(reviewed_author)s,
+
+vor Kurzem ist eine Schrift zum Thema %(title)s %(subtitle)s erschienen. Der Autor %(review_author)s hat diese Schrift auf der Rezensionsplattform recensio.net präsentiert und gibt an, sich mit Ihren Forschungen auseinandergesetzt zu haben.
+
+Sie können die Präsentation hier einsehen und haben zugleich die Gelegenheit, die präsentierten Thesen zu kommentieren. Dafür ist eine kurze, kostenlose Registrierung mit Namen und E-Mail-Adresse notwendig, die lediglich dazu dient, Missbrauch der Kommentarfunktion zu verhindern und den wissenschaftlichen Anspruch der Plattform zu wahren.
+
+Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: %(mail_from)s.
+
+Mit freundlichen Grüßen,
+Ihr recensio.net-Team
+
+recensio.net ist ein DFG-gefördertes Angebot der Bayerischen Staatsbibliothek, des Deutschen Historischen Instituts Paris und des Instituts für Europäische Geschichte Mainz. Weitere Informationen finden Sie unter %(concept_url)s'''
+    subject = u'Es wurde eine neue Rezension ihres Werkes %s veröffentlicht!'
+    def __init__(self, request, context):
+        super(BrowserView, self).__init__(request, context)
+        self.mailhost = getToolByName(self.context, 'MailHost')
+
+    def __call__(self):
+        root = getToolByName(self.context, 'portal_url').getPortalObject()
+        mail_info = IMailSchema(root)
+        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        authors = getattr(self.context, 'authors', [{'firstname' : '',\
+                                                     'lastname' : 'unknown'}])
+        for author in authors:
+            args = {}
+            fuckup = [author['firstname'], author['lastname']]
+            fuckup = [x.decode('utf-8') for x in fuckup]
+            args['reviewed_author'] = u' '.join(fuckup)
+            args['title'] = self.context.title.decode('utf-8')
+            args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
+            args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
+            args['mail_from'] = mail_from.decode('utf-8')
+            args['concept_url'] = root.konzept.absolute_url()
+            subject = self.subject % self.context.title
+            self.sendMail(self.msg_template % args, mail_from, subject)
+
+    def sendMail(self, msg, mail_from, subject):
+        self.mailhost.send(messageText=msg, mto=mail_from,
+                           mfrom=mail_from,
+                           subject=subject, charset='utf-8')
+
 class MailUncommented(BrowserView):
     subject = 'Ihre Rezension auf Rezensio.net'
     msg_template = u'''Hallo %(name)s,
