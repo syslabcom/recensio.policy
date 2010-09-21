@@ -62,6 +62,7 @@ class WorkflowHelper(BrowserView):
             mail_to = owner.getProperty('email')
             pref_lang = owner.getProperty('preferred_language', 'de')
             title = _(u'label_item_published', default=u'Your item has been published')
+            info.object.restrictedTraverse('@@mail_new_presentation')()
             template = publish_notification_template.get(pref_lang, None) or \
                 publish_notification_template.get('de')
             msg = template % dict(title=info.object.Title(),
