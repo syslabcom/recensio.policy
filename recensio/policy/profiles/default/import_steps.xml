@@ -59,4 +59,12 @@
          <dependency step="content" />
          setViewsOnFolders
     </import-step>
+    <import-step id="recensio_policy_set_versioned_types" version="20100920-01"
+            handler="recensio.policy.setuphandlers.setVersionedTypes"
+            description="Activate versioning for our custom types"
+            title="Set versioned types" />
+    <import-step id="recensio_policy_customize_workflow_and_permissions" version="20100920-01"
+            handler="recensio.policy.setuphandlers.customizeWorkflowAndPermissions"
+            description="Add custom workflow states and transmissions and connected permissions"
+            title="Customize workflow and permissions" />
 </import-steps>

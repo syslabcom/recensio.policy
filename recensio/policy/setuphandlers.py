@@ -15,12 +15,15 @@ from plone.registry.interfaces import IRegistry
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from recensio.policy.interfaces import IDiscussionCollections, INewsletterSource
 from recensio.policy.interfaces import IRecensioSettings
+from recensio.contenttypes.config import PORTAL_TYPES
 from plone.portlets.interfaces import IPortletManager, ILocalPortletAssignmentManager
 from plone.portlets.constants import CONTEXT_CATEGORY
 from plone.app.portlets.utils import assignment_mapping_from_key
 from plone.portlet.static import static
 from Products.Archetypes.interfaces.base import IBaseFolder
-
+from Products.CMFCore.utils import getToolByName
+from Products.CMFEditions.setuphandlers import VERSIONING_ACTIONS, ADD_POLICIES, DEFAULT_POLICIES
+from Products.DCWorkflow.Guard import Guard
 
 from collective.solr.interfaces import ISolrConnectionConfig
 
@@ -383,3 +386,76 @@ def publishImportedContent(context):
             log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
             continue
         doPublish(obj, pwt)
+
+@guard
+def setVersionedTypes(context):
+    portal = context.getSite()
+
+    for versioning_actions in PORTAL_TYPES:
+        VERSIONING_ACTIONS[versioning_actions] = 'version_document_view'
+        portal_repository = getToolByName(portal, 'portal_repository')
+        portal_repository.setAutoApplyMode(True)
+        portal_repository.setVersionableContentTypes(VERSIONING_ACTIONS.keys())
+        portal_repository._migrateVersionPolicies()
+        portal_repository.manage_changePolicyDefs(ADD_POLICIES)
+        for ctype in VERSIONING_ACTIONS:
+            for policy_id in DEFAULT_POLICIES:
+                portal_repository.addPolicyForContentType(ctype, policy_id)
+
+@guard
+def customizeWorkflowAndPermissions(context):
+    portal = context.getSite()
+    pwf = portal.portal_workflow
+    spw = pwf.getWorkflowById('simple_publication_workflow')
+    spw.description = ' - Simple workflow that is useful for basic web sites. - Things start out as private, and can either be submitted for review, or published directly. - The creator of a content item can edit the item even after it is published. - Modified for recensio.net: Added deleted state'
+
+    guard = Guard()
+    guard.permissions = ('Delete objects',)
+
+    # delete existing states and transitions to avoid clashes
+    if 'delete' in spw.transitions:
+        spw.transitions.deleteTransitions(['delete'])
+    if 'restore' in spw.transitions:
+        spw.transitions.deleteTransitions(['restore'])
+    if 'deleted' in spw.states:
+        spw.states.deleteStates(['deleted'])
+
+    # add Transitions
+    spw.transitions.addTransition('delete')
+    spw.transitions['delete'].guard = guard
+    spw.transitions['delete'].title = 'Delete'
+    spw.transitions['delete'].description = 'Mark the content as deleted and make it invisible for all except managers'
+    spw.transitions['delete'].new_state_id = 'deleted'
+    spw.transitions['delete'].after_script_name = 'handle_change'
+    spw.transitions['delete'].actbox_name = 'Delete'
+    spw.transitions['delete'].actbox_url = '%(content_url)s/content_status_modify?workflow_action=delete'
+
+    spw.transitions.addTransition('restore')
+    spw.transitions['restore'].guard = guard
+    spw.transitions['restore'].title = 'Restore'
+    spw.transitions['restore'].description = 'Restore the content from the deleted state and make it visible again'
+    spw.transitions['restore'].new_state_id = 'restore'
+    spw.transitions['restore'].after_script_name = 'handle_change'
+    spw.transitions['restore'].actbox_name = 'Restore'
+    spw.transitions['restore'].actbox_url = '%(content_url)s/content_status_modify?workflow_action=restore'
+
+    # add state and register transitions with states
+    spw.states.addState('deleted')
+    spw.states['deleted'].title = 'Deleted'
+    spw.states['deleted'].description = 'Marked as deleted and invisible to all but managers'
+    spw.states['deleted'].transitions = ('restore',)
+    # access only for Manager
+    for perm in spw.permissions:
+        spw.states['deleted'].setPermission(perm, acquired=0, roles=['Manager'])
+
+    for state in ['pending', 'private', 'published']:
+        trans = spw.states[state].transitions
+        if not 'delete' in trans:
+            trans = list(trans)
+            trans.append('delete')
+            spw.states[state].transitions = tuple(trans)
+    # set custom permission on delete actions
+    pa = portal.portal_actions
+    pa.object_buttons['delete'].permissions = ('recensio.policy: Permanently delete objects',)
+    pa.object_buttons['delete'].available_expr = 'python:checkPermission("recensio.policy: Permanently delete objects", globals_view.getParentObject()) and not globals_view.isPortalOrPortalDefaultPage()'
+    pa.folder_buttons['delete'].permissions = ('recensio.policy: Permanently delete objects',)

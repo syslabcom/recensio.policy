@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<object>
+  <difftypes>
+    <type portal_type="Review Journal">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Review Monograph">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Presentation Article Review">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Presentation Collection">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Presentation Monograph">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Presentation Online Resource">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+  </difftypes>
+</object>
