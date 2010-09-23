@@ -140,4 +140,4 @@ test title (1 Kommentar)
         for lineno, (expected, real) in enumerate(
                                   zip(expected_mail.split('\n'),
                                       view.mailhost.sentMail.split('\n'))):
-            self.assertTrue(compare(expected, real), "Error in Line %i:\nExp:\n%s\nGot:\n%s" % (lineno, '\n'.join(expected_mail.split('\n')[lineno-2:lineno+3]), '\n'.join(view.mailhost.sentMail.split('\n')[lineno-2:lineno+3])))
+            self.assertTrue(compare(expected, real), ("Error in Line %i:\nExp:\n%s\nGot:\n%s" % (lineno, '\n'.join(expected_mail.split('\n')[lineno-2:lineno+3]), '\n'.join(view.mailhost.sentMail.split('\n')[lineno-2:lineno+3]))).encode('ascii', 'ignore'))

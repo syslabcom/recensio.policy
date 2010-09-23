@@ -62,4 +62,4 @@ recensio.net ist ein DFG-gef\xf6rdertes Angebot der Bayerischen Staatsbibliothek
         for lineno, (expected, real) in enumerate(
                                   zip(expected_mail.split('\n'),
                                       view.mailhost.sentMail.split('\n'))):
-            self.assertTrue(compare(expected, real), "Error in Line %i:\nExp:\n%s\nGot:\n%s" % (lineno, '\n'.join(expected_mail.split('\n')[max(0, lineno-2):lineno+3]), '\n'.join(view.mailhost.sentMail.split('\n')[max(0, lineno-2):lineno+3])))
+            self.assertTrue(compare(expected, real), ("Error in Line %i:\nExp:\n%s\nGot:\n%s" % (lineno, '\n'.join(expected_mail.split('\n')[max(0, lineno-2):lineno+3]), '\n'.join(view.mailhost.sentMail.split('\n')[max(0, lineno-2):lineno+3]))).encode('ascii', 'ignore'))
