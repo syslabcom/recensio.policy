@@ -17,6 +17,15 @@
     />
 
   <browser:page
+    for="recensio.contenttypes.interfaces.review.IReview"
+    name="cut_pdf"
+    class=".pdf_cut.PDFCutter"
+    layer="recensio.theme.interfaces.IRecensioLayer"
+    permission="cmf.ModifyPortalContent"
+    template="templates/pdf_cut.pt"
+    />
+
+  <browser:page
     name="mail_new_presentation"
     for="recensio.contenttypes.interfaces.review.IReview"
     class=".email.MailNewPublication"
