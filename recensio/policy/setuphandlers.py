@@ -410,7 +410,7 @@ def customizeWorkflowAndPermissions(context):
     spw.description = ' - Simple workflow that is useful for basic web sites. - Things start out as private, and can either be submitted for review, or published directly. - The creator of a content item can edit the item even after it is published. - Modified for recensio.net: Added deleted state'
 
     guard = Guard()
-    guard.permissions = ('Delete objects',)
+    guard.roles = ('Manager', 'Editor', 'Owner', )
 
     # delete existing states and transitions to avoid clashes
     if 'delete' in spw.transitions:
@@ -434,7 +434,7 @@ def customizeWorkflowAndPermissions(context):
     spw.transitions['restore'].guard = guard
     spw.transitions['restore'].title = 'Restore'
     spw.transitions['restore'].description = 'Restore the content from the deleted state and make it visible again'
-    spw.transitions['restore'].new_state_id = 'restore'
+    spw.transitions['restore'].new_state_id = 'private'
     spw.transitions['restore'].after_script_name = 'handle_change'
     spw.transitions['restore'].actbox_name = 'Restore'
     spw.transitions['restore'].actbox_url = '%(content_url)s/content_status_modify?workflow_action=restore'
@@ -446,7 +446,7 @@ def customizeWorkflowAndPermissions(context):
     spw.states['deleted'].transitions = ('restore',)
     # access only for Manager
     for perm in spw.permissions:
-        spw.states['deleted'].setPermission(perm, acquired=0, roles=['Manager'])
+        spw.states['deleted'].setPermission(perm, acquired=0, roles=['Manager', 'Editor', 'Owner'])
 
     for state in ['pending', 'private', 'published']:
         trans = spw.states[state].transitions
@@ -454,8 +454,3 @@ def customizeWorkflowAndPermissions(context):
             trans = list(trans)
             trans.append('delete')
             spw.states[state].transitions = tuple(trans)
-    # set custom permission on delete actions
-    pa = portal.portal_actions
-    pa.object_buttons['delete'].permissions = ('recensio.policy: Permanently delete objects',)
-    pa.object_buttons['delete'].available_expr = 'python:checkPermission("recensio.policy: Permanently delete objects", globals_view.getParentObject()) and not globals_view.isPortalOrPortalDefaultPage()'
-    pa.folder_buttons['delete'].permissions = ('recensio.policy: Permanently delete objects',)
