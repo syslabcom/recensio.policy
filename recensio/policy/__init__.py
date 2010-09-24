@@ -3,7 +3,6 @@ import sys
 from zc.testbrowser.browser import Browser
 from zope.i18nmessageid import MessageFactory
 import patches
-import permissions
 
 recensioMessageFactory = MessageFactory('recensio')
 
