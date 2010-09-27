@@ -3,8 +3,7 @@ from AccessControl.Permission import Permission
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility, queryUtility
 from zope.interface import directlyProvides
-from plone.contentratings.interfaces import IRatingCategoryAssignment
-from logging import getLogger
+ from logging import getLogger
 from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs,\
     createHierarchicalVocabs
 import transaction
@@ -111,19 +110,6 @@ def setPermissions(self):
     user_folder = self.getSite().Members
     user_folder.manage_setLocalRoles('Reviewers', ['Reader'])
     setPermission(self.getSite(), 'Content Ratings: User Rate', ('Authenticated', ))
-
-@guard
-def configureContentRatings(context):
-    portal = context.getSite()
-    utility = getUtility(IRatingCategoryAssignment)
-    portal_types = ['Review Journal', 'Review Monograph',\
-                    'Presentation Online Resource',\
-                    'Presentation Article Review',\
-                    'Presentation Collection',\
-                    'Presentation Monograph']
-    categories_to_set = [utility._avalable_categories.by_token[''].value]
-    for type in portal_types:
-        utility.assign_categories(type, categories_to_set)
 
 @guard
 def setUpCollections(context):
