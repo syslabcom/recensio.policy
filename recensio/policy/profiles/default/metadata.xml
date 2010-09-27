@@ -1,6 +1,6 @@
 <metadata>
     <description>Recensio policy product</description>
-    <version>4</version>
+    <version>5</version>
     <dependencies>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
         <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
@@ -11,13 +11,10 @@
         <dependency>profile-collective.solr:search</dependency>
         <dependency>profile-collective.xdv:default</dependency>
         <dependency>profile-plone.app.discussion:default</dependency>
-        <dependency>profile-plone.contentratings:default</dependency>
+        <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
         <dependency>profile-recensio.contenttypes:default</dependency>
         <dependency>profile-recensio.imports:default</dependency>
         <dependency>profile-recensio.theme:default</dependency>
-        <dependency>profile-plone.contentratings:default</dependency>
-        <dependency>profile-plone.app.discussion:default</dependency>
-        <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
     </dependencies>
 </metadata>
 
