@@ -100,16 +100,8 @@ def activateDemoSolr(self):
 
 @guard
 def setPermissions(self):
-    def setPermission(context, perm_name, roles):
-        perm = filter(lambda x: perm_name == x[0],
-                      context.ac_inherited_permissions(all=True))[0]
-        name, value = perm[:2]
-        permission = Permission(name, value, context)
-        permission.setRoles(roles)
-
     user_folder = self.getSite().Members
     user_folder.manage_setLocalRoles('Reviewers', ['Reader'])
-    setPermission(self.getSite(), 'Content Ratings: User Rate', ('Authenticated', ))
 
 @guard
 def setUpCollections(context):
