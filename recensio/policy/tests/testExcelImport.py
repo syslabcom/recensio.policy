@@ -25,7 +25,7 @@ class TestEmailFormat(unittest.TestCase):
         setRoles(portal, TEST_USER_ID, ['Manager'])
         setRoles(portal, TEST_USER_NAME, ['Manager'])
         request = self.layer['request']
-        reviews = portal.reviews
+        reviews = portal["sample-reviews"]
         reviews.invokeFactory('Publication', id='pub', title='pub')
         publication = reviews.pub
         publication.invokeFactory('Volume', id='vol', title='vol')
