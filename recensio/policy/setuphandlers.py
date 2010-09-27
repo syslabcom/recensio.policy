@@ -3,7 +3,7 @@ from AccessControl.Permission import Permission
 from Products.CMFCore.utils import getToolByName
 from zope.component import getUtility, queryUtility
 from zope.interface import directlyProvides
- from logging import getLogger
+from logging import getLogger
 from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs,\
     createHierarchicalVocabs
 import transaction
