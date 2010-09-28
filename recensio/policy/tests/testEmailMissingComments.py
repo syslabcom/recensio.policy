@@ -29,7 +29,7 @@ Bis jetzt hat noch niemand auf Ihre Veröffentlichung geantwortet.
 Das ist schade!
 
 Vielleicht möchten Sie sich ihre Rezension mit ein wenig Abstand nochmal
-anschauen und sehen, ob Sie was überarbeiten können, um mehr Aufmerksamkeit
+anschauen und sehen, ob Sie etwas überarbeiten können, um mehr Aufmerksamkeit
 der Recensio.net Besucher zu bekommen.
 
 Auf Ihre Rezension kommen Sie übrigens über diesen Link:
