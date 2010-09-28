@@ -217,8 +217,11 @@ recensio.net ist ein DFG-gefördertes Angebot der Bayerischen Staatsbibliothek, 
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
-        authors = getattr(self.context, 'authors', [{'firstname' : '',\
-                                                     'lastname' : 'unknown'}])
+        authors = list(getattr(self.context, 'authors', [{'firstname' : '',\
+                                                     'lastname' : 'unknown'}]))
+        referenceAuthors = getattr(self.context, 'referenceAuthors', [])
+        authors.extend(referenceAuthors)
+
         for author in authors:
             args = {}
             fuckup = [author['firstname'], author['lastname']]
@@ -245,7 +248,7 @@ Bis jetzt hat noch niemand auf Ihre Veröffentlichung geantwortet.
 Das ist schade!
 
 Vielleicht möchten Sie sich ihre Rezension mit ein wenig Abstand nochmal
-anschauen und sehen, ob Sie was überarbeiten können, um mehr Aufmerksamkeit
+anschauen und sehen, ob Sie etwas überarbeiten können, um mehr Aufmerksamkeit
 der Recensio.net Besucher zu bekommen.
 
 Auf Ihre Rezension kommen Sie übrigens über diesen Link:
