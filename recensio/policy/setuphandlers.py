@@ -33,7 +33,7 @@ mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
 
 imported_content = ['ansprechpartner', 'autoren', 'benutzerrichtlinien', 'copyright',
         'konzept', 'mitmachen-bei-recensio.net', 'themen-epochen-regionen',
-        'zeitschriften', 'zitierhinweise', 'images']
+        'zeitschriften', 'zitierhinweise', 'images', 'RSS-feeds']
 
 portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,

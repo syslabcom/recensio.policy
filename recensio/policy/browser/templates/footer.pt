@@ -54,13 +54,13 @@
     <div class="column_footer">
         <h2><a href="/RSS-feeds" tal:attributes="href context/RSS-feeds/absolute_url | nothing">RSS feeds</a></h2>
         <ul>
-            <li tal:define="feed string:${context/RSS-feeds/new_reviews/absolute_url}/RSS | nothing">
+            <li tal:define="feed string:${context/RSS-feeds/new_reviews/absolute_url | nothing}/RSS">
                 <a href="#" tal:attributes="href feed">
                     <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
                 </a>
                 <a href="#" tal:attributes="href feed">Neue Rezensionen</a>
             </li>
-            <li tal:define="feed string:${context/RSS-feeds/new_presentations/absolute_url}/RSS | nothing">
+            <li tal:define="feed string:${context/RSS-feeds/new_presentations/absolute_url | nothing}/RSS">
                 <a href="#" tal:attributes="href feed">
                     <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
                 </a>
