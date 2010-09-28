@@ -34,6 +34,14 @@
     />
 
   <browser:page
+    name="notify_author_new_comment"
+    for="plone.app.discussion.interfaces.IComment"
+    class=".email.MailNewComment"
+    layer="recensio.theme.interfaces.IRecensioLayer"
+    permission="zope2.View"
+    />
+
+  <browser:page
     for="recensio.policy.interfaces.INewsletterSource"
     name="mail_uncommented_presentations"
     class=".email.MailUncommented"

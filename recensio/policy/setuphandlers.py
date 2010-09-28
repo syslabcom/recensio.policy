@@ -186,27 +186,48 @@ def setUpCollections(context):
     criterion.setValue(1)
 
 @guard
-def addWorkflowScripts(context):
-    site = context.getSite()
-    pwt = getToolByName(site, 'portal_workflow')
-    spw = getattr(pwt, 'simple_publication_workflow')
-    spw_scripts = spw.scripts
-    id = 'handle_change'
-    if not getattr(spw_scripts, id, None):
-        spw_scripts.manage_addProduct['PythonScripts'].manage_addPythonScript(
-            id=id)
-    body = """
+def addWorkflowScriptsForComments(context):
+    script = """
+browser_view = info.object.restrictedTraverse('@@notify_author_new_comment')
+browser_view()
+"""
+    addWorkflowScripts(
+        context,
+        wf_name = 'comment_review_workflow',
+        script_name = 'send_notification',
+        script_contents = script,
+        after_transitions_to_hook_in = ['publish']
+    )
+
+@guard
+def addWorkflowScriptsForRegularContent(context):
+    script = """
 rwh = context.restrictedTraverse('@@recensio_workflow_helper')
 rwh.handleTransition(info)
 """
-    params = "info"
-    script = getattr(spw_scripts, id)
-    script.ZPythonScript_edit(params, body)
+    addWorkflowScripts(
+        context,
+        wf_name = 'simple_publication_workflow',
+        script_name = 'handle_change',
+        script_contents = script,
+        after_transitions_to_hook_in = ['submit', 'publish']
+    )
 
-    submit = getattr(spw.transitions, 'submit')
-    submit.after_script_name = id
-    publish = getattr(spw.transitions, 'publish')
-    publish.after_script_name = id
+def addWorkflowScripts(context, wf_name, script_name, script_contents, \
+        after_transitions_to_hook_in):
+    portal_workflow_tool = getToolByName(context.getSite(), 'portal_workflow')
+    workflow = getattr(portal_workflow_tool, wf_name)
+    wf_scripts = workflow.scripts
+    if not getattr(wf_scripts, script_name, None):
+        wf_scripts.manage_addProduct['PythonScripts'].manage_addPythonScript(
+            id=script_name)
+    params = "info"
+    script = getattr(wf_scripts, script_name)
+    script.ZPythonScript_edit(params, script_contents)
+
+    for transition_id in after_transitions_to_hook_in:
+        transition = getattr(workflow.transitions, transition_id)
+        transition.after_script_name = script_name
 
 @guard
 def addCatalogIndexes(context):

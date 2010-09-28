@@ -153,6 +153,48 @@ class MailCollection(BrowserView):
                 messages.addStatusMessage(u"Mail sending will be prepared. Mail will be sent to %s" % mail_to, type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
+class MailNewComment(BrowserView):
+    msg_template = u'''Hallo %(author)s,
+
+es gibt einen neuen Kommentar auf eine Ihrer Rezensionen.
+
+Über %(url)s
+
+kommen Sie direkt auf die Rezension
+
+Mit freundlichen Grüßen,
+
+       Ihr Rezensio.net Team
+'''
+
+    def __init__(self, request, context):
+        super(BrowserView, self).__init__(request, context)
+        self.mailhost = getToolByName(self.context, 'MailHost')
+
+    def __call__(self):
+        root = getToolByName(self.context, 'portal_url').getPortalObject()
+        mail_info = IMailSchema(root)
+        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        authors = getattr(self.context, 'authors', [{'firstname' : '',\
+                                                     'lastname' : 'unknown'}])
+        args = {}
+        args['url'] = self.context.absolute_url()
+        args['author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
+        subject = "New comment on a rezension"
+        mail_to = self.findRecipient()
+        self.sendMail(self.msg_template % args, mail_from, mail_to, subject)
+
+    def sendMail(self, msg, mail_from, mail_to, subject):
+        self.mailhost.send(messageText=msg, mto=mail_to,
+                           mfrom=mail_from,
+                           subject=subject, charset='utf-8')
+
+    def findRecipient(self):
+        membership_tool = getToolByName(self.context, 'portal_membership')
+        owner = membership_tool.getMemberById(self.context.__parent__.__parent__.Creator()).getUser()
+        return owner.getProperty('email')
+
+
 class MailNewPublication(BrowserView):
     msg_template = u'''Sehr geehrter Herr %(reviewed_author)s,
 

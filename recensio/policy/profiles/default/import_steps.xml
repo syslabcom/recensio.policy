@@ -24,10 +24,14 @@
             handler="recensio.policy.setuphandlers.setUpCollections"
             description="Collection configuration for Recensio"
             title="recensio_collections" />
-    <import-step id="recensio_workflow_settings" version="20100621-01"
-            handler="recensio.policy.setuphandlers.addWorkflowScripts"
-            description="Workflow configuration for Recensio"
-            title="recensio_workflow" />
+    <import-step id="recensio_workflow_settings_comment" version="20100928-01"
+            handler="recensio.policy.setuphandlers.addWorkflowScriptsForComments"
+            description="Workflow configuration for Recensio comments"
+            title="recensio_workflow_comments" />
+    <import-step id="recensio_workflow_settings_content" version="20100928-01"
+            handler="recensio.policy.setuphandlers.addWorkflowScriptsForRegularContent"
+            description="Workflow configuration for Recensio content"
+            title="recensio_workflow_content" />
     <import-step id="recensio_policy_catalog_indexes" version="20100623-01"
             handler="recensio.policy.setuphandlers.addCatalogIndexes"
             description="Catalog Indexes for Recensio"
