@@ -41,6 +41,7 @@ def setupXDVTheme(context):
         u'^.*/@@babblechat.*$',       # Don't interfere with Babble
         u'^.*/@@render_chat_box',     # Don't interfere with Babble
         u'^.*/manage_addProduct/.*$', # Necesary for ZMI access.
+        u'^.*@@pageviewer$',          # Don't theme Pageviewer for Fancybox
         ]
 
     if settings.notheme != None:
