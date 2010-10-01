@@ -67,4 +67,9 @@
             handler="recensio.policy.setuphandlers.customizeWorkflowAndPermissions"
             description="Add custom workflow states and transmissions and connected permissions"
             title="Customize workflow and permissions" />
+    <import-step id="recensio_portal_tabs" version="20101001-01"
+            handler="recensio.policy.setuphandlers.fixPortalTabs"
+            description="Remove index_html from the default portal_actions/portal_tabs"
+            title="Fix Portal Tabs" />
+
 </import-steps>

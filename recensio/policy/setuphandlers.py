@@ -453,3 +453,12 @@ def customizeWorkflowAndPermissions(context):
             trans = list(trans)
             trans.append('delete')
             spw.states[state].transitions = tuple(trans)
+
+@guard
+def fixPortalTabs(self):
+    """ Remove index_html from the default portal_actions/portal_tabs """
+    site = self.getSite()
+    pat = getToolByName(site, 'portal_actions')
+    tabs = pat.get("portal_tabs")
+    if tabs and "index_html" in tabs.objectIds():
+        tabs.manage_delObjects("index_html")
