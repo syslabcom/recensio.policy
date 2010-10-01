@@ -1,17 +1,21 @@
 <?xml version="1.0"?>
 <object name="portal_properties" meta_type="Plone Properties Tool">
- <object name="site_properties" meta_type="Plone Property Sheet">
-  <!-- Fields that will be on the form after installation of the product -->
-  <property name="user_registration_fields" type="lines">
-   <element value="firstname" />
-   <element value="lastname" />
-   <element value="academic_title" />
-   <element value="username" />
-   <element value="email" />
-   <element value="preferred_language" />
-   <element value="declaration_of_identity" />
-   <element value="captcha" />
-   <element value="mail_me" />
-  </property>
- </object>
+  <object name="site_properties" meta_type="Plone Property Sheet">
+    <!-- Fields that will be on the form after installation of the product -->
+    <property name="user_registration_fields" type="lines">
+      <element value="lastname" />
+      <element value="academic_title" />
+      <element value="username" />
+      <element value="email" />
+      <element value="preferred_language" />
+      <element value="declaration_of_identity" />
+      <element value="captcha" />
+      <element value="mail_me" />
+    </property>
+    <property name="disable_folder_sections" type="boolean">True</property>
+    <property name="disable_nonfolderish_sections"
+              type="boolean">True</property>
+
+
+  </object>
 </object>
