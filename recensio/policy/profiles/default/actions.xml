@@ -393,7 +393,7 @@
  <object name="portal_tabs" meta_type="CMF Action Category">
   <property name="title"></property>
   <object name="authors" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="">Authors</property>
+   <property name="title" i18n:translate="label_tab_authors">Authors</property>
    <property name="description" i18n:translate=""></property>
    <property
       name="url_expr">string:${globals_view/navigationRootUrl}/autoren</property>
@@ -406,7 +406,7 @@
    <property name="visible">True</property>
   </object>
   <object name="themes" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="">Themes</property>
+   <property name="title" i18n:translate="label_tab_themes">Themes</property>
    <property name="description" i18n:translate=""></property>
    <property
       name="url_expr">string:${globals_view/navigationRootUrl}/themen-epochen-regionen</property>
@@ -419,7 +419,7 @@
    <property name="visible">True</property>
   </object>
   <object name="aboutus" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="">About us</property>
+   <property name="title" i18n:translate="label_tab_about_us">About us</property>
    <property name="description" i18n:translate=""></property>
    <property
       name="url_expr">string:${globals_view/navigationRootUrl}/ueberuns</property>
