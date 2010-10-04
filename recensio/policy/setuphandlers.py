@@ -23,7 +23,8 @@ from Products.Archetypes.interfaces.base import IBaseFolder
 from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.setuphandlers import VERSIONING_ACTIONS, ADD_POLICIES, DEFAULT_POLICIES
 from Products.DCWorkflow.Guard import Guard
-
+from Products.LinguaPlone.utils import linkTranslations
+from Products.LinguaPlone import AlreadyTranslated
 from collective.solr.interfaces import ISolrConnectionConfig
 
 log = getLogger('recensio.policy.setuphandlers.py')
@@ -31,9 +32,8 @@ log = getLogger('recensio.policy.setuphandlers.py')
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
 
-imported_content = ['ansprechpartner', 'autoren', 'benutzerrichtlinien', 'copyright',
-        'konzept', 'mitmachen-bei-recensio.net', 'themen-epochen-regionen',
-        'zeitschriften', 'zitierhinweise', 'images', 'RSS-feeds', 'beste-kommentare']
+imported_content = ['autoren', 'konzept', 'themen-epochen-regionen',
+        'zeitschriften', 'images', 'RSS-feeds', 'beste-kommentare']
 
 portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
@@ -321,6 +321,26 @@ def setViewsOnFolders(context):
             fp._delProperty(id)
         fp._setProperty(id=id, value='authorsearch', type='string')
 
+    autoren_en = getattr(portal, 'autoren-en', None)
+    if not autoren_en:
+        log.warning('Folder "autoren-en" not found on portal. Please run recensio.contenttypes.initial_content')
+    else:
+        fp = getattr(autoren_en, 'index_html')
+        id = 'layout'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='authorsearch', type='string')
+
+    autoren_fr = getattr(portal, 'autoren-fr', None)
+    if not autoren_fr:
+        log.warning('Folder "autoren-fr" not found on portal. Please run recensio.contenttypes.initial_content')
+    else:
+        fp = getattr(autoren_fr, 'index_html')
+        id = 'layout'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='authorsearch', type='string')
+
     themen = getattr(portal, 'themen-epochen-regionen', None)
     if not themen:
         log.warning('Folder "themen-epochen-regionen" not found on portal. Please run recensio.contenttypes.initial_content')
@@ -349,21 +369,50 @@ def doSetLanguage(obj, language):
             doSetLanguage(item, language)
 
 @guard
-def makeImportedContentGerman(context):
+def setImportedContentLanguages(context):
     portal = context.getSite()
     for id in imported_content:
-        ob = getattr(portal, id, None)
+        ob = portal.unrestrictedTraverse(id, None)
         if not ob:
-            log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
+            log.warning('Object %s not found. Please run import step "Recensio initial content"' % (id))
             continue
         if id not in ['images']:
             language = 'de'
         else:
             language = ''
         doSetLanguage(ob, language)
-        
-    portal.setLanguage('de')
 
+        def translate_folder(path, language, path_trans, lang_trans):
+            ob = portal.unrestrictedTraverse(path, None)
+            ob_trans = portal.unrestrictedTraverse(path_trans, None)
+            for item in ob.objectIds():
+                subob = ob.unrestrictedTraverse(item, None)
+                subob_trans = ob_trans.unrestrictedTraverse(item, None)
+                if not subob_trans:
+                    log.warning('Object %s not found. No translation for %s will be set' % ("/".join(path_trans + [item]), lang_trans))
+                else:
+                    if not subob.hasTranslation(lang_trans):
+                        linkTranslations(portal, [[(path + [item], language), (path_trans + [item], lang_trans)]])
+                        log.debug('Setting translation for %s (%s): %s (%s)' % (path + [item], language, path_trans + [item], lang_trans))
+                        if subob and subob.portal_type == 'Folder':
+                            translate_folder(path + [item], language, path_trans + [item], lang_trans)
+                    else:
+                        log.warning('%s is already translated into %s!' % path,lang_trans)
+
+        if language:
+            for lang_trans in ['en', 'fr']:
+                id_trans = id + '-' + lang_trans
+                ob_trans = portal.unrestrictedTraverse(id_trans, None)
+                if ob_trans:
+                    if not ob.hasTranslation(lang_trans):
+                        linkTranslations(portal, [[([id], language), ([id_trans], lang_trans)]])
+                        if ob.portal_type == 'Folder':
+                            translate_folder([id], language, [id_trans], lang_trans)
+                    else:
+                        log.warning('%s is already translated into %s!' % (id,lang_trans))
+                else:
+                    log.warning('Object %s not found. No translation for %s will be set' % (id_trans, lang_trans))
+    portal.setLanguage('de')
 
 def doPublish(obj, pwt):
     try:
@@ -380,11 +429,14 @@ def publishImportedContent(context):
     portal = context.getSite()
     pwt = getToolByName(portal, 'portal_workflow')
     for id in imported_content:
-        obj = getattr(portal, id, None)
-        if not obj:
-            log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
-            continue
-        doPublish(obj, pwt)
+        for lang in ['', 'en', 'fr']:
+            if lang:
+                id = id + '-' + lang
+            obj = getattr(portal, id, None)
+            if not obj:
+                log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
+                continue
+            doPublish(obj, pwt)
 
 @guard
 def setVersionedTypes(context):

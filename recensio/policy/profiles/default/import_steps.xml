@@ -44,10 +44,10 @@
             handler="recensio.policy.setuphandlers.setupHomepage"
             description="Set up the home page"
             title="Set up the home page" />
-    <import-step id="recensio_policy_make_content_german" version="20100824-01"
-            handler="recensio.policy.setuphandlers.makeImportedContentGerman"
-            description="Make imported content German"
-            title="Make imported content German" />
+    <import-step id="recensio_policy_set_content_languages" version="20100824-01"
+            handler="recensio.policy.setuphandlers.setImportedContentLanguages"
+            description="Set languages of imported content"
+            title="Set imported content languages" />
     <import-step id="recensio_policy_publish_imported_content" version="20100824-01"
             handler="recensio.policy.setuphandlers.publishImportedContent"
             description="Publish imported content"
