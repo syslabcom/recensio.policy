@@ -24,7 +24,7 @@
     <div class="column_footer">
         <h2><a href="#" tal:attributes="href context/themen-epochen-regionen/absolute_url | nothing">Themen <span>&bull;</span> Epochen <span>&bull;</span> Regionen</a></h2>
         <ul>
-            <li tal:repeat="link view/drill_down_views">
+            <li tal:repeat="link view/drill_down_views | nothing">
                 <a href="#"
                     tal:attributes="href link/url"
                     tal:content="link/title">Topic</a>
@@ -66,7 +66,7 @@
                 </a>
                 <a href="#" tal:attributes="href feed">Neue Präsentationen</a>
             </li>
-            <li tal:define="feed string:${context/RSS-feeds/new_discussions/absolute_url}/RSS">
+            <li tal:define="feed string:${context/RSS-feeds/new_discussions/absolute_url | nothing}/RSS">
                 <a href="#" tal:attributes="href feed">
                     <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
                 </a>
