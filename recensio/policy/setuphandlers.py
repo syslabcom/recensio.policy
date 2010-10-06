@@ -24,7 +24,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFEditions.setuphandlers import VERSIONING_ACTIONS, ADD_POLICIES, DEFAULT_POLICIES
 from Products.DCWorkflow.Guard import Guard
 from Products.LinguaPlone.utils import linkTranslations
-from Products.LinguaPlone import AlreadyTranslated
+from Products.LinguaPlone.public import AlreadyTranslated
 from collective.solr.interfaces import ISolrConnectionConfig
 
 log = getLogger('recensio.policy.setuphandlers.py')
