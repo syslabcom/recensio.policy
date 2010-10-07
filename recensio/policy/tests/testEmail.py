@@ -23,12 +23,20 @@ class TestEmailFormat(unittest.TestCase):
     def testFormat(self):
         expected_mail = u'''Liebe Abonnenten,
 
-wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net
-informieren zu können.
+wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net informieren zu können.
 
-Angenehmes Stöbern und Entdecken wünscht Ihnen Ihre recensio.net-Redaktion.
+Angenehmes Stöbern und Entdecken wünscht Ihnen
+Ihre recensio.net-Redaktion.
 
-Neue Rezensionen ...
+Dear subscribers,
+
+It’s time again for your monthly digest of news from recensio.net.
+
+We hope you will enjoy browsing our platform and discovering its content.
+Your recensio.net editorial team
+
+
+Neue Rezensionen / New reviews ...
 
 Zeitschrift 1
 
@@ -54,7 +62,7 @@ Zeitschrift 2
     ----------------------------------------
 
 
-Neue Präsentationen ...
+Neue Präsentationen / New presentations ...
 
     Präsentationen von Aufsätzen
 
@@ -108,8 +116,9 @@ Neue Präsentationen ...
         http://nohost/plone/RSS-feeds/new_presentations
 
 
-Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
-des vergangenen Monats:
+Verfolgen Sie die Diskussion über / Follow the discussion on ...
+... die meistkommentierten Präsentationen des vergangenen Monats:
+... the presentations most commented on over the course of the past months:
 
 test title (1 Kommentar)
 (http://nohost...)
