@@ -4,7 +4,7 @@
 <tal:block define="userHasReplyPermission view/can_reply;
                    isAnonymousDiscussionAllowed view/anonymous_discussion_allowed;
                    isAnon view/is_anonymous;
-                   canManage view/can_manage;
+                   canManage view/can_review;
                    replies python:view.get_replies(canManage);
                    has_replies python:view.has_replies(canManage);
                    showCommenterImage view/show_commenter_image;
@@ -94,7 +94,7 @@
                           action=""
                           method="post"
                           style="display: inline;"
-                          tal:condition="view/can_manage"
+                          tal:condition="view/can_review"
                           tal:attributes="action string:${reply/absolute_url}/@@moderate-delete-comment">
                         <input name="form.button.DeleteComment"
                                class="destructive"
