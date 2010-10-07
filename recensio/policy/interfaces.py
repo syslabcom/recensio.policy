@@ -41,21 +41,32 @@ class INewsletterSettings(Interface):
                                 description = _(u'description_mailsettings_mail_template', default=u'The container for the complete template, Variable expansion will be applied. Provide the following slots: a b c'),
                                 default = u"""Liebe Abonnenten,
 
-wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net
-informieren zu können.
+wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net informieren zu können.
 
-Angenehmes Stöbern und Entdecken wünscht Ihnen Ihre recensio.net-Redaktion.
+Angenehmes Stöbern und Entdecken wünscht Ihnen
+Ihre recensio.net-Redaktion.
 
-Neue Rezensionen ...
+
+Dear subscribers,
+
+It’s time again for your monthly digest of news from recensio.net.
+
+We hope you will enjoy browsing our platform and discovering its content.
+Your recensio.net editorial team
+
+
+Neue Rezensionen / New reviews ...
 
 %(new_reviews)s
 
 
-Neue Präsentationen ...
+Neue Präsentationen / New presentations ...
 %(new_presentations)s
 
-Verfolgen Sie die Diskussion über die meistkommentierten Präsentationen
-des vergangenen Monats:
+Verfolgen Sie die Diskussion über / Follow the discussion on ...
+... die meistkommentierten Präsentationen des vergangenen Monats:
+... the presentations most commented on over the course of the past months:
+
 %(new_discussions)s
 """)
     subject = schema.TextLine(title = _('Subject'),
@@ -69,7 +80,7 @@ des vergangenen Monats:
 
 %(Description)s
 
-Created on: %(created)s
+Erstellt am: / Created on: %(created)s
 --------------------------------------------
 """)
     # This template will be used for IATTopics, that implement the
@@ -79,7 +90,7 @@ Created on: %(created)s
 
 %(Description)s
 
-Last discussed on: %(last_comment_date)s
+Zuletzt kommentiert am: / Last discussed on: %(last_comment_date)s
 --------------------------------------------
 """)
 

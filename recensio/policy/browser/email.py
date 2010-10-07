@@ -12,6 +12,7 @@ from zope.component import getUtility
 
 from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings, IDiscussionCollections
+from Acquisition import aq_parent
 
 log = logging.getLogger()
 
@@ -25,16 +26,17 @@ class MailCollection(BrowserView):
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
+        self.ts = getToolByName(self.context, 'translation_service')
 
     def getNewReviews(self):
         magazines = {}
         for result in self.context.new_reviews.queryCatalog():
             obj = result.getObject()
-            mag_title = obj.get_publication_title()
+            mag_title = obj.get_publication_title().decode('utf-8')
             if not magazines.has_key(mag_title):
                 magazines[mag_title] = []
             magazines[mag_title].append(obj)
-        retval = ''
+        retval = u''
         mag_keys = magazines.keys()
         mag_keys.sort()
         for mag_title in mag_keys:
@@ -42,13 +44,13 @@ class MailCollection(BrowserView):
             retval += mag_title
             for i, result in enumerate(mag_results):
                 if i < 3:
-                    msg = u'\n\n    %s (%s)\n\n    %s' % (result.Title(), \
+                    msg = '\n\n    %s (%s)\n\n    %s\n\n' % (result.Title(), \
                                              result.absolute_url(),\
                                              '-' * 40)
                     retval += msg
                 if i == 3:
-                    msg = u'\n\n    Weitere Ergebnisse finden Sie hier:\n    %s\n\n' % \
-                        self.context.new_reviews.absolute_url()
+                    msg = "    " + self.ts.translate(_('more_results_here'), context=self.context) % \
+                        self.context.new_reviews.absolute_url() + "\n\n"
                     retval += msg
                     break
         return retval
@@ -56,32 +58,36 @@ class MailCollection(BrowserView):
     def getComments(self):
         retval = ''
         for result in self.context.new_discussions.queryCatalog():
-            retval += '\n%s (%s Kommentar%s)\n(%s)\n' % (result.Title, \
+            retval += '\n%s (%s %s)\n(%s)\n' % (result.Title, \
                 result.total_comments, \
-                result.total_comments != '1' and 's' or '', \
+                result.total_comments != '1' and self.ts.translate(_('comments'), context=self.context) or self.ts.translate(_('comment'), context=self.context), \
                 result.getURL())
         return retval
 
     def getNewPresentations(self):
-        presentations = {u'Präsentationen von Monographien' : [],
-                         u'Präsentationen von Aufsätzen' : [],
-                         u'Präsentationen von Internetressourcen' : []}
+        key_monographs = self.ts.translate(_('presentations_of_monographs'), context=self.context)
+        key_articles = self.ts.translate(_('presentations_of_articles'), context=self.context)
+        key_onlineres = self.ts.translate(_('presentations_of_online_resources'), context=self.context)
+        
+        presentations = {key_monographs : [],
+                         key_articles : [],
+                         key_onlineres : []}
 
         formatted_result = lambda x: u'\n\n        %s (%s)\n\n        %s' % \
             (x.Title, x.getURL(), '-' * 36)
 
         for result in self.context.new_presentations.queryCatalog():
             if result.portal_type == 'Presentation Article Review':
-                presentations[u'Präsentationen von Aufsätzen']\
+                presentations[key_articles]\
                     .append(formatted_result(result))
             elif result.portal_type == 'Presentation Collection':
-                presentations[u'Präsentationen von Aufsätzen']\
+                presentations[key_articles]\
                     .append(formatted_result(result))
             elif result.portal_type == 'Presentation Monograph':
-                presentations[u'Präsentationen von Monographien']\
+                presentations[key_monographs]\
                     .append(formatted_result(result))
             elif result.portal_type == 'Presentation Online Resource':
-                presentations[u'Präsentationen von Internetressourcen']\
+                presentations[key_onlineres]\
                     .append(formatted_result(result))
             else:
                 assert False, "Unknown new content type, fix me"
@@ -89,7 +95,7 @@ class MailCollection(BrowserView):
         presentation_keys.sort()
         for key in presentation_keys:
             if len(presentations[key]) > 3:
-                presentations[key][3] = u'\n\n        Weitere Ergebnisse finden Sie hier:\n        %s\n' % self.context.new_presentations.absolute_url()
+                presentations[key][3] = "\n\n    " + self.ts.translate(_('more_results_here'), context=self.context) % self.context.new_presentations.absolute_url() + "\n\n"
                 presentations[key] = presentations[key][:4]
         retval = ''
         for key in presentations.keys():
@@ -150,44 +156,48 @@ class MailCollection(BrowserView):
                 for error in self.errors:
                     messages.addStatusMessage(error, type='error')
             else:
-                messages.addStatusMessage(u"Mail sending will be prepared. Mail will be sent to %s" % mail_to, type="info")
+                messages.addStatusMessage(self.ts.translate(_('mail_sending_prepared'), context=self.context) % mail_to, type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
 class MailNewComment(BrowserView):
-    msg_template = u'''Hallo %(author)s,
-
-es gibt einen neuen Kommentar auf eine Ihrer Rezensionen.
-
-Über %(url)s
-
-kommen Sie direkt auf die Rezension
-
-Mit freundlichen Grüßen,
-
-       Ihr Rezensio.net Team
-'''
-
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
+        self.ts = getToolByName(self.context, 'translation_service')
 
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
-        authors = getattr(self.context, 'authors', [{'firstname' : '',\
-                                                     'lastname' : 'unknown'}])
+
+        comment = self.context
+        conversation = aq_parent(comment)
+        review = aq_parent(conversation)
+
+        authors = getattr(review, 'authors', [{'firstname' : '',\
+                                               'lastname' : 'unknown'}])
         args = {}
-        args['url'] = self.context.absolute_url()
-        args['author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
-        subject = "New comment on a rezension"
+        args['url'] = review.absolute_url()
+        args['author'] = u' '.join([x.decode('utf-8') for x in [review.reviewAuthorFirstname, review.reviewAuthorLastname]])
+        args['date'] = review.created().strftime('%d.%m.%Y')
+        args['title'] = review.Title()
+        args['commenter'] = comment.author_name
+        args['commentdate'] = comment.creation_date.strftime('%d.%m.%Y')
+        args['mail_from'] = mail_from
+
+        subject = self.ts.translate(_('mail_new_comment_subject'), context=self.context)
         mail_to = self.findRecipient()
-        self.sendMail(self.msg_template % args, mail_from, mail_to, subject)
+        msg_template = self.ts.translate(_('mail_new_comment_body'), context=self.context)
+        self.sendMail(msg_template % args, mail_from, mail_to, subject)
 
     def sendMail(self, msg, mail_from, mail_to, subject):
-        self.mailhost.send(messageText=msg, mto=mail_to,
-                           mfrom=mail_from,
-                           subject=subject, charset='utf-8')
+        if mail_to:
+            self.mailhost.send(messageText=msg, mto=mail_to,
+                               mfrom=mail_from,
+                               subject=subject, charset='utf-8')
+        else:
+            messages = IStatusMessage(self.request)
+            messages.addStatusMessage(self.ts.translate(_('mail_no_recipients'), context=self.context), type="warning")
 
     def findRecipient(self):
         membership_tool = getToolByName(self.context, 'portal_membership')
@@ -196,25 +206,13 @@ Mit freundlichen Grüßen,
 
 
 class MailNewPublication(BrowserView):
-    msg_template = u'''Sehr geehrter Herr %(reviewed_author)s,
-
-vor Kurzem ist eine Schrift zum Thema %(title)s %(subtitle)s erschienen. Der Autor %(review_author)s hat diese Schrift auf der Rezensionsplattform recensio.net präsentiert und gibt an, sich mit Ihren Forschungen auseinandergesetzt zu haben.
-
-Sie können die Präsentation hier einsehen und haben zugleich die Gelegenheit, die präsentierten Thesen zu kommentieren. Dafür ist eine kurze, kostenlose Registrierung mit Namen und E-Mail-Adresse notwendig, die lediglich dazu dient, Missbrauch der Kommentarfunktion zu verhindern und den wissenschaftlichen Anspruch der Plattform zu wahren.
-
-Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: %(mail_from)s.
-
-Mit freundlichen Grüßen,
-Ihr recensio.net-Team
-
-recensio.net ist ein DFG-gefördertes Angebot der Bayerischen Staatsbibliothek, des Deutschen Historischen Instituts Paris und des Instituts für Europäische Geschichte Mainz. Weitere Informationen finden Sie unter %(concept_url)s'''
-    subject = u'Es wurde eine neue Rezension ihres Werkes %s veröffentlicht!'
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
 
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
+        ts = getToolByName(self.context, 'translation_service')
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         authors = list(getattr(self.context, 'authors', [{'firstname' : '',\
@@ -227,13 +225,18 @@ recensio.net ist ein DFG-gefördertes Angebot der Bayerischen Staatsbibliothek, 
             fuckup = [author['firstname'], author['lastname']]
             fuckup = [x.decode('utf-8') for x in fuckup]
             args['reviewed_author'] = u' '.join(fuckup)
+            if author.has_key('email'):
+                args['mail_to'] = author['email']
+            else:
+                args['mail_to'] = ts.translate(_('no_mail_address_available'), context=self.context)
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
             args['mail_from'] = mail_from.decode('utf-8')
             args['concept_url'] = root.konzept.absolute_url()
-            subject = self.subject % self.context.title
-            self.sendMail(self.msg_template % args, mail_from, subject)
+            subject = ts.translate(_('mail_new_publication_subject'), context=self.context) % args['title']
+            msg_template = ts.translate(_('mail_new_publication_body'), context=self.context)
+            self.sendMail(msg_template % args, mail_from, subject)
 
     def sendMail(self, msg, mail_from, subject):
         self.mailhost.send(messageText=msg, mto=mail_from,
@@ -241,27 +244,10 @@ recensio.net ist ein DFG-gefördertes Angebot der Bayerischen Staatsbibliothek, 
                            subject=subject, charset='utf-8')
 
 class MailUncommented(BrowserView):
-    subject = 'Ihre Rezension auf Rezensio.net'
-    msg_template = u'''Hallo %(name)s,
-
-Bis jetzt hat noch niemand auf Ihre Veröffentlichung geantwortet.
-Das ist schade!
-
-Vielleicht möchten Sie sich ihre Rezension mit ein wenig Abstand nochmal
-anschauen und sehen, ob Sie etwas überarbeiten können, um mehr Aufmerksamkeit
-der Recensio.net Besucher zu bekommen.
-
-Auf Ihre Rezension kommen Sie übrigens über diesen Link:
-%(url)s
-
-Mit freundlichen Grüßen,
-
-       Ihr Rezensio.net Team
-'''
-
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
+        self.ts = getToolByName(self.context, 'translation_service')
 
 
     def __call__(self):
@@ -276,18 +262,23 @@ Mit freundlichen Grüßen,
         msg = self.formatMessage(result)
         mail_to = self.findRecipient(result)
         mail_from = self.findSender()
+        subject = self.ts.translate(_('mail_uncommented_subject'), context=self.context)
         self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
-                           subject=self.subject, charset='utf-8')
+                           subject=subject, charset='utf-8')
 
     def formatMessage(self, result):
         title = result.Title
         owner_name = result.Creator
         url = result.getURL()
+        date = result.created.strftime('%d.%m.%Y')
+        msg_template = self.ts.translate(_('mail_uncommented_body'), context=self.context)
 
-        return self.msg_template % {'name' : owner_name,
+        return msg_template % {'name' : owner_name,
                                     'url' : url,
-                                    'title' : title}
+                                    'title' : title,
+                                    'date' : date,
+                                    'mail_from' : self.findSender() }
 
     def findRecipient(self, result):
         membership_tool = getToolByName(self.context, 'portal_membership')
