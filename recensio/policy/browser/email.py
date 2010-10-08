@@ -41,16 +41,16 @@ class MailCollection(BrowserView):
         mag_keys.sort()
         for mag_title in mag_keys:
             mag_results = magazines[mag_title]
-            retval += mag_title
+            retval += '    ' + mag_title
             for i, result in enumerate(mag_results):
                 if i < 3:
-                    msg = '\n\n    %s (%s)\n\n    %s\n\n' % (result.Title(), \
+                    msg = '\n\n        %s (%s)\n\n    %s' % (result.Title(), \
                                              result.absolute_url(),\
-                                             '-' * 40)
+                                             '    ' + '-' * 40)
                     retval += msg
                 if i == 3:
-                    msg = "    " + self.ts.translate(_('more_results_here'), context=self.context) % \
-                        self.context.new_reviews.absolute_url() + "\n\n"
+                    msg = '\n\n        ' + self.ts.translate(_('more_results_here'), context=self.context) + '\n        ' +\
+                        self.context.new_reviews.absolute_url() + '\n\n'
                     retval += msg
                     break
         return retval
@@ -58,10 +58,10 @@ class MailCollection(BrowserView):
     def getComments(self):
         retval = ''
         for result in self.context.new_discussions.queryCatalog():
-            retval += '\n%s (%s %s)\n(%s)\n' % (result.Title, \
+            retval += '    %s (%s %s)\n    (%s)\n\n' % (result.Title, \
                 result.total_comments, \
-                result.total_comments != '1' and self.ts.translate(_('comments'), context=self.context) or self.ts.translate(_('comment'), context=self.context), \
-                result.getURL())
+                result.total_comments != '1' and self.ts.translate(_('comments'), context=self.context) \
+                    or self.ts.translate(_('comment'), context=self.context), result.getURL())
         return retval
 
     def getNewPresentations(self):
@@ -95,11 +95,11 @@ class MailCollection(BrowserView):
         presentation_keys.sort()
         for key in presentation_keys:
             if len(presentations[key]) > 3:
-                presentations[key][3] = "\n\n    " + self.ts.translate(_('more_results_here'), context=self.context) % self.context.new_presentations.absolute_url() + "\n\n"
+                presentations[key][3] = "\n\n        " + self.ts.translate(_('more_results_here'), context=self.context) + '\n        ' + self.context.new_presentations.absolute_url() + "\n\n"
                 presentations[key] = presentations[key][:4]
         retval = ''
         for key in presentations.keys():
-            retval += u'\n    ' + key
+            retval += u'    ' + key
             for result in presentations[key]:
                 retval += result
         return retval
@@ -209,10 +209,10 @@ class MailNewPublication(BrowserView):
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
+        self.ts = getToolByName(self.context, 'translation_service')
 
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
-        ts = getToolByName(self.context, 'translation_service')
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         authors = list(getattr(self.context, 'authors', [{'firstname' : '',\
@@ -228,14 +228,14 @@ class MailNewPublication(BrowserView):
             if author.has_key('email'):
                 args['mail_to'] = author['email']
             else:
-                args['mail_to'] = ts.translate(_('no_mail_address_available'), context=self.context)
+                args['mail_to'] = self.ts.translate(_('no_mail_address_available'), context=self.context)
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
             args['mail_from'] = mail_from.decode('utf-8')
             args['concept_url'] = root.konzept.absolute_url()
-            subject = ts.translate(_('mail_new_publication_subject'), context=self.context) % args['title']
-            msg_template = ts.translate(_('mail_new_publication_body'), context=self.context)
+            subject = self.ts.translate(_('mail_new_publication_subject'), context=self.context) % args['title']
+            msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
             self.sendMail(msg_template % args, mail_from, subject)
 
     def sendMail(self, msg, mail_from, subject):

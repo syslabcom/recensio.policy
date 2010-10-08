@@ -28,6 +28,7 @@ wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net informier
 Angenehmes Stöbern und Entdecken wünscht Ihnen
 Ihre recensio.net-Redaktion.
 
+
 Dear subscribers,
 
 It’s time again for your monthly digest of news from recensio.net.
@@ -38,28 +39,28 @@ Your recensio.net editorial team
 
 Neue Rezensionen / New reviews ...
 
-Zeitschrift 1
+    Zeitschrift 1
 
-    Test ReviewMonograph No 0 (http://nohost...)
+        Test ReviewMonograph No 0 (http://nohost...)
 
-    ----------------------------------------
+        ----------------------------------------
 
-    Test ReviewMonograph No 1 (http://nohost...)
+        Test ReviewMonograph No 1 (http://nohost...)
 
-    ----------------------------------------
+        ----------------------------------------
 
-    Test ReviewMonograph No 2 (http://nohost...)
+        Test ReviewMonograph No 2 (http://nohost...)
 
-    ----------------------------------------
+        ----------------------------------------
 
-    Weitere Ergebnisse finden Sie hier:
-    http://nohost/plone/RSS-feeds/new_reviews
+        Weitere Ergebnisse finden Sie hier:
+        http://nohost/plone/RSS-feeds/new_reviews
 
-Zeitschrift 2
+    Zeitschrift 2
 
-    test title (http://nohost...)
+        test title (http://nohost...)
 
-    ----------------------------------------
+        ----------------------------------------
 
 
 Neue Präsentationen / New presentations ...
@@ -116,12 +117,15 @@ Neue Präsentationen / New presentations ...
         http://nohost/plone/RSS-feeds/new_presentations
 
 
+
+
 Verfolgen Sie die Diskussion über / Follow the discussion on ...
 ... die meistkommentierten Präsentationen des vergangenen Monats:
 ... the presentations most commented on over the course of the past months:
 
-test title (1 Kommentar)
-(http://nohost...)
+    test title (1 Kommentar)
+    (http://nohost...)
+
 
 '''
         portal = self.layer['portal']

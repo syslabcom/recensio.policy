@@ -61,7 +61,9 @@ Neue Rezensionen / New reviews ...
 
 
 Neue Präsentationen / New presentations ...
+
 %(new_presentations)s
+
 
 Verfolgen Sie die Diskussion über / Follow the discussion on ...
 ... die meistkommentierten Präsentationen des vergangenen Monats:

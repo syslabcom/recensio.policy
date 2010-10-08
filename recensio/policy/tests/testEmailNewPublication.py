@@ -24,13 +24,13 @@ class TestEmailFormat(unittest.TestCase):
 
     def testFormat(self):
         expected_mail = u'''Liebe Redaktion,
-Die folgende Mail wurde generiert zur Benachrichtigung von %(reviewed_author)s. Bitte prüfen Sie sie und leiten sie ggf. weiter an
+Die folgende Mail wurde generiert zur Benachrichtigung von Fürchtegott Hubermüller. Bitte prüfen Sie sie und leiten sie ggf. weiter an
 
 ...
 
 **********
 
-Dear Mr %(reviewed_author)s,
+Dear Mr Fürchtegott Hubermüller,
 
 Recently a text on the topic Test ReviewMonograph No 0 Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 was published.
 Its author \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 has presented the text on the review platform recensio.net and states that he/she has dealt with your research.
