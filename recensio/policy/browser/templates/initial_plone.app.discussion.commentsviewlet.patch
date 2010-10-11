@@ -1,0 +1,98 @@
+--- /home/cillian/Syslab/recensio.net/parts/omelette/plone/app/discussion/browser/comments.pt	2010-10-11 14:23:09.000000000 +0200
++++ comments.pt	2010-10-11 14:13:53.000000000 +0200
+@@ -22,10 +22,10 @@
+                    />
+         </form>
+     </div>
+-<BREAK ZPTLINT
++
+     <div class="discussion"
+          tal:attributes="class python: showCommenterImage and 'discussion showCommenterImage' or 'discussion';"
+-         tal:condition="has_replies">
++         tal:condition="python:replies or (userHasReplyPermission and isDiscussionAllowed) or (isAnon and not userHasReplyPermission and isDiscussionAllowed)">
+         <tal:getreplies repeat="reply_dict replies">
+ 
+             <div class="comment"
+@@ -62,7 +62,7 @@
+                 <h3 class="commentTitle"
+                     tal:content="reply/Title" />
+ 
+-                <div class="documentByLine" i18n:domain="plone.app.discussion">
++                <div class="documentByLine">
+                         <tal:posted i18n:translate="label_comment_by">Posted by</tal:posted>
+                         <tal:name>
+                             <a href=""
+@@ -81,11 +81,11 @@
+                 </div>
+ 
+                 <div class="commentBody"
+-                     tal:content="structure python:view.cook(reply.getText())" />
++                     tal:content="reply/getText" />
+ 
+                 <div class="commentActions">
+                     <button class="context reply-to-comment-button hide allowMultiSubmit"
+-                            tal:condition="python:isDiscussionAllowed and (isAnon and isAnonymousDiscussionAllowed or userHasReplyPermission)"
++                            tal:condition="python:userHasReplyPermission and isDiscussionAllowed or isAnonymousDiscussionAllowed"
+                             i18n:translate="label_reply">
+                         Reply
+                     </button>
+@@ -94,7 +94,7 @@
+                           action=""
+                           method="post"
+                           style="display: inline;"
+-                          tal:condition="canManage"
++                          tal:condition="view/can_manage"
+                           tal:attributes="action string:${reply/absolute_url}/@@moderate-delete-comment">
+                         <input name="form.button.DeleteComment"
+                                class="destructive"
+@@ -109,7 +109,6 @@
+                           action=""
+                           method="get"
+                           style="display: inline;"
+-                          tal:condition="canManage"
+                           tal:repeat="action reply_dict/actions|nothing"
+                           tal:attributes="action string:${reply/absolute_url}/@@moderate-publish-comment;
+                                           name action/id">
+@@ -120,6 +119,12 @@
+                                tal:attributes="value action/title"
+                                i18n:attributes="value"
+                                />
++                        <a class="problematic_comment" href="mailto:"
++                            title="NOTIFICATION: possible problematic comment"
++                            tal:attributes="href string:mailto:${view/getMailTarget}?subject=${view/escaped_title}${reply/getId};
++                                            title string: ${view/title}${reply/getId}"
++                            i18n:translate="">Notify portal owner about this comment</a>
++            
+                     </form>
+ 
+                 </div>
+@@ -130,7 +135,7 @@
+     </div>
+ 
+     <div class="reply"
+-         tal:condition="python:isDiscussionAllowed and (isAnon and not isAnonymousDiscussionAllowed)">
++         tal:condition="python: isAnon and not isAnonymousDiscussionAllowed and has_replies">
+         <form tal:attributes="action view/login_action">
+             <input class="standalone"
+                    style="margin-bottom: 1.25em;"
+@@ -141,17 +146,17 @@
+         </form>
+     </div>
+ 
+-    <div id="commenting" class="reply" tal:condition="python:isDiscussionAllowed and (isAnon and isAnonymousDiscussionAllowed or userHasReplyPermission)">
++    <div id="commenting" class="reply" tal:condition="python: isAnon and isAnonymousDiscussionAllowed or not isAnon">
+ 
+         <fieldset>
+ 
+-            <legend i18n:translate="label_add_comment">Add comment</legend>
++            <legend i18n:translate="legend_add_comment">Add comment</legend>
+             <p i18n:translate="description_add_comment">
+                 You can add a comment by filling out the form below. Plain text
+                 formatting.
+             </p>
+ 
+-            <div tal:replace="structure view/form/render" />
++			<div tal:replace="structure view/form/render" />
+ 
+         </fieldset>
+     </div>
