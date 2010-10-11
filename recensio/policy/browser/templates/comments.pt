@@ -4,9 +4,9 @@
 <tal:block define="userHasReplyPermission view/can_reply;
                    isAnonymousDiscussionAllowed view/anonymous_discussion_allowed;
                    isAnon view/is_anonymous;
-                   canManage view/can_review;
-                   replies python:view.get_replies(canManage);
-                   has_replies python:view.has_replies(canManage);
+                   canReview view/can_review;
+                   replies python:view.get_replies(canReview);
+                   has_replies python:view.has_replies(canReview);
                    showCommenterImage view/show_commenter_image;
                    errors options/state/getErrors|nothing;
                    wtool context/@@plone_tools/workflow;">
@@ -25,7 +25,7 @@
 
     <div class="discussion"
          tal:attributes="class python: showCommenterImage and 'discussion showCommenterImage' or 'discussion';"
-         tal:condition="python:replies or (userHasReplyPermission and isDiscussionAllowed) or (isAnon and not userHasReplyPermission and isDiscussionAllowed)">
+         tal:condition="has_replies">
         <tal:getreplies repeat="reply_dict replies">
 
             <div class="comment"
@@ -38,7 +38,7 @@
                  tal:attributes="class python:'comment replyTreeLevel'+str(depth)+' state-'+str(review_state);
                                  style string:margin-left: ${depth}em;
                                  id string:${reply/getId}"
-                 tal:condition="python:canManage or review_state == 'published'">
+                 tal:condition="python:canReview or review_state == 'published'">
 
                 <div class="commentImage" tal:condition="showCommenterImage">
                     <a href="" tal:condition="has_author_link"
@@ -46,96 +46,95 @@
                          <img src="defaultUser.gif"
                               alt=""
                               border="0"
-                              width="75"
+                              height="32"
                               tal:attributes="src portrait_url;
                                               alt reply/Creator" />
                     </a>
                     <img src="defaultUser.gif"
                          alt=""
                          border="0"
-                         width="75"
+                         height="32"
                          tal:condition="not: has_author_link"
                          tal:attributes="src portrait_url;
                                          alt reply/Creator" />
                 </div>
-
-                <h3 class="commentTitle"
-                    tal:content="reply/Title" />
-
-                <div class="documentByLine">
-                        <tal:posted i18n:translate="label_comment_by">Posted by</tal:posted>
-                        <tal:name>
-                            <a href=""
-                               tal:condition="has_author_link"
-                               tal:content="reply/Creator"
-                               tal:attributes="href author_home_url">
-                                Poster Name
-                            </a>
-                            <span tal:condition="not: has_author_link"
-                                  tal:replace="reply/Creator" />
-                        </tal:name>
-                        <tal:name condition="python:reply.Creator() in ('Anonymous User', '', None)"
-                                  tal:content="reply/author_name">Anonymous User</tal:name>
-                        <tal:at i18n:translate="label_commented_at">at</tal:at>
-                    <span tal:replace="python:view.format_time(reply.modification_date)">8/23/2001 12:40:44 PM</span>
+                     
+                <div class="documentByLine" i18n:domain="plone.app.discussion">
+                    <tal:name>
+                        <a href=""
+                           tal:condition="has_author_link"
+                           tal:content="reply/Creator"
+                           tal:attributes="href author_home_url">
+                            Poster Name
+                        </a>
+                        <span tal:condition="not: has_author_link"
+                              tal:replace="reply/Creator" />
+                        <span tal:condition="not: reply/Creator">Anonymous</span>
+                    </tal:name>
+                    <tal:posted i18n:translate="label_says">says:</tal:posted>
+                    <div class="commentDate" 
+                         tal:content="python:view.format_time(reply.modification_date)">
+                         8/23/2001 12:40:44 PM
+                    </div>
                 </div>
-
-                <div class="commentBody"
-                     tal:content="reply/getText" />
-
-                <div class="commentActions">
-                    <button class="context reply-to-comment-button hide allowMultiSubmit"
-                            tal:condition="python:userHasReplyPermission and isDiscussionAllowed or isAnonymousDiscussionAllowed"
-                            i18n:translate="label_reply">
-                        Reply
-                    </button>
-
-                    <form name="delete"
-                          action=""
-                          method="post"
-                          style="display: inline;"
-                          tal:condition="view/can_review"
-                          tal:attributes="action string:${reply/absolute_url}/@@moderate-delete-comment">
-                        <input name="form.button.DeleteComment"
-                               class="destructive"
-                               type="submit"
-                               value="Delete"
-                               i18n:attributes="value label_delete;"
-                               />
-                    </form>
-
-                    <!-- Workflow actions (e.g. 'publish') -->
-                    <form name=""
-                          action=""
-                          method="get"
-                          style="display: inline;"
-                          tal:repeat="action reply_dict/actions|nothing"
-                          tal:attributes="action string:${reply/absolute_url}/@@moderate-publish-comment;
-                                          name action/id">
-                        <input type="hidden" name="workflow_action" tal:attributes="value action/id" />
-                        <input name="form.button.PublishComment"
-                               class="context"
-                               type="submit"
-                               tal:attributes="value action/title"
-                               i18n:attributes="value"
-                               />
-                        <a class="problematic_comment" href="mailto:"
-                            title="NOTIFICATION: possible problematic comment"
-                            tal:attributes="href string:mailto:${view/getMailTarget}?subject=${view/escaped_title}${reply/getId};
-                                            title string: ${view/title}${reply/getId}"
-                            i18n:translate="">Notify portal owner about this comment</a>
-            
-                    </form>
+                
+                <div class="commentBody">
+                
+                    <span tal:replace="structure python:view.cook(reply.getText())" />
+                
+                    <div class="commentActions">
+                        <form name="delete"
+                              action=""
+                              method="post"
+                              style="display: inline;"
+                              tal:condition="canReview"
+                              tal:attributes="action string:${reply/absolute_url}/@@moderate-delete-comment">
+                            <input name="form.button.DeleteComment"
+                                   class="destructive"
+                                   type="submit"
+                                   value="Delete"
+                                   i18n:attributes="value label_delete;"
+                                   />
+                        </form>
+    
+                        <!-- Workflow actions (e.g. 'publish') -->
+                        <form name=""
+                              action=""
+                              method="get"
+                              style="display: inline;"
+                              tal:condition="canReview"
+                              tal:repeat="action reply_dict/actions|nothing"
+                              tal:attributes="action string:${reply/absolute_url}/@@moderate-publish-comment;
+                                              name action/id">
+                            <input type="hidden" name="workflow_action" tal:attributes="value action/id" />
+                            <input name="form.button.PublishComment"
+                                   class="context"
+                                   type="submit"
+                                   tal:attributes="value action/title"
+                                   i18n:attributes="value"
+                                   />
+                            <a class="problematic_comment" href="mailto:"
+                               title="NOTIFICATION: possible problematic comment"
+                               tal:attributes="href string:mailto:${view/getMailTarget}?subject=${view/escaped_title}${reply/getId};
+                                               title string: ${view/title}${reply/getId}"
+                               i18n:translate="">Notify portal owner about this comment</a>
+                        </form>
+                    </div>
+                     
 
                 </div>
-
+                <button class="context reply-to-comment-button hide allowMultiSubmit"
+                        tal:condition="python:isDiscussionAllowed and (isAnon and isAnonymousDiscussionAllowed or userHasReplyPermission)"
+                        i18n:translate="label_reply">
+                    Reply
+                </button>
             </div>
 
         </tal:getreplies>
     </div>
 
     <div class="reply"
-         tal:condition="python: isAnon and not isAnonymousDiscussionAllowed and has_replies">
+         tal:condition="python:has_replies and (isAnon and not isAnonymousDiscussionAllowed)">
         <form tal:attributes="action view/login_action">
             <input class="standalone"
                    style="margin-bottom: 1.25em;"
@@ -146,17 +145,17 @@
         </form>
     </div>
 
-    <div id="commenting" class="reply" tal:condition="python: isAnon and isAnonymousDiscussionAllowed or not isAnon">
+    <div id="commenting" class="reply" tal:condition="python:isDiscussionAllowed and (isAnon and isAnonymousDiscussionAllowed or userHasReplyPermission)">
 
         <fieldset>
 
-            <legend i18n:translate="legend_add_comment">Add comment</legend>
+            <legend i18n:translate="label_add_comment">Add comment</legend>
             <p i18n:translate="description_add_comment">
                 You can add a comment by filling out the form below. Plain text
                 formatting.
             </p>
 
-			<div tal:replace="structure view/form/render" />
+            <div tal:replace="structure view/form/render" />
 
         </fieldset>
     </div>
