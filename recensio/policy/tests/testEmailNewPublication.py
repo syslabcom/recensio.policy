@@ -43,7 +43,7 @@ For any further information/questions please feel free to contact the recensio.n
 Yours sincerely
 The recensio.net editorial team
 
-recensio.net is a joint project of the Bavarian State Library (BSB) Munich, the German Historical Institute Paris (DHIP) and the Institute for European History (IEG) Mainz – funded by the German Research Foundation (DFG). Further information http://nohost/plone/konzept'''
+recensio.net is a joint project of the Bavarian State Library (BSB) Munich, the German Historical Institute Paris (DHIP) and the Institute for European History (IEG) Mainz – funded by the German Research Foundation (DFG). Further information http://nohost/plone/ueberuns/konzept'''
         expected_mail_de = u'''Sehr geehrter Herr Tadeusz Kot\u0142owski,
 
 vor Kurzem ist eine Schrift zum Thema Test ReviewMonograph No 0 Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 erschienen. Der Autor \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 hat diese Schrift auf der Rezensionsplattform recensio.net pr\xe4sentiert und gibt an, sich mit Ihren Forschungen auseinandergesetzt zu haben.

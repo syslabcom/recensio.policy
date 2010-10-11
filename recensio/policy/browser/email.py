@@ -233,7 +233,7 @@ class MailNewPublication(BrowserView):
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
             args['mail_from'] = mail_from.decode('utf-8')
-            args['concept_url'] = root.konzept.absolute_url()
+            args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             subject = self.ts.translate(_('mail_new_publication_subject'), context=self.context) % args['title']
             msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
             self.sendMail(msg_template % args, mail_from, subject)
