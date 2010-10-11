@@ -1,7 +1,7 @@
 <div id="footer" tal:define="portal context/portal_url">
    <img src="footer_bg_top.png" alt="grafisches Element" class='top'/>
    <div class="column_footer">
-        <h2><a tal:attributes="href context/rezensionen/absolute_url | nothing" href="#">Rezensionen</a></h2>
+        <h2><a tal:attributes="href context/rezensionen/absolute_url | nothing" href="#" i18n:translate="reviews">Rezensionen</a></h2>
         <ul tal:repeat="index python:range(3)" class="easyticker">
             <li tal:repeat="mag view/getPublications"
                 tal:attributes="style python: repeat['mag'].start and 'display: list-item' or 'display: None'">
