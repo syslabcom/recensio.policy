@@ -117,7 +117,7 @@
                                title="NOTIFICATION: possible problematic comment"
                                tal:attributes="href string:mailto:${view/getMailTarget}?subject=${view/escaped_title}${reply/getId};
                                                title string: ${view/title}${reply/getId}"
-                               i18n:translate="">Notify portal owner about this comment</a>
+                               i18n:translate="notify_portal_owner">Notify portal owner about this comment</a>
                         </form>
                     </div>
                      
