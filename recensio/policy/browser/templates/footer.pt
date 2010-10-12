@@ -32,7 +32,7 @@
         </ul>
     </div>
     <div class="column_footer">
-        <h2><a href="#" tal:attributes="href context/konzept/mitmachen-bei-recensio.net/absolute_url | nothing"  i18n:translate="participating_in_recensio_net">mitmachen bei recensio.net</a></h2>
+        <h2><a href="#" tal:attributes="href context/ueberuns/mitmachen-bei-recensio.net/absolute_url | nothing"  i18n:translate="participating_in_recensio_net">mitmachen bei recensio.net</a></h2>
         <ul tal:define="member context/@@plone_portal_state/member;
                         isAnon context/@@plone_portal_state/anonymous;
                         homefolder context/portal_membership/getHomeUrl">
