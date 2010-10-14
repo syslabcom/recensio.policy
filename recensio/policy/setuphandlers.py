@@ -32,8 +32,9 @@ log = getLogger('recensio.policy.setuphandlers.py')
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
 
-imported_content = ['autoren', 'konzept', 'themen-epochen-regionen',
-        'zeitschriften', 'images', 'RSS-feeds', 'beste-kommentare']
+imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen',
+        'zeitschriften', 'images', 'RSS-feeds', 'beste-kommentare',
+        'rezensionen']
 
 portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
