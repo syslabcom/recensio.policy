@@ -430,12 +430,10 @@ def publishImportedContent(context):
     portal = context.getSite()
     pwt = getToolByName(portal, 'portal_workflow')
     for id in imported_content:
-        for lang in ['', 'en', 'fr']:
-            if lang:
-                id = id + '-' + lang
-            obj = getattr(portal, id, None)
+        for lang in ['', '-en', '-fr']:
+            obj = getattr(portal, id + lang, None)
             if not obj:
-                log.warning('Object %s not found. Please run import step "Recensio initial content"' % id)
+                log.warning('Object %s not found. Please run import step "Recensio initial content"' % id + lang)
                 continue
             doPublish(obj, pwt)
 
