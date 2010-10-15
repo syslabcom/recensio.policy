@@ -34,7 +34,7 @@ mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
 
 imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen',
         'zeitschriften', 'images', 'RSS-feeds', 'beste-kommentare',
-        'rezensionen']
+        'rezensionen', 'front-page']
 
 portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
@@ -290,14 +290,15 @@ def hideAllFolders(context):
 @guard
 def setupHomepage(context):
     site = context.getSite()
-    fp = getattr(site, 'front-page', None)
-    if not fp:
-        log.error('Front page not found')
-        return
-    id = 'layout'
-    if fp.hasProperty(id):
-        fp._delProperty(id)
-    fp._setProperty(id=id, value='homepage-view', type='string')
+    for fp_id in ['front-page', 'front-page-en', 'front-page-fr']:
+        fp = getattr(site, fp_id, None)
+        if not fp:
+            log.error('%s not found' % fp_id)
+            continue
+        id = 'layout'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='homepage-view', type='string')
     log.debug('Homepage view was set on the front page')
 
     # set up portlet
@@ -312,45 +313,27 @@ def setupHomepage(context):
 def setViewsOnFolders(context):
     portal = context.getSite()
 
-    autoren = getattr(portal, 'autoren', None)
-    if not autoren:
-        log.warning('Folder "autoren" not found on portal. Please run recensio.contenttypes.initial_content')
-    else:
-        fp = getattr(autoren, 'index_html')
-        id = 'layout'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='authorsearch', type='string')
+    for autoren_id in ['autoren', 'autoren-en', 'autoren-fr']:
+        autoren = getattr(portal, autoren_id, None)
+        if not autoren:
+            log.warning('Folder "%s" not found on portal. Please run recensio.contenttypes.initial_content' % autoren_id)
+        else:
+            fp = getattr(autoren, 'index_html')
+            id = 'layout'
+            if fp.hasProperty(id):
+                fp._delProperty(id)
+            fp._setProperty(id=id, value='authorsearch', type='string')
 
-    autoren_en = getattr(portal, 'autoren-en', None)
-    if not autoren_en:
-        log.warning('Folder "autoren-en" not found on portal. Please run recensio.contenttypes.initial_content')
-    else:
-        fp = getattr(autoren_en, 'index_html')
-        id = 'layout'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='authorsearch', type='string')
-
-    autoren_fr = getattr(portal, 'autoren-fr', None)
-    if not autoren_fr:
-        log.warning('Folder "autoren-fr" not found on portal. Please run recensio.contenttypes.initial_content')
-    else:
-        fp = getattr(autoren_fr, 'index_html')
-        id = 'layout'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='authorsearch', type='string')
-
-    themen = getattr(portal, 'themen-epochen-regionen', None)
-    if not themen:
-        log.warning('Folder "themen-epochen-regionen" not found on portal. Please run recensio.contenttypes.initial_content')
-    else:
-        fp = getattr(themen, 'index_html')
-        id = 'layout'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='browse-topics', type='string')
+    for themen_id in ['themen-epochen-regionen', 'themen-epochen-regionen-en', 'themen-epochen-regionen-fr']:
+        themen = getattr(portal, themen_id, None)
+        if not themen:
+            log.warning('Folder "%s" not found on portal. Please run recensio.contenttypes.initial_content' % themen_id)
+        else:
+            fp = getattr(themen, 'index_html')
+            id = 'layout'
+            if fp.hasProperty(id):
+                fp._delProperty(id)
+            fp._setProperty(id=id, value='browse-topics', type='string')
 
     rezensionen = getattr(portal, 'rezensionen', None)
     zeitschriften = getattr(rezensionen, 'zeitschriften', None)
@@ -431,9 +414,9 @@ def publishImportedContent(context):
     pwt = getToolByName(portal, 'portal_workflow')
     for id in imported_content:
         for lang in ['', '-en', '-fr']:
-            obj = getattr(portal, id + lang, None)
+            obj = getattr(portal, (id + lang), None)
             if not obj:
-                log.warning('Object %s not found. Please run import step "Recensio initial content"' % id + lang)
+                log.warning('Object %s not found. Please run import step "Recensio initial content"' % (id + lang))
                 continue
             doPublish(obj, pwt)
 
