@@ -36,11 +36,19 @@ imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen',
         'zeitschriften', 'images', 'RSS-feeds', 'beste-kommentare',
         'rezensionen', 'front-page']
 
-portlet_hp_text = u"""<h2>Auf recensio.net …</h2>
+portlet_hp_text = {'front-page': u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
 ihre Rezensionsteile online als Pre- oder Post-Prints (»Rezensionen«)</p>
 <p>… präsentieren Autoren die Kernthesen ihrer Monographien und Aufsätze (»Präsentationen«).
-Nutzerkommentare lassen »lebendige Rezensionen« entstehen.</p>"""
+Nutzerkommentare lassen »lebendige Rezensionen« entstehen.</p>""",
+                   'front-page-en': u"""<h2>recensio.net enables …</h2>
+<p>… editorial teams of journals who previously published in print to also publish 
+their review sections online (a pre- or post-print) (»reviews«)</p>
+<p>… authors to present the core statements of their monographs and articles 
+(»presentations«). User comments create »live reviews«.</p>""",
+                   'front-page-fr': u"""
+""",
+                   }
 
 def guard(func):
     def wrapper(self):
@@ -299,15 +307,15 @@ def setupHomepage(context):
         if fp.hasProperty(id):
             fp._delProperty(id)
         fp._setProperty(id=id, value='homepage-view', type='string')
-    log.debug('Homepage view was set on the front page')
+        log.debug('Homepage view was set on the front page')
 
-    # set up portlet
-    mapping = assignment_mapping_from_key(fp, 'plone.rightcolumn',
-        CONTEXT_CATEGORY, '/'.join(fp.getPhysicalPath()))
-    id = 'homepage-intro'
-    if id not in mapping:
-        mapping[id] = static.Assignment(header=u'Intro', text=portlet_hp_text,
-            omit_border=True)
+        # set up portlet
+        mapping = assignment_mapping_from_key(fp, 'plone.rightcolumn',
+            CONTEXT_CATEGORY, '/'.join(fp.getPhysicalPath()))
+        id = 'homepage-intro'
+        if id not in mapping:
+            mapping[id] = static.Assignment(header=u'Intro', text=portlet_hp_text[fp_id],
+                omit_border=True)
 
 @guard
 def setViewsOnFolders(context):
@@ -336,6 +344,15 @@ def setViewsOnFolders(context):
             fp._setProperty(id=id, value='browse-topics', type='string')
 
     rezensionen = getattr(portal, 'rezensionen', None)
+    if not rezensionen :
+        log.warning('Folder "rezensionen " not found on portal. Please run recensio.contenttypes.initial_content')
+    else:
+        fp = rezensionen
+        id = 'default_page'
+        if fp.hasProperty(id):
+            fp._delProperty(id)
+        fp._setProperty(id=id, value='zeitschriften', type='string')
+
     zeitschriften = getattr(rezensionen, 'zeitschriften', None)
     if not zeitschriften:
         log.warning('Folder "zeitschriften" not found on portal. Please run recensio.contenttypes.initial_content')
