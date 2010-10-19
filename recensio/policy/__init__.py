@@ -45,8 +45,9 @@ def reset():
         additional_profiles = sys.argv[4:]
     except:
         pass
-    br = Browser(sys.argv[1])
+    br = Browser()
     br.mech_browser.set_handle_robots(False)
+    br.open(sys.argv[1])
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br.addHeader('Authorization', 'Basic %s' % base64string)
     br.reload()
