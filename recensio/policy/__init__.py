@@ -46,6 +46,7 @@ def reset():
     except:
         pass
     br = Browser(sys.argv[1])
+    br.mech_browser.set_handle_robots(False)
     base64string = base64.encodestring('%s:%s' % (user, passwd))[:-1]
     br.addHeader('Authorization', 'Basic %s' % base64string)
     br.reload()
