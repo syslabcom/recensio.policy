@@ -15,6 +15,7 @@
         <dependency>profile-recensio.contenttypes:default</dependency>
         <dependency>profile-recensio.imports:default</dependency>
         <dependency>profile-recensio.theme:default</dependency>
+        <dependency>profile-collective.logbook:default</dependency>
     </dependencies>
 </metadata>
 
