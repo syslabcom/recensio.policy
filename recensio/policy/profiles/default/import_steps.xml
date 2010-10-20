@@ -24,10 +24,6 @@
             handler="recensio.policy.setuphandlers.addWorkflowScriptsForComments"
             description="Workflow configuration for Recensio comments"
             title="recensio_workflow_comments" />
-    <import-step id="recensio_workflow_settings_content" version="20100928-01"
-            handler="recensio.policy.setuphandlers.addWorkflowScriptsForRegularContent"
-            description="Workflow configuration for Recensio content"
-            title="recensio_workflow_content" />
     <import-step id="recensio_policy_catalog_indexes" version="20100623-01"
             handler="recensio.policy.setuphandlers.addCatalogIndexes"
             description="Catalog Indexes for Recensio"
@@ -63,10 +59,6 @@
             handler="recensio.policy.setuphandlers.setVersionedTypes"
             description="Activate versioning for our custom types"
             title="Set versioned types" />
-    <import-step id="recensio_policy_customize_workflow_and_permissions" version="20100920-01"
-            handler="recensio.policy.setuphandlers.customizeWorkflowAndPermissions"
-            description="Add custom workflow states and transmissions and connected permissions"
-            title="Customize workflow and permissions" />
     <import-step id="recensio_portal_tabs" version="20101001-01"
             handler="recensio.policy.setuphandlers.fixPortalTabs"
             description="Remove index_html from the default portal_actions/portal_tabs"

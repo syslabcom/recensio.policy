@@ -1,31 +1,33 @@
 <?xml version="1.0"?>
-<dc-workflow xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-             i18n:domain="plone"
-             workflow_id="simple_publication_workflow"
-             title="Simple Publication Workflow"
-             description="
-- Simple workflow that is useful for basic web sites.
-- Things start out as private, and can either be submitted for review, or published directly.
-- The creator of a content item can edit the item even after it is published."
-             state_variable="review_state"
-             initial_state="private"
-             i18n:attributes="title; description">
-
+<dc-workflow workflow_id="simple_publication_workflow" title="Simple Publication Workflow" description=" - Simple workflow that is useful for basic web sites. - Things start out as private, and can either be submitted for review, or published directly. - The creator of a content item can edit the item even after it is published. - Modified for recensio.net: Added deleted state" state_variable="review_state" initial_state="private" manager_bypass="False">
  <permission>Access contents information</permission>
  <permission>Change portal events</permission>
  <permission>Modify portal content</permission>
  <permission>View</permission>
-
- <state state_id="pending" title="Pending review" i18n:attributes="title">
-  <description i18n:translate="">
-    Waiting to be reviewed, not editable by the owner.
-  </description>
+ <state state_id="deleted" title="Deleted">
+  <description>Marked as deleted and invisible to all but managers</description>
+  <exit-transition transition_id="restore"/>
+  <permission-map name="Access contents information" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Change portal events" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="Modify portal content" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+  <permission-map name="View" acquired="False">
+   <permission-role>Manager</permission-role>
+  </permission-map>
+ </state>
+ <state state_id="pending" title="Pending review">
+  <description>Waiting to be reviewed, not editable by the owner.</description>
   <exit-transition transition_id="make_private"/>
   <exit-transition transition_id="publish"/>
   <exit-transition transition_id="reject"/>
   <exit-transition transition_id="retract"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
+  <exit-transition transition_id="delete"/>
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Editor</permission-role>
@@ -33,13 +35,11 @@
    <permission-role>Contributor</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Change portal events"
-                  acquired="False">
+  <permission-map name="Change portal events" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
@@ -51,30 +51,25 @@
    <permission-role>Contributor</permission-role>
    <permission-role>Reviewer</permission-role>
   </permission-map>
-
  </state>
- <state state_id="private" title="Private" i18n:attributes="title">
-  <description i18n:translate="">
-    Can only be seen and edited by the owner.
-  </description>
+ <state state_id="private" title="Private">
+  <description>Can only be seen and edited by the owner.</description>
   <exit-transition transition_id="publish"/>
   <exit-transition transition_id="submit"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
+  <exit-transition transition_id="delete"/>
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Editor</permission-role>
    <permission-role>Reader</permission-role>
    <permission-role>Contributor</permission-role>
   </permission-map>
-  <permission-map name="Change portal events"
-                  acquired="False">
+  <permission-map name="Change portal events" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Editor</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Editor</permission-role>
@@ -87,104 +82,83 @@
    <permission-role>Contributor</permission-role>
   </permission-map>
  </state>
- <state state_id="published" title="Published" i18n:attributes="title">
-  <description i18n:translate="">
-    Visible to everyone, not editable by the owner.
-  </description>
+ <state state_id="published" title="Published">
+  <description>Visible to everyone, not editable by the owner.</description>
   <exit-transition transition_id="retract"/>
   <exit-transition transition_id="reject"/>
-  <permission-map name="Access contents information"
-                  acquired="False">
+  <exit-transition transition_id="delete"/>
+  <permission-map name="Access contents information" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
-  <permission-map name="Change portal events"
-                  acquired="False">
+  <permission-map name="Change portal events" acquired="False">
    <permission-role>Manager</permission-role>
    <permission-role>Owner</permission-role>
    <permission-role>Editor</permission-role>
   </permission-map>
-  <permission-map name="Modify portal content"
-                  acquired="False">
+  <permission-map name="Modify portal content" acquired="False">
    <permission-role>Manager</permission-role>
+   <permission-role>Owner</permission-role>
+   <permission-role>Editor</permission-role>
   </permission-map>
   <permission-map name="View" acquired="False">
    <permission-role>Anonymous</permission-role>
   </permission-map>
  </state>
-
- <transition transition_id="publish" new_state="published"
-             title="Reviewer publishes content"
-             trigger="USER"
-             before_script="" after_script=""
-             i18n:attributes="title">
-  <description i18n:translate="">
-    Publishing the item makes it visible to other users.
-  </description>
-  <action url="%(content_url)s/content_status_modify?workflow_action=publish"
-          category="workflow"
-          i18n:translate="">Publish</action>
+ <transition transition_id="delete" title="Delete" new_state="deleted" trigger="USER" after_script="handle_change">
+  <description>Mark the content as deleted and make it invisible for all except managers</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=delete" category="workflow" icon="">Delete</action>
+  <guard>
+   <guard-role>Manager</guard-role>
+   <guard-role>Editor</guard-role>
+   <guard-role>Owner</guard-role>
+  </guard>
+ </transition>
+ <transition transition_id="publish" title="Reviewer publishes content" new_state="published" trigger="USER" before_script="" after_script="handle_change">
+  <description>Publishing the item makes it visible to other users.</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=publish" category="workflow" icon="">Publish</action>
   <guard>
    <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
- <transition transition_id="reject"  new_state="private"
-             title="Reviewer send content back for re-drafting"
-             trigger="USER"
-             before_script="" after_script=""
-             i18n:attributes="title">
-  <description i18n:translate="">
-    Sending the item back will return the item to the original author instead of publishing it. You should preferably include a reason for why it was not published.
-  </description>
-  <action url="%(content_url)s/content_status_modify?workflow_action=reject"
-          category="workflow"
-          i18n:translate="">Send back</action>
+ <transition transition_id="reject" title="Reviewer send content back for re-drafting" new_state="private" trigger="USER" before_script="" after_script="">
+  <description>Sending the item back will return the item to the original author instead of publishing it. You should preferably include a reason for why it was not published.</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=reject" category="workflow" icon="">Send back</action>
   <guard>
    <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
- <transition transition_id="retract" new_state="private" 
-             title="Member retracts submission"
-             trigger="USER"
-             before_script="" after_script=""
-             i18n:attributes="title">
-  <description i18n:translate="">
-    If you submitted the item by mistake or want to perform additional edits, this will take it back.
-  </description>
-  <action url="%(content_url)s/content_status_modify?workflow_action=retract"
-          category="workflow"
-          i18n:translate="">Retract</action>
+ <transition transition_id="restore" title="Restore" new_state="private" trigger="USER" after_script="handle_change">
+  <description>Restore the content from the deleted state and make it visible again</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=restore" category="workflow" icon="">Restore</action>
+  <guard>
+   <guard-role>Manager</guard-role>
+   <guard-role>Editor</guard-role>
+   <guard-role>Owner</guard-role>
+  </guard>
+ </transition>
+ <transition transition_id="retract" title="Member retracts submission" new_state="private" trigger="USER" before_script="" after_script="">
+  <description>If you submitted the item by mistake or want to perform additional edits, this will take it back.</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=retract" category="workflow" icon="">Retract</action>
   <guard>
    <guard-permission>Request review</guard-permission>
   </guard>
  </transition>
- <transition transition_id="submit"  new_state="pending" 
-             title="Member submits content for publication"
-             trigger="USER"
-             before_script="" after_script=""
-             i18n:attributes="title">
-  <description i18n:translate="">
-    Puts your item in a review queue, so it can be published on the site.
-  </description>
-  <action url="%(content_url)s/content_status_modify?workflow_action=submit"
-          category="workflow"
-          i18n:translate="">Submit for publication</action>
+ <transition transition_id="submit" title="Member submits content for publication" new_state="pending" trigger="USER" before_script="" after_script="handle_change">
+  <description>Puts your item in a review queue, so it can be published on the site.</description>
+  <action url="%(content_url)s/content_status_modify?workflow_action=submit" category="workflow" icon="">Submit for publication</action>
   <guard>
    <guard-permission>Request review</guard-permission>
   </guard>
  </transition>
- 
  <worklist worklist_id="reviewer_queue" title="">
   <description>Reviewer tasks</description>
-  <action url="%(portal_url)s/search?review_state=pending"
-          category="global">Pending (%(count)d)</action>
+  <action url="%(portal_url)s/search?review_state=pending" category="global" icon="">Pending (%(count)d)</action>
   <guard>
    <guard-permission>Review portal content</guard-permission>
   </guard>
   <match name="review_state" values="pending"/>
  </worklist>
-
- <variable variable_id="action"         for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="action" for_catalog="False" for_status="True" update_always="True">
   <description>Previous transition</description>
   <default>
    
@@ -193,8 +167,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="actor"          for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="actor" for_catalog="False" for_status="True" update_always="True">
   <description>The ID of the user who performed the previous transition</description>
   <default>
    
@@ -203,8 +176,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="comments"       for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="comments" for_catalog="False" for_status="True" update_always="True">
   <description>Comment about the last transition</description>
   <default>
    
@@ -213,8 +185,7 @@
   <guard>
   </guard>
  </variable>
- <variable variable_id="review_history" for_catalog="False"
-           for_status="False" update_always="False">
+ <variable variable_id="review_history" for_catalog="False" for_status="False" update_always="False">
   <description>Provides access to workflow history</description>
   <default>
    
@@ -225,8 +196,7 @@
    <guard-permission>Review portal content</guard-permission>
   </guard>
  </variable>
- <variable variable_id="time"           for_catalog="False"
-           for_status="True" update_always="True">
+ <variable variable_id="time" for_catalog="False" for_status="True" update_always="True">
   <description>When the previous transition was performed</description>
   <default>
    
@@ -235,5 +205,5 @@
   <guard>
   </guard>
  </variable>
-
+ <script script_id="handle_change" type="Script (Python)" filename="workflows/simple_publication_workflow/scripts/handle_change.py" module="" function=""/>
 </dc-workflow>
