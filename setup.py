@@ -39,6 +39,7 @@ setup(name='recensio.policy',
           'recensio.theme',
           'recensio.translations',
           'setuptools',
+          'collective.logbook',
           'collective.solr',
       ],
       extras_require = {
