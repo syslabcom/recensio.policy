@@ -104,7 +104,7 @@
    <permission-role>Anonymous</permission-role>
   </permission-map>
  </state>
- <transition transition_id="delete" title="Delete" new_state="deleted" trigger="USER" after_script="handle_change">
+ <transition transition_id="delete" title="Delete" new_state="deleted" before_script="" trigger="USER" after_script="handle_change">
   <description>Mark the content as deleted and make it invisible for all except managers</description>
   <action url="%(content_url)s/content_status_modify?workflow_action=delete" category="workflow" icon="">Delete</action>
   <guard>
@@ -127,7 +127,7 @@
    <guard-permission>Review portal content</guard-permission>
   </guard>
  </transition>
- <transition transition_id="restore" title="Restore" new_state="private" trigger="USER" after_script="handle_change">
+ <transition transition_id="restore" title="Restore" new_state="private" trigger="USER" before_script="" after_script="handle_change">
   <description>Restore the content from the deleted state and make it visible again</description>
   <action url="%(content_url)s/content_status_modify?workflow_action=restore" category="workflow" icon="">Restore</action>
   <guard>
