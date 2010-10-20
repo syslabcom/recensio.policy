@@ -19,6 +19,7 @@
   <adapter factory=".indexer.authors" name="authors" />
   <adapter factory=".indexer.authorsFulltext" name="authorsFulltext" />
   <adapter factory=".indexer.titleOrShortname" name="titleOrShortname" />
+  <adapter factory=".iteration.CustomCheckingCheckoutPolicyAdapter" />
 
     <browser:page
         for="plone.app.layout.navigation.interfaces.INavigationRoot"
