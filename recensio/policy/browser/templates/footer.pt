@@ -42,7 +42,7 @@
                    i18n:translate="manage_presentations">Manage your presentations</a></li>
             <li><a href="#"
                    tal:condition="not: isAnon"
-                   tal:attributes="href string:%{homefolder}/folder_factories"
+                   tal:attributes="href string:${homefolder}/folder_factories"
                    i18n:translate="create_presentation">Create new presentation</a></li>
             <li><a href="#"
                    tal:condition="isAnon"
