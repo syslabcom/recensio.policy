@@ -33,8 +33,7 @@ mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
 
 imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen',
-        'zeitschriften', 'images', 'RSS-feeds', 'beste-kommentare',
-        'rezensionen', 'front-page']
+        'images', 'RSS-feeds', 'beste-kommentare', 'rezensionen', 'front-page']
 
 portlet_hp_text = {'front-page': u"""<h2>Auf recensio.net …</h2>
 <p>… publizieren Zeitschriftenredaktionen, die bislang im Druck veröffentlichen,
@@ -359,15 +358,14 @@ def doSetLanguage(obj, language):
 def setImportedContentLanguages(context):
     portal = context.getSite()
     for id in imported_content:
+        language = 'de'
         ob = portal.unrestrictedTraverse(id, None)
         if not ob:
             log.warning('Object %s not found. Please run import step "Recensio initial content"' % (id))
             continue
-        if id not in ['images']:
-            language = 'de'
-        else:
+        if id in ['images']:
             language = ''
-        doSetLanguage(ob, language)
+            doSetLanguage(ob, language)
 
         def translate_folder(path, language, path_trans, lang_trans):
             ob = portal.unrestrictedTraverse(path, None)
@@ -381,10 +379,10 @@ def setImportedContentLanguages(context):
                     if not subob.hasTranslation(lang_trans):
                         linkTranslations(portal, [[(path + [item], language), (path_trans + [item], lang_trans)]])
                         log.debug('Setting translation for %s (%s): %s (%s)' % (path + [item], language, path_trans + [item], lang_trans))
-                        if subob and subob.portal_type == 'Folder':
-                            translate_folder(path + [item], language, path_trans + [item], lang_trans)
                     else:
-                        log.warning('%s is already translated into %s!' % path,lang_trans)
+                        log.warning('%s is already translated into %s!' % ("/".join(path + [item]),lang_trans))
+                    if subob and subob.portal_type == 'Folder':
+                        translate_folder(path + [item], language, path_trans + [item], lang_trans)
 
         if language:
             for lang_trans in ['en', 'fr']:
@@ -393,10 +391,10 @@ def setImportedContentLanguages(context):
                 if ob_trans:
                     if not ob.hasTranslation(lang_trans):
                         linkTranslations(portal, [[([id], language), ([id_trans], lang_trans)]])
-                        if ob.portal_type == 'Folder':
-                            translate_folder([id], language, [id_trans], lang_trans)
                     else:
                         log.warning('%s is already translated into %s!' % (id,lang_trans))
+                    if ob.portal_type == 'Folder':
+                        translate_folder([id], language, [id_trans], lang_trans)
                 else:
                     log.warning('Object %s not found. No translation for %s will be set' % (id_trans, lang_trans))
     portal.setLanguage('de')
