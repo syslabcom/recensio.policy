@@ -22,6 +22,11 @@ class UserDataSchemaProvider(object):
         """
         return IRecensioUserDataSchema
 
+def validateAccept(value):
+    if not value == True:
+        return False
+    return True
+
 
 class IRecensioUserDataSchema(IUserDataSchema):
     """ Use all the fields from the default user data schema, and add various
@@ -54,13 +59,13 @@ class IRecensioUserDataSchema(IUserDataSchema):
         # values = [u'English', u'Deutsch', u'Francais'],
         )
 
-    declaration_of_identity = schema.Choice(
+    declaration_of_identity = schema.Bool(
         title=_(u'label_declaration_of_identity', default=u'Declaration of identity'),
         description=_(u'help_declaration_of_identity',
                       default=u"I declare that I am indeed the person "
                       "identified by the entries above. "),
         required=True,
-        values = [u'OK'],
+        constraint=validateAccept,
         )
 
     captcha = Captcha(
@@ -68,3 +73,4 @@ class IRecensioUserDataSchema(IUserDataSchema):
         description=_(u'Type the code from the picture shown below or '
                    u'from the audio.'),
         )
+

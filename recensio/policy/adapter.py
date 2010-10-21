@@ -34,3 +34,15 @@ class RecensioUserDataPanelAdapter(UserDataPanelAdapter):
         if value is not None:
             return self.context.setMemberProperties({"lastname": value})
     lastname = property(get_lastname, set_lastname)
+
+    def get_declaration_of_identity(self):
+        return self._getProperty("declaration_of_identity")
+    def set_declaration_of_identity(self, value):
+        if value is not None:
+            return self.context.setMemberProperties({"declaration_of_identity": value})
+    declaration_of_identity = property(get_declaration_of_identity, set_declaration_of_identity)
+
+    captcha = None
+
+    def absolute_url(self):
+        return "recensio"
