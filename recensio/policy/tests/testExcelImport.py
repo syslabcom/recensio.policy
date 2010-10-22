@@ -17,7 +17,7 @@ from Products.CMFCore.utils import getToolByName
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
 
-class TestEmailFormat(unittest.TestCase):
+class TestExcelImport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testFormat(self):
@@ -41,8 +41,10 @@ class TestEmailFormat(unittest.TestCase):
         request['ACTUAL_URL'] = 'test'
         class FakeFile(file):
             filename = 'fake'
-        request.form['pdf'] = FakeFile('../../src/recensio.imports/samples/demo1.pdf')
-        request.form['xls'] = file('../../src/recensio.imports/samples/initial.xls')
+        request.form['pdf'] = FakeFile(
+            '../../src/recensio.imports/samples/demo1.pdf')
+        request.form['xls'] = FakeFile(
+            '../../src/recensio.imports/samples/initial.xls')
         view = getMultiAdapter((issue, request), name='magazine_import')
         html = view()
         self.assertFalse('portalMessage error' in html)
