@@ -254,7 +254,7 @@
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property
-      name="available_expr">python: object.portal_type in ['Issue', 'Volume']</property>
+      name="available_expr">python: object.portal_type in ['Issue']</property>
    <property name="permissions">
     <element value="Add portal content"/>
    </property>
