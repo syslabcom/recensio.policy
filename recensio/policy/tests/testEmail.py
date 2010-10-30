@@ -133,7 +133,7 @@ Verfolgen Sie die Diskussion über / Follow the discussion on ...
         request = self.layer['request']
         directlyProvides(request, IRecensioLayer)
 
-        setRoles(portal, TEST_USER_NAME, ['Manager'])
+        setRoles(portal, TEST_USER_ID, ['Manager'])
 
         mail_schema = IMailSchema(portal)
         mail_schema.email_from_address = 'fake'
