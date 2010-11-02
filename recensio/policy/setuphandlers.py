@@ -263,6 +263,7 @@ def addCatalogIndexes(context):
     addIndex('publisher', 'FieldIndex')
     addIndex('series', 'FieldIndex')
     addIndex('isbn', 'FieldIndex')
+    addIndex('recensioID', 'FieldIndex')
 
     addColumn('getAuthors')
     addColumn('listAuthors')
