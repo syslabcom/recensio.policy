@@ -8,7 +8,7 @@ compare = lambda x, y:OutputChecker().check_output(x, y, ELLIPSIS)
 from zope.component import getMultiAdapter
 from zope.interface import directlyProvides
 
-from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_ID
 from plone.app.testing import setRoles
 
 from plone.app.controlpanel.mail import IMailSchema

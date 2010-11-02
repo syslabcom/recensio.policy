@@ -23,7 +23,7 @@ class TestExcelImport(unittest.TestCase):
     def testFormat(self):
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ['Manager'])
-        setRoles(portal, TEST_USER_NAME, ['Manager'])
+#        setRoles(portal, TEST_USER_NAME, ['Manager'])
         request = self.layer['request']
         reviews = portal["sample-reviews"]
         reviews.invokeFactory('Publication', id='pub', title='pub')

@@ -6,9 +6,6 @@ from doctest import OutputChecker, ELLIPSIS
 from zope.component import getMultiAdapter
 from zope.interface import directlyProvides
 
-from plone.app.testing import TEST_USER_NAME
-from plone.app.testing import setRoles
-
 from plone.app.controlpanel.mail import IMailSchema
 from Products.CMFCore.utils import getToolByName
 

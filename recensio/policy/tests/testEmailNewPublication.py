@@ -10,7 +10,7 @@ from zope.component import getMultiAdapter
 from zope.interface import directlyProvides, alsoProvides
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
-from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_NAME, TEST_USER_ID
 from plone.app.testing import setRoles, login
 
 from plone.app.controlpanel.mail import IMailSchema
@@ -61,7 +61,7 @@ recensio.net ist ein DFG-gef\xf6rdertes Angebot der Bayerischen Staatsbibliothek
         request = self.layer['request']
         directlyProvides(request, IRecensioLayer)
 
-        setRoles(portal, TEST_USER_NAME, ['Manager'])
+        setRoles(portal, TEST_USER_ID, ['Manager'])
         login(portal, TEST_USER_NAME)
         alsoProvides(request, IDefaultBrowserLayer)
 
