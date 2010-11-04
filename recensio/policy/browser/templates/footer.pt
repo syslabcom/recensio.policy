@@ -1,4 +1,4 @@
-<div id="footer" tal:define="portal context/portal_url">
+<div id="footer" tal:define="portal context/portal_url" i18n:domain="recensio">
    <img src="footer_bg_top.png" alt="grafisches Element" i18n:attributes="alt graphical_element" class='top'/>
    <div class="column_footer">
         <h2><a tal:attributes="href context/rezensionen/absolute_url | nothing" href="#" i18n:translate="reviews">Rezensionen</a></h2>
@@ -47,7 +47,7 @@
             <li><a href="#"
                    tal:condition="isAnon"
                    tal:attributes="href string:${portal}/@@register"
-                   i18n:translate="register_and_reate_presentations">Register and create new presentations</a></li>
+                   i18n:translate="register_and_create_presentations">Register and create new presentations</a></li>
         </ul>
     </div>
 
@@ -79,4 +79,3 @@
     
     <img src="footer_bg_bottom.png" alt="grafisches Element" class='bottom' /> 
 </div>
-
