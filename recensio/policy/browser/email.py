@@ -9,6 +9,7 @@ from Products.Five.browser import BrowserView
 from plone.app.registry.browser import controlpanel
 from plone.registry.interfaces import IRegistry
 from zope.component import getUtility
+from DateTime import DateTime
 
 from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings, IDiscussionCollections
@@ -41,16 +42,16 @@ class MailCollection(BrowserView):
         mag_keys.sort()
         for mag_title in mag_keys:
             mag_results = magazines[mag_title]
-            retval += '    ' + mag_title
+            retval += mag_title + '\n' + '-' * len(mag_title)
             for i, result in enumerate(mag_results):
                 if i < 3:
-                    msg = '\n\n        %s (%s)\n\n    %s' % (result.Title(), \
-                                             result.absolute_url(),\
-                                             '    ' + '-' * 40)
+                    msg = '\n%s\n%s\n(%s)\n\n' % (result.Title(), \
+                                             '~' * len(result.Title()),
+                                             result.absolute_url())
                     retval += msg
                 if i == 3:
-                    msg = '\n\n        ' + self.ts.translate(_('more_results_here'), context=self.context) + '\n        ' +\
-                        self.context.new_reviews.absolute_url() + '\n\n'
+                    msg = '\n' + self.ts.translate(_('more_results_here'), context=self.context) + '\n' +\
+                        self.context.new_reviews.absolute_url() + '\n\n\n'
                     retval += msg
                     break
         return retval
@@ -58,10 +59,12 @@ class MailCollection(BrowserView):
     def getComments(self):
         retval = ''
         for result in self.context.new_discussions.queryCatalog():
-            retval += '    %s (%s %s)\n    (%s)\n\n' % (result.Title, \
+            line = '%s (%s %s)\n' % (result.Title, \
                 result.total_comments, \
                 result.total_comments != '1' and self.ts.translate(_('comments'), context=self.context) \
-                    or self.ts.translate(_('comment'), context=self.context), result.getURL())
+                    or self.ts.translate(_('comment')))
+            line += '~' * len(line)
+            retval += '%s\n(%s)\n\n' % (line, result.getURL())
         return retval
 
     def getNewPresentations(self):
@@ -73,8 +76,8 @@ class MailCollection(BrowserView):
                          key_articles : [],
                          key_onlineres : []}
 
-        formatted_result = lambda x: u'\n\n        %s (%s)\n\n        %s' % \
-            (x.Title, x.getURL(), '-' * 36)
+        formatted_result = lambda x: u'\n%s\n%s\n(%s)\n\n' % \
+            (x.Title, '~' * len(x.Title), x.getURL())
 
         for result in self.context.new_presentations.queryCatalog():
             if result.portal_type == 'Presentation Article Review':
@@ -95,11 +98,11 @@ class MailCollection(BrowserView):
         presentation_keys.sort()
         for key in presentation_keys:
             if len(presentations[key]) > 3:
-                presentations[key][3] = "\n\n        " + self.ts.translate(_('more_results_here'), context=self.context) + '\n        ' + self.context.new_presentations.absolute_url() + "\n\n"
+                presentations[key][3] = "\n" + self.ts.translate(_('more_results_here'), context=self.context) + '\n' + self.context.new_presentations.absolute_url() + "\n\n\n"
                 presentations[key] = presentations[key][:4]
         retval = ''
         for key in presentations.keys():
-            retval += u'    ' + key
+            retval += u'' + key + '\n' + '-' * len(key)
             for result in presentations[key]:
                 retval += result
         return retval
@@ -125,6 +128,7 @@ class MailCollection(BrowserView):
 
     def __call__(self):
         self.errors = []
+        messages = IStatusMessage(self.request)
         try:
             mail_from, mail_to = self.getMailAddresses()
             registry = getUtility(IRegistry)
@@ -145,13 +149,52 @@ class MailCollection(BrowserView):
                 self.mailhost.send(messageText=msg, mto=mail_to,
                                    mfrom=mail_from,
                                    subject=settings.subject, charset='utf-8')
+
+            # Copy mail to archive folder
+            try:
+                arch = self.context.unrestrictedTraverse(settings.archive_folder)
+            except (AttributeError, KeyError):
+                # try to create archive folder
+                folder = getToolByName(self.context, 'portal_url').getPortalObject()
+                for sub in settings.archive_folder.split('/')[2:]:
+                    if sub in folder.objectIds():
+                        folder = folder[sub]
+                    else:
+                        type = getattr(folder, 'meta_type', None)
+                        if not (type == 'ATFolder' or type == 'Plone Site'):
+                            messages.addStatusMessage('Unable to create archive folder %s: %s is not a folder!' % (settings.archive_folder, folder.getId()), type='error')
+                            break
+                        else:
+                            id = folder.invokeFactory('Folder', sub)
+                            folder = folder[id]
+                            folder.setTitle(sub)
+                arch = folder
+                messages.addStatusMessage('Created Newsletter archive folder %s' % (settings.archive_folder), type='info')
+
+            if not getattr(arch, 'meta_type', None) == 'ATFolder':
+                messages.addStatusMessage('Unable to use %s as archive folder: Not a folder!' % (settings.archive_folder), type='error')
+                raise ValidationError
+
+            if not arch.getPhysicalPath() == tuple(settings.archive_folder.split('/')):
+                raise ValidationError
+                
+            name = 'Newsletter %s' % DateTime().strftime('%d.%m.%Y')
+            if name in arch.objectIds():
+                messages.addStatusMessage('%s already exists in archive' % name, type='warning')
+            else:
+                id = arch.invokeFactory('Document', name)
+                new_ob = arch[id]
+                new_ob.setTitle(name)
+                new_ob.setText(msg)
+                new_ob.setContentType('text/restructured')
+                messages.addStatusMessage('Mail archived as %s' % '/'.join(new_ob.getPhysicalPath()), type='info')
+
         except ValidationError:
             pass
 #        except Exception, e:
 #            log.exception(e)
 #            self.errors.append(str(e.__class__) + ' ' + str(e))
         finally:
-            messages = IStatusMessage(self.request)
             if self.errors:
                 for error in self.errors:
                     messages.addStatusMessage(error, type='error')

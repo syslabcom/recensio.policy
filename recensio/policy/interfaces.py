@@ -39,36 +39,73 @@ class INewsletterSettings(Interface):
     """
     mail_template = schema.Text(title = _('Mail Template'), 
                                 description = _(u'description_mailsettings_mail_template', default=u'The container for the complete template, Variable expansion will be applied. Provide the following slots: a b c'),
-                                default = u"""Liebe Abonnenten,
+                                default = u"""(English version see below)
+
+**Liebe Abonnenten,**
+
 
 wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net informieren zu können.
 
 Angenehmes Stöbern und Entdecken wünscht Ihnen
-Ihre recensio.net-Redaktion.
 
 
-Dear subscribers,
+*Ihre recensio.net-Redaktion.*
+
+
+--------------------
+Neue Rezensionen ...
+--------------------
+
+%(new_reviews)s
+
+-----------------------
+Neue Präsentationen ...
+-----------------------
+
+%(new_presentations)s
+
+-------------------------------------
+Verfolgen Sie die Diskussion über ...
+-------------------------------------
+
+... die meistkommentierten Präsentationen des vergangenen Monats:
+-----------------------------------------------------------------
+
+%(new_discussions)s
+
+
+*********************************************
+
+
+**Dear subscribers,**
+
 
 It’s time again for your monthly digest of news from recensio.net.
 
 We hope you will enjoy browsing our platform and discovering its content.
-Your recensio.net editorial team
 
 
-Neue Rezensionen / New reviews ...
+*Your recensio.net editorial team*
+
+
+---------------
+New reviews ...
+---------------
 
 %(new_reviews)s
 
-
-Neue Präsentationen / New presentations ...
+---------------------
+New presentations ...
+---------------------
 
 %(new_presentations)s
 
+----------------------------
+Follow the discussion on ...
+----------------------------
 
-Verfolgen Sie die Diskussion über / Follow the discussion on ...
-... die meistkommentierten Präsentationen des vergangenen Monats:
 ... the presentations most commented on over the course of the past months:
-
+---------------------------------------------------------------------------
 %(new_discussions)s
 """)
     subject = schema.TextLine(title = _('Subject'),
@@ -83,7 +120,6 @@ Verfolgen Sie die Diskussion über / Follow the discussion on ...
 %(Description)s
 
 Erstellt am: / Created on: %(created)s
---------------------------------------------
 """)
     # This template will be used for IATTopics, that implement the
     # IDiscussionCollections Interface.
@@ -93,7 +129,6 @@ Erstellt am: / Created on: %(created)s
 %(Description)s
 
 Zuletzt kommentiert am: / Last discussed on: %(last_comment_date)s
---------------------------------------------
 """)
 
     separator = schema.Text(title=_(u'Separator'),
@@ -102,6 +137,9 @@ Zuletzt kommentiert am: / Last discussed on: %(last_comment_date)s
                             default=u"""*********************************************
 
 """)
+    archive_folder = schema.TextLine(title = _('Archive Folder'),
+                              description=_(u'description_mailsettings_archive_folder', default=u"The path of the folder where newsletter mails will be saved after they have been sent. Will be created when needed if it does not exist."),
+                              default = _(u"""/recensio/newsletter/archiv"""))
 
 class IWorkflowHelper(Interface):
     
