@@ -14,11 +14,11 @@
         </ul>
     </div>
     <div class="column_footer">
-        <h2><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Monograph&amp;portal_type:list=Presentation+Online+Resource&amp;portal_type:list=Presentation+Article+Review&amp;portal_type:list=Presentation+Collection" i18n:translate="presentations">Präsentationen</a></h2>
+        <h2><a href="#" tal:attributes="href string:${portal}/praesentationen" i18n:translate="presentations">Präsentationen</a></h2>
         <ul>
-        <li><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Monograph" i18n:translate="monographs">Monographien</a></li>
-        <li><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Article+Review" i18n:translate="articles">Aufsätze</a></li>
-        <li><a href="#" tal:attributes="href string:${portal}/search?portal_type:list=Presentation+Online+Resource" i18n:translate="online_resources">Internetressourcen</a></li>
+        <li><a href="#" tal:attributes="href string:${portal}/praesentationen/monographien/search" i18n:translate="monographs">Monographien</a></li>
+        <li><a href="#" tal:attributes="href string:${portal}/praesentationen/aufsaetze/search" i18n:translate="articles">Aufsätze</a></li>
+        <li><a href="#" tal:attributes="href string:${portal}/praesentationen/internetressourcen/search" i18n:translate="online_resources">Internetressourcen</a></li>
         </ul>   
     </div>
     <div class="column_footer">
