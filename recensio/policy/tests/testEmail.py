@@ -21,110 +21,260 @@ class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testFormat(self):
-        expected_mail = u'''Liebe Abonnenten,
+        expected_mail = u'''(English version see below)
+
+**Liebe Abonnenten,**
+
 
 wie jeden Monat freuen wir uns, Sie über Neuigkeiten auf recensio.net informieren zu können.
 
 Angenehmes Stöbern und Entdecken wünscht Ihnen
-Ihre recensio.net-Redaktion.
 
 
-Dear subscribers,
+*Ihre recensio.net-Redaktion.*
+
+
+--------------------
+Neue Rezensionen ...
+--------------------
+
+Zeitschrift 1
+-------------
+Test ReviewMonograph No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...)
+
+
+Test ReviewMonograph No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...)
+
+
+Test ReviewMonograph No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_reviews
+
+
+Zeitschrift 2
+-------------
+test title
+~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspaperb/summer/issue-2/ReviewMonograph...)
+
+
+
+-----------------------
+Neue Präsentationen ...
+-----------------------
+
+Präsentationen von Aufsätzen
+----------------------------
+Test PresentationArticleReview No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationArticleReview...)
+
+
+Test PresentationArticleReview No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationArticleReview...)
+
+
+Test PresentationArticleReview No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationArticleReview...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_presentations
+
+
+Präsentationen von Internetressourcen
+-------------------------------------
+Test PresentationOnlineResource No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationOnlineResource...)
+
+
+Test PresentationOnlineResource No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationOnlineResource...)
+
+
+Test PresentationOnlineResource No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationOnlineResource...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_presentations
+
+
+Präsentationen von Monographien
+-------------------------------
+Test PresentationMonograph No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationMonograph...)
+
+
+Test PresentationMonograph No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationMonograph...)
+
+
+Test PresentationMonograph No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationMonograph...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_presentations
+
+
+
+
+-------------------------------------
+Verfolgen Sie die Diskussion über ...
+-------------------------------------
+
+... die meistkommentierten Präsentationen des vergangenen Monats:
+-----------------------------------------------------------------
+
+test title (1 comment)
+~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspaperb/summer/issue-2/ReviewMonograph...)
+
+
+
+
+*********************************************
+
+
+**Dear subscribers,**
+
 
 It’s time again for your monthly digest of news from recensio.net.
 
 We hope you will enjoy browsing our platform and discovering its content.
-Your recensio.net editorial team
 
 
-Neue Rezensionen / New reviews ...
-
-    Zeitschrift 1
-
-        Test ReviewMonograph No 0 (http://nohost...)
-
-        ----------------------------------------
-
-        Test ReviewMonograph No 1 (http://nohost...)
-
-        ----------------------------------------
-
-        Test ReviewMonograph No 2 (http://nohost...)
-
-        ----------------------------------------
-
-        Weitere Ergebnisse finden Sie hier:
-        http://nohost/plone/RSS-feeds/new_reviews
-
-    Zeitschrift 2
-
-        test title (http://nohost...)
-
-        ----------------------------------------
+*Your recensio.net editorial team*
 
 
-Neue Präsentationen / New presentations ...
+---------------
+New reviews ...
+---------------
 
-    Präsentationen von Aufsätzen
+Zeitschrift 1
+-------------
+Test ReviewMonograph No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...)
 
-        Test PresentationArticleReview No 0 (http://nohost...)
 
-        ------------------------------------
+Test ReviewMonograph No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...)
 
-        Test PresentationArticleReview No 1 (http://nohost...)
 
-        ------------------------------------
+Test ReviewMonograph No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...)
 
-        Test PresentationArticleReview No 2 (http://nohost...)
 
-        ------------------------------------
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_reviews
 
-        Weitere Ergebnisse finden Sie hier:
-        http://nohost/plone/RSS-feeds/new_presentations
 
-    Präsentationen von Internetressourcen
-
-        Test PresentationOnlineResource No 0 (http://nohost...)
-
-        ------------------------------------
-
-        Test PresentationOnlineResource No 1 (http://nohost...)
-
-        ------------------------------------
-
-        Test PresentationOnlineResource No 2 (http://nohost...)
-
-        ------------------------------------
-
-        Weitere Ergebnisse finden Sie hier:
-        http://nohost/plone/RSS-feeds/new_presentations
-
-    Präsentationen von Monographien
-
-        Test PresentationMonograph No 0 (http://nohost...)
-
-        ------------------------------------
-
-        Test PresentationMonograph No 1 (http://nohost...)
-
-        ------------------------------------
-
-        Test PresentationMonograph No 2 (http://nohost...)
-
-        ------------------------------------
-
-        Weitere Ergebnisse finden Sie hier:
-        http://nohost/plone/RSS-feeds/new_presentations
+Zeitschrift 2
+-------------
+test title
+~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspaperb/summer/issue-2/ReviewMonograph...)
 
 
 
+---------------------
+New presentations ...
+---------------------
 
-Verfolgen Sie die Diskussion über / Follow the discussion on ...
-... die meistkommentierten Präsentationen des vergangenen Monats:
+Präsentationen von Aufsätzen
+----------------------------
+Test PresentationArticleReview No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationArticleReview...)
+
+
+Test PresentationArticleReview No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationArticleReview...)
+
+
+Test PresentationArticleReview No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationArticleReview...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_presentations
+
+
+Präsentationen von Internetressourcen
+-------------------------------------
+Test PresentationOnlineResource No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationOnlineResource...)
+
+
+Test PresentationOnlineResource No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationOnlineResource...)
+
+
+Test PresentationOnlineResource No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationOnlineResource...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_presentations
+
+
+Präsentationen von Monographien
+-------------------------------
+Test PresentationMonograph No 0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationMonograph...)
+
+
+Test PresentationMonograph No 1
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationMonograph...)
+
+
+Test PresentationMonograph No 2
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/Members/fake_member/PresentationMonograph...)
+
+
+Weitere Ergebnisse finden Sie hier:
+http://nohost/plone/RSS-feeds/new_presentations
+
+
+
+
+----------------------------
+Follow the discussion on ...
+----------------------------
+
 ... the presentations most commented on over the course of the past months:
-
-    test title (1 Kommentar)
-    (http://nohost...)
+---------------------------------------------------------------------------
+test title (1 comment)
+~~~~~~~~~~~~~~~~~~~~~~~
+(http://nohost/plone/sample-reviews/newspaperb/summer/issue-2/ReviewMonograph...)
 
 
 '''
