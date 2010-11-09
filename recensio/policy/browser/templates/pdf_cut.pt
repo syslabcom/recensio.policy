@@ -9,13 +9,13 @@
 
 <metal:main fill-slot="main">
     <metal:main define-macro="main">
-        <div class="pdfcutter">
-            The PDF attached to this document has <span tal:replace="view/num_pages" /> <tal:condition tal:condition="python: view.num_pages <= 1">page</tal:condition><tal:condition tal:condition="python: view.num_pages > 1">pages</tal:condition>.
-            The document says, that the relevant pages start at page <span tal:replace="view/start_page" /> and end at page <span tal:replace="view/end_page" />.
+        <div class="pdfcutter" i18n:translate="">
+            The PDF attached to this document has <span tal:replace="view/num_pages" /> <tal:condition tal:condition="python: 1 >= view.num_pages" i18n:translate="" i18n:name="page">page</tal:condition><tal:condition tal:condition="python: view.num_pages > 1" i18n:translate="" i18n:name="pages">pages</tal:condition>.
+            The document says, that the relevant pages start at page <span tal:replace="view/start_page" i18n:name="start_page" /> and end at page <span tal:replace="view/end_page" i18n:name="end_page" />.
         </div>
         <form type="POST">
-            <legend for="sure">Do you really want to cut the pdf?</legend>
-            <input type="submit" name="sure" value="Yes" />
+            <legend for="sure" i18n:translate="">Do you really want to cut the pdf?</legend>
+            <input type="submit" name="sure" value="Yes" i18n:attributes="value Yes" />
         </form>
     </metal:main>
 </metal:main>
