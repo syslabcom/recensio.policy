@@ -11,6 +11,8 @@ _ = MessageFactory("recensio")
 UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES = (
     'declaration_of_identity',
     'captcha',
+    'portrait',
+    'pdelete',
     )
 
 
