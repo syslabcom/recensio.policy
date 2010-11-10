@@ -21,4 +21,3 @@ class RecensioUserDataPanel(UserDataPanel):
         schema = util.getSchema()
         fields = form.FormFields(schema)
         self.form_fields = fields.omit(*UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES)
-        self.form_fields['portrait'].custom_widget = FileUploadWidget
