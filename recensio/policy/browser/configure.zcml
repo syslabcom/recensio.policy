@@ -80,6 +80,13 @@
       permission="zope.Public"
       />
 
+  <browser:page
+      name="fixer1"
+      for="*"
+      class=".fixer.Fixer"
+      permission="cmf.ManagePortal"
+      />
+
   <!-- Control panel -->
   <browser:page
       name="recensio-settings"
