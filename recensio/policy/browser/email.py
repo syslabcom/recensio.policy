@@ -258,12 +258,9 @@ class MailNewPublication(BrowserView):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
-        authors = list(getattr(self.context, 'authors', [{'firstname' : '',\
-                                                     'lastname' : 'unknown'}]))
         referenceAuthors = getattr(self.context, 'referenceAuthors', [])
-        authors.extend(referenceAuthors)
 
-        for author in authors:
+        for author in referenceAuthors:
             args = {}
             fuckup = [author['firstname'], author['lastname']]
             fuckup = [x.decode('utf-8') for x in fuckup]
