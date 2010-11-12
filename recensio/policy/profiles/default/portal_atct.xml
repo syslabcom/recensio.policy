@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<atcttool xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+    <topic_indexes i18n:domain="plone">
+
+        <index name="last_comment_date" friendlyName="Date of last Comment"
+            description="The last time, somebody commented on an item"
+            enabled="True">
+
+            <criteria>ATDateRangeCriterion</criteria>
+            <criteria>ATFriendlyDateCriteria</criteria>
+
+        </index>
+    </topic_indexes>
+</atcttool>
+
