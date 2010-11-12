@@ -24,7 +24,7 @@ class TestEmailFormat(unittest.TestCase):
 
     def testFormat(self):
         expected_mail = u'''Liebe Redaktion,
-Die folgende Mail wurde generiert zur Benachrichtigung von Tadeusz Kot\u0142owski. Bitte prüfen Sie sie und leiten sie ggf. weiter an
+Die folgende Mail wurde generiert zur Benachrichtigung von Fran\xc3\xa7ois Lam\xc3\xa8re. Bitte prüfen Sie sie und leiten sie ggf. weiter an
 
 ...
 
