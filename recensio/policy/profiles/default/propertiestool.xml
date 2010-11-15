@@ -3,6 +3,7 @@
   <object name="site_properties" meta_type="Plone Property Sheet">
     <!-- Fields that will be on the form after installation of the product -->
     <property name="user_registration_fields" type="lines">
+      <element value="firstname" />
       <element value="lastname" />
       <element value="academic_title" />
       <element value="username" />
