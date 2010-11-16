@@ -10,6 +10,13 @@
             <criteria>ATFriendlyDateCriteria</criteria>
 
         </index>
+        <index name="Language" friendlyName="Language of the content"
+            description="The Language of the content item"
+            enabled="True">
+
+            <criteria>ATListCriterion</criteria>
+            <criteria>ATSimpleStringCriterion</criteria>
+        </index>
     </topic_indexes>
 </atcttool>
 
