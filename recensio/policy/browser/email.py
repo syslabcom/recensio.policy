@@ -265,22 +265,23 @@ class MailNewPublication(BrowserView):
             fuckup = [author['firstname'], author['lastname']]
             fuckup = [x.decode('utf-8') for x in fuckup]
             args['reviewed_author'] = u' '.join(fuckup)
-            if author.has_key('email'):
+            args['mail_from'] = mail_from.decode('utf-8')
+            if author.has_key('email') and author['email']:
                 args['mail_to'] = author['email']
+                msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
             else:
-                args['mail_to'] = self.ts.translate(_('no_mail_address_available'), context=self.context)
+                args['mail_to'] = args['mail_from']
+                msg_template = self.ts.translate(_('mail_new_publication_intro'), context=self.context) + self.ts.translate(_('mail_new_publication_body'), context=self.context)
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
-            args['mail_from'] = mail_from.decode('utf-8')
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             args['context_url'] = self.context.absolute_url()
             subject = self.ts.translate(_('mail_new_publication_subject'), context=self.context) % args['title']
-            msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
-            self.sendMail(msg_template % args, mail_from, subject)
+            self.sendMail(msg_template % args, args['mail_to'], mail_from, subject)
 
-    def sendMail(self, msg, mail_from, subject):
-        self.mailhost.send(messageText=msg, mto=mail_from,
+    def sendMail(self, msg, mail_to, mail_from, subject):
+        self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
 

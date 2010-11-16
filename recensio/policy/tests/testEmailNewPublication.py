@@ -23,14 +23,7 @@ class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testFormat(self):
-        expected_mail = u'''Liebe Redaktion,
-Die folgende Mail wurde generiert zur Benachrichtigung von Fran\xe7ois Lam\xe8re. Bitte prüfen Sie sie und leiten sie ggf. weiter an
-
-...
-
-**********
-
-Dear Mr Fran\xe7ois Lam\xe8re,
+        expected_mail = u'''Dear Mr Fran\xe7ois Lam\xe8re,
 
 Recently a text on the topic Test PresentationArticleReview No 0 Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 was published.
 Its author \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 has presented the text on the review platform recensio.net and states that he/she has dealt with your research.
