@@ -128,19 +128,6 @@
    </property>
    <property name="visible">True</property>
   </object>
-  <object name="cut" meta_type="CMF Action" i18n:domain="plone">
-   <property name="title" i18n:translate="">Cut</property>
-   <property name="description" i18n:translate=""></property>
-   <property name="url_expr">string:folder_cut:method</property>
-   <property name="link_target"></property>
-   <property name="icon_expr"></property>
-   <property
-      name="available_expr">python:checkPermission("Delete objects", object)</property>
-   <property name="permissions">
-    <element value="Copy or Move"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
   <object name="rename" meta_type="CMF Action" i18n:domain="plone">
    <property name="title" i18n:translate="">Rename</property>
    <property name="description" i18n:translate=""></property>
