@@ -7,7 +7,7 @@ class RecensioRegistrationForm(RegistrationForm):
     def handle_join_success(self, data):
         """ Set fullname from firstname and lastname
         """
-        if not data['fullname']:
+        if not get(data, 'fullname', None):
             data['fullname'] = data['firstname'] + " " + data['lastname']
 
         super(RecensioRegistrationForm, self).handle_join_success(data)
