@@ -21,12 +21,19 @@
   <adapter factory=".indexer.titleOrShortname" name="titleOrShortname" />
   <adapter factory=".iteration.CustomCheckingCheckoutPolicyAdapter" />
 
-    <browser:page
-        for="plone.app.layout.navigation.interfaces.INavigationRoot"
-      name="personal-information"
-      class=".personalpreferences.RecensioUserDataPanel"
-      permission="cmf.SetOwnProperties"
-      />
+  <browser:page
+    name="register"
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    class=".browser.register.RecensioRegistrationForm"
+    permission="cmf.AddPortalMember"
+    />
+
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="personal-information"
+    class=".personalpreferences.RecensioUserDataPanel"
+    permission="cmf.SetOwnProperties"
+    />
 
   <browser:viewlet
     name="plone.app.i18n.locales.languageselector"
