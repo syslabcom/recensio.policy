@@ -74,9 +74,9 @@
       />
 
   <browser:page
-      name="oai"
+      name="opac"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".oai.OAI"
+      class=".opac.OPAC"
       permission="zope.Public"
       />
 

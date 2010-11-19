@@ -25,6 +25,8 @@ class OpacSearch(object):
         br.open(self.url)
         return map(createResult, results)
 
+opac = OpacSearch()
+
 def createResult(result):
     try:
         subtitle = getString(result('span', {'class' : 'book_subtitle'})[0])
@@ -113,7 +115,7 @@ def createResult(result):
                         state = 'not started'
                         continue
                 except AttributeError:
-                    language += unicode(thing2)
+                    language += thing2
             elif state == 'isbn':
                 try:
                     if thing2.name == 'br':
