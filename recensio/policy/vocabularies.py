@@ -10,6 +10,7 @@ from zope.component import queryUtility
 from plone.i18n.locales.interfaces import ILanguageAvailability
 from zope.component import getGlobalSiteManager
 from recensio.policy.interfaces import IRecensioSettings
+from recensio.policy import recensioMessageFactory as _
 
 class AvailableUserLanguages(object):
     """ Vocabulary that shows all languages that a user might
@@ -51,7 +52,7 @@ class AvailableContentLanguages(object):
             lang = lang.strip()
             if available_languages.get(lang):
                 terms.append(SimpleTerm(lang, lang,
-                    available_languages[lang]['name']))
+                    _(available_languages[lang]['name'])))
 
         return SimpleVocabulary(terms)
 
