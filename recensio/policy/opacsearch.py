@@ -39,6 +39,7 @@ def createResult(result):
     authors = []
     ppy = ''
     pages = []
+    ddc = []
     language = ''
     isbn = ''
     location = publisher = year = ''
@@ -60,6 +61,9 @@ def createResult(result):
                         elif thing2.text == 'Sprache:':
                             state = 'language'
                             continue
+                        elif thing2.text == 'Schlagwort:':
+                            state = 'ddc'
+                            continue
                         elif thing2.text == 'ISBN-ISSN-ISMN:':
                             state = 'isbn'
                             continue
@@ -71,6 +75,17 @@ def createResult(result):
                 try:
                     if thing2.name == 'a':
                         authors.append(thing2.text)
+                    elif thing2.name == 'br':
+                        state = 'not started'
+                        continue
+                    else:
+                        pass
+                except AttributeError:
+                    pass
+            elif state == 'ddc':
+                try:
+                    if thing2.name == 'a':
+                        ddc.append(thing2.text)
                     elif thing2.name == 'br':
                         state = 'not started'
                         continue
@@ -144,12 +159,14 @@ def createResult(result):
     location = location and location or None
     publisher = publisher and publisher or None
     year = year and year or None
+    ddc = ddc and ddc or None
 
     return {'title' : title
            ,'subtitle' : subtitle
            ,'authors' : authors
            ,'language' : language
            ,'isbn' : isbn
+           ,'ddc' : ddc
            ,'location' : location
            ,'publisher' : publisher
            ,'pages' : pages

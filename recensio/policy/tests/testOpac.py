@@ -520,6 +520,7 @@ class TestOpacSearch(unittest.TestCase):
             'location': u'M\xfcnchen/Germany',
             'language': u'Deutsch',
             'title': u'\xacDas ZOPE-Buch',
+            'ddc': [u'Zope &lt;Programm&gt;', u'World Wide Web', u'Server'],
             'isbn': u'3-8272-6194-5',
             'authors': [{'lastname': u'Pelletier', 'firstname': u'Michel'}],
             'year': u'2002', 'pages': '437'}]
@@ -541,6 +542,7 @@ class TestOpacSearch(unittest.TestCase):
             'location': u'M\xfcnchen/Germany',
             'language': u'Deutsch',
             'title': u'\xacDas ZOPE-Buch',
+            'ddc': [u'Zope &lt;Programm&gt;', u'World Wide Web', u'Server'],
             'isbn': u'3-8272-6194-5',
             'authors': [{'lastname': u'Pelletier', 'firstname': u'Michel'}],
             'year': u'2002', 'pages': '437'}]
@@ -625,6 +627,14 @@ class TestOpacSearch(unittest.TestCase):
         self.assertEquals('Deutsch', soup1_res['language'])
         self.assertEquals(None, soup2_res['language'])
         self.assertEquals(None, soup3_res['language'])
+
+    def testDDC(self):
+        soup1 = BeautifulSoup(sampleblob)
+        soup2 = BeautifulSoup()
+        soup1_res = createResult(soup1)
+        soup2_res = createResult(soup2)
+        self.assertEquals([u'Zope &lt;Programm&gt;', u'World Wide Web', u'Server'], soup1_res['ddc'])
+        self.assertEquals(None, soup2_res['ddc'])
 
     def testISBN(self):
         soup1 = BeautifulSoup(sampleblob)
