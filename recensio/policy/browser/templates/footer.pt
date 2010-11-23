@@ -1,5 +1,4 @@
 <div id="footer" tal:define="portal context/portal_url" i18n:domain="recensio">
-   <img src="footer_bg_top.png" alt="grafisches Element" i18n:attributes="alt graphical_element" class='top'/>
    <div class="column_footer">
         <h2><a tal:attributes="href context/rezensionen/absolute_url | nothing" href="#" i18n:translate="reviews">Rezensionen</a></h2>
         <ul tal:repeat="index python:range(3)" class="easyticker">
