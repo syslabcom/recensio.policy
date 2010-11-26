@@ -4,10 +4,6 @@
             handler="recensio.policy.setuphandlers.importVocabularies"
             description="Vocabularies for Recensio"
             title="recensio_vocabularies" />
-    <import-step id="recensio_policy_languages" version="20100617-01"
-            handler="recensio.policy.setuphandlers.addLanguages"
-            description="Supported languages for Recensio"
-            title="recensio_languages" />
     <import-step id="recensio_policy_security_settings" version="20100701-01"
             handler="recensio.policy.setuphandlers.configureSecurity"
             description="Security configuration for Recensio"

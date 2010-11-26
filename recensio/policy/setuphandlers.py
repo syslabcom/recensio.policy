@@ -67,21 +67,6 @@ def importVocabularies(self):
     createHierarchicalVocabs(pvm, constants.hierarchical_vocabularies)
 
 @guard
-def addLanguages(self):
-    site = self.getSite()
-    # site languages
-    plt = getToolByName(site, 'portal_languages')
-    for l in constants.interface_languages:
-        plt.addSupportedLanguage(l)
-    plt.display_flags = 1
-    # content languages
-    registry = queryUtility(IRegistry)
-    settings = registry.forInterface(IRecensioSettings)
-    langs = "\n".join(constants.languages)
-    setattr(settings, 'available_content_languages', langs)
-    transaction.savepoint(optimistic=True)
-
-@guard
 def configureSecurity(self):
     site = self.getSite()
     pcp = SecurityControlPanelAdapter(site)
