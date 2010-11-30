@@ -272,7 +272,7 @@ def setupHomepage(context):
     for fp_id in ['front-page', 'front-page-en', 'front-page-fr']:
         fp = getattr(site, fp_id, None)
         if not fp:
-            log.error('%s not found' % fp_id)
+            log.warning('%s not found' % fp_id)
             continue
         id = 'layout'
         if fp.hasProperty(id):
