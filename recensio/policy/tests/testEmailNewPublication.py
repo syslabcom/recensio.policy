@@ -33,7 +33,7 @@ Here you can take a look at the presentation and comment on the presented statem
 http://nohost/plone/...
 
 For any further information/questions please feel free to contact the recensio.net editorial team:
- <fake>.
+Recensio.net <fake>.
 
 Yours sincerely
 The recensio.net editorial team
