@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+		http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+	<responseDate>2010-11-24T15:21:44Z</responseDate>
+	<request verb="ListRecords" metadataPrefix="oai_dc">http://www.perspectivia.net/content/publikationen/francia/francia-recensio/oai</request>
+	<ListRecords>
+		<record>
+			<header>
+				<identifier>oai:perspectivia.net.dhi-paris.francia/francia-recensio/2010-2/FN/bauer-et-al_pillorget</identifier>
+				<datestamp>2010-07-01T16:20:00syZ</datestamp>
+				<setSpec>history</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title>D. Bauer, J. Dillinger, J. Schmidt, Hexenprozess und Staatsbildung (René Pillorget)</dc:title>
+	<dc:creator>Pillorget, René</dc:creator>
+	<dc:subject>340.09</dc:subject> 
+	<dc:subject>t1.09024</dc:subject>
+	<dc:subject>t1.09031</dc:subject> 
+	<dc:subject>t1.09032</dc:subject>
+	<dc:subject>940</dc:subject>
+	<dc:subject>Hexenverfolgung</dc:subject>
+	<dc:subject>Staat</dc:subject>
+	<dc:publisher>perspectivia.net</dc:publisher>
+	<dc:date>2010-06-02</dc:date>
+	<dc:type>Review</dc:type>
+	<dc:type></dc:type>
+	<dc:format>application/html</dc:format>
+	<dc:identifier>http://www.perspectivia.net/content/publikationen/francia/francia-recensio/2010-2/FN/bauer-et-al_pillorget</dc:identifier>
+	<dc:source>Perspectivia.net, Francia Recensio 2010-2, Frühe Neuzeit – Revolution – Empire (1500–1815)</dc:source>
+	<dc:rights>by-nc-ne-3.0-de, perspectivia.net</dc:rights>
+	<dc:relation>978-3-89534-732-0</dc:relation> 
+</oai_dc:dc>
+			</metadata>
+		</record>
+		<record>
+			<header>
+				<identifier>oai:perspectivia.net.dhi-paris.francia/francia-recensio/rev-books/2010/978-3-89534-732-0</identifier>
+				<datestamp>2010-06-30T16:47:00Z</datestamp>
+				<setSpec>history</setSpec>
+			</header>
+			<metadata>
+<oai_dc:dc
+	xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc/
+	http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+	<dc:title>Hexenprozess und Staatsbildung/Witch-Trials and State-Building</dc:title>
+	<dc:creator>Bauer, Dieter R.</dc:creator>
+	<dc:creator>Dillinger, Johannes</dc:creator>
+	<dc:creator>Schmidt, Jürgen Michael</dc:creator>
+	<dc:publisher>Verlag für Regionalgeschichte, Bielefeld</dc:publisher>
+	<dc:date>2010-06-30</dc:date>
+	<dc:type>Book</dc:type>
+	<dc:format>application/html</dc:format>
+	<dc:identifier>978-3-89534-732-0</dc:identifier>
+	<dc:relation>http://www.perspectivia.net/content/publikationen/francia/francia-recensio/2010-2/FN/bauer-et-al_pillorget</dc:relation>
+</oai_dc:dc>
+			</metadata>
+		</record>
+	</ListRecords>
+</OAI-PMH>
