@@ -109,6 +109,13 @@
       permission="cmf.ManagePortal"
       />
 
+  <browser:page
+      name="perspektivia-import"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".perspektivia.Import"
+      permission="cmf.ManagePortal"
+      />
+
   <browser:viewlet
     name="bottom_links"
     manager="plone.app.layout.viewlets.interfaces.IPortalFooter"

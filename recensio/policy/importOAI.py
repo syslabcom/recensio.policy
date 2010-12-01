@@ -36,7 +36,7 @@ class PerspektiviaParser(object):
             'id'         : ''.join(x('oai:header/oai:identifier/text()'))
            ,'title'      : space('title')
            ,'creator'    : list(self._creators(*dc('creator')))
-           ,'subject'    : space('subject')
+           ,'subject'    : dc('subject')
            ,'publisher'  : space('publisher')
            ,'date'       : date(no_space('date')) # XXX What is date for?
            ,'type'       : no_space('type')
