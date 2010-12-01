@@ -128,6 +128,12 @@
   <div class="clear"></div>
 </div>
 
-<div id="logo-slogan" i18n:translate="logo-slogan">
-  Review platform for the european...
-</div>
+<tal:extras
+     define="default_language context/@@plone_portal_state/language;
+             portal context/portal_url;">
+  <img id="recensio_logo"
+       src="/++resource++recensio.theme.images/logo_recensio.png"
+       tal:attributes="src string:/${portal}/++resource++recensio.theme.images/${default_language}/logo_recensio.png"
+       title="Recensio.net"
+       alt="Recensio.net Logo"/>
+</tal:extras>
