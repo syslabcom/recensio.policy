@@ -5,7 +5,7 @@
          tal:attributes="href context/rezensionen/absolute_url | nothing"
          i18n:translate="reviews">Rezensionen</a>
     </h2>
-    <ul tal:repeat="index python:range(3)" class="easyticker">
+    <ul tal:repeat="index python:range(3)" class="easyticker-disabled">
       <li tal:repeat="mag view/getPublications"
           tal:attributes="style python: repeat['mag'].start and 'display: list-item' or 'display: None'">
         <a href="#"
@@ -64,22 +64,22 @@
     <ul tal:define="member context/@@plone_portal_state/member;
                     isAnon context/@@plone_portal_state/anonymous;
                     homefolder context/portal_membership/getHomeUrl">
-      <li><a href="#"
-             tal:condition="not: isAnon"
-             tal:attributes="href string:${homefolder}"
-             i18n:translate="manage_presentations">
+      <li tal:condition="not: isAnon">
+        <a href="#"
+           tal:attributes="href string:${homefolder}"
+           i18n:translate="manage_presentations">
           Manage your presentations</a>
       </li>
-      <li><a href="#"
-             tal:condition="not: isAnon"
-             tal:attributes="href string:${homefolder}/folder_factories"
-             i18n:translate="create_presentation">
+      <li tal:condition="not: isAnon">
+        <a href="#"
+           tal:attributes="href string:${homefolder}/folder_factories"
+           i18n:translate="create_presentation">
           Create new presentation</a>
       </li>
-      <li><a href="#"
-             tal:condition="isAnon"
-             tal:attributes="href string:${portal}/@@register"
-             i18n:translate="register_and_create_presentations">
+      <li tal:condition="isAnon">
+        <a href="#"
+           tal:attributes="href string:${portal}/@@register"
+           i18n:translate="register_and_create_presentations">
           Register and create new presentations</a>
       </li>
     </ul>
