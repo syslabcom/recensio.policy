@@ -6,6 +6,7 @@ from zope.interface import implements
 from zope.component import getUtility
 from zope.app.schema.vocabulary import IVocabularyFactory
 from Products.Archetypes.utils import DisplayList
+from plone.i18n.locales.languages import _languagelist
 
 from recensio.policy.interfaces import IRecensioView
 
@@ -19,5 +20,5 @@ class RecensioView(BrowserView):
         util = getUtility(IVocabularyFactory,
             u"recensio.policy.vocabularies.available_content_languages")
         vocab = util(self)
-        terms = [(x.value, x.title) for x in vocab]
+        terms = [(x.value, _languagelist[x.value][u'native']) for x in vocab]
         return DisplayList(terms)
