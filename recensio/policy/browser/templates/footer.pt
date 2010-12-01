@@ -1,82 +1,133 @@
 <div id="footer" tal:define="portal context/portal_url" i18n:domain="recensio">
-   <div class="column_footer">
-        <h2><a tal:attributes="href context/rezensionen/absolute_url | nothing" href="#" i18n:translate="reviews">Rezensionen</a></h2>
-        <ul tal:repeat="index python:range(3)" class="easyticker">
-            <li tal:repeat="mag view/getPublications"
-                tal:attributes="style python: repeat['mag'].start and 'display: list-item' or 'display: None'">
-                <a href="#"
-                   tal:attributes="href mag/absolute_url"
-                   tal:content="mag/title">
-                    A magazine
-                </a>
-            </li>
-        </ul>
-    </div>
-    <div class="column_footer">
-        <h2><a href="#" tal:attributes="href string:${portal}/praesentationen" i18n:translate="presentations">Präsentationen</a></h2>
-        <ul>
-        <li><a href="#" tal:attributes="href string:${portal}/praesentationen/monographien/search" i18n:translate="monographs">Monographien</a></li>
-        <li><a href="#" tal:attributes="href string:${portal}/praesentationen/aufsaetze/search" i18n:translate="articles">Aufsätze</a></li>
-        <li><a href="#" tal:attributes="href string:${portal}/praesentationen/internetressourcen/search" i18n:translate="online_resources">Internetressourcen</a></li>
-        </ul>   
-    </div>
-    <div class="column_footer">
-        <h2><a href="#" tal:attributes="href context/themen-epochen-regionen/absolute_url | nothing" i18n:translate="browse_topics">Themenbrowsing</a></h2>
-        <ul>
-            <li tal:repeat="link view/drill_down_views | nothing">
-                <a href="#"
-                    tal:attributes="href link/url"
-                    tal:content="link/title">Topic</a>
-            </li>
-        </ul>
-    </div>
-    <div class="column_footer">
-        <h2><a href="#" tal:attributes="href context/ueberuns/mitmachen-bei-recensio.net/absolute_url | nothing"  i18n:translate="participating_in_recensio_net">mitmachen bei recensio.net</a></h2>
-        <ul tal:define="member context/@@plone_portal_state/member;
-                        isAnon context/@@plone_portal_state/anonymous;
-                        homefolder context/portal_membership/getHomeUrl">
-            <li><a href="#"
-                   tal:condition="not: isAnon"
-                   tal:attributes="href string:${homefolder}"
-                   i18n:translate="manage_presentations">Manage your presentations</a></li>
-            <li><a href="#"
-                   tal:condition="not: isAnon"
-                   tal:attributes="href string:${homefolder}/folder_factories"
-                   i18n:translate="create_presentation">Create new presentation</a></li>
-            <li><a href="#"
-                   tal:condition="isAnon"
-                   tal:attributes="href string:${portal}/@@register"
-                   i18n:translate="register_and_create_presentations">Register and create new presentations</a></li>
-        </ul>
-    </div>
+  <div class="column_footer">
+    <h2>
+      <a href="#"
+         tal:attributes="href context/rezensionen/absolute_url | nothing"
+         i18n:translate="reviews">Rezensionen</a>
+    </h2>
+    <ul tal:repeat="index python:range(3)" class="easyticker">
+      <li tal:repeat="mag view/getPublications"
+          tal:attributes="style python: repeat['mag'].start and 'display: list-item' or 'display: None'">
+        <a href="#"
+           tal:attributes="href mag/absolute_url"
+           tal:content="mag/title">
+          A magazine
+        </a>
+      </li>
+    </ul>
+  </div>
 
-    <div class="column_footer">
-        <h2><a href="/RSS-feeds" tal:attributes="href context/RSS-feeds/absolute_url | nothing" i18n:translate="rss_feeds">RSS feeds</a></h2>
-        <ul>
-            <li tal:define="feed string:${context/RSS-feeds/new_reviews/absolute_url | nothing}/RSS">
-                <a href="#" tal:attributes="href feed">
-                    <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
-                </a>
-                <a href="#" tal:attributes="href feed" i18n:translate="new_reviews">Neue Rezensionen</a>
-            </li>
-            <li tal:define="feed string:${context/RSS-feeds/new_presentations/absolute_url | nothing}/RSS">
-                <a href="#" tal:attributes="href feed">
-                    <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
-                </a>
-                <a href="#" tal:attributes="href feed" i18n:translate="new_presentations">Neue Präsentationen</a>
-            </li>
-            <li tal:define="feed string:${context/RSS-feeds/new_discussions/absolute_url | nothing}/RSS">
-                <a href="#" tal:attributes="href feed">
-                    <img src="#" tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif" alt="RSS icon" />
-                </a>
-                <a href="#" tal:attributes="href feed" i18n:translate="new_discussions">Neue Diskussionen</a>
-            </li>
-        </ul>
-    </div>
+  <div class="column_footer">
+    <h2>
+      <a href="#"
+         tal:attributes="href string:${portal}/praesentationen"
+         i18n:translate="presentations">Präsentationen</a>
+    </h2>
+    <ul>
+      <li>
+        <a href="#"
+           tal:attributes="href string:${portal}/praesentationen/monographien/search"
+           i18n:translate="monographs">Monographien</a>
+      </li>
+      <li>
+        <a href="#"
+           tal:attributes="href string:${portal}/praesentationen/aufsaetze/search"
+           i18n:translate="articles">Aufsätze</a>
+      </li>
+      <li>
+        <a href="#"
+           tal:attributes="href string:${portal}/praesentationen/internetressourcen/search"
+           i18n:translate="online_resources">Internetressourcen</a></li>
+    </ul>
+  </div>
 
-    <div class="clear"></div>
-    
+  <div class="column_footer">
+    <h2>
+      <a href="#"
+         tal:attributes="href context/themen-epochen-regionen/absolute_url | nothing"
+         i18n:translate="browse_topics">Themenbrowsing</a></h2>
+    <ul>
+      <li tal:repeat="link view/drill_down_views | nothing">
+        <a href="#"
+           tal:attributes="href link/url"
+           tal:content="link/title">Topic</a>
+      </li>
+    </ul>
+  </div>
+  <div class="column_footer">
+    <h2>
+      <a href="#"
+         tal:attributes="href context/ueberuns/mitmachen-bei-recensio.net/absolute_url | nothing"
+         i18n:translate="participating_in_recensio_net">
+        mitmachen bei recensio.net</a>
+    </h2>
+    <ul tal:define="member context/@@plone_portal_state/member;
+                    isAnon context/@@plone_portal_state/anonymous;
+                    homefolder context/portal_membership/getHomeUrl">
+      <li><a href="#"
+             tal:condition="not: isAnon"
+             tal:attributes="href string:${homefolder}"
+             i18n:translate="manage_presentations">
+          Manage your presentations</a>
+      </li>
+      <li><a href="#"
+             tal:condition="not: isAnon"
+             tal:attributes="href string:${homefolder}/folder_factories"
+             i18n:translate="create_presentation">
+          Create new presentation</a>
+      </li>
+      <li><a href="#"
+             tal:condition="isAnon"
+             tal:attributes="href string:${portal}/@@register"
+             i18n:translate="register_and_create_presentations">
+          Register and create new presentations</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="column_footer">
+    <h2>
+      <a href="/RSS-feeds"
+         tal:attributes="href context/RSS-feeds/absolute_url | nothing" i18n:translate="rss_feeds">
+        RSS feeds</a>
+    </h2>
+    <ul>
+      <li tal:define="feed string:${context/RSS-feeds/new_reviews/absolute_url | nothing}/RSS">
+        <a href="#" tal:attributes="href feed">
+          <img src="#"
+               tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif"
+               alt="RSS icon" />
+        </a>
+        <a href="#"
+           tal:attributes="href feed" i18n:translate="new_reviews">
+          Neue Rezensionen</a>
+      </li>
+      <li tal:define="feed string:${context/RSS-feeds/new_presentations/absolute_url | nothing}/RSS">
+        <a href="#" tal:attributes="href feed">
+          <img src="#"
+               tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif"
+               alt="RSS icon" />
+        </a>
+        <a href="#"
+           tal:attributes="href feed" i18n:translate="new_presentations">
+          Neue Präsentationen</a>
+      </li>
+      <li tal:define="feed string:${context/RSS-feeds/new_discussions/absolute_url | nothing}/RSS">
+        <a href="#" tal:attributes="href feed">
+          <img src="#"
+               tal:attributes="src string:${portal}/++resource++recensio.theme.images/icon_rss_feed.gif"
+               alt="RSS icon" />
+        </a>
+        <a href="#"
+           tal:attributes="href feed"
+           i18n:translate="new_discussions">Neue Diskussionen</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="clear"></div>
 </div>
+
 <div id="logo-slogan" i18n:translate="logo-slogan">
-    Review platform for the european...
+  Review platform for the european...
 </div>
