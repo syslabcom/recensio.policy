@@ -16,12 +16,19 @@
   </div>    
 </div>
 
-<tal:extras
-     define="default_language context/@@plone_portal_state/language;
-             portal context/portal_url;">
+<div id="extra-design-elements"
+     tal:define="
+default_language context/@@plone_portal_state/language;
+portal context/portal_url;">
   <img id="recensio_logo"
-       src="++resource++recensio.theme.images/logo_recensio.png"
-       tal:attributes="src string:${portal}/++resource++recensio.theme.images/${default_language}/logo_recensio.png"
+       src="++resource++recensio.theme.images/de/logo_recensio.png"
+       tal:attributes="
+src string:${portal}/++resource++recensio.theme.images/${default_language}/logo_recensio.png"
        title="Recensio.net"
        alt="Recensio.net Logo"/>
-</tal:extras>
+  <a id="advanced_search"
+     href="search_form"
+     tal:attributes="href string:${portal}/search_form?${request/QUERY_STRING}"
+     i18n:translate="search_results_advanced_link">
+    Advanced Search</a>
+</div>
