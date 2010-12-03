@@ -14,6 +14,7 @@ from BeautifulSoup import BeautifulSoup
 
 from recensio.policy.importSehepunkte import sehepunkte_parser
 from recensio.policy.opacsearch import opac
+from recensio.policy.tools import convertToString
 
 def convert(vocab):
     retval = {}
@@ -47,7 +48,7 @@ class Import(BrowserView):
                 pass # The library takes care of logging a failure
         for review in chain(*data):
             self._addReview(self._convertVocabulary(\
-                             self._convertToString(\
+                             convertToString(\
                               review)))
         return
 
@@ -75,21 +76,6 @@ class Import(BrowserView):
         for key, value in review.items():
             setattr(review_ob, key, value)
         notify(ObjectEditedEvent(review_ob))
-
-    def _convertToString(self, obj):
-        if isinstance(obj, unicode):
-            return obj.encode('utf-8')
-        elif isinstance(obj, str):
-            return obj
-        elif isinstance(obj, list):
-            return [self._convertToString(x) for x in obj]
-        elif isinstance(obj, dict):
-            retval = {}
-            for key, value in obj.items():
-                retval[key] = self._convertToString(value)
-            return retval
-        else:
-            raise AttributeError()
 
     def _convertVocabulary(self, review):
         category = review.pop('category')
