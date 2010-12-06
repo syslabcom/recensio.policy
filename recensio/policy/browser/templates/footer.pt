@@ -9,7 +9,7 @@
       <div>
         <span>
           <a href="http://www.dfg.de"
-             ><img src="imgs/logos/dfg_logo.png"
+             ><img tal:attributes="src string:${portal_url}/imgs/logos/dfg_logo.png" src="imgs/logos/dfg_logo.png"
                    alt="Logo der deutschen Forschungsgemeinschaft"
                    class="logo"></a>
           &nbsp; recensio.net ist ein von der Deutschen
@@ -17,13 +17,13 @@
           folgender Institutionen
         </span><br />
         <a href="http://www.bsb-muenchen.de/"
-           ><img src="imgs/logos/bsb_logo.gif"
+           ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
                  alt="Logo der Bayerischen Staatsbibliothek"></a>
         <a href="http://www.dhi-paris.fr/"
-           ><img src="imgs/logos/dhip_logo.png"
+           ><img tal:attributes="src string:${portal_url}/imgs/logos/dhip_logo.png" src="imgs/logos/dhip_logo.png"
                  alt="Logo des deutschen historischen Instituts Paris"></a>
         <a href="http://www.ieg-mainz.de/likecms/index.php"
-           ><img src="imgs/logos/ieg_logo.gif"
+           ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.gif" src="imgs/logos/ieg_logo.gif"
                  alt="Logo des Institus für europäische Geschichte"></a>
       </div>
 
