@@ -52,7 +52,6 @@ class TestExcelImport(unittest.TestCase):
         request.form['xls'] = FakeFile(
             '../../src/recensio.imports/samples/%s' % filename)
         view = getMultiAdapter((issue, request), name='magazine_import')
-        import pdb;pdb.set_trace()
         html = view()
         self.assertFalse('portalMessage error' in html)
 
