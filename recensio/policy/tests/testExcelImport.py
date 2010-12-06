@@ -20,7 +20,13 @@ from recensio.theme.interfaces import IRecensioLayer
 class TestExcelImport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
-    def testFormat(self):
+    def testGermanFormat(self):
+        self._testFormat('recensioupload_DE.xls')
+
+    def testEnglishFormat(self):
+        self._testFormat('recensioupload_EN.xls')
+
+    def testFormat(self, filename):
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ['Manager'])
 #        setRoles(portal, TEST_USER_NAME, ['Manager'])
@@ -44,7 +50,7 @@ class TestExcelImport(unittest.TestCase):
         request.form['pdf'] = FakeFile(
             '../../src/recensio.imports/samples/demo1.pdf')
         request.form['xls'] = FakeFile(
-            '../../src/recensio.imports/samples/initial.xls')
+            '../../src/recensio.imports/samples/%s' % filename)
         view = getMultiAdapter((issue, request), name='magazine_import')
         html = view()
         self.assertFalse('portalMessage error' in html)
