@@ -26,7 +26,7 @@ class TestExcelImport(unittest.TestCase):
     def testEnglishFormat(self):
         self._testFormat('recensioupload_EN.xls')
 
-    def testFormat(self, filename):
+    def _testFormat(self, filename):
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ['Manager'])
 #        setRoles(portal, TEST_USER_NAME, ['Manager'])
@@ -52,6 +52,7 @@ class TestExcelImport(unittest.TestCase):
         request.form['xls'] = FakeFile(
             '../../src/recensio.imports/samples/%s' % filename)
         view = getMultiAdapter((issue, request), name='magazine_import')
+        import pdb;pdb.set_trace()
         html = view()
         self.assertFalse('portalMessage error' in html)
 
