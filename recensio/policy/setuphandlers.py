@@ -56,6 +56,10 @@ def importVocabularies(self):
             pvm.invokeFactory('VdexFileVocabulary', vocabname)
             pvm[vocabname].importXMLBinding(pkg_resources.resource_string(\
                 __name__, path_tmpl % filenamepart))
+    for vocab_name, vocabulary in constants.vocabularies.items():
+        if not hasattr(pvm, vocab_name):
+            createSimpleVocabs(pvm, {vocab_name : vocabulary.items()})
+
 
 @guard
 def configureSecurity(self):
