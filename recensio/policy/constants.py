@@ -105,7 +105,8 @@ vocabularies = {
          u'normen_und_standards':u'Normen und Standards',
          u'anleitungen_handbuecher_lehrmaterial':u'Anleitungen, Handbücher, Lehrmaterial',
          u'sonstige_nachschlagewerke':u'Sonstige Nachschlagewerke',
-         },
+         }
+    }
 
 
 languages = [u'sq',
