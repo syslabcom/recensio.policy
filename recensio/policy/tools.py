@@ -4,7 +4,7 @@ def convertToString(obj):
     elif isinstance(obj, str):
         return obj
     elif isinstance(obj, list):
-        return [_convertToString(x) for x in obj]
+        return [convertToString(x) for x in obj]
     elif isinstance(obj, dict):
         retval = {}
         for key, value in obj.items():

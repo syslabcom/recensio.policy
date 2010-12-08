@@ -79,7 +79,7 @@ class Import(BrowserView):
 
     def _convertVocabulary(self, review):
         category = review.pop('category')
-        setter = lambda mapper: [x for x in mapper.get(category, '') if x]
+        setter = lambda mapper: [x for x in [mapper.get(category, '')] if x]
         review['ddcSubject'] = setter(self.topic_values)
         review['ddcTime'] = setter(self.epoch_values)
         review['ddcPlace'] = setter(self.region_values)
