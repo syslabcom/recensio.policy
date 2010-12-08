@@ -30,8 +30,8 @@ class SehepunkteParser(object):
         authors = []
         for i in range(1,4):
             authors.append({
-                'lastname'  : xpath_single('book/author_%i_last_name/text()' % i)
-               ,'firstname' : xpath_single('book/author_%i_first_name/text()' % i)
+                'lastname'  : xpath_single('book[1]/author_%i_last_name/text()' % i)
+               ,'firstname' : xpath_single('book[1]/author_%i_first_name/text()' % i)
             })
         authors = filter(lambda x: x['lastname'] or x['firstname'], authors)
 
@@ -42,14 +42,14 @@ class SehepunkteParser(object):
            ,'reviewAuthorLastname' : xpath_single('reviewer/last_name/text()')
            ,'reviewAuthorFirstname' : xpath_single('reviewer/first_name/text()')
            ,'authors' : authors
-           ,'isbn' : xpath_single('book/isbn/text()')
-           ,'title' : xpath_single('book/title/text()')
-           ,'subtitle' : xpath_single('book/subtitle/text()')
-           ,'placeOfPublication' : xpath_single('book/place_of_publication/text()')
-           ,'publisher' : xpath_single('book/publishing_company/text()')
-           ,'yearOfPublication' : xpath_single('book/year/text()')
-           ,'series' : xpath_single('book/series/text()')
-           ,'pages' : xpath_single('book/pages/text()')
+           ,'isbn' : xpath_single('book[1]/isbn/text()')
+           ,'title' : xpath_single('book[1]/title/text()')
+           ,'subtitle' : xpath_single('book[1]/subtitle/text()')
+           ,'placeOfPublication' : xpath_single('book[1]/place_of_publication/text()')
+           ,'publisher' : xpath_single('book[1]/publishing_company/text()')
+           ,'yearOfPublication' : xpath_single('book[1]/year/text()')
+           ,'series' : xpath_single('book[1]/series/text()')
+           ,'pages' : xpath_single('book[1]/pages/text()')
            ,'canonical_uri' : canonical_uri
         }
 
