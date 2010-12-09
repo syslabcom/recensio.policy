@@ -325,7 +325,7 @@ class MailUncommented(BrowserView):
     def findRecipient(self, result):
         membership_tool = getToolByName(self.context, 'portal_membership')
         owner = membership_tool.getMemberById(result.Creator).getUser()
-        return owner.getProperty('email')
+        return owner.getProperty('email') or self.findSender()
 
     def findSender(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
