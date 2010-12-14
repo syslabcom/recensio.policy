@@ -9,6 +9,7 @@ from Products.Archetypes.utils import DisplayList
 from plone.i18n.locales.languages import _languagelist
 
 from recensio.policy.interfaces import IRecensioView
+from recensio.contenttypes.content.review import BaseReviewNoMagic
 
 
 class RecensioView(BrowserView):
@@ -17,8 +18,4 @@ class RecensioView(BrowserView):
     implements(IRecensioView)
 
     def getSupportedLanguages(self):
-        util = getUtility(IVocabularyFactory,
-            u"recensio.policy.vocabularies.available_content_languages")
-        vocab = util(self)
-        terms = [(x.value, _languagelist[x.value][u'native']) for x in vocab]
-        return DisplayList(terms)
+        return BaseReviewNoMagic(self.context).listSupportedLanguages()
