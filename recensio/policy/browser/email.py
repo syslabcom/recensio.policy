@@ -199,7 +199,7 @@ class MailCollection(BrowserView):
                 for error in self.errors:
                     messages.addStatusMessage(error, type='error')
             else:
-                messages.addStatusMessage(self.ts.translate(_('mail_sending_prepared'), context=self.context) % mail_to, type="info")
+                messages.addStatusMessage(self.ts.translate(_('mail_sending_prepared', default="uMailversand wird vorbereitet. Mail wird versandt an %s"), context=self.context) % mail_to, type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
 class MailNewComment(BrowserView):
@@ -228,9 +228,9 @@ class MailNewComment(BrowserView):
         args['commentdate'] = comment.creation_date.strftime('%d.%m.%Y')
         args['mail_from'] = mail_from
 
-        subject = self.ts.translate(_('mail_new_comment_subject'), context=self.context)
-        mail_to = self.findRecipient()
-        msg_template = self.ts.translate(_('mail_new_comment_body'), context=self.context)
+        mail_to, pref_lang = self.findRecipient()
+        subject = self.ts.translate(_('mail_new_comment_subject'), target_language=pref_lang)
+        msg_template = self.ts.translate(_('mail_new_comment_body'), target_language=pref_lang)
         self.sendMail(msg_template % args, mail_from, mail_to, subject)
 
     def sendMail(self, msg, mail_from, mail_to, subject):
@@ -240,12 +240,12 @@ class MailNewComment(BrowserView):
                                subject=subject, charset='utf-8')
         else:
             messages = IStatusMessage(self.request)
-            messages.addStatusMessage(self.ts.translate(_('mail_no_recipients'), context=self.context), type="warning")
+            messages.addStatusMessage(self.ts.translate(_('mail_no_recipients'), target_language=pref_lang), type="warning")
 
     def findRecipient(self):
         membership_tool = getToolByName(self.context, 'portal_membership')
         owner = membership_tool.getMemberById(self.context.__parent__.__parent__.Creator()).getUser()
-        return owner.getProperty('email')
+        return owner.getProperty('email'), owner.getProperty('preferred_language', 'de')
 
 
 class MailNewPublication(BrowserView):
@@ -253,6 +253,8 @@ class MailNewPublication(BrowserView):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
         self.ts = getToolByName(self.context, 'translation_service')
+        self.pas = getToolByName(self.context, "acl_users")
+        self.membership_tool = getToolByName(self.context, 'portal_membership')
 
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
@@ -260,24 +262,35 @@ class MailNewPublication(BrowserView):
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         referenceAuthors = getattr(self.context, 'referenceAuthors', [])
 
+        def get_preferred_language(email, default='de'):
+            found = self.pas.searchUsers(email=args['mail_to'])
+            if found:
+                owner = self.membership_tool.getMemberById(found[0]['userid']).getUser()
+                return owner.getProperty('preferred_language', default)
+            else:
+                return default
+
         for author in referenceAuthors:
             args = {}
             fuckup = [author['firstname'], author['lastname']]
             fuckup = [x.decode('utf-8') for x in fuckup]
             args['reviewed_author'] = u' '.join(fuckup)
             args['mail_from'] = mail_from.decode('utf-8')
-#            if author.has_key('email') and author['email']:
-#                args['mail_to'] = author['email']
-#                msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
-#            else:
-            args['mail_to'] = args['mail_from']
-            msg_template = self.ts.translate(_('mail_new_publication_intro'), context=self.context) + self.ts.translate(_('mail_new_publication_body'), context=self.context)
+            pref_lang = 'de'
+            if author.has_key('email') and author['email']:
+                args['mail_to'] = author['email']
+                pref_lang = get_preferred_language(author['email'], pref_lang)
+                msg_template = self.ts.translate(_('mail_new_publication_body'), target_language=pref_lang)
+            else:
+                args['mail_to'] = args['mail_from']
+                pref_lang = get_preferred_language(args['mail_from'], pref_lang)
+                msg_template = self.ts.translate(_('mail_new_publication_intro'), target_language=pref_lang) + self.ts.translate(_('mail_new_publication_body'), target_language=pref_lang)
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             args['context_url'] = self.context.absolute_url()
-            subject = self.ts.translate(_('mail_new_publication_subject'), context=self.context) % args['title']
+            subject = self.ts.translate(_('mail_new_publication_subject', default=u"Es wurde eine Rezension von %s veröffentlicht"), target_language=pref_lang) % args['title']
             self.sendMail(msg_template % args, args['mail_to'], mail_from, subject)
 
     def sendMail(self, msg, mail_to, mail_from, subject):
@@ -302,9 +315,9 @@ class MailUncommented(BrowserView):
 
     def sendMail(self, result):
         msg = self.formatMessage(result)
-        mail_to = self.findRecipient(result)
+        mail_to, pref_lang = self.findRecipient(result)
         mail_from = self.findSender()
-        subject = self.ts.translate(_('mail_uncommented_subject'), context=self.context)
+        subject = self.ts.translate(_('mail_uncommented_subject'), target_language=pref_lang)
         self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
@@ -314,7 +327,7 @@ class MailUncommented(BrowserView):
         owner_name = result.Creator
         url = result.getURL()
         date = result.created.strftime('%d.%m.%Y')
-        msg_template = self.ts.translate(_('mail_uncommented_body'), context=self.context)
+        msg_template = self.ts.translate(_('mail_uncommented_body'), target_language=pref_lang)
 
         return msg_template % {'name' : owner_name,
                                     'url' : url,
@@ -325,7 +338,7 @@ class MailUncommented(BrowserView):
     def findRecipient(self, result):
         membership_tool = getToolByName(self.context, 'portal_membership')
         owner = membership_tool.getMemberById(result.Creator).getUser()
-        return owner.getProperty('email') or self.findSender()
+        return owner.getProperty('email') or self.findSender(), owner.getProperty('preferred_language', 'de')
 
     def findSender(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
