@@ -245,7 +245,7 @@ class MailNewComment(BrowserView):
     def findRecipient(self):
         membership_tool = getToolByName(self.context, 'portal_membership')
         owner = membership_tool.getMemberById(self.context.__parent__.__parent__.Creator()).getUser()
-        return owner.getProperty('email'), owner.getProperty('preferred_language', 'de')
+        return owner.getProperty('email'), owner.getProperty('preferred_language', 'en')
 
 
 class MailNewPublication(BrowserView):
@@ -262,7 +262,7 @@ class MailNewPublication(BrowserView):
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         referenceAuthors = getattr(self.context, 'referenceAuthors', [])
 
-        def get_preferred_language(email, default='de'):
+        def get_preferred_language(email, default='en'):
             found = self.pas.searchUsers(email=args['mail_to'])
             if found:
                 owner = self.membership_tool.getMemberById(found[0]['userid']).getUser()
@@ -276,7 +276,7 @@ class MailNewPublication(BrowserView):
             fuckup = [x.decode('utf-8') for x in fuckup]
             args['reviewed_author'] = u' '.join(fuckup)
             args['mail_from'] = mail_from.decode('utf-8')
-            pref_lang = 'de'
+            pref_lang = 'en'
             if author.has_key('email') and author['email']:
                 args['mail_to'] = author['email']
                 pref_lang = get_preferred_language(author['email'], pref_lang)
@@ -339,7 +339,7 @@ class MailUncommented(BrowserView):
     def findRecipient(self, result):
         membership_tool = getToolByName(self.context, 'portal_membership')
         owner = membership_tool.getMemberById(result.Creator).getUser()
-        return owner.getProperty('email') or self.findSender(), owner.getProperty('preferred_language', 'de')
+        return owner.getProperty('email') or self.findSender(), owner.getProperty('preferred_language', 'en')
 
     def findSender(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
