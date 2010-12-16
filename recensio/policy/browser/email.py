@@ -325,6 +325,7 @@ class MailUncommented(BrowserView):
     def formatMessage(self, result):
         title = result.Title
         owner_name = result.Creator
+        mail, pref_lang = self.findRecipient(result)
         url = result.getURL()
         date = result.created.strftime('%d.%m.%Y')
         msg_template = self.ts.translate(_('mail_uncommented_body'), target_language=pref_lang)
