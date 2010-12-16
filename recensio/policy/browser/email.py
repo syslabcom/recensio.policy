@@ -266,12 +266,12 @@ class MailNewPublication(BrowserView):
             fuckup = [x.decode('utf-8') for x in fuckup]
             args['reviewed_author'] = u' '.join(fuckup)
             args['mail_from'] = mail_from.decode('utf-8')
-            if author.has_key('email') and author['email']:
-                args['mail_to'] = author['email']
-                msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
-            else:
-                args['mail_to'] = args['mail_from']
-                msg_template = self.ts.translate(_('mail_new_publication_intro'), context=self.context) + self.ts.translate(_('mail_new_publication_body'), context=self.context)
+#            if author.has_key('email') and author['email']:
+#                args['mail_to'] = author['email']
+#                msg_template = self.ts.translate(_('mail_new_publication_body'), context=self.context)
+#            else:
+            args['mail_to'] = args['mail_from']
+            msg_template = self.ts.translate(_('mail_new_publication_intro'), context=self.context) + self.ts.translate(_('mail_new_publication_body'), context=self.context)
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
