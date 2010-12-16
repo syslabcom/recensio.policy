@@ -35,9 +35,9 @@ class Import(BrowserView):
         self.plone_utils = getToolByName(context, 'plone_utils')
 
         pv = getToolByName(context, 'portal_vocabularies')
-        self.topic_values = convert(pv.topic_values.getVocabularyDict('de'))
-        self.epoch_values = convert(pv.epoch_values.getVocabularyDict('de'))
-        self.region_values = convert(pv.region_values.getVocabularyDict('de'))
+        self.topic_values = convert(pv.topic_values._getManager().getVocabularyDict(lang='de'))
+        self.epoch_values = convert(pv.epoch_values._getManager().getVocabularyDict(lang='de'))
+        self.region_values = convert(pv.region_values._getManager().getVocabularyDict(lang='de'))
 
     def __call__(self):
         data = []
