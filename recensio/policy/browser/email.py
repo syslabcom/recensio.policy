@@ -317,7 +317,7 @@ class MailUncommented(BrowserView):
         msg = self.formatMessage(result)
         mail_to, pref_lang = self.findRecipient(result)
         mail_from = self.findSender()
-        subject = self.ts.translate(_('mail_uncommented_subject'), target_language=pref_lang)
+        subject = self.ts.translate(_('mail_uncommented_subject'), context=self.context)
         self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
@@ -328,7 +328,7 @@ class MailUncommented(BrowserView):
         mail, pref_lang = self.findRecipient(result)
         url = result.getURL()
         date = result.created.strftime('%d.%m.%Y')
-        msg_template = self.ts.translate(_('mail_uncommented_body'), target_language=pref_lang)
+        msg_template = self.ts.translate(_('mail_uncommented_body'), context=self.context)
 
         return msg_template % {'name' : owner_name,
                                     'url' : url,
