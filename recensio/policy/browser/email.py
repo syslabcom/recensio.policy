@@ -302,6 +302,26 @@ class MailUncommented(BrowserView):
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
+        self.mail_body = """Sehr geehrte/r Frau/Herr %(name)s,
+
+Sie haben am %(date)s Ihre Schrift
+    %(title)s
+    
+    auf recensio.net präsentiert. Bisher liegen keine Kommentare vor. Sie 
+haben hier die Gelegenheit, Ihre Präsentation zu modifizieren: Sie könnten 
+die Thesenformulierung bearbeiten oder auch die Zahl der aufgeführten 
+Bezugsautoren erweitern. In der Regel werden diese von der recensio.net-
+Redaktion kontaktiert, was erheblich zur Sichtbarkeit einer Präsentation 
+beiträgt. Wenn noch nicht geschehen, haben Sie zusätzlich die Möglichkeit, 
+Coverbilder und Inhaltsverzeichnisse beizufügen (im Fall von Präsentationen 
+von Monographien).
+    
+    Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur 
+Verfügung: %(mail_from)s.
+    
+    Mit freundlichen Grüßen,
+    Ihr recensio.net-Team"""
+
         self.ts = getToolByName(self.context, 'translation_service')
 
 
@@ -317,7 +337,7 @@ class MailUncommented(BrowserView):
         msg = self.formatMessage(result)
         mail_to, pref_lang = self.findRecipient(result)
         mail_from = self.findSender()
-        subject = self.ts.translate(_('mail_uncommented_subject'), context=self.context)
+        subject = self.ts.translate(_('mail_uncommented_subject', default="Ihre Rezension auf recensio.net"), target_language=pref_lang)
         self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
@@ -328,7 +348,7 @@ class MailUncommented(BrowserView):
         mail, pref_lang = self.findRecipient(result)
         url = result.getURL()
         date = result.created.strftime('%d.%m.%Y')
-        msg_template = self.ts.translate(_('mail_uncommented_body'), context=self.context)
+        msg_template = self.ts.translate(_('mail_uncommented_body', default=self.mail_body), target_language=pref_lang)
 
         return msg_template % {'name' : owner_name,
                                     'url' : url,
