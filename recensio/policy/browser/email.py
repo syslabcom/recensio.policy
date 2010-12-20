@@ -302,7 +302,7 @@ class MailUncommented(BrowserView):
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
-        self.mail_body = """Sehr geehrte/r Frau/Herr %(name)s,
+        self.mail_body = u"""Sehr geehrte/r Frau/Herr %(name)s,
 
 Sie haben am %(date)s Ihre Schrift
     %(title)s
@@ -337,7 +337,7 @@ Verfügung: %(mail_from)s.
         msg = self.formatMessage(result)
         mail_to, pref_lang = self.findRecipient(result)
         mail_from = self.findSender()
-        subject = self.ts.translate(_('mail_uncommented_subject', default="Ihre Rezension auf recensio.net"), target_language=pref_lang)
+        subject = self.ts.translate(_('mail_uncommented_subject', default=u"Ihre Rezension auf recensio.net"), target_language=pref_lang)
         self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
