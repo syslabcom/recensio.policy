@@ -307,17 +307,9 @@ class MailUncommented(BrowserView):
 Sie haben am %(date)s Ihre Schrift
     %(title)s
     
-    auf recensio.net präsentiert. Bisher liegen keine Kommentare vor. Sie 
-haben hier die Gelegenheit, Ihre Präsentation zu modifizieren: Sie könnten 
-die Thesenformulierung bearbeiten oder auch die Zahl der aufgeführten 
-Bezugsautoren erweitern. In der Regel werden diese von der recensio.net-
-Redaktion kontaktiert, was erheblich zur Sichtbarkeit einer Präsentation 
-beiträgt. Wenn noch nicht geschehen, haben Sie zusätzlich die Möglichkeit, 
-Coverbilder und Inhaltsverzeichnisse beizufügen (im Fall von Präsentationen 
-von Monographien).
+    auf recensio.net präsentiert. Bisher liegen keine Kommentare vor. Sie haben hier die Gelegenheit, Ihre Präsentation zu modifizieren: Sie könnten die Thesenformulierung bearbeiten oder auch die Zahl der aufgeführten Bezugsautoren erweitern. In der Regel werden diese von der recensio.net-Redaktion kontaktiert, was erheblich zur Sichtbarkeit einer Präsentation beiträgt. Wenn noch nicht geschehen, haben Sie zusätzlich die Möglichkeit, Coverbilder und Inhaltsverzeichnisse beizufügen (im Fall von Präsentationen von Monographien).
     
-    Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur 
-Verfügung: %(mail_from)s.
+    Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: %(mail_from)s.
     
     Mit freundlichen Grüßen,
     Ihr recensio.net-Team"""
