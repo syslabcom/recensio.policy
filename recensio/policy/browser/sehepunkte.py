@@ -62,10 +62,10 @@ class Import(BrowserView):
 
     def _addReview(self, review):
         if review['volume'] not in self.mag:
-            self.mag.invokeFactory(type_name="Volume", id=review['volume'])
+            self.mag.invokeFactory(type_name="Volume", id=review['volume'], title=review['volume'])
         volume = self.mag[review['volume']]
         if review['issue'] not in volume:
-            volume.invokeFactory(type_name='Issue', id=review['issue'])
+            volume.invokeFactory(type_name='Issue', id=review['issue'], title=review['issue'])
         issue = volume[review['issue']]
         new_id = self.plone_utils.normalizeString(review['title'])
         if new_id in issue:
