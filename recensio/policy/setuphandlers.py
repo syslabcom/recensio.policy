@@ -379,9 +379,6 @@ def doPublish(obj, pwt):
         obj.reindexObject()
     except:
         log.info('Could not publish %s' % obj.absolute_url())
-    if IBaseFolder.providedBy(obj):
-        for item in obj.objectValues():
-            doPublish(item, pwt)
 
 @guard
 def publishImportedContent(context):
