@@ -37,7 +37,7 @@ class IRecensioUserDataSchema(IUserDataSchema):
     academic_title = schema.TextLine(
         title=_(u'label_academic_title', default=u'Academic title'),
         description=_(u'help_academic_title',
-                      default=u""),
+                      default=u"Please add your academic titles here"),
         required=False,
         )
 
