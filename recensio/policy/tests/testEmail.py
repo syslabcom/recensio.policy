@@ -143,7 +143,7 @@ Verfolgen Sie die Diskussion über ...
 ... die meistkommentierten Präsentationen des vergangenen Monats:
 -----------------------------------------------------------------
 
-test title (1 comment)
+test title (1 Comment)
 ~~~~~~~~~~~~~~~~~~~~~~~
 (http://nohost/plone/sample-reviews/newspaperb/summer/issue-2/ReviewMonograph...)
 
@@ -272,7 +272,7 @@ Follow the discussion on ...
 
 ... the presentations most commented on over the course of the past months:
 ---------------------------------------------------------------------------
-test title (1 comment)
+test title (1 Comment)
 ~~~~~~~~~~~~~~~~~~~~~~~
 (http://nohost/plone/sample-reviews/newspaperb/summer/issue-2/ReviewMonograph...)
 
