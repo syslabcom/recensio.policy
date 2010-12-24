@@ -1,11 +1,13 @@
 from zope.testbrowser.browser import Browser
+from mechanize._mechanize import LinkNotFoundError
 from BeautifulSoup import BeautifulSoup, Comment
+import re
 
 def viewPage(br):
     file('/tmp/lala', 'w').write(br.contents)
 
 class OpacSearch(object):
-    def __init__(self, url = 'https://opacplus.bsb-muenchen.de'):
+    def __init__(self, url = 'http://opac.bib-bvb.de:8080/InfoGuideClient.fasttestsis/search.do?methodToCall=switchSearchPage&SearchType=2'):
         browser = Browser()
         browser.mech_browser.set_handle_robots(False)
         browser.open(url)
@@ -15,162 +17,86 @@ class OpacSearch(object):
     def getMetadataForISBN(self, isbn):
         br = self.browser
         try:
-            br.getControl(name='searchCategories[1]').value=['540']
+            br.getControl(name='searchCategories[0]').value=['540']
         except LookupError:
-            raise IOError('Can\'t communicate with Server!')
-        br.getControl(name='searchString[1]').value=isbn
-        br.getControl(name='submitSearch').click()
+            try:
+                br.getLink('Neu starten').click()
+                br.getLink('Erweiterte Suche').click()
+                br.getControl(name='searchCategories[0]').value=['540']
+            except (LinkNotFoundError, LookupError):
+                raise IOError('Can\'t communicate with Server!')
+        br.getControl(name='searchString[0]').value=isbn
+        br.getForm().submit()
         soup = BeautifulSoup(br.contents)
-        results = soup('table', {'class' : 'data'})[:-1]
+        try:
+            results = soup('table', {'class' : 'data'})[0].findAll('tr')
+        except:
+            return []
         br.open(self.url)
         return map(createResult, results)
 
 opac = OpacSearch()
 
 def createResult(result):
+    raw_stuff = {}
+    key = None
     try:
-        subtitle = getString(result('span', {'class' : 'book_subtitle'})[0])
-    except IndexError:
-        subtitle = None
-    try:
-        title = getString(result('span', {'class' : 'book_title'})[0])
-    except IndexError:
-        title = None
+        stuff = result.td.contents
+    except:
+        stuff = []
+    for thing in stuff:
+        try:
+            if thing.name == 'strong':
+                key = getString(thing)
+                raw_stuff[key] = ''
+                continue
+        except AttributeError:
+            pass
+        if getString(thing) not in ['', '\n'] and key:
+            raw_stuff[key] += getString(thing)
     authors = []
-    ppy = ''
-    pages = []
-    ddc = []
-    language = ''
-    isbn = ''
-    location = publisher = year = ''
-    for thing1 in result('span', {'class' : 'book_title'}):
-        state = 'not started'
-        for thing2 in thing1.parent.contents:
-            if state == 'not started':
-                try:
-                    if thing2.name == 'strong':
-                        if thing2.text == u'Autor / Hrsg.:':
-                            state = 'authors'
-                            continue
-                        elif thing2.text == 'Ort, Verlag, Jahr:':
-                            state = 'ppy'
-                            continue
-                        elif thing2.text == 'Umfang:':
-                            state = 'pages'
-                            continue
-                        elif thing2.text == 'Sprache:':
-                            state = 'language'
-                            continue
-                        elif thing2.text == 'Schlagwort:':
-                            state = 'ddc'
-                            continue
-                        elif thing2.text == 'ISBN-ISSN-ISMN:':
-                            state = 'isbn'
-                            continue
-                        else:
-                            pass
-                except AttributeError:
-                    pass
-            elif state == 'authors':
-                try:
-                    if thing2.name == 'a':
-                        authors.append(thing2.text)
-                    elif thing2.name == 'br':
-                        state = 'not started'
-                        continue
-                    else:
-                        pass
-                except AttributeError:
-                    pass
-            elif state == 'ddc':
-                try:
-                    if thing2.name == 'a':
-                        ddc.append(thing2.text)
-                    elif thing2.name == 'br':
-                        state = 'not started'
-                        continue
-                    else:
-                        pass
-                except AttributeError:
-                    pass
-            elif state == 'ppy':
-                try:
-                    if thing2.name == 'br':
-                        if ppy.count(',') == 2:
-                            location, publisher, year = ppy.split(',')
-                        else:
-                            publisher = ppy
-                        location = location.strip()
-                        publisher = publisher.strip()
-                        year = year.strip()
-                        state = 'not started'
-                        continue
-                except AttributeError:
-                    ppy += unicode(thing2)
-            elif state == 'pages':
-                try:
-                    if thing2.name == 'br':
-                        if len(pages) == 1:
-                            pages = str(pages[0])
-                        elif not len(pages):
-                            pages = None
-                        else:
-                            pages = ' '.join([str(x) for x in pages])
-                        state = 'not started'
-                        continue
-                except AttributeError:
-                    try:
-                        for bit in unicode(thing2).split():
-                            pages.append(int(bit))
-                    except ValueError:
-                        pass
-            elif state == 'language':
-                try:
-                    if thing2.name == 'br':
-                        state = 'not started'
-                        continue
-                except AttributeError:
-                    language += thing2
-            elif state == 'isbn':
-                try:
-                    if thing2.name == 'br':
-                        state = 'not started'
-                        continue
-                except AttributeError:
-                    isbn += unicode(thing2)
-            else:
-                raise AttributeError("Unknown state! %s" % state)
-    def makeAuthors(raw):
-        if raw.count(',') == 1:
-            lastname, firstname = raw.split(',')
+    for author in raw_stuff.get('Verfasser:', '').split(';'):
+        if not author:
+            continue
+        if author.count(',') == 1:
+            lastname, firstname = author.split(',')
             lastname, firstname = map(unicode.strip, (lastname, firstname))
         else:
             firstname = None
-            lastname = raw.strip()
-        return {'firstname' : firstname, 'lastname' : lastname}
-    authors = map(makeAuthors, list(set(authors)))
-    authors.sort()
+            lastname = author.strip()
+        authors.append({'firstname' : firstname, 'lastname' : lastname})
+    title = raw_stuff.get('Titel:', '').split('|')[0]
+    subtitle = "|".join(raw_stuff.get('Titel:', '').split('|')[1:])
+    language = raw_stuff.get('Sprache:', '')
+    isbn = raw_stuff.get('ISBN/ISMN:', '')
+    try:
+        pages = unicode(int(raw_stuff.get('Impressum:', '').split(':')[3].strip()[:-2]))
+    except:
+        pages = u''
+    try:
+        location = raw_stuff.get('Impressum:', '').split(':')[0].strip()
+    except:
+        location = u''
+    try:
+        publisher = raw_stuff.get('Impressum:', '').split(':')[1].strip()
+    except:
+        publisher = u''
+    try:
+        year = raw_stuff.get('Impressum:', '').split(':')[2].strip()
+    except:
+        year = u''
+    ddc = list(set(re.compile('[GSZ]:[^, ]*').findall(raw_stuff.get('Notation:', ''))))
 
-    title = title and title.strip() or None
-    subtitle = subtitle and subtitle.strip() or None
-    language = language and language.strip() or None
-    isbn = isbn and isbn.strip() or None
-    pages = pages and pages or None
-    location = location and location or None
-    publisher = publisher and publisher or None
-    year = year and year or None
-    ddc = ddc and ddc or None
-
-    return {'title' : title
-           ,'subtitle' : subtitle
-           ,'authors' : authors
-           ,'language' : language
-           ,'isbn' : isbn
-           ,'ddc' : ddc
-           ,'location' : location
-           ,'publisher' : publisher
-           ,'pages' : pages
-           ,'year' : year
+    return {'title' : title or None
+           ,'subtitle' : subtitle or None
+           ,'authors' : authors or []
+           ,'language' : language or None
+           ,'isbn' : isbn or None
+           ,'ddc' : ddc or None
+           ,'location' : location or None
+           ,'publisher' : publisher or None
+           ,'pages' : pages or None
+           ,'year' : year or None
            }
 
 def getString(soup):
@@ -178,6 +104,6 @@ def getString(soup):
         return ''.join(map(getString, soup.contents))
     else:
         if not isinstance(soup, Comment):
-            return unicode(soup)
+            return unicode(soup).replace('&nbsp;', ' ').replace('&lt;', '<').replace('&gt;', '>').strip()
         else:
             return u''
