@@ -65,7 +65,7 @@ class WorkflowHelper(BrowserView):
             info.object.restrictedTraverse('@@mail_new_presentation')()
             template = publish_notification_template.get(pref_lang, None) or \
                 publish_notification_template.get('de')
-            msg = template % dict(title=info.object.Title(),
+            msg = template % dict(title=info.object.Title().decode('utf-8'),
                 url=info.object.absolute_url())
 
         if msg:
