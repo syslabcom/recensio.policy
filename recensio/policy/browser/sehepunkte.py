@@ -62,7 +62,7 @@ class Import(BrowserView):
 
     def _addReview(self, review):
         if review['volume'] not in self.mag:
-            self.mag.invokeFactory(type_name="Volume", id=review['volume'], title=review['volume'])
+            self.mag.invokeFactory(type_name="Volume", id=review['volume'], title="%s (%s)" % (review['volume'], review['year']))
         volume = self.mag[review['volume']]
         if review['issue'] not in volume:
             volume.invokeFactory(type_name='Issue', id=review['issue'], title=review['issue'])
