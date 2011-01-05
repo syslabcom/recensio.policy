@@ -60,10 +60,10 @@ class TestOpacSearch(unittest.TestCase):
         opac = OpacSearch()
         is_ = opac.getMetadataForISBN('3-8272-6194-5')
         should_be = [{'publisher': u'Markt+Technik-Verl.',
-            'subtitle': u'\xacDas\xac ZOPE-Buch|Einf\xfchrung und Dokumentation zur Entwicklung von Webanwendungen',
+            'subtitle': u'Das ZOPE-Buch|Einf\xfchrung und Dokumentation zur Entwicklung von Webanwendungen',
             'location': u'M\xfcnchen/Germany',
             'language': u'Deutsch',
-            'title': u'\xacThe\xac ZOPE Book <dt.>',
+            'title': u'The ZOPE Book <dt.>',
             'ddc': None,
             'isbn': u'3827261945',
             'authors': [{'firstname': u'Michel', 'lastname': u'Pelletier'},
@@ -83,10 +83,10 @@ class TestOpacSearch(unittest.TestCase):
         is_2 = opac.getMetadataForISBN('3-8272-61945')
         is_3 = opac.getMetadataForISBN('3827261945')
         should_be = [{'publisher': u'Markt+Technik-Verl.',
-            'subtitle': u'\xacDas\xac ZOPE-Buch|Einf\xfchrung und Dokumentation zur Entwicklung von Webanwendungen',
+            'subtitle': u'Das ZOPE-Buch|Einf\xfchrung und Dokumentation zur Entwicklung von Webanwendungen',
             'location': u'M\xfcnchen/Germany',
             'language': u'Deutsch',
-            'title': u'\xacThe\xac ZOPE Book <dt.>',
+            'title': u'The ZOPE Book <dt.>',
             'ddc': None,
             'isbn': u'3827261945',
             'authors': [{'firstname': u'Michel', 'lastname': u'Pelletier'},

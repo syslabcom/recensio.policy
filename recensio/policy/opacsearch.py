@@ -65,8 +65,8 @@ def createResult(result):
             firstname = None
             lastname = author.strip()
         authors.append({'firstname' : firstname, 'lastname' : lastname})
-    title = raw_stuff.get('Titel:', '').split('|')[0].strip()
-    subtitle = "|".join([x.strip() for x in raw_stuff.get('Titel:', '').split('|')[1:]])
+    title = raw_stuff.get('Titel:', '').split('|')[0].strip().replace(u'\xac', '')
+    subtitle = ("|".join([x.strip() for x in raw_stuff.get('Titel:', '').split('|')[1:]])).replace(u'\xac', '')
     language = raw_stuff.get('Sprache:', '')
     isbn = raw_stuff.get('ISBN/ISMN:', '')
     try:
