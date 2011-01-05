@@ -18,7 +18,7 @@ class OpacSearch(object):
         br = self.browser
         try:
             br.getControl(name='searchCategories[0]').value=['540']
-        except (LookupError, TypeError), e:
+        except LookupError:
             try:
                 br.getLink('Neu starten').click()
                 br.getLink('Erweiterte Suche').click()
@@ -28,11 +28,11 @@ class OpacSearch(object):
         br.getControl(name='searchString[0]').value=isbn
         br.getForm().submit()
         soup = BeautifulSoup(br.contents)
+        br.open(self.url)
         try:
             results = soup('table', {'class' : 'data'})[0].findAll('tr')
         except:
             return []
-        br.open(self.url)
         return map(createResult, results)
 
 opac = OpacSearch()
