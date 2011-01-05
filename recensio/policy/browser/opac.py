@@ -275,7 +275,7 @@ class OPAC(BrowserView):
         data['ddcPlace'] = []
         data['ddcTime'] = []
         data['ddcSubject'] = []
-        for keyword in data.get('ddc', []):
+        for keyword in data.get('ddc', None) or []:
             prefix = keyword[:1]
             suffix = keyword[2:]
             if prefix == 'G':
