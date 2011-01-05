@@ -9,7 +9,7 @@ from Products.Archetypes.utils import DisplayList
 from plone.i18n.locales.languages import _languagelist
 
 from recensio.policy.interfaces import IRecensioView
-from recensio.contenttypes.content.review import BaseReviewNoMagic
+from recensio.contenttypes.content.review import BaseBaseReviewNoMagic
 
 
 class RecensioView(BrowserView):
@@ -18,4 +18,4 @@ class RecensioView(BrowserView):
     implements(IRecensioView)
 
     def getSupportedLanguages(self):
-        return BaseReviewNoMagic(self.context).listSupportedLanguages()
+        return BaseBaseReviewNoMagic(self.context).listSupportedLanguages()
