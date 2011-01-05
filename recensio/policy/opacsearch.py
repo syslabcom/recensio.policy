@@ -85,7 +85,7 @@ def createResult(result):
         year = raw_stuff.get('Impressum:', '').split(':')[2].strip()
     except:
         year = u''
-    ddc = list(set(re.compile('[GSZ]:[^, ]*').findall(raw_stuff.get('Notation:', ''))))
+    ddc = list(set(re.compile('[GSZ][: ][^, ]*').findall(raw_stuff.get('Notation:', ''))))
 
     return {'title' : title or None
            ,'subtitle' : subtitle or None
