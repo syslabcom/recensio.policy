@@ -18,7 +18,7 @@ sampleblob = '''<tr>
 
                 <strong class="c2">Titel: </strong>¬The¬ ZOPE Book &lt;dt.&gt;|¬Das¬ ZOPE-Buch|Einführung und Dokumentation zur Entwicklung von Webanwendungen<br>
 
-<strong class="c2">Impressum: </strong>München/Germany: Markt+Technik-Verl.: 2002: 437 S. : Ill., graph. Darst.<br>
+<strong class="c2">Impressum: </strong>München/Germany: Markt+Technik-Verl.: 2002: 380S., [8] Bl. : Ill., graph. Darst.<br>
 
 <strong class="c2">ISBN/ISMN: </strong>3827261945<br>
 
@@ -137,7 +137,7 @@ class TestOpacSearch(unittest.TestCase):
 
     def testLocationPublisherYear(self):
         soup1 = BeautifulSoup(sampleblob)
-        soup2 = BeautifulSoup(sampleblob.replace('München/Germany: Markt+Technik-Verl.: 2002: 437 S. : Ill., graph. Darst.', ''))
+        soup2 = BeautifulSoup(sampleblob.replace('>München/Germany: Markt+Technik-Verl.: 2002: 380S., [8] Bl. : Ill., graph. Darst.', ''))
         soup3 = BeautifulSoup()
         soup1_res = createResult(soup1)
         soup2_res = createResult(soup2)
@@ -155,12 +155,12 @@ class TestOpacSearch(unittest.TestCase):
 
     def testPages(self):
         soup1 = BeautifulSoup(sampleblob)
-        soup2 = BeautifulSoup(sampleblob.replace('437', 'XXX'))
+        soup2 = BeautifulSoup(sampleblob.replace('380S., [8]', 'XXX'))
         soup3 = BeautifulSoup()
         soup1_res = createResult(soup1)
         soup2_res = createResult(soup2)
         soup3_res = createResult(soup3)
-        self.assertEquals('437', soup1_res['pages'])
+        self.assertEquals('380', soup1_res['pages'])
         self.assertEquals(None, soup2_res['pages'])
         self.assertEquals(None, soup3_res['pages'])
 

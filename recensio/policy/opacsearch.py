@@ -70,7 +70,7 @@ def createResult(result):
     language = raw_stuff.get('Sprache:', '')
     isbn = raw_stuff.get('ISBN/ISMN:', '')
     try:
-        pages = unicode(int(raw_stuff.get('Impressum:', '').split(':')[3].strip()[:-2]))
+        pages = ''.join([(x in '1234567890' and x) or ' ' for x in raw_stuff.get('Impressum:', '').split(':')[3].strip()]).strip().split()[0]
     except:
         pages = u''
     try:
