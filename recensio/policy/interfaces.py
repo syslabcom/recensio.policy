@@ -139,7 +139,7 @@ Zuletzt kommentiert am: / Last discussed on: %(last_comment_date)s
 """)
     archive_folder = schema.TextLine(title = _('Archive Folder'),
                               description=_(u'description_mailsettings_archive_folder', default=u"The path of the folder where newsletter mails will be saved after they have been sent. Will be created when needed if it does not exist."),
-                              default = _(u"""/recensio/newsletter/archiv"""))
+                              default = u"""/recensio/newsletter/archiv""")
 
 class IWorkflowHelper(Interface):
     
