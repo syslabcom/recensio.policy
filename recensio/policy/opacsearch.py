@@ -18,7 +18,7 @@ class OpacSearch(object):
         br = self.browser
         try:
             br.getControl(name='searchCategories[0]').value=['540']
-        except LookupError:
+        except (LookupError, TypeError), e:
             try:
                 br.getLink('Neu starten').click()
                 br.getLink('Erweiterte Suche').click()
