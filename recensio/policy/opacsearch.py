@@ -86,6 +86,11 @@ def createResult(result):
     except:
         year = u''
     ddc = list(set(re.compile('[GSZ][: ][^, ]*').findall(raw_stuff.get('Notation:', ''))))
+    keywords = set()
+    for key in filter(lambda x:x.startswith('Schlagw'), raw_stuff.keys()):
+       for keyword in raw_stuff.get(key, '').split(';'):
+             keywords.add(keyword.strip())
+    keywords = list(keywords)
 
     return {'title' : title or None
            ,'subtitle' : subtitle or None
@@ -94,6 +99,7 @@ def createResult(result):
            ,'isbn' : isbn or None
            ,'ddc' : ddc or None
            ,'location' : location or None
+           ,'keywords' : keywords or None
            ,'publisher' : publisher or None
            ,'pages' : pages or None
            ,'year' : year or None

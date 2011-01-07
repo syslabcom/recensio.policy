@@ -66,6 +66,7 @@ class TestOpacSearch(unittest.TestCase):
             'title': u'The ZOPE Book <dt.>',
             'ddc': None,
             'isbn': u'3827261945',
+            'keywords' : [u'World Wide Web', u'Zope <Programm>', u'Server'],
             'authors': [{'firstname': u'Michel', 'lastname': u'Pelletier'},
                {'firstname': u'Amos', 'lastname': u'Latteier'}],
             'year': u'2002', 'pages': '437'}]
@@ -89,6 +90,7 @@ class TestOpacSearch(unittest.TestCase):
             'title': u'The ZOPE Book <dt.>',
             'ddc': None,
             'isbn': u'3827261945',
+            'keywords' : [u'World Wide Web', u'Zope <Programm>', u'Server'],
             'authors': [{'firstname': u'Michel', 'lastname': u'Pelletier'},
                {'firstname': u'Amos', 'lastname': u'Latteier'}],
             'year': u'2002', 'pages': '437'}]
@@ -182,6 +184,14 @@ class TestOpacSearch(unittest.TestCase):
         soup2_res = createResult(soup2)
         self.assertEquals([u'Z:14'], soup1_res['ddc'])
         self.assertEquals(None, soup2_res['ddc'])
+
+    def testKeywords(self):
+        soup1 = BeautifulSoup(sampleblob)
+        soup2 = BeautifulSoup()
+        soup1_res = createResult(soup1)
+        soup2_res = createResult(soup2)
+        self.assertEquals([u'World Wide Web', u'Zope <Programm>', u'Server'], soup1_res['keywords'])
+        self.assertEquals(None, soup2_res['keywords'])
 
     def testISBN(self):
         soup1 = BeautifulSoup(sampleblob)
