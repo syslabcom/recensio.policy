@@ -119,6 +119,35 @@ class TestOpacSearch(unittest.TestCase):
         self.assertEquals(u'Einführung und Dokumentation zur Entwicklung von Webanwendungen', createResult(soup1)['subtitle'].strip())
         self.assertEquals(None, createResult(soup2)['subtitle'])
 
+    def testMoreThanOneResult(self):
+        opac = OpacSearch()
+        is_ = opac.getMetadataForISBN('978-0-19-928007-0')
+        should_be = [{'authors': [{'firstname': u'Anthony', 'lastname': u'McElligott'}],
+  'ddc': [u'G:de', u'S:ge', u'Z:42'],
+  'isbn': u'9780199280063 : 9780199280070',
+  'keywords': [u'Geschichte 1918-1933', u'Weimarer Republik', u'Deutschland'],
+  'language': u'Englisch',
+  'location': u'Oxford [u.a.]',
+  'pages': u'324',
+  'publisher': u'Oxford Univ. Press',
+  'subtitle': None,
+  'title': u'Weimar Germany',
+  'year': u'2010'},
+ {'authors': [{'firstname': u'Anthony', 'lastname': u'McElligott'}],
+  'ddc': [u'G:de', u'S:ge', u'Z:42'],
+  'isbn': u'9780199280063 : 9780199280070',
+  'keywords': [u'Geschichte 1918-1933', u'Weimarer Republik', u'Deutschland'],
+  'language': u'EnglischLink ( Inhaltsverzeichnis)',
+  'location': u'Oxford [u.a.]',
+  'pages': u'324',
+  'publisher': u'Oxford Univ. Press',
+  'subtitle': None,
+  'title': u'Weimar Germany',
+  'year': u'2009'}]
+        self.assertEquals(should_be, is_)
+
+
+
     def testAuthors(self):
         soup1 = BeautifulSoup(sampleblob)
         soup2 = BeautifulSoup(sampleblob.replace('Pelletier, Michel', 'Pelletier, Michel, Maier'))

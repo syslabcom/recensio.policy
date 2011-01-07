@@ -28,11 +28,24 @@ class OpacSearch(object):
         br.getControl(name='searchString[0]').value=isbn
         br.getForm().submit()
         soup = BeautifulSoup(br.contents)
-        br.open(self.url)
         try:
             results = soup('table', {'class' : 'data'})[0].findAll('tr')
         except:
-            return []
+            try:
+                if 'Treffer BVB-Verbundkatalog' in br.contents:
+                    results = []
+                    base_url = '/'.join(br.url.split('/')[:3])
+                    for result in soup('table', {'class' : 'data kurztrefferliste'})[0].findAll('tr'):
+                        br.open(base_url + result.findAll('a')[3]['href'])
+                        soup = BeautifulSoup(br.contents)
+                        results.extend(soup('table', {'class' : 'data'})[0].findAll('tr'))
+                else:
+                    br.open(self.url)
+                    return []
+            except:
+                br.open(self.url)
+                return []
+        br.open(self.url)
         return map(createResult, results)
 
 opac = OpacSearch()
