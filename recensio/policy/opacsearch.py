@@ -112,7 +112,7 @@ def createResult(result):
            ,'isbn' : isbn or None
            ,'ddc' : ddc or None
            ,'location' : location or None
-           ,'keywords' : keywords or None
+           ,'keywords' : keywords or []
            ,'publisher' : publisher or None
            ,'pages' : pages or None
            ,'year' : year or None

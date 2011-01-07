@@ -220,7 +220,7 @@ class TestOpacSearch(unittest.TestCase):
         soup1_res = createResult(soup1)
         soup2_res = createResult(soup2)
         self.assertEquals([u'World Wide Web', u'Zope <Programm>', u'Server'], soup1_res['keywords'])
-        self.assertEquals(None, soup2_res['keywords'])
+        self.assertEquals([], soup2_res['keywords'])
 
     def testISBN(self):
         soup1 = BeautifulSoup(sampleblob)
