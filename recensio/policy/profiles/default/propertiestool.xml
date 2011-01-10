@@ -13,6 +13,11 @@
       <element value="captcha" />
       <element value="mail_me" />
     </property>
+    <property name="allowRolesToAddKeywords" type="lines">
+      <element value="Manager"/>
+      <element value="Reviewer"/>
+      <element value="Contributor"/>
+    </property>
     <property name="disable_folder_sections" type="boolean">True</property>
     <property name="disable_nonfolderish_sections"
               type="boolean">True</property>
