@@ -124,7 +124,7 @@ class TestOpacSearch(unittest.TestCase):
         is_ = opac.getMetadataForISBN('978-0-19-928007-0')
         should_be = [{'authors': [{'firstname': u'Anthony', 'lastname': u'McElligott'}],
   'ddc': [u'G:de', u'S:ge', u'Z:42'],
-  'isbn': u'9780199280063 : 9780199280070',
+  'isbn': u'9780199280063: 9780199280070',
   'keywords': [u'Geschichte 1918-1933', u'Weimarer Republik', u'Deutschland'],
   'language': u'Englisch',
   'location': u'Oxford [u.a.]',
@@ -135,7 +135,7 @@ class TestOpacSearch(unittest.TestCase):
   'year': u'2010'},
  {'authors': [{'firstname': u'Anthony', 'lastname': u'McElligott'}],
   'ddc': [u'G:de', u'S:ge', u'Z:42'],
-  'isbn': u'9780199280063 : 9780199280070',
+  'isbn': u'9780199280063: 9780199280070',
   'keywords': [u'Geschichte 1918-1933', u'Weimarer Republik', u'Deutschland'],
   'language': u'EnglischLink ( Inhaltsverzeichnis)',
   'location': u'Oxford [u.a.]',
