@@ -199,7 +199,7 @@ class MailCollection(BrowserView):
                 for error in self.errors:
                     messages.addStatusMessage(error, type='error')
             else:
-                messages.addStatusMessage(self.ts.translate(_('mail_sending_prepared', default="uMailversand wird vorbereitet. Mail wird versandt an %s"), context=self.context) % mail_to, type="info")
+                messages.addStatusMessage(self.ts.translate(_('mail_sending_prepared', default="Mailversand wird vorbereitet. Mail wird versandt an ${mail_to}"), context=self.context, mapping={u'mail_to': mail_to}), type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
 class MailNewComment(BrowserView):
@@ -229,9 +229,9 @@ class MailNewComment(BrowserView):
         args['mail_from'] = mail_from
 
         mail_to, pref_lang = self.findRecipient()
-        subject = self.ts.translate(_('mail_new_comment_subject'), target_language=pref_lang)
-        msg_template = self.ts.translate(_('mail_new_comment_body'), target_language=pref_lang)
-        self.sendMail(msg_template % args, mail_from, mail_to, subject)
+        subject = self.ts.translate(_('mail_new_comment_subject'), target_language=pref_lang, mapping=args)
+        msg_template = self.ts.translate(_('mail_new_comment_body'), target_language=pref_lang, mapping=args)
+        self.sendMail(msg_template, mail_from, mail_to, subject)
 
     def sendMail(self, msg, mail_from, mail_to, subject):
         if mail_to:
@@ -239,6 +239,7 @@ class MailNewComment(BrowserView):
                                mfrom=mail_from,
                                subject=subject, charset='utf-8')
         else:
+            mail_to, pref_lang = self.findRecipient()
             messages = IStatusMessage(self.request)
             messages.addStatusMessage(self.ts.translate(_('mail_no_recipients'), target_language=pref_lang), type="warning")
 
@@ -277,21 +278,21 @@ class MailNewPublication(BrowserView):
             args['reviewed_author'] = u' '.join(fuckup)
             args['mail_from'] = mail_from.decode('utf-8')
             pref_lang = 'en'
-            if author.has_key('email') and author['email']:
-                args['mail_to'] = author['email']
-                pref_lang = get_preferred_language(author['email'], pref_lang)
-                msg_template = self.ts.translate(_('mail_new_publication_body'), target_language=pref_lang)
-            else:
-                args['mail_to'] = args['mail_from']
-                pref_lang = get_preferred_language(args['mail_from'], pref_lang)
-                msg_template = self.ts.translate(_('mail_new_publication_intro'), target_language=pref_lang) + self.ts.translate(_('mail_new_publication_body'), target_language=pref_lang)
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
             args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             args['context_url'] = self.context.absolute_url()
-            subject = self.ts.translate(_('mail_new_publication_subject', default=u"Es wurde eine Rezension von %s veröffentlicht"), target_language=pref_lang) % args['title']
-            self.sendMail(msg_template % args, args['mail_to'], mail_from, subject)
+            if author.has_key('email') and author['email']:
+                args['mail_to'] = author['email']
+                pref_lang = get_preferred_language(author['email'], pref_lang)
+                msg_template = self.ts.translate(_('mail_new_publication_body', mapping=args), target_language=pref_lang)
+            else:
+                args['mail_to'] = args['mail_from']
+                pref_lang = get_preferred_language(args['mail_from'], pref_lang)
+                msg_template = self.ts.translate(_('mail_new_publication_intro', target_language=pref_lang, mapping=args)) + self.ts.translate(_('mail_new_publication_body', mapping=args), target_language=pref_lang)
+            subject = self.ts.translate(_('mail_new_publication_subject', default=u"Es wurde eine Rezension von ${title} veröffentlicht", mapping=args), target_language=pref_lang)
+            self.sendMail(msg_template, args['mail_to'], mail_from, subject)
 
     def sendMail(self, msg, mail_to, mail_from, subject):
         self.mailhost.send(messageText=msg, mto=mail_to,
@@ -302,14 +303,14 @@ class MailUncommented(BrowserView):
     def __init__(self, request, context):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
-        self.mail_body = u"""Sehr geehrte/r Frau/Herr %(name)s,
+        self.mail_body = u"""Sehr geehrte/r Frau/Herr ${name},
 
-Sie haben am %(date)s Ihre Schrift
-    %(title)s
+Sie haben am ${date} Ihre Schrift
+    ${title}
     
     auf recensio.net präsentiert. Bisher liegen keine Kommentare vor. Sie haben hier die Gelegenheit, Ihre Präsentation zu modifizieren: Sie könnten die Thesenformulierung bearbeiten oder auch die Zahl der aufgeführten Bezugsautoren erweitern. In der Regel werden diese von der recensio.net-Redaktion kontaktiert, was erheblich zur Sichtbarkeit einer Präsentation beiträgt. Wenn noch nicht geschehen, haben Sie zusätzlich die Möglichkeit, Coverbilder und Inhaltsverzeichnisse beizufügen (im Fall von Präsentationen von Monographien).
     
-    Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: %(mail_from)s.
+    Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: ${mail_from}.
     
     Mit freundlichen Grüßen,
     Ihr recensio.net-Team"""
@@ -340,13 +341,14 @@ Sie haben am %(date)s Ihre Schrift
         mail, pref_lang = self.findRecipient(result)
         url = result.getURL()
         date = result.created.strftime('%d.%m.%Y')
-        msg_template = self.ts.translate(_('mail_uncommented_body', default=self.mail_body), target_language=pref_lang)
+        args = {'name' : owner_name,
+                'url' : url,
+                'title' : title,
+                'date' : date,
+                'mail_from' : self.findSender() }
+        msg = self.ts.translate(_('mail_uncommented_body', default=self.mail_body, mapping=args), target_language=pref_lang)
 
-        return msg_template % {'name' : owner_name,
-                                    'url' : url,
-                                    'title' : title,
-                                    'date' : date,
-                                    'mail_from' : self.findSender() }
+        return msg
 
     def findRecipient(self, result):
         membership_tool = getToolByName(self.context, 'portal_membership')
