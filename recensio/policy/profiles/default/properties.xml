@@ -7,7 +7,7 @@
   <element value="news_listing"/>
  </property>
  <property name="email_from_address"
-    type="string">recensio@syslab.com</property>
+    type="string">redaktion@recensio.net</property>
  <property name="email_from_name" type="string">Recensio.net</property>
  <property name="validate_email" type="boolean">True</property>
  <property name="email_charset" type="string">utf-8</property>
