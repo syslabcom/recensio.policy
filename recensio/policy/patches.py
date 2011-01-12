@@ -90,3 +90,16 @@ def mangleQuery(keywords):
         assert not args, 'unsupported usage: %r' % args
 
 mangler.mangleQuery = mangleQuery
+
+def patch(old_method):
+    def contentIndependentGetVocabularyDict(self, instance=None):
+        return old_method(self)
+    return contentIndependentGetVocabularyDict
+
+from Products.ATVocabularyManager.types import tree, simple
+
+tree.vocabulary.TreeVocabulary.getVocabularyDict = \
+    patch(tree.vocabulary.TreeVocabulary.getVocabularyDict)
+
+simple.vocabulary.SimpleVocabulary.getVocabularyDict = \
+    patch(simple.vocabulary.SimpleVocabulary.getVocabularyDict)
