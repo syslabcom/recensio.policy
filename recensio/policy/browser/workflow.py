@@ -19,11 +19,7 @@ submit_notification_template = """User %(user)s (mailto:%(email)s) has submitted
 Please check it out a %(link)s.
 """
 
-publish_notification_template = dict(
-en=u"""Your item "%(title)s" at %(url)s has been approved and is now published.""",
-de=u"""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar.""",
-fr=u"""Ihr Artikel "%(title)s" wurde freigeschaltet und ist nun unter %(url)s verfügbar."""
-)
+#en=u"""Your item "${title}" at ${url} has been approved and is now published.""",
 
 class WorkflowHelper(BrowserView):
     """ Helper for the Recensio workflows
@@ -58,13 +54,20 @@ class WorkflowHelper(BrowserView):
                 )
 
         elif info.transition.id == 'publish' and info.old_state.id == 'pending':
+            ts = getToolByName(self.context, 'translation_service')
             owner = info.object.getOwner()
             mail_to = owner.getProperty('email')
             pref_lang = owner.getProperty('preferred_language', 'de')
-            title = _(u'label_item_published', default=u'Your item has been published')
+            title = ts.translate(_(u'label_item_published', default=u'Your item has been published'), target_language=pref_lang)
             info.object.restrictedTraverse('@@mail_new_presentation')()
-            template = publish_notification_template.get(pref_lang, None) or \
-                publish_notification_template.get('de')
+
+            publish_notification_template = _('publish_notification_template',
+                default=u"""Ihr Artikel "${title}" wurde freigeschaltet und ist nun unter ${url} verfügbar.""",
+                mapping=dict(title=info.object.Title().decode('utf-8'),
+                             url=info.object.absolute_url()
+                             )
+                )
+            template = ts.translate(publish_notification_template, target_language=pref_lang)
             msg = template % dict(title=info.object.Title().decode('utf-8'),
                 url=info.object.absolute_url())
 
