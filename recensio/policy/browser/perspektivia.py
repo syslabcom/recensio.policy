@@ -1,6 +1,7 @@
 import urllib
 
 import BeautifulSoup
+from HTMLParser import HTMLParser
 
 from persistent.dict import PersistentDict
 from Products.Five.browser import BrowserView
@@ -20,14 +21,14 @@ class Import(BrowserView):
 
     def __call__(self):
         import pkg_resources
-        filename = pkg_resources.resource_filename(__name__, '../tests/perspektivia.xml')
+        filename = pkg_resources.resource_filename(__name__, '../tests/perspektivia2.xml')
         data = perspektivia_parser.parse(file(filename).read())
         # The order is IMPORTANT!
         self._handleBooks(data['books'])
         self._handleReviews(data['reviews'])
 
     def _handleReviews(self, reviews):
-        for review in reviews:
+        for (count, review) in enumerate(reviews):
             self._runAssertions(review)
             helper, review = self._renameKeysOfReview(review)
             review = self._addReviewKeys(review)
@@ -56,9 +57,9 @@ class Import(BrowserView):
             review['reviewAuthorLastname'] = author['lastname'].encode('utf8')
             break
         review['canonical_uri'] = review.pop('identifier')
-        review['id'] = self.plone_utils.normalizeString(review['title']).encode('utf8')
-        for unused_key in ['date', 'format', 'publisher', 'rights', 'source','id', 'title']:
+        for unused_key in ['date', 'format', 'publisher', 'rights', 'source', 'title']:
             review.pop(unused_key)
+        review['id'] = self.plone_utils.normalizeString(review['id']).encode('utf8')
         return helper, review
 
     def _renameKeysOfBook(self, book):
@@ -70,7 +71,7 @@ class Import(BrowserView):
                 yield thing
         book['authors'] = list(stringify(book.pop('creator')))
         for unused_key in ['date', 'format', 'relation', 'rights', 'source', \
-            'subject', 'type']:
+            'subject', 'type', 'id']:
             book.pop(unused_key)
         book['isbn'] = book.pop('identifier')
         publisher = book.pop('publisher')
@@ -80,7 +81,6 @@ class Import(BrowserView):
         book['publisher'] = publisher.strip()
         if placeOfPublication:
             book['placeOfPublication'] = placeOfPublication
-        book['id'] = self.plone_utils.normalizeString(book['title']).encode('utf8')
         return {}, book
 
     def _addReviewKeys(self, review):
@@ -106,6 +106,10 @@ class Import(BrowserView):
             subject.remove(subject)
         review['review'] = ''.join([x.prettify().decode('utf8') for x in \
                     soup.findAll('p', {'class' : 'western'})])
+        try:
+            HTMLParser().feed(review['review'].encode('utf-8'))
+        except UnicodeDecodeError:
+            review['review'] = "Could not save document"
         return review
 
     def _addBookKeys(self, book):
@@ -113,28 +117,29 @@ class Import(BrowserView):
         return book
 
     def _importReview(self, review, helper):
-        review_ob = self.mag.incomplete_books.pop(helper['book_id'])
-        for key, value in review.items() + helper.items():
-            setattr(review_ob, key, value)
-        notify(ObjectEditedEvent(review_ob))
-
-    def _importBook(self, book, helper):
+        try:
+            book_data = self.mag.incomplete_books[helper['book_id']]
+        except:
+            return
         if '1' not in self.mag:
             self.mag.invokeFactory(type_name="Volume", id='1')
         volume = self.mag['1']
         if '1' not in volume:
             volume.invokeFactory(type_name='Issue', id='1')
         issue = volume['1']
-        if book['id'] in issue:
+        if review['id'] in issue:
             return
         else:
-            issue.invokeFactory(type_name = 'Review Monograph', id = book['id'])
-        import pdb;pdb.set_trace()
-        book_ob = issue[book['id']]
-        if not hasattr(self.mag, 'incomplete books'):
-            self.mag.incomplete_books = PersistentDict()
-        self.mag.incomplete_books[book['isbn']] = book_ob
-        for key, value in book.items():
+            issue.invokeFactory(type_name = 'Review Monograph', id = review['id'])
+        book_ob = issue[review['id']]
+        for key, value in book_data.items() + review.items() + helper.items():
             setattr(book_ob, key, value)
+        notify(ObjectEditedEvent(book_ob))
+
+    def _importBook(self, book, helper):
+        if not hasattr(self.mag, 'incomplete_books'):
+            self.mag.incomplete_books = PersistentDict()
+        if not self.mag.incomplete_books.has_key(book['isbn']):
+            self.mag.incomplete_books[book['isbn']] = book
 
         return book

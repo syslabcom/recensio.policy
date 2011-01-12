@@ -6,6 +6,7 @@ from recensio.policy import importOAI
 from recensio.policy.importOAI import perspektivia_parser
 
 testdata_filename = pkg_resources.resource_filename(__name__, 'perspektivia.xml')
+testdata2_filename = pkg_resources.resource_filename(__name__, 'perspektivia2.xml')
 
 class TestPerspektiviaImport(unittest.TestCase):
     def testImportGood(self):
@@ -46,3 +47,14 @@ class TestPerspektiviaImport(unittest.TestCase):
 
         data = perspektivia_parser.parse(file(testdata_filename).read())
         self.assertEquals(data, should_be)
+
+    def testRealDataCanPickle(self):
+        data = perspektivia_parser.parse(file(testdata2_filename).read())
+        import pickle
+        for x in data['books'] + data['reviews']:
+            pickle.dumps(x)
+
+    def testRealDataIsEnough(self):
+        data = perspektivia_parser.parse(file(testdata2_filename).read())
+        self.assertEquals(997, len(data['books']), "Not enough books?")
+        self.assertEquals(919, len(data['reviews']))

@@ -16,6 +16,12 @@ class PerspektiviaParser(object):
                 reviews.append(record)
             elif record['type'] == 'Book':
                 books.append(record)
+            elif record['type'] == 'Book(psjBook)':
+                record['type'] = 'Book'
+                books.append(record)
+            elif record['type'] == 'Review(psjReview)':
+                record['type'] = 'Review'
+                reviews.append(record)
             else:
                 raise TypeError('What is type %s in OAI?' % record['type'])
         return {'books' : books, 'reviews' : reviews}
@@ -23,29 +29,39 @@ class PerspektiviaParser(object):
     def _deserialize(self, data):
         root = etree.fromstring(data)
         for element in xp(root)('oai:ListRecords/oai:record'):
-            yield self._parseRecord(element)
+            for record in  self._parseRecords(element):
+                yield record
 
-    def _parseRecord(self, element):
+    def _parseDate(self, date):
+        try:
+            return datetime.strptime(date, '%Y-%m-%d')
+        except ValueError:
+            return datetime.strptime(date, '%Y-%m-%dT%H:%M:%SZ')
+
+    def _parseRecords(self, element):
         x = xp(element)
         dc = lambda y: x('oai:metadata/oaidc:dc/dc:%s/text()' % y)
-        date = lambda x: datetime.strptime(x, '%Y-%m-%d')
-        space = lambda x: ' '.join(dc(x))
-        no_space = lambda x: ''.join(dc(x))
+        space = lambda x: u' '.join(dc(x))
+        no_space = lambda x: u''.join(dc(x))
 
-        return {
+        relations = dc('relation')
+
+        for relation in relations or ['']:
+
+            yield {
             'id'         : ''.join(x('oai:header/oai:identifier/text()'))
            ,'title'      : space('title')
            ,'creator'    : list(self._creators(*dc('creator')))
-           ,'subject'    : dc('subject')
+           ,'subject'    : [unicode(subject) for subject in dc('subject')]
            ,'publisher'  : space('publisher')
-           ,'date'       : date(no_space('date')) # XXX What is date for?
+           ,'date'       : self._parseDate(no_space('date')) # XXX What is date for?
            ,'type'       : no_space('type')
            ,'format'     : no_space('format') # XXX Alyaws assume html?
            ,'identifier' : no_space('identifier')
            ,'source'     : no_space('source') # XXX Zitierweise?
            ,'rights'     : no_space('rights') # always assume X?
-           ,'relation'   : no_space('relation')
-        }
+           ,'relation'   : unicode(relation)
+            }
 
     def _creators(self, *creators):
         for creator in creators:
@@ -53,6 +69,6 @@ class PerspektiviaParser(object):
             firstname = ''
             if creator.count(',') == 1:
                 lastname, firstname = map(lambda x:x.strip(), creator.split(','))
-            yield {'firstname' : firstname, 'lastname' : lastname}
+            yield {'firstname' : unicode(firstname), 'lastname' : unicode(lastname)}
 
 perspektivia_parser = PerspektiviaParser()
