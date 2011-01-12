@@ -19,8 +19,6 @@
 <langstring language="en">Europe</langstring>
 <langstring language="fr">Europe</langstring>
 </caption>
-
-</term>
 <term>
 <termIdentifier>41</termIdentifier>
 <caption>
@@ -214,29 +212,11 @@
 <langstring language="fr">Europe de l'Est</langstring>
 </caption>
 <term>
-<termIdentifier>43.1</termIdentifier>
+<termIdentifier>43.0</termIdentifier>
 <caption>
-<langstring language="de">Russland</langstring>
-<langstring language="en">Russia</langstring>
-<langstring language="fr">Russie</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>43.2</termIdentifier>
-<caption>
-<langstring language="de">Weißrussland</langstring>
-<langstring language="en">Belarus</langstring>
-<langstring language="fr">Biélorussie</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>43.3</termIdentifier>
-<caption>
-<langstring language="de">Ukraine</langstring>
-<langstring language="en">Ukraine</langstring>
-<langstring language="fr">Ukraine</langstring>
+<langstring language="de">Ostmitteleuropa</langstring>
+<langstring language="en">East-Central Europe</langstring>
+<langstring language="fr">Europe médiane</langstring>
 </caption>
 
 </term>
@@ -273,6 +253,33 @@
 <langstring language="de">Ungarn</langstring>
 <langstring language="en">Hungary</langstring>
 <langstring language="fr">Hongrie</langstring>
+</caption>
+
+</term>
+<term>
+<termIdentifier>43.1</termIdentifier>
+<caption>
+<langstring language="de">Russland</langstring>
+<langstring language="en">Russia</langstring>
+<langstring language="fr">Russie</langstring>
+</caption>
+
+</term>
+<term>
+<termIdentifier>43.2</termIdentifier>
+<caption>
+<langstring language="de">Weißrussland</langstring>
+<langstring language="en">Belarus</langstring>
+<langstring language="fr">Biélorussie</langstring>
+</caption>
+
+</term>
+<term>
+<termIdentifier>43.3</termIdentifier>
+<caption>
+<langstring language="de">Ukraine</langstring>
+<langstring language="en">Ukraine</langstring>
+<langstring language="fr">Ukraine</langstring>
 </caption>
 
 </term>
@@ -464,6 +471,7 @@
 </term>
 </term>
 </term>
+</term>
 <term>
 <termIdentifier>5</termIdentifier>
 <caption>
@@ -471,8 +479,6 @@
 <langstring language="en">Asia</langstring>
 <langstring language="fr">Asie</langstring>
 </caption>
-
-</term>
 <term>
 <termIdentifier>51.0</termIdentifier>
 <caption>
@@ -536,6 +542,7 @@
 </caption>
 
 </term>
+</term>
 <term>
 <termIdentifier>6</termIdentifier>
 <caption>
@@ -543,8 +550,6 @@
 <langstring language="en">Africa</langstring>
 <langstring language="fr">Afrique</langstring>
 </caption>
-
-</term>
 <term>
 <termIdentifier>61.0</termIdentifier>
 <caption>
@@ -617,6 +622,7 @@
 </caption>
 
 </term>
+</term>
 <term>
 <termIdentifier>7</termIdentifier>
 <caption>
@@ -624,8 +630,6 @@
 <langstring language="en">America</langstring>
 <langstring language="fr">Amérique</langstring>
 </caption>
-
-</term>
 <term>
 <termIdentifier>71</termIdentifier>
 <caption>
@@ -670,6 +674,7 @@
 </caption>
 
 </term>
+</term>
 <term>
 <termIdentifier>9</termIdentifier>
 <caption>
@@ -695,8 +700,6 @@
 <langstring language="en">Ancient World</langstring>
 <langstring language="fr">Ancien Monde</langstring>
 </caption>
-
-</term>
 <term>
 <termIdentifier>32</termIdentifier>
 <caption>
@@ -759,5 +762,6 @@
 <langstring language="fr">Empire romain</langstring>
 </caption>
 
+</term>
 </term>
 </vdex>

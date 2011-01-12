@@ -318,4 +318,31 @@
 </caption>
 
 </term>
+<term>
+<termIdentifier>400</termIdentifier>
+<caption>
+<langstring language="de">Sprache</langstring>
+<langstring language="en">Language</langstring>
+<langstring language="fr">Langue</langstring>
+</caption>
+
+</term>
+<term>
+<termIdentifier>390</termIdentifier>
+<caption>
+<langstring language="de">Bräuche, Etikette, Folkore</langstring>
+<langstring language="en">Customs, Etiquette, Folkore</langstring>
+<langstring language="fr">Us et coutumes, folklore</langstring>
+</caption>
+
+</term>
+<term>
+<termIdentifier>902</termIdentifier>
+<caption>
+<langstring language="de">Hilfsmittel für die Geschichtswissenschaft</langstring>
+<langstring language="en">Tools for the Historical Science</langstring>
+<langstring language="fr">Ressources pour la recherche historique</langstring>
+</caption>
+
+</term>
 </vdex>
