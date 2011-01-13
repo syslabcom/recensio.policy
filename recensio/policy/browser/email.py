@@ -229,8 +229,8 @@ class MailNewComment(BrowserView):
         args['mail_from'] = mail_from
 
         mail_to, pref_lang = self.findRecipient()
-        subject = self.ts.translate(_('mail_new_comment_subject'), target_language=pref_lang, mapping=args)
-        msg_template = self.ts.translate(_('mail_new_comment_body'), target_language=pref_lang, mapping=args)
+        subject = self.ts.translate(_('mail_new_comment_subject', mapping=args), target_language=pref_lang)
+        msg_template = self.ts.translate(_('mail_new_comment_body', mapping=args), target_language=pref_lang)
         self.sendMail(msg_template, mail_from, mail_to, subject)
 
     def sendMail(self, msg, mail_from, mail_to, subject):
