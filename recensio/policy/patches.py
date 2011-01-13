@@ -96,10 +96,14 @@ def patch(old_method):
         return old_method(self)
     return contentIndependentGetVocabularyDict
 
-from Products.ATVocabularyManager.types import tree, simple
+try:
+    from Products.ATVocabularyManager.types import tree, simple
 
-tree.vocabulary.TreeVocabulary.getVocabularyDict = \
-    patch(tree.vocabulary.TreeVocabulary.getVocabularyDict)
+    tree.vocabulary.TreeVocabulary.getVocabularyDict = \
+        patch(tree.vocabulary.TreeVocabulary.getVocabularyDict)
 
-simple.vocabulary.SimpleVocabulary.getVocabularyDict = \
-    patch(simple.vocabulary.SimpleVocabulary.getVocabularyDict)
+    simple.vocabulary.SimpleVocabulary.getVocabularyDict = \
+        patch(simple.vocabulary.SimpleVocabulary.getVocabularyDict)
+
+except ImportError:
+    pass
