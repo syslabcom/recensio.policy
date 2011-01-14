@@ -12,9 +12,12 @@
              ><img tal:attributes="src string:${portal_url}/imgs/logos/dfg_logo.png" src="imgs/logos/dfg_logo.png"
                    alt="Logo der deutschen Forschungsgemeinschaft"
                    class="logo"></a>
-          &nbsp; recensio.net ist ein von der Deutschen
-          Forschungsgemeinschaft gefördertes Gemeinschaftsprojekt
+          &nbsp;
+          <span i18n:translate="message_supported_by">
+          recensio.net ist ein von der Deutschen
+          Forschungsgemeinschaft gefoerdertes Gemeinschaftsprojekt
           folgender Institutionen
+          </span>
         </span><br />
         <a href="http://www.bsb-muenchen.de/"
            ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
