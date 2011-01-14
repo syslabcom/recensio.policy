@@ -409,7 +409,7 @@
    <property name="title" i18n:translate="label_tab_about_us">About us</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">python:context.ueberuns.getTranslation().absolute_url()</property>
+      name="url_expr">string:${globals_view/navigationRootUrl}/ueberuns</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
