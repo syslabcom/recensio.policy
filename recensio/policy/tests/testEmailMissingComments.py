@@ -23,17 +23,17 @@ class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testFormat(self):
-        expected_mail = u'''Sehr geehrte/r Frau/Herr admin,
+        expected_mail = u'''Dear Mr admins,
 
-Sie haben am ... Ihre Schrift
-    Test PresentationArticleReview No 0
-    
-    auf recensio.net präsentiert. Bisher liegen keine Kommentare vor. Sie haben hier die Gelegenheit, Ihre Präsentation zu modifizieren: Sie könnten die Thesenformulierung bearbeiten oder auch die Zahl der aufgeführten Bezugsautoren erweitern. In der Regel werden diese von der recensio.net-Redaktion kontaktiert, was erheblich zur Sichtbarkeit einer Präsentation beiträgt. Wenn noch nicht geschehen, haben Sie zusätzlich die Möglichkeit, Coverbilder und Inhaltsverzeichnisse beizufügen (im Fall von Präsentationen von Monographien).
-    
-    Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: Recensio.net <fake>.
+On ... you presented your text 
+\tTest PresentationArticleReview No 0s
+on recensio.net, but so far no comments have been left by other users. Do you want to modify your presentation? You could review the phrasing of your core statements or extend the number of stated reference authors. Usually these will be contacted by the recensio.net editorial staff, which greatly adds to the visibility of a presentation. If you haven’t done this yet, you may also add cover images and indeces (in the case of presentations of monographs).
 
-    Mit freundlichen Grüßen,
-    Ihr recensio.net-Team'''
+If you have any further questions or require more information please feel free to contact the recensio.net editorial team:
+Recensio.net <fake>.
+
+Yours sincerely
+The recensio.net editorial team'''
 
         portal = self.layer['portal']
         feeds = portal['RSS-feeds']
