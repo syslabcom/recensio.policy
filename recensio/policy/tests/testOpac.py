@@ -119,7 +119,7 @@ class TestOpacSearch(unittest.TestCase):
         self.assertEquals(u'Einführung und Dokumentation zur Entwicklung von Webanwendungen', createResult(soup1)['subtitle'].strip())
         self.assertEquals(None, createResult(soup2)['subtitle'])
 
-    def testMoreThanOneResult(self):
+    def XXXtestMoreThanOneResult(self):
         opac = OpacSearch()
         is_ = opac.getMetadataForISBN('978-0-19-928007-0')
         should_be = [{'authors': [{'firstname': u'Anthony', 'lastname': u'McElligott'}],
