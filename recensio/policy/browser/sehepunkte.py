@@ -50,7 +50,7 @@ class Import(BrowserView):
             self._addReview(self._convertVocabulary(\
                              convertToString(\
                               review)))
-        return
+        return "Success"
 
     def _getTargetURLs(self):
         base = 'http://www.sehepunkte.de/export/sehepunkte_%s.xml'
