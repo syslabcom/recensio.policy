@@ -290,7 +290,7 @@ class MailNewPublication(BrowserView):
             else:
                 args['mail_to'] = args['mail_from']
                 pref_lang = get_preferred_language(args['mail_from'], pref_lang)
-                msg_template = self.ts.translate(_('mail_new_publication_intro', target_language=pref_lang, mapping=args)) + self.ts.translate(_('mail_new_publication_body', mapping=args), target_language=pref_lang)
+                msg_template = self.ts.translate(_('mail_new_publication_intro', mapping=args), target_language=pref_lang) + self.ts.translate(_('mail_new_publication_body', mapping=args), target_language=pref_lang)
             subject = self.ts.translate(_('mail_new_publication_subject', default=u"Es wurde eine Rezension von ${title} veröffentlicht", mapping=args), target_language=pref_lang)
             self.sendMail(msg_template, args['mail_to'], mail_from, subject)
 
