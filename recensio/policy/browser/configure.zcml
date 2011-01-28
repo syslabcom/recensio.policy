@@ -106,7 +106,7 @@
       name="sehepunkte-import"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".sehepunkte.Import"
-      permission="cmf.ManagePortal"
+      permission="zope.Public"
       />
 
   <browser:page
