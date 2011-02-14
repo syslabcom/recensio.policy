@@ -2,17 +2,9 @@
 """
 Various functional tests
 """
-import datetime
-import os
 import unittest2 as unittest
 from urlparse import urljoin
 
-from Testing import makerequest
-import transaction
-import zope.event
-
-from Products.Archetypes.event import ObjectEditedEvent
-from plone.app.blob.utils import openBlob
 from plone.testing.z2 import Browser
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
