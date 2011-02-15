@@ -35,4 +35,4 @@ RECENSIO_FIXTURE = RecensioPolicy()
 RECENSIO_INTEGRATION_TESTING = IntegrationTesting(bases=(RECENSIO_FIXTURE, ),
     name="RecensioPolicy:Integration")
 RECENSIO_FUNCTIONAL_TESTING = FunctionalTesting(bases=(RECENSIO_FIXTURE, ),
-    name="RecensioContenttypes:Functional")
+    name="RecensioPolicy:Functional")
