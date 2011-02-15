@@ -109,19 +109,11 @@ class MailCollection(BrowserView):
 
     def getMailAddresses(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
-        membership_tool = getToolByName(self.context, 'portal_membership')
-        if membership_tool.isAnonymousUser():
-            self.errors.append(_('You are not logged in'))
-            raise ValidationError()
-        user = membership_tool.getAuthenticatedMember()
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        mail_to = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         if not mail_info.email_from_address:
             self.errors.append(_('Plone site is not configured'))
-            raise ValidationError()
-        mail_to = user.getProperty('email')
-        if not mail_to:
-            self.errors.append(_("You did not provide an e-mail address in your profile"))
             raise ValidationError()
         return mail_from, mail_to
 

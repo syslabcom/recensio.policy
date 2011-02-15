@@ -286,10 +286,10 @@ test title (1 Comment)
         setRoles(portal, TEST_USER_ID, ['Manager'])
 
         mail_schema = IMailSchema(portal)
-        mail_schema.email_from_address = 'fake'
+        mail_schema.email_from_address = 'fake@syslab.com'
         membership_tool = getToolByName(portal, 'portal_membership')
         user = membership_tool.getAuthenticatedMember()
-        user.setProperties({'email': 'fake@syslab.com'})
+        user.setProperties({'email': 'fake2@syslab.com'})
 
         view = getMultiAdapter((feeds, request), name='mail_results')
 
@@ -297,9 +297,13 @@ test title (1 Comment)
             sentMail = ''
             def send(self, messageText, mto, mfrom, subject, charset):
                 self.sentMail = messageText
+                self.mto = mto
+                self.mfrom = mfrom
         view.mailhost = MockMailHost()
 
         view()
+        self.assertEquals('Recensio.net <fake@syslab.com>', view.mailhost.mto)
+        self.assertEquals('Recensio.net <fake@syslab.com>', view.mailhost.mfrom)
         for lineno, (expected, real) in enumerate(
                                   zip(expected_mail.split('\n'),
                                       view.mailhost.sentMail.split('\n'))):
