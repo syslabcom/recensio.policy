@@ -68,3 +68,14 @@ class TestMainSiteSections(unittest.TestCase):
 
     def test_authors_batching(self):
         self.is_successful_status("autoren?b_start:int=30")
+
+    def test_publication(self):
+        self.is_successful_status("sample-reviews/newspapera")
+        self.assertTrue("Summer" in self.browser.contents,
+                        msg = ("The example Volume is missing from the "
+                               "publicationlisting viewlet")
+                        )
+        self.assertTrue("Issue 2" in self.browser.contents,
+                        msg = ("The example Issue is missing from the "
+                               "publicationlisting viewlet")
+                        )
