@@ -177,7 +177,7 @@ class MailCollection(BrowserView):
 
             if not arch.getPhysicalPath() == tuple(settings.archive_folder.split('/')):
                 raise ValidationError
-                
+
             name = 'Newsletter %s' % DateTime().strftime('%d.%m.%Y')
             if name in arch.objectIds():
                 messages.addStatusMessage('%s already exists in archive' % name, type='warning')
@@ -191,9 +191,6 @@ class MailCollection(BrowserView):
 
         except ValidationError:
             pass
-#        except Exception, e:
-#            log.exception(e)
-#            self.errors.append(str(e.__class__) + ' ' + str(e))
         finally:
             if self.errors:
                 for error in self.errors:
