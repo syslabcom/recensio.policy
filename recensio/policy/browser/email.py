@@ -44,13 +44,13 @@ class MailCollection(BrowserView):
             mag_results = magazines[mag_title]
             retval += mag_title + '\n' + '-' * len(mag_title)
             for i, result in enumerate(mag_results):
-                if i < 3:
-                    title = result.Title().decode('utf-8')
+                if i < 9999:
+                    title = result.getDecoratedTitle()
                     msg = u'\n%s\n%s\n(%s)\n\n' % (title, \
                                              '~' * len(title),
                                              result.absolute_url())
                     retval += msg
-                if i == 3:
+                if i == 9999:
                     msg = '\n' + self.ts.translate(_('more_results_here'), context=self.context) + '\n' +\
                         self.context.new_reviews.absolute_url() + '\n\n\n'
                     retval += msg
@@ -78,7 +78,7 @@ class MailCollection(BrowserView):
                          key_onlineres : []}
 
         formatted_result = lambda x: u'\n%s\n%s\n(%s)\n\n' % \
-            (x.Title, '~' * len(x.Title), x.getURL())
+            (x.getObject().getDecoratedTitle(), '~' * len(x.getObject().getDecoratedTitle()), x.getURL())
 
         for result in self.context.new_presentations.queryCatalog():
             if result.portal_type == 'Presentation Article Review':
@@ -98,9 +98,9 @@ class MailCollection(BrowserView):
         presentation_keys = presentations.keys()
         presentation_keys.sort()
         for key in presentation_keys:
-            if len(presentations[key]) > 3:
-                presentations[key][3] = "\n" + self.ts.translate(_('more_results_here'), context=self.context) + '\n' + self.context.new_presentations.absolute_url() + "\n\n\n"
-                presentations[key] = presentations[key][:4]
+            if len(presentations[key]) > 9999:
+                presentations[key][9999] = "\n" + self.ts.translate(_('more_results_here'), context=self.context) + '\n' + self.context.new_presentations.absolute_url() + "\n\n\n"
+                presentations[key] = presentations[key][:10000]
         retval = ''
         for key in presentations.keys():
             retval += u'' + key + '\n' + '-' * len(key)
