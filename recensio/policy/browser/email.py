@@ -45,8 +45,9 @@ class MailCollection(BrowserView):
             retval += mag_title + '\n' + '-' * len(mag_title)
             for i, result in enumerate(mag_results):
                 if i < 3:
-                    msg = u'\n%s\n%s\n(%s)\n\n' % (result.Title().decode('utf-8'), \
-                                             '~' * len(result.Title()),
+                    title = result.Title().decode('utf-8')
+                    msg = u'\n%s\n%s\n(%s)\n\n' % (title, \
+                                             '~' * len(title),
                                              result.absolute_url())
                     retval += msg
                 if i == 3:
