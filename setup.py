@@ -28,7 +28,7 @@ setup(name='recensio.policy',
           'Products.CMFPlacefulWorkflow',
           'Products.DataGridField',
           'Products.LinguaPlone',
-          'collective.captcha',
+          'collective.captcha>=1.5', # We have permission problems in 1.5
           'collective.indexing',
           'collective.xdv',
 	      'collective.portlet.tal',
