@@ -24,7 +24,7 @@ setup(name='recensio.policy',
       zip_safe=False,
       install_requires=[
           'BeautifulSoup',
-          'Products.ATVocabularyManager',
+          'Products.ATVocabularyManager>=1.6',
           'Products.CMFPlacefulWorkflow',
           'Products.DataGridField',
           'Products.LinguaPlone',
