@@ -24,7 +24,8 @@ setup(name='recensio.policy',
       zip_safe=False,
       install_requires=[
           'BeautifulSoup',
-          'Products.ATVocabularyManager>=1.6',
+          'Products.ATVocabularyManager>=1.6', # Only here Plone 4 compatibility started
+          'Products.CMFDiffTool>=2.0', # This fixed important issues related to Plone 4
           'Products.CMFPlacefulWorkflow',
           'Products.DataGridField',
           'Products.LinguaPlone',
