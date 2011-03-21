@@ -92,7 +92,7 @@ def setPermissions(self):
     user_folder.manage_setLocalRoles('Reviewers', ['Reader'])
 
 @guard
-def setUpCollections(context):
+def xxxsetUpCollections(context):
     portal = context.getSite()
     wftool = getToolByName(portal, 'portal_workflow')
     def getOrAdd(context, type, name, publish = True):
