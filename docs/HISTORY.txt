@@ -1,11 +1,11 @@
 Changelog
 =========
 
-1.0.2 (unreleased)
+1.0.2 (2011-03-21)
 ------------------
 
-- Nothing changed yet.
-
+- Fix for unicode error in newsletter. Also added missing newline
+  (reinhardt)
 
 1.0.1 (2011-03-02)
 ------------------
