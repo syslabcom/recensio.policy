@@ -28,6 +28,7 @@ class MailCollection(BrowserView):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
         self.ts = getToolByName(self.context, 'translation_service')
+        self.root = getToolByName(self.context, 'portal_url').getPortalObject()
 
     def getNewReviews(self):
         magazines = {}
@@ -47,7 +48,7 @@ class MailCollection(BrowserView):
                 if i < 9999:
                     title = result.getDecoratedTitle()
                     msg = u'\n%s\n%s\n(%s)\n\n' % (title, \
-                                             '~' * len(title),
+                                             '\n',
                                              result.absolute_url())
                     retval += msg
                 if i == 9999:
@@ -60,11 +61,11 @@ class MailCollection(BrowserView):
     def getComments(self):
         retval = ''
         for result in self.context.new_discussions.queryCatalog():
-            line = '%s (%s %s)\n' % (result.Title, \
+            line = '%s (%s %s)\n' % (result.getObject().getDecoratedTitle(), \
                 result.total_comments, \
                 result.total_comments != '1' and self.ts.translate(_('comments'), context=self.context) \
                     or self.ts.translate(_('comment')))
-            line += '~' * len(line)
+            line += '\n'
             retval += '%s\n(%s)\n\n' % (line, result.getURL())
         return retval
 
@@ -78,7 +79,7 @@ class MailCollection(BrowserView):
                          key_onlineres : []}
 
         formatted_result = lambda x: u'\n%s\n%s\n(%s)\n\n' % \
-            (x.getObject().getDecoratedTitle().decode('utf8'), u'~' * len(x.getObject().getDecoratedTitle().decode('utf8')), x.getURL())
+            (x.getObject().getDecoratedTitle(), '\n', x.getURL())
 
         for result in self.context.new_presentations.queryCatalog():
             if result.portal_type == 'Presentation Article Review':
@@ -94,7 +95,7 @@ class MailCollection(BrowserView):
                 presentations[key_onlineres]\
                     .append(formatted_result(result))
             else:
-                assert False, "Unknown new content type, fix me"
+                assert False, "Unknown new content type '%s', fix me" % result.portal_type
         presentation_keys = presentations.keys()
         presentation_keys.sort()
         for key in presentation_keys:
@@ -109,8 +110,7 @@ class MailCollection(BrowserView):
         return retval
 
     def getMailAddresses(self):
-        root = getToolByName(self.context, 'portal_url').getPortalObject()
-        mail_info = IMailSchema(root)
+        mail_info = IMailSchema(self.root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         mail_to = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
         if not mail_info.email_from_address:
@@ -118,14 +118,16 @@ class MailCollection(BrowserView):
             raise ValidationError()
         return mail_from, mail_to
 
+    def getNewsletterSettings(self):
+        return getUtility(IRegistry).forInterface(INewsletterSettings)
 
     def __call__(self):
         self.errors = []
         messages = IStatusMessage(self.request)
+        mail_to = mail_from = ""
         try:
             mail_from, mail_to = self.getMailAddresses()
-            registry = getUtility(IRegistry)
-            settings = registry.forInterface(INewsletterSettings)
+            settings = self.getNewsletterSettings()
             if not settings.mail_format:
                 self.errors.append(_('Mailsettings not configured'))
                 raise ValidationError()
@@ -213,14 +215,15 @@ class MailNewComment(BrowserView):
         args['url'] = review.absolute_url()
         args['author'] = u' '.join([x.decode('utf-8') for x in [review.reviewAuthorFirstname, review.reviewAuthorLastname]])
         args['date'] = review.created().strftime('%d.%m.%Y')
-        args['title'] = review.Title()
+        args['title'] = review.Title().decode('utf-8')
         args['commenter'] = comment.author_name
         args['commentdate'] = comment.creation_date.strftime('%d.%m.%Y')
         args['mail_from'] = mail_from
 
         mail_to, pref_lang = self.findRecipient()
         subject = self.ts.translate(_('mail_new_comment_subject', mapping=args), target_language=pref_lang)
-        msg_template = self.ts.translate(_('mail_new_comment_body', mapping=args), target_language=pref_lang)
+        msg_template = self.ts.translate(_('mail_new_comment_body', mapping=args),
+                                         target_language=pref_lang)
         self.sendMail(msg_template, mail_from, mail_to, subject)
 
     def sendMail(self, msg, mail_from, mail_to, subject):

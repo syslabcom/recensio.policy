@@ -52,17 +52,17 @@ Angenehmes Stöbern und Entdecken wünscht Ihnen
 *Ihre recensio.net-Redaktion.*
 
 
---------------------
-Neue Rezensionen ...
---------------------
-
-%(new_reviews)s
-
 -----------------------
 Neue Präsentationen ...
 -----------------------
 
 %(new_presentations)s
+
+--------------------
+Neue Rezensionen ...
+--------------------
+
+%(new_reviews)s
 
 -------------------------------------
 Verfolgen Sie die Diskussion über ...
@@ -88,17 +88,17 @@ We hope you will enjoy browsing our platform and discovering its content.
 *Your recensio.net editorial team*
 
 
----------------
-New reviews ...
----------------
-
-%(new_reviews)s
-
 ---------------------
 New presentations ...
 ---------------------
 
 %(new_presentations)s
+
+---------------
+New reviews ...
+---------------
+
+%(new_reviews)s
 
 ----------------------------
 Follow the discussion on ...
