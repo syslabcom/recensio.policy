@@ -78,7 +78,7 @@ class MailCollection(BrowserView):
                          key_onlineres : []}
 
         formatted_result = lambda x: u'\n%s\n%s\n(%s)\n\n' % \
-            (x.getObject().getDecoratedTitle(), '~' * len(x.getObject().getDecoratedTitle()), x.getURL())
+            (x.getObject().getDecoratedTitle().decode('utf8'), u'~' * len(x.getObject().getDecoratedTitle().decode('utf8')), x.getURL())
 
         for result in self.context.new_presentations.queryCatalog():
             if result.portal_type == 'Presentation Article Review':
@@ -103,7 +103,7 @@ class MailCollection(BrowserView):
                 presentations[key] = presentations[key][:10000]
         retval = ''
         for key in presentations.keys():
-            retval += u'' + key + '\n' + '-' * len(key)
+            retval += u'' + key + '\n' + '-' * len(key) + u'\n'
             for result in presentations[key]:
                 retval += result
         return retval
