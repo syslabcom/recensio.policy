@@ -56,7 +56,7 @@ sampleblob = '''<tr>
         </tr>'''
 
 class TestOpacSearch(unittest.TestCase):
-    def testSuccessfulSearch(self):
+    def xtestSuccessfulSearch(self):
         opac = OpacSearch()
         is_ = opac.getMetadataForISBN('3-8272-6194-5')
         should_be = [{'publisher': u'Markt+Technik-Verl.',
@@ -78,7 +78,7 @@ class TestOpacSearch(unittest.TestCase):
         should_be = []
         self.assertEquals(should_be, is_)
 
-    def testSuccessfulSearchFunnyISBN(self):
+    def xtestSuccessfulSearchFunnyISBN(self):
         opac = OpacSearch()
         is_1 = opac.getMetadataForISBN('3-8272-6194-5')
         is_2 = opac.getMetadataForISBN('3-8272-61945')
