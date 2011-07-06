@@ -16,6 +16,7 @@ from plone.app.testing import setRoles, login
 from plone.app.controlpanel.mail import IMailSchema
 from Products.CMFCore.utils import getToolByName
 
+from recensio.policy.interfaces import INewsletterSource
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
 

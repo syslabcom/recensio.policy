@@ -4,4 +4,8 @@
             handler="recensio.policy.setuphandlers.activateTestSolr"
             description="Solr, Engage!"
             title="Solr, Engage!" />
+    <import-step id="recensio_policy_setup_collections" version="2010706-01"
+            handler="recensio.policy.setuphandlers.testSetUpCollections"
+            description="Production does not trigger this step any longer"
+            title="Collections" />
 </import-steps>

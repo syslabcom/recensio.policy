@@ -92,7 +92,13 @@ def setPermissions(self):
     user_folder.manage_setLocalRoles('Reviewers', ['Reader'])
 
 @guard
-def xxxsetUpCollections(context):
+def testSetUpCollections(context):
+    """
+    This step was originally used to set up the recensio site.
+    This step is not safe to be executed many times, so we just deactivated
+    it.
+    It is now used for tests!
+    """
     portal = context.getSite()
     wftool = getToolByName(portal, 'portal_workflow')
     def getOrAdd(context, type, name, publish = True):
