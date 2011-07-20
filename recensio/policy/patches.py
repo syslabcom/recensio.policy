@@ -3,28 +3,22 @@ from collective.solr import indexer, mangler
 from collective.solr.indexer import datehandler
 from collective.solr.mangler import *
 
-def getRID(self):
-    """ Return a Resource Identifier, like a brain would do """
-    return self.UID 
+# This seems to be fixed with Solr 3.3, but keep an eye out for problems!
 
-PloneFlare.getRID = getRID
-
-PloneFlare._unrestrictedGetObject = PloneFlare.getObject
-
-def inthandler(value):
+#def inthandler(value):
     # solr would choke on None and throw a javalangNumberFormatException,
     # preventing the whole object from being indexed. Therefore raise an
     # AttributeError in this case.
-    if value is None:
-        raise AttributeError
-    return value
+#    if value is None:
+#        raise AttributeError
+#    return value
 
-indexer.handlers = {
-    'solr.DateField': datehandler,
-    'solr.TrieDateField': datehandler,
-    'solr.IntField': inthandler,
-    'solr.TrieIntField': inthandler,
-}
+#indexer.handlers = {
+#    'solr.DateField': datehandler,
+#    'solr.TrieDateField': datehandler,
+#    'solr.IntField': inthandler,
+#    'solr.TrieIntField': inthandler,
+#}
 
 def mangleQuery(keywords):
     """ translate / mangle query parameters to replace zope specifics
@@ -89,7 +83,7 @@ def mangleQuery(keywords):
             keywords[key] = convert(value)
         assert not args, 'unsupported usage: %r' % args
 
-mangler.mangleQuery = mangleQuery
+#mangler.mangleQuery = mangleQuery
 
 def patch(old_method):
     def contentIndependentGetVocabularyDict(self, instance=None):
