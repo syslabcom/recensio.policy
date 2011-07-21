@@ -1,6 +1,5 @@
-from collective.solr.flare import PloneFlare
 from collective.solr import indexer, mangler
-from collective.solr.indexer import datehandler
+#from collective.solr.indexer import datehandler
 from collective.solr.mangler import *
 
 # This seems to be fixed with Solr 3.3, but keep an eye out for problems!
