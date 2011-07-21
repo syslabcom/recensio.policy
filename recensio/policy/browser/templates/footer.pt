@@ -10,32 +10,30 @@
         <span>
           <a href="http://www.dfg.de"
              ><img tal:attributes="src string:${portal_url}/imgs/logos/dfg_logo.png" src="imgs/logos/dfg_logo.png"
-                   alt="Logo der deutschen Forschungsgemeinschaft"
-                   class="logo"></a>
+             alt="Logo der deutschen Forschungsgemeinschaft"
+             class="logo"/></a>
           &nbsp;
           <span i18n:translate="message_supported_by">
-          recensio.net ist ein von der Deutschen
-          Forschungsgemeinschaft gefoerdertes Gemeinschaftsprojekt
-          folgender Institutionen
+            recensio.net ist ein von der Deutschen
+            Forschungsgemeinschaft gefoerdertes Gemeinschaftsprojekt
+            folgender Institutionen
           </span>
-        </span><br />
-        <a href="http://www.bsb-muenchen.de/"
-           ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
-                 alt="Logo der Bayerischen Staatsbibliothek"></a>
-        <a href="http://www.dhi-paris.fr/"
-           ><img tal:attributes="src string:${portal_url}/imgs/logos/dhip_logo.png" src="imgs/logos/dhip_logo.png"
-                 alt="Logo des deutschen historischen Instituts Paris"></a>
-        <a href="http://www.ieg-mainz.de/likecms/index.php"
-           ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.gif" src="imgs/logos/ieg_logo.gif"
-                 alt="Logo des Institus für europäische Geschichte"></a>
+          </span><br />
+          <a href="http://www.bsb-muenchen.de/"
+             ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
+             alt="Logo der Bayerischen Staatsbibliothek" /></a>
+          <a href="http://www.dhi-paris.fr/"
+             ><img tal:attributes="src string:${portal_url}/imgs/logos/dhip_logo.png" src="imgs/logos/dhip_logo.png"
+             alt="Logo des deutschen historischen Instituts Paris" /></a>
+          <a href="http://www.ieg-mainz.de/likecms/index.php"
+             ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.gif" src="imgs/logos/ieg_logo.gif"
+             alt="Logo des Institus für europäische Geschichte" /></a>
       </div>
 
       <div id="notes">
         <a href="#"
-           tal:define="
-lang_suffix python:language != 'de' and '-'+language or ''"
-           tal:attributes="
-href string:${portal_url}/impressum${lang_suffix}">Impressum</a>
+           tal:define="lang_suffix python:language != 'de' and '-'+language or ''"
+           tal:attributes="href string:${portal_url}/impressum${lang_suffix}">Impressum</a>
       </div>
 
     </div>
@@ -43,8 +41,18 @@ href string:${portal_url}/impressum${lang_suffix}">Impressum</a>
 
   <img id="recensio_logo"
        src="++resource++recensio.theme.images/de/logo_recensio.png"
-       tal:attributes="
-src string:${portal_url}/++resource++recensio.theme.images/${language}/logo_recensio.png"
+       tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/${language}/logo_recensio.png"
        title="Recensio.net"
        alt="Recensio.net Logo"/>
+
+  <object width="900" height="150" id="page_image"
+          tal:define="swf_path string:/++resource++recensio.theme.images/main_${language}.swf">
+    <param name="movie" tal:attributes="value swf_path"/>
+    <param name="wmmode" value="transparent" />
+    <embed wmmode="transparent"
+           width="900" height="150"
+           tal:attributes="src swf_path">
+    </embed>
+  </object>
+
 </div>
