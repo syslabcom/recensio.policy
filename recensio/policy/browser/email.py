@@ -226,6 +226,21 @@ class MailNewComment(BrowserView):
                                          target_language=pref_lang)
         self.sendMail(msg_template, mail_from, mail_to, subject)
 
+        # Find other comment authors and notify them
+        recipients = []
+        for item in conversation.items():
+            cmt = item[1]
+            if not cmt.author_email in map(lambda x: x[0], recipients) and not cmt.author_email == mail_to:
+                rcpt = self.findRecipient(id=cmt.author_username)
+                recipients.append(rcpt)
+
+        for rcpt in recipients:
+            mail_to, pref_lang = rcpt
+            subject = self.ts.translate(_('mail_new_comment_subject', mapping=args), target_language=pref_lang)
+            msg_template = self.ts.translate(_('mail_new_comment_body', mapping=args),
+                                             target_language=pref_lang)
+            self.sendMail(msg_template, mail_from, mail_to, subject)
+
     def sendMail(self, msg, mail_from, mail_to, subject):
         if mail_to:
             self.mailhost.send(messageText=msg, mto=mail_to,
@@ -236,9 +251,9 @@ class MailNewComment(BrowserView):
             messages = IStatusMessage(self.request)
             messages.addStatusMessage(self.ts.translate(_('mail_no_recipients'), target_language=pref_lang), type="warning")
 
-    def findRecipient(self):
+    def findRecipient(self, id=None):
         membership_tool = getToolByName(self.context, 'portal_membership')
-        owner = membership_tool.getMemberById(self.context.__parent__.__parent__.Creator()).getUser()
+        owner = membership_tool.getMemberById(id or self.context.__parent__.__parent__.Creator()).getUser()
         return owner.getProperty('email'), owner.getProperty('preferred_language', 'en')
 
 
@@ -250,7 +265,7 @@ class MailNewPublication(BrowserView):
         self.pas = getToolByName(self.context, "acl_users")
         self.membership_tool = getToolByName(self.context, 'portal_membership')
 
-    def __call__(self):
+    def __call__(self, skip_addrs=[]):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
         mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
@@ -265,6 +280,8 @@ class MailNewPublication(BrowserView):
                 return default
 
         for author in referenceAuthors:
+            if author.has_key('email') and author['email'] in skip_addrs:
+                continue
             args = {}
             fuckup = [author['firstname'], author['lastname']]
             fuckup = [x.decode('utf-8') for x in fuckup]
