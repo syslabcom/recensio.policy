@@ -19,7 +19,7 @@ from collective.solr.mangler import *
 #    'solr.TrieIntField': inthandler,
 #}
 
-def mangleQuery(keywords):
+def mangleQuery(keywords, config, schema):
     """ translate / mangle query parameters to replace zope specifics
         with equivalent constructs for solr """
     extras = {}
@@ -32,7 +32,7 @@ def mangleQuery(keywords):
             keywords[key] = value['query']
             del value['query']
             extras[key] = value
-        elif hasattr(value, 'query'):     # unify object parameters
+        elif hasattr(value, 'query'):       # unify object parameters
             keywords[key] = value.query
             extra = dict()
             for arg in query_args:
@@ -40,25 +40,61 @@ def mangleQuery(keywords):
                 if arg_val is not None:
                     extra[arg] = arg_val
             extras[key] = extra
+        elif key in ignored:
+            del keywords[key]
+
+    # find EPI indexes
+    if schema:
+        epi_indexes = {}
+        for name in schema.keys():
+            parts = name.split('_')
+            if parts[-1] in ['string', 'depth', 'parents']:
+                count = epi_indexes.get(parts[0], 0)
+                epi_indexes[parts[0]] = count + 1
+        epi_indexes = [k for k, v in epi_indexes.items() if v == 3]
+    else:
+        epi_indexes = ['path']
 
     for key, value in keywords.items():
         args = extras.get(key, {})
-        if key == 'path':
-            path = keywords['parentPaths'] = value
+        if key == 'SearchableText':
+            pattern = getattr(config, 'search_pattern', '')
+            simple_term = isSimpleTerm(value)
+            if pattern and isSimpleSearch(value):
+                base_value = value
+                if simple_term:             # use prefix/wildcard search
+                    value = '(%s* OR %s)' % (value.lower(), value)
+                elif isWildCard(value):     # wildcard searches need lower-case
+                    value = value.lower()
+                    base_value = quote(value.replace('*', '').replace('?', ''))
+                # simple queries use custom search pattern
+                value = pattern.format(value=quote(value),
+                    base_value=base_value)
+                keywords[key] = set([value])    # add literal query parameter
+                continue
+            elif simple_term:               # use prefix/wildcard search
+                keywords[key] = '(%s* OR %s)' % (value.lower(), value)
+                continue
+        if key in epi_indexes:
+            path = keywords['%s_parents' % key] = value
             del keywords[key]
             if 'depth' in args:
                 depth = int(args['depth'])
                 if depth >= 0:
                     if not isinstance(value, (list, tuple)):
                         path = [path]
-                    tmpl = '(+physicalDepth:[%d TO %d] AND +parentPaths:%s)'
-                    params = keywords['parentPaths'] = set()
+                    tmpl = '(+%s_depth:[%d TO %d] AND +%s_parents:%s)'
+                    params = keywords['%s_parents' % key] = set()
                     for p in path:
                         base = len(p.split('/'))
-                        params.add(tmpl % (base + (depth and 1), base + depth, p))
+                        params.add(tmpl % (key, base + (depth and 1), base + depth, key, p))
                 del args['depth']
         elif key == 'effectiveRange':
-            value = convert(value)
+            if isinstance(value, DateTime):
+                steps = getattr(config, 'effective_steps', 1)
+                if steps > 1:
+                    value = DateTime(value.timeTime() // steps * steps)
+                value = iso8601date(value)
             del keywords[key]
             keywords['effective'] = '[* TO %s]' % value
             keywords['expires'] = '[%s TO *]' % value
@@ -67,22 +103,27 @@ def mangleQuery(keywords):
         elif 'range' in args:
             if not isinstance(value, (list, tuple)):
                 value = [value]
-            payload = map(convert, value)
+            payload = map(iso8601date, value)
             keywords[key] = ranges[args['range']] % tuple(payload)
             del args['range']
         elif 'operator' in args:
             if isinstance(value, (list, tuple)) and len(value) > 1:
                 sep = ' %s ' % args['operator'].upper()
-                value = sep.join(map(str, map(convert, value)))
+                value = sep.join(map(str, map(iso8601date, value)))
                 keywords[key] = '(%s)' % value
             del args['operator']
-        elif isinstance(value, basestring) and value.endswith('*'):
-            keywords[key] = '%s' % value.lower()
-        else:
-            keywords[key] = convert(value)
-        assert not args, 'unsupported usage: %r' % args
+        elif key == 'allowedRolesAndUsers':
+            if getattr(config, 'exclude_user', False):
+                token = 'user$' + getSecurityManager().getUser().getId()
+                if token in value:
+                    value.remove(token)
+        elif isinstance(value, DateTime):
+            keywords[key] = iso8601date(value)
+        elif not isinstance(value, basestring):
+            assert not args, 'unsupported usage: %r' % args
 
-#mangler.mangleQuery = mangleQuery
+
+mangler.mangleQuery = mangleQuery
 
 def patch(old_method):
     def contentIndependentGetVocabularyDict(self, instance=None):
