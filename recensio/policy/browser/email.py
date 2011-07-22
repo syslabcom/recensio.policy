@@ -12,7 +12,8 @@ from zope.component import getUtility
 from DateTime import DateTime
 
 from recensio.policy import recensioMessageFactory
-from recensio.policy.interfaces import INewsletterSettings, IDiscussionCollections
+from recensio.policy.interfaces import INewsletterSettings, \
+    IDiscussionCollections
 from Acquisition import aq_parent
 
 log = logging.getLogger()
@@ -52,8 +53,10 @@ class MailCollection(BrowserView):
                                              result.absolute_url())
                     retval += msg
                 if i == 9999:
-                    msg = '\n' + self.ts.translate(_('more_results_here'), context=self.context) + '\n' +\
-                        self.context.new_reviews.absolute_url() + '\n\n\n'
+                    msg = ('\n'+ self.ts.translate(_('more_results_here'),
+                                                   context=self.context) +
+                           '\n' + self.context.new_reviews.absolute_url() +
+                           '\n\n\n')
                     retval += msg
                     break
         return retval
@@ -61,19 +64,27 @@ class MailCollection(BrowserView):
     def getComments(self):
         retval = ''
         for result in self.context.new_discussions.queryCatalog():
-            line = '%s (%s %s)\n' % (result.getObject().getDecoratedTitle(), \
-                result.total_comments, \
-                result.total_comments != '1' and self.ts.translate(_('comments'), context=self.context) \
-                    or self.ts.translate(_('comment')))
+            label_comments = result.total_comments == 1 \
+                and self.ts.translate(_('comment')) \
+                or  self.ts.translate(_('comments'), context=self.context)
+            line = '%s (%s %s)\n' % (
+                result.getObject().getDecoratedTitle(), result.total_comments,
+                label_comments)
             line += '\n'
             retval += '%s\n(%s)\n\n' % (line, result.getURL())
         return retval
 
     def getNewPresentations(self):
-        key_monographs = self.ts.translate(_('presentations_of_monographs'), context=self.context)
-        key_articles = self.ts.translate(_('presentations_of_articles'), context=self.context)
-        key_onlineres = self.ts.translate(_('presentations_of_online_resources'), context=self.context)
-        
+        key_monographs = self.ts.translate(
+            _('presentations_of_monographs'),
+            context=self.context)
+        key_articles = self.ts.translate(
+            _('presentations_of_articles'),
+            context=self.context)
+        key_onlineres = self.ts.translate(
+            _('presentations_of_online_resources'),
+            context=self.context)
+
         presentations = {key_monographs : [],
                          key_articles : [],
                          key_onlineres : []}
@@ -95,12 +106,17 @@ class MailCollection(BrowserView):
                 presentations[key_onlineres]\
                     .append(formatted_result(result))
             else:
-                assert False, "Unknown new content type '%s', fix me" % result.portal_type
+                assert False, "Unknown new content type '%s', fix me" % (
+                    result.portal_type)
         presentation_keys = presentations.keys()
         presentation_keys.sort()
         for key in presentation_keys:
             if len(presentations[key]) > 9999:
-                presentations[key][9999] = "\n" + self.ts.translate(_('more_results_here'), context=self.context) + '\n' + self.context.new_presentations.absolute_url() + "\n\n\n"
+                presentations[key][9999] = (
+                    "\n" + self.ts.translate(_('more_results_here'),
+                                             context=self.context) +
+                    '\n' + self.context.new_presentations.absolute_url() +
+                    "\n\n\n")
                 presentations[key] = presentations[key][:10000]
         retval = ''
         for key in presentations.keys():
@@ -111,8 +127,10 @@ class MailCollection(BrowserView):
 
     def getMailAddresses(self):
         mail_info = IMailSchema(self.root)
-        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
-        mail_to = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        mail_from = '%s <%s>' % (
+            mail_info.email_from_name, mail_info.email_from_address)
+        mail_to = '%s <%s>' % (
+            mail_info.email_from_name, mail_info.email_from_address)
         if not mail_info.email_from_address:
             self.errors.append(_('Plone site is not configured'))
             raise ValidationError()
@@ -147,42 +165,58 @@ class MailCollection(BrowserView):
 
             # Copy mail to archive folder
             try:
-                arch = self.context.unrestrictedTraverse(settings.archive_folder)
+                arch = self.context.unrestrictedTraverse(
+                    settings.archive_folder)
             except (AttributeError, KeyError):
                 # try to create archive folder
-                folder = getToolByName(self.context, 'portal_url').getPortalObject()
+                folder = getToolByName(
+                    self.context, 'portal_url').getPortalObject()
                 for sub in settings.archive_folder.split('/')[2:]:
                     if sub in folder.objectIds():
                         folder = folder[sub]
                     else:
                         type = getattr(folder, 'meta_type', None)
                         if not (type == 'ATFolder' or type == 'Plone Site'):
-                            messages.addStatusMessage('Unable to create archive folder %s: %s is not a folder!' % (settings.archive_folder, folder.getId()), type='error')
+                            messages.addStatusMessage(
+                                'Unable to create archive folder %s: '
+                                '%s is not a folder!' % (
+                                    settings.archive_folder, folder.getId()),
+                                type='error')
                             break
                         else:
                             id = folder.invokeFactory('Folder', sub)
                             folder = folder[id]
                             folder.setTitle(sub)
                 arch = folder
-                messages.addStatusMessage('Created Newsletter archive folder %s' % (settings.archive_folder), type='info')
+                messages.addStatusMessage(
+                    'Created Newsletter archive folder %s' % (
+                        settings.archive_folder),
+                    type='info')
 
             if not getattr(arch, 'meta_type', None) == 'ATFolder':
-                messages.addStatusMessage('Unable to use %s as archive folder: Not a folder!' % (settings.archive_folder), type='error')
+                messages.addStatusMessage(
+                    'Unable to use %s as archive folder: Not a folder!' % (
+                        settings.archive_folder), type='error')
                 raise ValidationError
 
-            if not arch.getPhysicalPath() == tuple(settings.archive_folder.split('/')):
+            if not arch.getPhysicalPath() == tuple(
+                settings.archive_folder.split('/')):
                 raise ValidationError
 
             name = 'Newsletter %s' % DateTime().strftime('%d.%m.%Y')
             if name in arch.objectIds():
-                messages.addStatusMessage('%s already exists in archive' % name, type='warning')
+                messages.addStatusMessage(
+                    '%s already exists in archive' % name,
+                    type='warning')
             else:
                 id = arch.invokeFactory('Document', name)
                 new_ob = arch[id]
                 new_ob.setTitle(name)
                 new_ob.setText(msg)
                 new_ob.setContentType('text/restructured')
-                messages.addStatusMessage('Mail archived as %s' % '/'.join(new_ob.getPhysicalPath()), type='info')
+                messages.addStatusMessage(
+                    'Mail archived as %s' % '/'.join(new_ob.getPhysicalPath()),
+                    type='info')
 
         except ValidationError:
             pass
@@ -191,7 +225,14 @@ class MailCollection(BrowserView):
                 for error in self.errors:
                     messages.addStatusMessage(error, type='error')
             else:
-                messages.addStatusMessage(self.ts.translate(_('mail_sending_prepared', default="Mailversand wird vorbereitet. Mail wird versandt an ${mail_to}"), context=self.context, mapping={u'mail_to': mail_to}), type="info")
+                messages.addStatusMessage(
+                    self.ts.translate(
+                        _('mail_sending_prepared',
+                          default=("Mailversand wird vorbereitet. "
+                                   "Mail wird versandt an ${mail_to}")),
+                        context=self.context,
+                        mapping={u'mail_to': mail_to}),
+                    type="info")
         return self.request.response.redirect(self.context.absolute_url())
 
 class MailNewComment(BrowserView):
@@ -203,7 +244,8 @@ class MailNewComment(BrowserView):
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
-        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        mail_from = '%s <%s>' % (
+            mail_info.email_from_name, mail_info.email_from_address)
 
         comment = self.context
         conversation = aq_parent(comment)
@@ -213,7 +255,11 @@ class MailNewComment(BrowserView):
                                                'lastname' : 'unknown'}])
         args = {}
         args['url'] = review.absolute_url()
-        args['author'] = u' '.join([x.decode('utf-8') for x in [review.reviewAuthorFirstname, review.reviewAuthorLastname]])
+        args['author'] = u' '.join(
+            [x.decode('utf-8')
+             for x in [review.reviewAuthorFirstname,
+                       review.reviewAuthorLastname]
+             ])
         args['date'] = review.created().strftime('%d.%m.%Y')
         args['title'] = review.Title().decode('utf-8')
         args['commenter'] = comment.author_name
@@ -221,8 +267,10 @@ class MailNewComment(BrowserView):
         args['mail_from'] = mail_from
 
         mail_to, pref_lang = self.findRecipient()
-        subject = self.ts.translate(_('mail_new_comment_subject', mapping=args), target_language=pref_lang)
-        msg_template = self.ts.translate(_('mail_new_comment_body', mapping=args),
+        subject = self.ts.translate(_('mail_new_comment_subject',
+                                      mapping=args), target_language=pref_lang)
+        msg_template = self.ts.translate(_('mail_new_comment_body',
+                                           mapping=args),
                                          target_language=pref_lang)
         self.sendMail(msg_template, mail_from, mail_to, subject)
 
@@ -230,14 +278,18 @@ class MailNewComment(BrowserView):
         recipients = []
         for item in conversation.items():
             cmt = item[1]
-            if not cmt.author_email in map(lambda x: x[0], recipients) and not cmt.author_email == mail_to:
+            if not cmt.author_email in map(lambda x: x[0], recipients) \
+                                           and not cmt.author_email == mail_to:
                 rcpt = self.findRecipient(id=cmt.author_username)
                 recipients.append(rcpt)
 
         for rcpt in recipients:
             mail_to, pref_lang = rcpt
-            subject = self.ts.translate(_('mail_new_comment_subject', mapping=args), target_language=pref_lang)
-            msg_template = self.ts.translate(_('mail_new_comment_body', mapping=args),
+            subject = self.ts.translate(_('mail_new_comment_subject',
+                                          mapping=args),
+                                        target_language=pref_lang)
+            msg_template = self.ts.translate(_('mail_new_comment_body',
+                                               mapping=args),
                                              target_language=pref_lang)
             self.sendMail(msg_template, mail_from, mail_to, subject)
 
@@ -249,12 +301,17 @@ class MailNewComment(BrowserView):
         else:
             mail_to, pref_lang = self.findRecipient()
             messages = IStatusMessage(self.request)
-            messages.addStatusMessage(self.ts.translate(_('mail_no_recipients'), target_language=pref_lang), type="warning")
+            messages.addStatusMessage(
+                self.ts.translate(_('mail_no_recipients'),
+                                  target_language=pref_lang),
+                type="warning")
 
     def findRecipient(self, id=None):
         membership_tool = getToolByName(self.context, 'portal_membership')
-        owner = membership_tool.getMemberById(id or self.context.__parent__.__parent__.Creator()).getUser()
-        return owner.getProperty('email'), owner.getProperty('preferred_language', 'en')
+        owner = membership_tool.getMemberById(
+            id or self.context.__parent__.__parent__.Creator()).getUser()
+        return (owner.getProperty('email'),
+                owner.getProperty('preferred_language', 'en'))
 
 
 class MailNewPublication(BrowserView):
@@ -268,13 +325,15 @@ class MailNewPublication(BrowserView):
     def __call__(self, skip_addrs=[]):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         mail_info = IMailSchema(root)
-        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        mail_from = '%s <%s>' % (
+            mail_info.email_from_name, mail_info.email_from_address)
         referenceAuthors = getattr(self.context, 'referenceAuthors', [])
 
         def get_preferred_language(email, default='en'):
             found = self.pas.searchUsers(email=args['mail_to'])
             if found:
-                owner = self.membership_tool.getMemberById(found[0]['userid']).getUser()
+                owner = self.membership_tool.getMemberById(
+                    found[0]['userid']).getUser()
                 return owner.getProperty('preferred_language', default)
             else:
                 return default
@@ -289,19 +348,40 @@ class MailNewPublication(BrowserView):
             args['mail_from'] = mail_from.decode('utf-8')
             pref_lang = 'en'
             args['title'] = self.context.title.decode('utf-8')
-            args['subtitle'] = getattr(self.context, 'subtitle', '').decode('utf-8')
-            args['review_author'] = u' '.join([x.decode('utf-8') for x in [self.context.reviewAuthorFirstname, self.context.reviewAuthorLastname]])
+            args['subtitle'] = getattr(
+                self.context, 'subtitle', '').decode('utf-8')
+            args['review_author'] = u' '.join(
+                [x.decode('utf-8')
+                 for x in [self.context.reviewAuthorFirstname,
+                           self.context.reviewAuthorLastname]
+                 ])
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             args['context_url'] = self.context.absolute_url()
             if author.has_key('email') and author['email']:
                 args['mail_to'] = author['email']
                 pref_lang = get_preferred_language(author['email'], pref_lang)
-                msg_template = self.ts.translate(_('mail_new_publication_body', mapping=args), target_language=pref_lang)
+                msg_template = self.ts.translate(
+                    _('mail_new_publication_body',
+                      mapping=args), target_language=pref_lang)
             else:
                 args['mail_to'] = args['mail_from']
                 pref_lang = get_preferred_language(args['mail_from'], pref_lang)
-                msg_template = self.ts.translate(_('mail_new_publication_intro', mapping=args), target_language=pref_lang) + self.ts.translate(_('mail_new_publication_body', mapping=args), target_language=pref_lang)
-            subject = self.ts.translate(_('mail_new_publication_subject', default=u"Es wurde eine Rezension von ${title} veröffentlicht", mapping=args), target_language=pref_lang)
+                msg_template = (
+                    self.ts.translate(
+                        _('mail_new_publication_intro',
+                          mapping=args),
+                        target_language=pref_lang) +
+                    self.ts.translate(
+                        _('mail_new_publication_body',
+                          mapping=args),
+                        target_language=pref_lang)
+                    )
+            subject = self.ts.translate(
+                _('mail_new_publication_subject',
+                  default=(u"Es wurde eine Rezension von ${title} "
+                           u"veröffentlicht"),
+                  mapping=args),
+                target_language=pref_lang)
             self.sendMail(msg_template, args['mail_to'], mail_from, subject)
 
     def sendMail(self, msg, mail_to, mail_from, subject):
@@ -317,11 +397,11 @@ class MailUncommented(BrowserView):
 
 Sie haben am ${date} Ihre Schrift
     ${title}
-    
+
     auf recensio.net präsentiert. Bisher liegen keine Kommentare vor. Sie haben hier die Gelegenheit, Ihre Präsentation zu modifizieren: Sie könnten die Thesenformulierung bearbeiten oder auch die Zahl der aufgeführten Bezugsautoren erweitern. In der Regel werden diese von der recensio.net-Redaktion kontaktiert, was erheblich zur Sichtbarkeit einer Präsentation beiträgt. Wenn noch nicht geschehen, haben Sie zusätzlich die Möglichkeit, Coverbilder und Inhaltsverzeichnisse beizufügen (im Fall von Präsentationen von Monographien).
-    
+
     Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: ${mail_from}.
-    
+
     Mit freundlichen Grüßen,
     Ihr recensio.net-Team"""
 
@@ -340,7 +420,10 @@ Sie haben am ${date} Ihre Schrift
         msg = self.formatMessage(result)
         mail_to, pref_lang = self.findRecipient(result)
         mail_from = self.findSender()
-        subject = self.ts.translate(_('mail_uncommented_subject', default=u"Ihre Rezension auf recensio.net"), target_language=pref_lang)
+        subject = self.ts.translate(
+            _('mail_uncommented_subject',
+              default=u"Ihre Rezension auf recensio.net"),
+            target_language=pref_lang)
         self.mailhost.send(messageText=msg, mto=mail_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
@@ -356,27 +439,34 @@ Sie haben am ${date} Ihre Schrift
                 'title' : title,
                 'date' : date,
                 'mail_from' : self.findSender() }
-        msg = self.ts.translate(_('mail_uncommented_body', default=self.mail_body, mapping=args), target_language=pref_lang)
+        msg = self.ts.translate(
+            _('mail_uncommented_body',
+              default=self.mail_body, mapping=args),
+            target_language=pref_lang)
 
         return msg
 
     def findRecipient(self, result):
         membership_tool = getToolByName(self.context, 'portal_membership')
         owner = membership_tool.getMemberById(result.Creator).getUser()
-        return owner.getProperty('email') or self.findSender(), owner.getProperty('preferred_language', 'en')
+        return (owner.getProperty('email') or self.findSender(),
+                owner.getProperty('preferred_language', 'en'))
 
     def findSender(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
         membership_tool = getToolByName(self.context, 'portal_membership')
         mail_info = IMailSchema(root)
-        mail_from = '%s <%s>' % (mail_info.email_from_name, mail_info.email_from_address)
+        mail_from = '%s <%s>' % (
+            mail_info.email_from_name, mail_info.email_from_address)
         return mail_from
 
 class NewsletterSettingsEditForm(controlpanel.RegistryEditForm):
 
     schema = INewsletterSettings
     label = _('Newsletter settings')
-    description = _('This is a technical configuration panel for newsletter settings.\nThe templates can access any object of a catalog result, but dates have been preformatted.')
+    description = _('This is a technical configuration panel for newsletter '
+                    'settings.\nThe templates can access any object of a '
+                    'catalog result, but dates have been preformatted.')
 
 class NewsletterSettingsControlPanel(controlpanel.ControlPanelFormWrapper):
     form = NewsletterSettingsEditForm
