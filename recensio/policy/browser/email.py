@@ -14,6 +14,7 @@ from DateTime import DateTime
 from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings, \
     IDiscussionCollections
+from recensio.contenttypes.content.review import get_formatted_names
 from Acquisition import aq_parent
 
 log = logging.getLogger()
@@ -255,11 +256,7 @@ class MailNewComment(BrowserView):
                                                'lastname' : 'unknown'}])
         args = {}
         args['url'] = review.absolute_url()
-        args['author'] = u' '.join(
-            [x.decode('utf-8')
-             for x in [review.reviewAuthorFirstname,
-                       review.reviewAuthorLastname]
-             ])
+        args['author'] = get_formatted_names(u' / ', ' ', self.reviewAuthors)
         args['date'] = review.created().strftime('%d.%m.%Y')
         args['title'] = review.Title().decode('utf-8')
         args['commenter'] = comment.author_name
@@ -350,11 +347,8 @@ class MailNewPublication(BrowserView):
             args['title'] = self.context.title.decode('utf-8')
             args['subtitle'] = getattr(
                 self.context, 'subtitle', '').decode('utf-8')
-            args['review_author'] = u' '.join(
-                [x.decode('utf-8')
-                 for x in [self.context.reviewAuthorFirstname,
-                           self.context.reviewAuthorLastname]
-                 ])
+            args['review_author'] = get_formatted_names(
+                u' / ', ' ', self.context.reviewAuthors)
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             args['context_url'] = self.context.absolute_url()
             if author.has_key('email') and author['email']:

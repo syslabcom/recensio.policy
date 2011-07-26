@@ -60,9 +60,13 @@ class TestExcelImport(unittest.TestCase):
             if obj.title == 'Titel der Rezension 2009':
                 self.assertEquals('123456', obj.isbn)
                 self.assertEquals('2009', obj.yearOfPublication)
-                self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
-                self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
-                self.assertEquals(({u'lastname': u'Autor Nachname', u'firstname': u'Autor Vorname'},), obj.authors)
+                self.assertEquals('Rez. Vorname',
+                                  obj.reviewAuthors[0]["firstname"])
+                self.assertEquals('Rez. Nachname',
+                                  obj.reviewAuthors[0]["lastname"])
+                self.assertEquals(({u'lastname': u'Autor Nachname',
+                                    u'firstname': u'Autor Vorname'},),
+                                  obj.authors)
                 self.assertEquals('http://www.1.de', obj.uri)
                 self.assertEquals(('en',), obj.languageReview)
                 self.assertEquals(('de',), obj.languageReviewedText)
@@ -71,8 +75,10 @@ class TestExcelImport(unittest.TestCase):
             if obj.title == 'Titel Rezension 2010':
                 self.assertEquals('124656', obj.issn)
                 self.assertEquals('2010', obj.yearOfPublication)
-                self.assertEquals('Rez. Vorname', obj.reviewAuthorFirstname)
-                self.assertEquals('Rez. Nachname', obj.reviewAuthorLastname)
+                self.assertEquals('Rez. Vorname',
+                                  obj.reviewAuthors[0]["firstname"])
+                self.assertEquals('Rez. Nachname',
+                                  obj.reviewAuthors[0]["lastname"])
                 self.assertEquals(3, obj.pageStart)
                 self.assertEquals(5, obj.pageEnd)
                 self.assertEquals('http://www.1.de', obj.uri)
