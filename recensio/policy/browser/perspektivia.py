@@ -53,13 +53,15 @@ class Import(BrowserView):
         helper['book_id'] = review['relation']
         authors = review.pop('creator')
         for author in authors:
-            review['reviewAuthorFirstname'] = author['firstname'].encode('utf8')
-            review['reviewAuthorLastname'] = author['lastname'].encode('utf8')
-            break
+            review['reviewAuthors'].append(
+                {"firstname" : author['firstname'].encode('utf8'),
+                 "lastname"  : author['lastname'].encode('utf8')})
         review['canonical_uri'] = review.pop('identifier')
-        for unused_key in ['date', 'format', 'publisher', 'rights', 'source', 'title']:
+        for unused_key in ['date', 'format', 'publisher', 'rights',
+                           'source', 'title']:
             review.pop(unused_key)
-        review['id'] = self.plone_utils.normalizeString(review['id']).encode('utf8')
+        review['id'] = self.plone_utils.normalizeString(
+            review['id']).encode('utf8')
         return helper, review
 
     def _renameKeysOfBook(self, book):
