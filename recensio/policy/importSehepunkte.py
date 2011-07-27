@@ -30,7 +30,8 @@ class SehepunkteParser(object):
 
     def _getReviewData(self, root):
         if root.tag != 'review':
-            logger.error('This XML Format seems to be unclean, it contained an unknown element after the issue tag')
+            logger.error('This XML Format seems to be unclean, it contained an '
+                         'unknown element after the issue tag')
             raise NoReview()
         xpath_single = lambda x:''.join(root.xpath(x)).strip()
 
@@ -38,8 +39,9 @@ class SehepunkteParser(object):
 
         return {
             'category' : xpath_single('category/text()')
-           ,'reviewAuthorLastname' : xpath_single('reviewer/last_name/text()')
-           ,'reviewAuthorFirstname' : xpath_single('reviewer/first_name/text()')
+           ,'reviewAuthors' : [
+                {"lastname": xpath_single('reviewer/last_name/text()'),
+                 "firstname": xpath_single('reviewer/first_name/text()')}]
            ,'canonical_uri' : canonical_uri
         }
     def _getBookData(self, root):
