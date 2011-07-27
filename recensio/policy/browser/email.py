@@ -21,6 +21,8 @@ log = logging.getLogger()
 
 _ = recensioMessageFactory
 
+REVIEW_TYPES = ["Review Monograph", "Review Journal"]
+
 class ValidationError(Exception):
     pass
 
@@ -241,6 +243,7 @@ class MailNewComment(BrowserView):
         super(BrowserView, self).__init__(request, context)
         self.mailhost = getToolByName(self.context, 'MailHost')
         self.ts = getToolByName(self.context, 'translation_service')
+        self.pl = getToolByName(self.context, 'portal_languages')
 
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
@@ -252,40 +255,59 @@ class MailNewComment(BrowserView):
         conversation = aq_parent(comment)
         review = aq_parent(conversation)
 
-        authors = getattr(review, 'authors', [{'firstname' : '',\
-                                               'lastname' : 'unknown'}])
+
         args = {}
         args['url'] = review.absolute_url()
-        args['author'] = get_formatted_names(u' / ', ' ', self.reviewAuthors)
+        args['author'] = get_formatted_names(u' / ', ' ', self.context.reviewAuthors)
         args['date'] = review.created().strftime('%d.%m.%Y')
         args['title'] = review.Title().decode('utf-8')
         args['commenter'] = comment.author_name
         args['commentdate'] = comment.creation_date.strftime('%d.%m.%Y')
         args['mail_from'] = mail_from
 
-        mail_to, pref_lang = self.findRecipient()
-        subject = self.ts.translate(_('mail_new_comment_subject',
-                                      mapping=args), target_language=pref_lang)
-        msg_template = self.ts.translate(_('mail_new_comment_body',
-                                           mapping=args),
-                                         target_language=pref_lang)
-        self.sendMail(msg_template, mail_from, mail_to, subject)
+        # for review types, notify authors of the works (via editorial office)
+        if review.portal_type in REVIEW_TYPES:
+            authors = getattr(review, 'authors', [])
+            args['author'] = get_formatted_names(u' / ', ' ', authors)
+            mail_to = mail_from
+            for author in authors:
+                # we don't know preferred language, send msg for each
+                for pref_lang in self.pl.getAvailableLanguages().keys():
+                    subject = self.ts.translate(_('mail_new_comment_subject_review',
+                                                  mapping=args), target_language=pref_lang)
+                    msg_template = self.ts.translate(_('mail_new_comment_body_review',
+                                                       mapping=args),
+                                                     target_language=pref_lang)
+                    self.sendMail(msg_template, mail_from, mail_to, subject)
+        # for presentation types, notify creator
+        else: 
+            mail_to, pref_lang = self.findRecipient()
+            subject = self.ts.translate(_('mail_new_comment_subject',
+                                          mapping=args), target_language=pref_lang)
+            msg_template = self.ts.translate(_('mail_new_comment_body',
+                                               mapping=args),
+                                             target_language=pref_lang)
+            self.sendMail(msg_template, mail_from, mail_to, subject)
 
         # Find other comment authors and notify them
         recipients = []
         for item in conversation.items():
             cmt = item[1]
             if not cmt.author_email in map(lambda x: x[0], recipients) \
-                                           and not cmt.author_email == mail_to:
+                                           and not cmt.author_email in mail_to \
+                                           and not cmt.author_email == comment.author_email:
                 rcpt = self.findRecipient(id=cmt.author_username)
-                recipients.append(rcpt)
+                recipients.append(rcpt + (cmt.author_name,))
 
         for rcpt in recipients:
-            mail_to, pref_lang = rcpt
-            subject = self.ts.translate(_('mail_new_comment_subject',
+            mail_to, pref_lang, name = rcpt
+            name = name.split(' ')
+            name = {'firstname':name[0], 'lastname':name[1]}
+            args['author'] = get_formatted_names(u' ',u' ', [name])
+            subject = self.ts.translate(_('mail_new_comment_subject_commenter',
                                           mapping=args),
                                         target_language=pref_lang)
-            msg_template = self.ts.translate(_('mail_new_comment_body',
+            msg_template = self.ts.translate(_('mail_new_comment_body_commenter',
                                                mapping=args),
                                              target_language=pref_lang)
             self.sendMail(msg_template, mail_from, mail_to, subject)
