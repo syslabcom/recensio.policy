@@ -12,6 +12,10 @@ from copy import deepcopy
 from ZTUtils import make_query
 from recensio.contenttypes.config import PORTAL_TYPES
 
+from zope.site.hooks import getSite
+from Products.CMFCore.utils import getToolByName
+from AccessControl import ClassSecurityInfo
+
 browsing_facets = ['ddcPlace', 'ddcTime', 'ddcSubject']
 
 class Reader(object):
@@ -195,4 +199,27 @@ def convertFacets(fields, context=None, request={}, filter=None):
         func = lambda a, b: cmp(a['title'], b['title'])
     return sorted(info, cmp=func)
 
+def getMemberInfo(memberId=None):
+    """ As in membership tool, but add academic title."""
+    portal = getSite()
+    mtool = getToolByName(portal, 'portal_membership')
+    if not memberId:
+        member = mtool.getAuthenticatedMember()
+    else:
+        member = mtool.getMemberById(memberId)
+
+    if member is None:
+        return None
+
+    memberinfo = { 'fullname'    : member.getProperty('fullname'),
+                   'description' : member.getProperty('description'),
+                   'location'    : member.getProperty('location'),
+                   'language'    : member.getProperty('language'),
+                   'home_page'   : member.getProperty('home_page'),
+                   'username'    : member.getUserName(),
+                   'has_email'   : bool(member.getProperty('email')),
+                   'academic_title': member.getProperty('academic_title'),
+                 }
+
+    return memberinfo
 
