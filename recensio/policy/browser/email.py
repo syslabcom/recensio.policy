@@ -2,6 +2,7 @@
 
 import logging
 from plone.app.controlpanel.mail import IMailSchema
+from Products.CMFPlone.utils import safe_unicode
 from Products.ATContentTypes.interfaces import IATTopic
 from Products.statusmessages.interfaces import IStatusMessage
 from Products.CMFCore.utils import getToolByName
@@ -15,6 +16,7 @@ from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings, \
     IDiscussionCollections
 from recensio.contenttypes.content.review import get_formatted_names
+from recensio.contenttypes.interfaces import IParentGetter
 from Acquisition import aq_parent
 
 log = logging.getLogger()
@@ -38,7 +40,7 @@ class MailCollection(BrowserView):
         magazines = {}
         for result in self.context.new_reviews.queryCatalog():
             obj = result.getObject()
-            mag_title = obj.get_publication_title().decode('utf-8')
+            mag_title = safe_unicode(obj.get_publication_title())
             if not magazines.has_key(mag_title):
                 magazines[mag_title] = []
             magazines[mag_title].append(obj)
@@ -239,11 +241,11 @@ class MailCollection(BrowserView):
         return self.request.response.redirect(self.context.absolute_url())
 
 class MailNewComment(BrowserView):
-    def __init__(self, request, context):
-        super(BrowserView, self).__init__(request, context)
+    def __init__(self, context, request):
+        super(BrowserView, self).__init__(context, request)
         self.mailhost = getToolByName(self.context, 'MailHost')
         self.ts = getToolByName(self.context, 'translation_service')
-        self.pl = getToolByName(self.context, 'portal_languages')
+        #self.pl = getToolByName(self.context, 'portal_languages')
 
     def __call__(self):
         root = getToolByName(self.context, 'portal_url').getPortalObject()
@@ -254,37 +256,49 @@ class MailNewComment(BrowserView):
         comment = self.context
         conversation = aq_parent(comment)
         review = aq_parent(conversation)
+        pg = IParentGetter(review)
 
 
         args = {}
         args['url'] = review.absolute_url()
-        args['author'] = get_formatted_names(u' / ', ' ', self.context.reviewAuthors)
+        args['author'] = get_formatted_names(u' / ', ' ', self.context.getAuthors())
+        args['recipient'] = args['author']
         args['date'] = review.created().strftime('%d.%m.%Y')
-        args['title'] = review.Title().decode('utf-8')
+        args['title'] = review.title + (review.subtitle and ': ' + review.subtitle or '')
+        args['year'] = getattr(review, 'yearOfPublication', '')
+        args['isbn'] = getattr(review, 'isbn', '')
+        args['reviewers'] = '/'.join(review.listReviewAuthors())
+        args['journal'] = pg.get_title_from_parent_of_type('Publication')
+        args['volume'] = pg.get_title_from_parent_of_type('Volume')
+        args['issue'] = pg.get_title_from_parent_of_type('Issue')
         args['commenter'] = comment.author_name
         args['commentdate'] = comment.creation_date.strftime('%d.%m.%Y')
         args['mail_from'] = mail_from
 
+        for key in args:
+            args[key] = safe_unicode(args[key])
+
         # for review types, notify authors of the works (via editorial office)
         if review.portal_type in REVIEW_TYPES:
             authors = getattr(review, 'authors', [])
-            args['author'] = get_formatted_names(u' / ', ' ', authors)
+            args['recipient'] = get_formatted_names(u' / ', ' ', authors)
             mail_to = mail_from
+            pref_lang = 'de'
             for author in authors:
-                # we don't know preferred language, send msg for each
-                for pref_lang in self.pl.getAvailableLanguages().keys():
-                    subject = self.ts.translate(_('mail_new_comment_subject_review',
-                                                  mapping=args), target_language=pref_lang)
-                    msg_template = self.ts.translate(_('mail_new_comment_body_review',
-                                                       mapping=args),
-                                                     target_language=pref_lang)
-                    self.sendMail(msg_template, mail_from, mail_to, subject)
-        # for presentation types, notify creator
+                #for pref_lang in self.pl.getAvailableLanguages().keys(): # send one mail for for every language
+                subject = self.ts.translate(_('mail_new_comment_subject_review_author',
+                                              mapping=args), target_language=pref_lang)
+                msg_template = self.ts.translate(_('mail_new_comment_body_review_author',
+                                                   mapping=args),
+                                                 target_language=pref_lang)
+                self.sendMail(msg_template, mail_from, mail_to, subject)
+        # for presentation types, notify presentation author
         else: 
+            args['recipient'] = get_formatted_names(u' / ', ' ', self.context.getReviewAuthors())
             mail_to, pref_lang = self.findRecipient()
-            subject = self.ts.translate(_('mail_new_comment_subject',
+            subject = self.ts.translate(_('mail_new_comment_subject_presentation_author',
                                           mapping=args), target_language=pref_lang)
-            msg_template = self.ts.translate(_('mail_new_comment_body',
+            msg_template = self.ts.translate(_('mail_new_comment_body_presentation_author',
                                                mapping=args),
                                              target_language=pref_lang)
             self.sendMail(msg_template, mail_from, mail_to, subject)
@@ -294,22 +308,33 @@ class MailNewComment(BrowserView):
         for item in conversation.items():
             cmt = item[1]
             if not cmt.author_email in map(lambda x: x[0], recipients) \
-                                           and not cmt.author_email in mail_to \
+                                           and (not mail_to or not cmt.author_email in mail_to) \
                                            and not cmt.author_email == comment.author_email:
                 rcpt = self.findRecipient(id=cmt.author_username)
                 recipients.append(rcpt + (cmt.author_name,))
 
         for rcpt in recipients:
             mail_to, pref_lang, name = rcpt
-            name = name.split(' ')
-            name = {'firstname':name[0], 'lastname':name[1]}
-            args['author'] = get_formatted_names(u' ',u' ', [name])
-            subject = self.ts.translate(_('mail_new_comment_subject_commenter',
-                                          mapping=args),
-                                        target_language=pref_lang)
-            msg_template = self.ts.translate(_('mail_new_comment_body_commenter',
-                                               mapping=args),
-                                             target_language=pref_lang)
+            if ' ' in name:
+                name = name.split(' ')
+                name = {'firstname':name[0], 'lastname':name[1]}
+            else:
+                name = {'firstname':'', 'lastname':name}
+            args['recipient'] = get_formatted_names(u' ',u' ', [name])
+            if review.portal_type in REVIEW_TYPES:
+                subject = self.ts.translate(_('mail_new_comment_subject_review_commenter',
+                                              mapping=args),
+                                            target_language=pref_lang)
+                msg_template = self.ts.translate(_('mail_new_comment_body_review_commenter',
+                                                   mapping=args),
+                                                 target_language=pref_lang)
+            else:
+                subject = self.ts.translate(_('mail_new_comment_subject_presentation_commenter',
+                                              mapping=args),
+                                            target_language=pref_lang)
+                msg_template = self.ts.translate(_('mail_new_comment_body_presentation_commenter',
+                                                   mapping=args),
+                                                 target_language=pref_lang)
             self.sendMail(msg_template, mail_from, mail_to, subject)
 
     def sendMail(self, msg, mail_from, mail_to, subject):
@@ -362,13 +387,13 @@ class MailNewPublication(BrowserView):
                 continue
             args = {}
             fuckup = [author['firstname'], author['lastname']]
-            fuckup = [x.decode('utf-8') for x in fuckup]
+            fuckup = [safe_unicode(x) for x in fuckup]
             args['reviewed_author'] = u' '.join(fuckup)
-            args['mail_from'] = mail_from.decode('utf-8')
+            args['mail_from'] = safe_unicode(mail_from)
             pref_lang = 'en'
-            args['title'] = self.context.title.decode('utf-8')
-            args['subtitle'] = getattr(
-                self.context, 'subtitle', '').decode('utf-8')
+            args['title'] = safe_unicode(self.context.title)
+            args['subtitle'] = safe_unicode(getattr(
+                self.context, 'subtitle', ''))
             args['review_author'] = get_formatted_names(
                 u' / ', ' ', self.context.reviewAuthors)
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
