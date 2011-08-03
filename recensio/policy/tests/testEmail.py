@@ -83,7 +83,10 @@ class TestNewsletter(unittest.TestCase):
             iss = Mock()
             iss.Title = lambda: u'%02d' % (9 ** art_num  % 7)
             iss.getParentNode = lambda: pub
-            catalog_entry.getParentNode = lambda: iss
+            obj = Mock()
+            obj.getParentNode = lambda: iss
+            catalog_entry.getObject = lambda: obj
+            catalog_entry.Title = u'%01d' % art_num
             yield catalog_entry
             
         

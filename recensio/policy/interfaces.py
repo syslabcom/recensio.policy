@@ -58,6 +58,12 @@ Neue Präsentationen ...
 
 %(new_presentations)s
 
+------------------------
+Neue Rezensionsteile ...
+------------------------
+
+%(new_review_sections)s
+
 --------------------
 Neue Rezensionen ...
 --------------------
