@@ -15,14 +15,17 @@ class TestNewsletter(unittest.TestCase):
         new_reviews = Mock()
         new_presentations = Mock()
         new_discussions = Mock()
+        new_issues = Mock()
         newsletter_settings = Mock()
         newsletter_settings.mail_template = INewsletterSettings['mail_template'].default
         context.new_reviews = new_reviews
         context.new_presentations = new_presentations
         context.new_discussions = new_discussions
+        context.new_issues = new_issues
         context.new_reviews.queryCatalog = lambda:self.makeReviews()
         context.new_presentations.queryCatalog = lambda:self.makePresentations()
         context.new_discussions.queryCatalog = lambda:self.makeDiscussions()
+        context.new_issues.queryCatalog = lambda:self.makeIssues()
         ts = Mock()
         def translate(a,context=None,mapping=None):
             return a
@@ -70,3 +73,17 @@ class TestNewsletter(unittest.TestCase):
             catalog_entry.getObject = lambda: discussion_item
             discussion_item.getDecoratedTitle = lambda: u"öDecorated Title %i" % art_num
             yield catalog_entry
+            
+    def makeIssues(self):
+        magazines = [u'A Magazine', u'Another Magazine', u'A Third Magazine']
+        for art_num in range(10):
+            catalog_entry = Mock()
+            pub = Mock()
+            pub.Title = lambda: magazines[art_num % 3]
+            iss = Mock()
+            iss.Title = lambda: u'%02d' % (9 ** art_num  % 7)
+            iss.getParentNode = lambda: pub
+            catalog_entry.getParentNode = lambda: iss
+            yield catalog_entry
+            
+        

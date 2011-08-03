@@ -53,8 +53,7 @@ class MailCollection(BrowserView):
             for i, result in enumerate(mag_results):
                 if i < 9999:
                     title = result.getDecoratedTitle()
-                    msg = u'\n%s\n%s\n(%s)\n\n' % (title, \
-                                             '\n',
+                    msg = u'\n%s\n(%s)\n\n' % (title, \
                                              result.absolute_url())
                     retval += msg
                 if i == 9999:
@@ -64,6 +63,14 @@ class MailCollection(BrowserView):
                            '\n\n\n')
                     retval += msg
                     break
+        return retval
+
+    def getNewReviewSections(self):
+        retval = ''
+        for result in self.context.new_issues.queryCatalog():
+            volume = result.getObject().getParentNode()
+            publication = volume.getParentNode()
+            retval += u'%s: %s, %s\n' % (safe_unicode(publication.Title()), safe_unicode(volume.Title()), safe_unicode(result.Title))
         return retval
 
     def getComments(self):
@@ -156,6 +163,7 @@ class MailCollection(BrowserView):
                 raise ValidationError()
 
             sections = {}
+            sections['new_review_sections'] = self.getNewReviewSections()
             sections['new_reviews'] = self.getNewReviews()
             sections['new_presentations'] = self.getNewPresentations()
             sections['new_discussions'] = self.getComments()
