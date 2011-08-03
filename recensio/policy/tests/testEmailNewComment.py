@@ -36,7 +36,7 @@ zu Ihrer Schrift
 
 erschien eine Rezension in der Zeitschrift
 Zeitschrift 1, Summer, Issue 2. Diese Rezension wurde auf der Rezensionsplattform recensio.net publiziert.
-Jack Commenter hat am 02.08.2011 diese Rezension bzw. Ihre Schrift kommentiert. Sie haben hier die Gelegenheit, den Kommentar zu lesen und ggf. darauf zu reagieren:
+Jack Commenter hat am ... diese Rezension bzw. Ihre Schrift kommentiert. Sie haben hier die Gelegenheit, den Kommentar zu lesen und ggf. darauf zu reagieren:
 
 http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...
 
@@ -49,7 +49,7 @@ Ihr recensio.net-Team''',
 Sie haben die Schrift bzw. die Internetressource
     Tadeusz Kotłowski: Test ReviewMonograph No 0: Dzieje państwa i społeczeństwa 1890–1945, 2008, 978-83-60448-39-7 (rezensiert von Стоичков, Христо) in Zeitschrift 1, Summer, Issue 2
 
-auf recensio.net kommentiert. Jack Commenter hat am 02.08.2011 einen weiteren Kommentar abgegeben. Sie haben hier die Gelegenheit, diesen zu lesen und ggf. darauf zu reagieren:
+auf recensio.net kommentiert. Jack Commenter hat am ... einen weiteren Kommentar abgegeben. Sie haben hier die Gelegenheit, diesen zu lesen und ggf. darauf zu reagieren:
 
 http://nohost/plone/sample-reviews/newspapera/summer/issue-2/ReviewMonograph...
 
@@ -62,7 +62,7 @@ Ihr recensio.net-Team'''],
 Sie haben die Schrift bzw. die Internetressource
     Tadeusz Kotłowski: Test PresentationArticleReview No 0: Dzieje państwa i społeczeństwa 1890–1945, 2008,  (präsentiert von Стоичков, Христо)
 
-auf recensio.net kommentiert. Jack Commenter hat am 02.08.2011 einen weiteren Kommentar abgegeben. Sie haben hier die Gelegenheit, diesen zu lesen und ggf. darauf zu reagieren:
+auf recensio.net kommentiert. Jack Commenter hat am ... einen weiteren Kommentar abgegeben. Sie haben hier die Gelegenheit, diesen zu lesen und ggf. darauf zu reagieren:
 
 http://nohost/plone/Members/fake_member/PresentationArticleReview...
 
