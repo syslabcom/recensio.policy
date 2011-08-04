@@ -84,6 +84,7 @@ class TestExcelImport(unittest.TestCase):
         request.form['xls'] = FakeFile(
             '../../src/recensio.imports/samples/%s' % filename)
         view = getMultiAdapter((issue, request), name='magazine_import')
+        view._supported_languages = ('de', 'en')
         html = view()
         self.assertFalse('portalMessage error' in html)
 
@@ -92,16 +93,11 @@ class TestExcelImport(unittest.TestCase):
             if obj.title == 'Titel der Rezension 2009':
                 self.assertEquals('123456', obj.isbn)
                 self.assertEquals('2009', obj.yearOfPublication)
-                self.assertEquals('Rez. Vorname',
-                                  obj.reviewAuthors[0]["firstname"])
-                self.assertEquals('Rez. Nachname',
-                                  obj.reviewAuthors[0]["lastname"])
-                self.assertEquals(({u'lastname': u'Autor Nachname',
-                                    u'firstname': u'Autor Vorname'},),
-                                  obj.authors)
                 self.assertEquals('http://www.1.de', obj.uri)
                 self.assertEquals(('en',), obj.languageReview)
                 self.assertEquals(('de',), obj.languageReviewedText)
+                self.assertEquals(3, obj.pageStart)
+                self.assertEquals(4, obj.pageEnd)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
             if obj.title == 'Titel Rezension 2010':
@@ -111,11 +107,11 @@ class TestExcelImport(unittest.TestCase):
                                   obj.reviewAuthors[0]["firstname"])
                 self.assertEquals('Rez. Nachname',
                                   obj.reviewAuthors[0]["lastname"])
-                self.assertEquals(3, obj.pageStart)
-                self.assertEquals(5, obj.pageEnd)
+                self.assertEquals(5, obj.pageStart)
+                self.assertEquals(6, obj.pageEnd)
                 self.assertEquals('http://www.1.de', obj.uri)
-                self.assertEquals(('az',), obj.languageReview)
-                self.assertEquals(('cs',), obj.languageReviewedText)
+                self.assertEquals(tuple(), obj.languageReview)
+                self.assertEquals(tuple(), obj.languageReviewedText)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
 
