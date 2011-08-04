@@ -17,6 +17,39 @@ from Products.CMFCore.utils import getToolByName
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
 
+class TestExcelImportUnit(unittest.TestCase):
+    def testLanguageValidation(self):
+        from recensio.imports.browser import MagazineImport
+        class Fake(MagazineImport):
+            supported_languages = ('en', 'fr')
+        view = Fake()
+        self.assertEquals(('en', 'fr'), view.convertLanguages("en, fr"))
+
+    def testLanguageValidationLowerEverything(self):
+        from recensio.imports.browser import MagazineImport
+        class Fake(MagazineImport):
+            supported_languages = ('en', 'fr')
+        view = Fake()
+        self.assertEquals(('en', 'fr'), view.convertLanguages("en, fr"))
+
+    def testLanguageValidationFunnyDividers(self):
+        from recensio.imports.browser import MagazineImport
+        class Fake(MagazineImport):
+            supported_languages = ('en', 'fr')
+        view = Fake()
+        for i in ('en,fr', 'fr,en', 'fr,,en', 'fr:en', 'fr;en', 'fr.en',
+                  'fr    en', 'fr\nen', 'fr\ten', 'fr\ren'):
+            self.assertEquals(set(('en', 'fr')), set(view.convertLanguages(i)),
+                              "%s not as expected" % str(i))
+
+    def testLanguageValidationMissingLang(self):
+        from recensio.imports.browser import MagazineImport
+        class Fake(MagazineImport):
+            supported_languages = ('en', 'fr')
+        view = Fake()
+        self.assertEquals(('en', 'fr'), view.convertLanguages("en, fr, es"))
+        self.assertEquals(['The language "${lang}" is unknown'], view.warnings)
+        
 class TestExcelImport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
@@ -29,7 +62,6 @@ class TestExcelImport(unittest.TestCase):
     def _testFormat(self, filename):
         portal = self.layer['portal']
         setRoles(portal, TEST_USER_ID, ['Manager'])
-#        setRoles(portal, TEST_USER_NAME, ['Manager'])
         request = self.layer['request']
         reviews = portal["sample-reviews"]
         reviews.invokeFactory('Publication', id='pub', title='pub')
