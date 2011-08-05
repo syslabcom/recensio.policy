@@ -8,7 +8,7 @@ from zope.lifecycleevent import ObjectModifiedEvent
 from Products.statusmessages.interfaces import IStatusMessage
 from Products.Five.browser import BrowserView
 
-from recensio.policy.pdf_cut import cutPDF
+from recensio.imports.pdf_cut import cutPDF
 
 class PDFCutter(BrowserView):
     def __call__(self, sure = None):
