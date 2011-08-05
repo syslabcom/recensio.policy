@@ -32,7 +32,7 @@ setup(name='recensio.policy',
           'collective.captcha>1.5', # We have permission problems in 1.5
           'collective.indexing',
           'collective.xdv',
-	      'collective.portlet.tal',
+          'collective.portlet.tal',
           'lxml',
           'plone.app.caching',
           'plone.app.discussion',

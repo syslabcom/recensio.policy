@@ -19,35 +19,31 @@ from recensio.theme.interfaces import IRecensioLayer
 
 class TestExcelImportUnit(unittest.TestCase):
     def testLanguageValidation(self):
-        from recensio.imports.browser import MagazineImport
-        class Fake(MagazineImport):
-            supported_languages = ('en', 'fr')
-        view = Fake()
-        self.assertEquals(('en', 'fr'), view.convertLanguages("en, fr"))
+        from recensio.imports.excel_converter import ExcelConverter
+        converter = ExcelConverter()
+        converter._supported_languages = ('en', 'fr')
+        self.assertEquals(('en', 'fr'), converter.convertLanguages("en, fr"))
 
     def testLanguageValidationLowerEverything(self):
-        from recensio.imports.browser import MagazineImport
-        class Fake(MagazineImport):
-            supported_languages = ('en', 'fr')
-        view = Fake()
-        self.assertEquals(('en', 'fr'), view.convertLanguages("en, fr"))
+        from recensio.imports.excel_converter import ExcelConverter
+        converter = ExcelConverter()
+        converter._supported_languages = ('en', 'fr')
+        self.assertEquals(('en', 'fr'), converter.convertLanguages("en, fr"))
 
     def testLanguageValidationFunnyDividers(self):
-        from recensio.imports.browser import MagazineImport
-        class Fake(MagazineImport):
-            supported_languages = ('en', 'fr')
-        view = Fake()
+        from recensio.imports.excel_converter import ExcelConverter
+        converter = ExcelConverter()
+        converter._supported_languages = ('en', 'fr')
         for i in ('en,fr', 'fr,en', 'fr,,en', 'fr:en', 'fr;en', 'fr.en',
                   'fr    en', 'fr\nen', 'fr\ten', 'fr\ren'):
-            self.assertEquals(set(('en', 'fr')), set(view.convertLanguages(i)),
+            self.assertEquals(set(('en', 'fr')), set(converter.convertLanguages(i)),
                               "%s not as expected" % str(i))
 
     def testLanguageValidationMissingLang(self):
-        from recensio.imports.browser import MagazineImport
-        class Fake(MagazineImport):
-            supported_languages = ('en', 'fr')
-        view = Fake()
-        self.assertEquals(('en', 'fr'), view.convertLanguages("en, fr, es"))
+        from recensio.imports.excel_converter import ExcelConverter
+        converter = ExcelConverter()
+        converter._supported_languages = ('en', 'fr')
+        self.assertEquals(('en', 'fr'), converter.convertLanguages("en, fr, es"))
         self.assertEquals(['The language "${lang}" is unknown'], view.warnings)
         
 class TestExcelImport(unittest.TestCase):
