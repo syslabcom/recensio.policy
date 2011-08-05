@@ -44,7 +44,7 @@ class TestExcelImportUnit(unittest.TestCase):
         converter = ExcelConverter()
         converter._supported_languages = ('en', 'fr')
         self.assertEquals(('en', 'fr'), converter.convertLanguages("en, fr, es"))
-        self.assertEquals(['The language "${lang}" is unknown'], view.warnings)
+        self.assertEquals(['The language "${lang}" is unknown'], converter.warnings)
         
 class TestExcelImport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
@@ -80,7 +80,7 @@ class TestExcelImport(unittest.TestCase):
         request.form['xls'] = FakeFile(
             '../../src/recensio.imports/samples/%s' % filename)
         view = getMultiAdapter((issue, request), name='magazine_import')
-        view._supported_languages = ('de', 'en')
+        view.excel_converter._supported_languages = ('de', 'en')
         html = view()
         self.assertFalse('portalMessage error' in html)
 
