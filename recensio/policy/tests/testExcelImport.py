@@ -2,6 +2,8 @@
 
 import unittest2 as unittest
 from doctest import OutputChecker, ELLIPSIS
+from mock import Mock
+from pkg_resources import resource_filename
 
 compare = lambda x, y:OutputChecker().check_output(x, y, ELLIPSIS)
 
@@ -16,6 +18,9 @@ from Products.CMFCore.utils import getToolByName
 
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
+
+class FakeFile(file):
+    filename = 'fake'
 
 class TestExcelImportUnit(unittest.TestCase):
     def testLanguageValidation(self):
@@ -45,8 +50,57 @@ class TestExcelImportUnit(unittest.TestCase):
         converter._supported_languages = ('en', 'fr')
         self.assertEquals(('en', 'fr'), converter.convertLanguages("en, fr, es"))
         self.assertEquals(['The language "${lang}" is unknown'], converter.warnings)
+
+class TestZipImport(unittest.TestCase):
+    def testZipImport(self):
+        from recensio.imports import browser
+        addOneItem = Mock()
+        browser.addOneItem = addOneItem
+        view = browser.MagazineImport()
+        view.zip_extractor = lambda x: (None, [1, 2])
+        view.excel_converter_zip = lambda x: [{'portal_type' : [1,2]},
+                                              {'portal_type' : [1,2]}]
+        view.type_getter = lambda a, b: None
+        view.context = None
+        view.addZIPContent(None)
+        self.assertEquals(2, len(view.results))
+        xls = FakeFile('../../src/recensio.imports/samples/ziptest.zip')
+
+    def testZipImportMissingDocs(self):
+        from recensio.imports import browser
+        addOneItem = Mock()
+        browser.addOneItem = addOneItem
+        view = browser.MagazineImport()
+        view.zip_extractor = lambda x: (None, [1, 2])
+        view.excel_converter_zip = lambda x: [{'portal_type' : [1,2]}]
+        view.type_getter = lambda a, b: None
+        view.context = None
+        self.assertRaises(browser.FrontendException, view.addZIPContent, None)
+
+    def testZipExtractor(self):
+        from recensio.imports.zip_extractor import ZipExtractor
+        extractor = ZipExtractor()
+        zipfile = file(resource_filename(__name__,
+                                         '../../../../recensio.imports/samples'
+                                         '/ziptest.zip'))
+        xls, docs = extractor(zipfile)
+        doc_names = [x.name for x in docs]
+        self.assertEquals('recensioupload_DE_zip.xls', xls.name)
+        self.assertTrue('3.doc' in doc_names)
+        self.assertTrue('2.doc' in doc_names)
+        self.assertEquals(2, len(doc_names))
+
+    def testExcelConverterForZip(self):
+        from recensio.imports.excel_converter import ExcelConverter
+        converter = ExcelConverter()
+        converter._supported_languages = ('de', 'en')
+        xls = file(resource_filename(__name__,
+                                     '../../../../recensio.imports/samples'
+                                     '/recensioupload_DE_zip.xls'))
+        results = list(converter.convert_zip(xls))
+        self.assertEquals(2, len(results))
         
-class TestExcelImport(unittest.TestCase):
+class testexcelimport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testGermanFormat(self):
@@ -73,8 +127,6 @@ class TestExcelImport(unittest.TestCase):
 
         alsoProvides(request, IRecensioLayer)
         request['ACTUAL_URL'] = 'test'
-        class FakeFile(file):
-            filename = 'fake'
         request.form['pdf'] = FakeFile(
             '../../src/recensio.imports/samples/demo1.pdf')
         request.form['xls'] = FakeFile(
