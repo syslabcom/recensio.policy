@@ -58,8 +58,9 @@ class TestZipImport(unittest.TestCase):
         browser.addOneItem = addOneItem
         view = browser.MagazineImport()
         view.zip_extractor = lambda x: (None, [1, 2])
-        view.excel_converter_zip = lambda x: [{'portal_type' : [1,2]},
-                                              {'portal_type' : [1,2]}]
+        view.excel_converter = Mock()
+        view.excel_converter.convert_zip = lambda x: [{'portal_type' : [1,2]},
+                                                      {'portal_type' : [1,2]}]
         view.type_getter = lambda a, b: None
         view.context = None
         view.addZIPContent(None)
@@ -84,11 +85,8 @@ class TestZipImport(unittest.TestCase):
                                          '../../../../recensio.imports/samples'
                                          '/ziptest.zip'))
         xls, docs = extractor(zipfile)
-        doc_names = [x.name for x in docs]
-        self.assertEquals('recensioupload_DE_zip.xls', xls.name)
-        self.assertTrue('3.doc' in doc_names)
-        self.assertTrue('2.doc' in doc_names)
-        self.assertEquals(2, len(doc_names))
+        docs = [x for x in docs]
+        self.assertEquals(2, len(docs))
 
     def testExcelConverterForZip(self):
         from recensio.imports.excel_converter import ExcelConverter
