@@ -1,6 +1,7 @@
 from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.component import getUtility
 from zope.i18n import translate
+from zope.i18n.locales import locales
 
 from Products.Five.browser import BrowserView
 
@@ -261,13 +262,16 @@ class OPAC(BrowserView):
         return json.dumps(data)
 
     def _convertLanguageToLangCode(self, language):
+        locale = locales.getLocale('de')
+        lang_in_german = locale.displayNames.languages
+
         if not hasattr(self, '_converter'):
             self._converter = {}
             util = getUtility(IVocabularyFactory,
                 u"recensio.policy.vocabularies.available_content_languages")
             vocab = util(self.context)
-            for key, title in [(x.value, x.title) for x in vocab]:
-                self._converter[translate(title, target_language='de')] = \
+            for key, title in [(x.value, lang_in_german[x.value]) for x in vocab]:
+                self._converter[title] = \
                     key
         return self._converter.get(language, 'unknown')
 
