@@ -964,3 +964,8 @@ class TestSehepunkteImport(unittest.TestCase):
         # Two because I am lazy. The first result contains two books that results in two results
         # the replace above can only break the first import.
         self.assertEquals(len(list(data1)), len(list(data2)) + 2)
+
+    def testEncodingFunny1(self):
+        from recensio.policy.browser.sehepunkte import superclean
+        data = 'Hallo &#255; &gt;'
+        self.assertEquals(u'Hallo \xff >', superclean(data))
