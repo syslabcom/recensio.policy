@@ -6,6 +6,7 @@ from Products.ATVocabularyManager import NamedVocabulary
 from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
 
+from guess_language import guessLanguage
 from itertools import chain
 import re
 import urllib
@@ -73,9 +74,15 @@ class Import(BrowserView):
         if new_id in issue:
             return
         review = self._extractAndSanitizeHTML(review)
+        languageReview = guessLanguage(review['review'])
+        languageReviewedText = guessLanguage(review['title'])
         issue.invokeFactory(type_name='Review Monograph', id = new_id)
         review_ob = issue[new_id]
+        review_ob.languageReview = languageReview
+        review_ob.languageReviewedText = languageReviewedText
         for key, value in review.items():
+            if isinstance(value, str):
+                value = superclean(value).encode('utf-8')
             setattr(review_ob, key, value)
         notify(ObjectEditedEvent(review_ob))
 
@@ -88,7 +95,6 @@ class Import(BrowserView):
         return review
 
     def _extractAndSanitizeHTML(self, review):
-        print review['canonical_uri']
         html = urllib.urlopen(review['canonical_uri']).read()
         soup = BeautifulSoup(html)
         dirt = soup.findAll('div', {'class' : 'box'})
@@ -106,7 +112,6 @@ class Import(BrowserView):
                 review['review'] = soup.find('body', {'class':'printable'}).prettify()
             except AttributeError:
                 review['review'] = soup.prettify()
-        review['review'] = superclean(review['review'])
         return review
 
 def superclean(text):
@@ -130,6 +135,5 @@ def superclean(text):
                     pass
             return text # leave as is
         return re.sub("&#?\w+;", fixup, text)
-
-    return unescape(text)
+    return unescape(text.decode('utf-8'))
     
