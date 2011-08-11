@@ -229,7 +229,7 @@ def addCatalogIndexes(context):
             cat.delIndex(name)
             log.debug('adding %s %s, kw=%s' %(type, name, kw))
             cat.addIndex(name, type, **kw)
-    
+
     def addColumn(name):
         if not name in cat.schema():
             log.debug('adding metadata %s' % name)
@@ -260,6 +260,11 @@ def addCatalogIndexes(context):
 
 @guard
 def hideAllFolders(context):
+    hideAllFoldersUnguarded(context)
+
+def hideAllFoldersUnguarded(context):
+    """ Unguarded version, so that it can also be called from
+    the recencio.contenttypes example_content profile. """
     site = context.getSite()
     for id in ['Members', 'news', 'events', 'imports', 'RSS-feeds', 'images']:
         ob = getattr(site, id, None)
@@ -284,6 +289,11 @@ def setupHomepage(context):
 
 @guard
 def setViewsOnFolders(context):
+    setViewsOnFoldersUnguarded(context)
+
+def setViewsOnFoldersUnguarded(context):
+    """ Unguarded version, so that it can also be called from
+    the recencio.contenttypes example_content profile. """
     portal = context.getSite()
 
     for autoren_id in ['autoren', 'autoren-en', 'autoren-fr']:

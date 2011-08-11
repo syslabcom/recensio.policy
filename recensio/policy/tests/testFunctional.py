@@ -1,6 +1,45 @@
 # -*- coding: utf-8 -*-
 """
 Various functional tests
+
+
+Recensio specific browser views (recensio/policy/scripts/list_browser_views.sh):
+
+| FOR                                                     | NAME                           | Tests  |
+|---------------------------------------------------------+--------------------------------+--------|
+| all                                                     | authorsearch                   |        |
+| all                                                     | browse-topics                  |        |
+| all                                                     | create-new-presentation        |        |
+| all                                                     | fixer1                         |        |
+| all                                                     | manage-my-presentations        |        |
+| all                                                     | newsletter-view                |        |
+| all                                                     | publications-view              |        |
+| all                                                     | recensioview                   |        |
+| all                                                     | recensio_workflow_helper       |        |
+| ..interfaces.IReview                                    | pageviewer                     |        |
+| ..interfaces.IReview                                    | review_view                    |        |
+| OFS.interfaces.IFolder                                  | magazine_import                |        |
+| plone.app.discussion.interfaces.IComment                | notify_author_new_comment      |        |
+| plone.app.layout.navigation.interfaces.INavigationRoot  | personal-information           |        |
+| plone.app.layout.navigation.interfaces.INavigationRoot  | register                       |        |
+| Products.ATContentTypes.interfaces.document.IATDocument | homepage-view                  |        |
+| Products.ATContentTypes.interfaces.topic.IATTopic       | digitool_export                |        |
+| Products.CMFCore.interfaces.ISiteRoot                   | xmlrpc_import                  |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | newsletter-settings            |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | opac                           |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | perspektivia-import            |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | recensio-import-settings       |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | recensio-settings              |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | sehepunkte-import              |        |
+| Products.CMFPlone.interfaces.IPloneSiteRoot             | sitemap.xml.gz                 |        |
+| recensio.contenttypes.interfaces.IReview                | generate-pdf-recension         |        |
+| recensio.contenttypes.interfaces.IReviewMonograph       | generate-pdf-recension         |        |
+| recensio.contenttypes.interfaces.review.IReview         | cut_pdf                        |        |
+| recensio.contenttypes.interfaces.review.IReview         | mail_new_presentation          |        |
+| recensio.policy.interfaces.INewsletterSource            | mail_results                   |        |
+| recensio.policy.interfaces.INewsletterSource            | mail_uncommented_presentations |        |
+
+
 """
 import unittest2 as unittest
 from urlparse import urljoin
@@ -47,6 +86,9 @@ class TestMainSiteSections(unittest.TestCase):
     def is_successful_status(self, path):
         """Open the path, and ensure 200 is returned"""
         self.browser.open(urljoin(self.site_root, path))
+        # obj = self.portal.unrestrictedTraverse("/plone/%s" %path)
+        # print "path:\n\t%s\nview:\n\t%s\n\n" %(
+        #     path, getattr(obj, "default_view"))
         self.assertTrue(self.browser.headers.dict["status"] == "200 Ok",
                         msg="Error when trying to view %s" % self.browser.url
                         )
@@ -79,3 +121,4 @@ class TestMainSiteSections(unittest.TestCase):
                         msg = ("The example Issue is missing from the "
                                "publicationlisting viewlet")
                         )
+
