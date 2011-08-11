@@ -21,6 +21,7 @@ class TestAuthorSearch(unittest.TestCase):
         request['ACTUAL_URL'] = 'test'
         view = getMultiAdapter((portal, request), name='authorsearch')
         expected = [
+            {'reviews': 0, 'comments': 0, 'presentations': 0, 'name': ''},
             {'reviews': 0, 'comments': 0, 'presentations': 0,
              'name': 'Huberm\xc3\xbcller, F\xc3\xbcrchtegott'},
             {'reviews': 0, 'comments': 0, 'presentations': 0,
