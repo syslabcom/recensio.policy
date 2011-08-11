@@ -1,54 +1,14 @@
 # -*- coding: utf-8 -*-
 """
-Various functional tests
-
-
-Recensio specific browser views (recensio/policy/scripts/list_browser_views.sh):
-
-| FOR                                                     | NAME                           | Tests  |
-|---------------------------------------------------------+--------------------------------+--------|
-| all                                                     | authorsearch                   |        |
-| all                                                     | browse-topics                  |        |
-| all                                                     | create-new-presentation        |        |
-| all                                                     | fixer1                         |        |
-| all                                                     | manage-my-presentations        |        |
-| all                                                     | newsletter-view                |        |
-| all                                                     | publications-view              |        |
-| all                                                     | recensioview                   |        |
-| all                                                     | recensio_workflow_helper       |        |
-| ..interfaces.IReview                                    | pageviewer                     |        |
-| ..interfaces.IReview                                    | review_view                    |        |
-| OFS.interfaces.IFolder                                  | magazine_import                |        |
-| plone.app.discussion.interfaces.IComment                | notify_author_new_comment      |        |
-| plone.app.layout.navigation.interfaces.INavigationRoot  | personal-information           |        |
-| plone.app.layout.navigation.interfaces.INavigationRoot  | register                       |        |
-| Products.ATContentTypes.interfaces.document.IATDocument | homepage-view                  |        |
-| Products.ATContentTypes.interfaces.topic.IATTopic       | digitool_export                |        |
-| Products.CMFCore.interfaces.ISiteRoot                   | xmlrpc_import                  |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | newsletter-settings            |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | opac                           |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | perspektivia-import            |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | recensio-import-settings       |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | recensio-settings              |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | sehepunkte-import              |        |
-| Products.CMFPlone.interfaces.IPloneSiteRoot             | sitemap.xml.gz                 |        |
-| recensio.contenttypes.interfaces.IReview                | generate-pdf-recension         |        |
-| recensio.contenttypes.interfaces.IReviewMonograph       | generate-pdf-recension         |        |
-| recensio.contenttypes.interfaces.review.IReview         | cut_pdf                        |        |
-| recensio.contenttypes.interfaces.review.IReview         | mail_new_presentation          |        |
-| recensio.policy.interfaces.INewsletterSource            | mail_results                   |        |
-| recensio.policy.interfaces.INewsletterSource            | mail_uncommented_presentations |        |
-
-
+Mainly testing recensio browser views, that no error is thrown when
+the view is accessed.
 """
-import unittest2 as unittest
 from urlparse import urljoin
+import unittest2 as unittest
 
+from plone.app.testing import (
+    TEST_USER_ID, TEST_USER_NAME, TEST_USER_PASSWORD, setRoles)
 from plone.testing.z2 import Browser
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
-from plone.app.testing import TEST_USER_PASSWORD
-from plone.app.testing import setRoles
 
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
 
@@ -86,39 +46,55 @@ class TestMainSiteSections(unittest.TestCase):
     def is_successful_status(self, path):
         """Open the path, and ensure 200 is returned"""
         self.browser.open(urljoin(self.site_root, path))
-        # obj = self.portal.unrestrictedTraverse("/plone/%s" %path)
-        # print "path:\n\t%s\nview:\n\t%s\n\n" %(
-        #     path, getattr(obj, "default_view"))
-        self.assertTrue(self.browser.headers.dict["status"] == "200 Ok",
-                        msg="Error when trying to view %s" % self.browser.url
-                        )
+        self.assertTrue(
+            self.browser.headers.dict["status"] == "200 Ok",
+            msg="Error when trying to view %s" % self.browser.url)
 
-    def test_reviews(self):
-        self.is_successful_status("rezensionen")
+    def test_authorsearch_view(self):
+        path = "autoren/index_html"
+        self.is_successful_status(path)
+        obj = self.portal.unrestrictedTraverse(path)
+        self.assertEquals(obj.getProperty("layout", ""), "authorsearch")
+
+    def test_browse_topics(self):
+        path = "themen-epochen-regionen/index_html"
+        self.is_successful_status(path)
+        obj = self.portal.unrestrictedTraverse(path)
+        self.assertEquals(obj.getProperty("layout", ""), "browse-topics")
+
+    def test_publications_view(self):
+        path = "rezensionen/zeitschriften"
+        self.is_successful_status(path)
+        obj = self.portal.unrestrictedTraverse(path)
+        self.assertEquals(obj.layout, "publications-view")
+
+    def test_personal_information_view(self):
+        path = "personal-information"
+        self.is_successful_status(path)
+
+    def test_personal_information_view(self):
+        path = "register"
+        self.is_successful_status(path)
 
     def test_presentations(self):
         self.is_successful_status("praesentationen")
 
-    def test_content_browsing(self):
-        self.is_successful_status("themen-epochen-regionen")
-
     def test_content_browsing_batching(self):
         self.is_successful_status("themen-epochen-regionen-en?b_start:int=10")
-
-    def test_authors(self):
-        self.is_successful_status("autoren")
 
     def test_authors_batching(self):
         self.is_successful_status("autoren?b_start:int=30")
 
     def test_publication(self):
         self.is_successful_status("sample-reviews/newspapera")
-        self.assertTrue("Summer" in self.browser.contents,
-                        msg = ("The example Volume is missing from the "
-                               "publicationlisting viewlet")
-                        )
-        self.assertTrue("Issue 2" in self.browser.contents,
-                        msg = ("The example Issue is missing from the "
-                               "publicationlisting viewlet")
-                        )
+        self.assertTrue(
+            "Summer" in self.browser.contents,
+            msg = ("The example Volume is missing from the "
+                   "publicationlisting viewlet")
+            )
+        self.assertTrue(
+            "Issue 2" in self.browser.contents,
+            msg = ("The example Issue is missing from the "
+                   "publicationlisting viewlet")
+            )
 
