@@ -20,7 +20,23 @@ class TestAuthorSearch(unittest.TestCase):
         request = self.layer['request']
         request['ACTUAL_URL'] = 'test'
         view = getMultiAdapter((portal, request), name='authorsearch')
-        expected = [{'reviews': 0, 'comments': 0, 'presentations': 0, 'name': 'Huberm\xc3\xbcller, F\xc3\xbcrchtegott'}, {'reviews': 0, 'comments': 0, 'presentations': 0, 'name': 'Kot\xc5\x82owski, Tadeusz'}, {'reviews': 0, 'comments': 0, 'presentations': 0, 'name': 'Lam\xc3\xa8re, Fran\xc3\xa7ois'}, {'reviews': 0, 'comments': 0, 'presentations': 0, 'name': 'Schmidt, Harald'}, {'reviews': 0, 'comments': 0, 'presentations': 0, 'name': '\xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe\xd0\xb2, '}, {'reviews': 0, 'comments': 0, 'presentations': 0, 'name': '\xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe\xd0\xb2, \xd0\xa5\xd1\x80\xd0\xb8\xd1\x81\xd1\x82\xd0\xbe'}]
+        expected = [
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+             'name': 'Huberm\xc3\xbcller, F\xc3\xbcrchtegott'},
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+             'name': 'Kot\xc5\x82owski, Tadeusz'},
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+             'name': 'Lam\xc3\xa8re, Fran\xc3\xa7ois'},
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+             'name': 'Schmidt, Harald'},
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+             'name': ('\xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe'
+                      '\xd0\xb2, ')},
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+            'name': ('\xd0\xa1\xd1\x82\xd0\xbe\xd0\xb8\xd1\x87\xd0\xba\xd0\xbe'
+                     '\xd0\xb2, \xd0\xa5\xd1\x80\xd0\xb8\xd1\x81\xd1\x82\xd0'
+                     '\xbe')}
+            ]
         view()
 
         got = view.authors
@@ -32,7 +48,9 @@ class TestAuthorSearch(unittest.TestCase):
         request['ACTUAL_URL'] = 'test'
         request.set('authors', 'Schmidt')
         view = getMultiAdapter((portal, request), name='authorsearch')
-        expected = [{'reviews': 0, 'comments': 0, 'presentations': 0, 'name': 'Schmidt, Harald'}]
+        expected = [
+            {'reviews': 0, 'comments': 0, 'presentations': 0,
+             'name': 'Schmidt, Harald'}]
         view()
 
         got = view.authors
