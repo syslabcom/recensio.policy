@@ -273,7 +273,10 @@ class OPAC(BrowserView):
             for key, title in [(x.value, lang_in_german[x.value]) for x in vocab]:
                 self._converter[title] = \
                     key
-        return self._converter.get(language, 'unknown')
+        retval = []
+        for key, value in self._converter.items():
+            if key.lower() in language.lower():
+                return value
 
     def _convertKeywords(self, data):
         data['ddcPlace'] = []

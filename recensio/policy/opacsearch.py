@@ -32,16 +32,12 @@ class OpacSearch(object):
             results = soup('table', {'class' : 'data'})[0].findAll('tr')
         except:
             try:
-                if 'Treffer BVB-Verbundkatalog' in br.contents:
-                    results = []
-                    base_url = '/'.join(br.url.split('/')[:3])
-                    for result in soup('table', {'class' : 'data kurztrefferliste'})[0].findAll('tr'):
-                        br.open(base_url + result.findAll('a')[3]['href'])
-                        soup = BeautifulSoup(br.contents)
-                        results.extend(soup('table', {'class' : 'data'})[0].findAll('tr'))
-                else:
-                    br.open(self.url)
-                    return []
+                results = []
+                base_url = '/'.join(br.url.split('/')[:3])
+                for result in soup('table', {'class' : 'data kurztrefferliste'})[0].findAll('tr'):
+                    br.open(base_url + result.findAll('a')[3]['href'])
+                    soup = BeautifulSoup(br.contents)
+                    results.extend(soup('table', {'class' : 'data'})[0].findAll('tr'))
             except:
                 br.open(self.url)
                 return []
@@ -120,7 +116,13 @@ def createResult(result):
 
 def getString(soup):
     if hasattr(soup, 'contents'):
-        return ''.join(map(getString, soup.contents))
+        subcontents = []
+        for content in soup.contents:
+            if hasattr(content, 'name') and content.name == u'br':
+                break
+            else:
+                subcontents.append(content)
+        return ''.join(map(getString, subcontents))
     else:
         if not isinstance(soup, Comment):
             return unicode(soup).replace('&nbsp;', ' ').replace('&lt;', '<').replace('&gt;', '>').strip()
