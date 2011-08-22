@@ -5,15 +5,15 @@ from recensio.policy.opacsearch import OpacSearch, getString, createResult
 
 sampleblob = '''<tr>
             <td>
-                    
-                    
-        
-                
-            
-            
-                
-                
-            
+
+
+
+
+
+
+
+
+
                 <strong class="c2">Verfasser: </strong>Pelletier, Michel&nbsp;; Latteier, Amos<br>
 
                 <strong class="c2">Titel: </strong>¬The¬ ZOPE Book &lt;dt.&gt;|¬Das¬ ZOPE-Buch|Einführung und Dokumentation zur Entwicklung von Webanwendungen<br>
@@ -38,20 +38,20 @@ sampleblob = '''<tr>
                 <br>
 
 
-                
-                
-                
-                
-                
 
-                
+
+
+
+
+
+
 
                 <strong class="c2">Schlagwörter 1: </strong>Zope &lt;Programm&gt;<br><strong class="c2">Schlagwörter 2: </strong>World Wide Web&nbsp;; Server<br>
 
-                
-                
-                
-            
+
+
+
+
             </td>
         </tr>'''
 
@@ -111,8 +111,8 @@ class TestOpacSearch(unittest.TestCase):
 
     def testCreateResultSubtitle(self):
         soup1 = BeautifulSoup('''<td><strong>Titel:</strong>
-  
-  
+
+
     Some Book|Einführung und Dokumentation zur Entwicklung von Webanwendungen<br><br>
   </td>''')
         soup2 = BeautifulSoup('')
@@ -153,13 +153,13 @@ class TestOpacSearch(unittest.TestCase):
         soup2 = BeautifulSoup(sampleblob.replace('Pelletier, Michel', 'Pelletier, Michel, Maier'))
         soup3 = BeautifulSoup('')
         is_ = createResult(soup1)['authors']
-        is_.sort() 
+        is_.sort()
         self.assertEquals([
             {'lastname' : u'Latteier', 'firstname' : u'Amos'},
             {'firstname' : u'Michel', 'lastname' : u'Pelletier'}],
           is_)
         is_ = createResult(soup2)['authors']
-        is_.sort() 
+        is_.sort()
         self.assertEquals([
             {'firstname': None, 'lastname': u'Pelletier, Michel, Maier'},
             {'firstname': u'Amos', 'lastname': u'Latteier'}],
@@ -240,7 +240,7 @@ class TestOpacSearch(unittest.TestCase):
         self.assertEquals(should_be,is_)
 
     def testGetStringWithBr(self):
-        import pdb;pdb.set_trace()
+        # import pdb;pdb.set_trace()
         is_ = getString(BeautifulSoup('''<strong>  Text
 <!-- Comment --></strong><br><a>lala</a>''')).strip()
         should_be = 'Text'
