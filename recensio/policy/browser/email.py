@@ -19,7 +19,7 @@ from recensio.contenttypes.content.review import get_formatted_names
 from recensio.contenttypes.interfaces import IParentGetter
 from Acquisition import aq_parent
 
-log = logging.getLogger()
+logger = logging.getLogger("recensio.policy.browser.email")
 
 _ = recensioMessageFactory
 
@@ -70,7 +70,9 @@ class MailCollection(BrowserView):
         for result in self.context.new_issues.queryCatalog():
             volume = result.getObject().getParentNode()
             publication = volume.getParentNode()
-            retval += u'%s: %s, %s\n' % (safe_unicode(publication.Title()), safe_unicode(volume.Title()), safe_unicode(result.Title))
+            retval += u'%s: %s, %s\n' % (
+                safe_unicode(publication.Title()), safe_unicode(volume.Title()),
+                safe_unicode(result.Title))
         return retval
 
     def getComments(self):
@@ -159,8 +161,9 @@ class MailCollection(BrowserView):
             mail_from, mail_to = self.getMailAddresses()
             settings = self.getNewsletterSettings()
             if not settings.mail_format:
-                self.errors.append(_('Mailsettings not configured'))
-                raise ValidationError()
+                msg = _('Mailsettings not configured')
+                self.errors.append(msg)
+                raise ValidationError(msg)
 
             sections = {}
             sections['new_review_sections'] = self.getNewReviewSections()
@@ -170,11 +173,11 @@ class MailCollection(BrowserView):
             msg = settings.mail_template % sections
 
             if self.errors:
-                raise ValidationError
+                raise ValidationError("Errors: %s" %self.errors)
             else:
-                self.mailhost.send(messageText=msg, mto=mail_to,
-                                   mfrom=mail_from,
-                                   subject=settings.subject, charset='utf-8')
+                self.mailhost.send(
+                    messageText=msg, mto=mail_to, mfrom=mail_from,
+                    subject=settings.subject, charset='utf-8')
 
             # Copy mail to archive folder
             try:
@@ -209,12 +212,13 @@ class MailCollection(BrowserView):
             if not getattr(arch, 'meta_type', None) == 'ATFolder':
                 messages.addStatusMessage(
                     'Unable to use %s as archive folder: Not a folder!' % (
-                        settings.archive_folder), type='error')
+                        settings.archive_folder),
+                    type='error')
                 raise ValidationError
 
             if not arch.getPhysicalPath() == tuple(
                 settings.archive_folder.split('/')):
-                raise ValidationError
+                raise ValidationError("Invalid archive folder path")
 
             name = 'Newsletter %s' % DateTime().strftime('%d.%m.%Y')
             if name in arch.objectIds():
@@ -231,10 +235,12 @@ class MailCollection(BrowserView):
                     'Mail archived as %s' % '/'.join(new_ob.getPhysicalPath()),
                     type='info')
 
-        except ValidationError:
+        except ValidationError, msg:
+            logger.warning("ValidationError: %s"  %msg)
             pass
         finally:
             if self.errors:
+                logger.warning("Errors: %s" %self.errors)
                 for error in self.errors:
                     messages.addStatusMessage(error, type='error')
             else:
@@ -301,7 +307,7 @@ class MailNewComment(BrowserView):
                                                  target_language=pref_lang)
                 self.sendMail(msg_template, mail_from, mail_to, subject)
         # for presentation types, notify presentation author
-        else: 
+        else:
             args['recipient'] = get_formatted_names(u' / ', ' ', self.context.getReviewAuthors())
             mail_to, pref_lang = self.findRecipient()
             subject = self.ts.translate(_('mail_new_comment_subject_presentation_author',
