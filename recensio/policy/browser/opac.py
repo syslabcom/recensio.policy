@@ -262,6 +262,8 @@ class OPAC(BrowserView):
         return json.dumps(data)
 
     def _convertLanguageToLangCode(self, language):
+        if not language:
+            return ""
         locale = locales.getLocale('de')
         lang_in_german = locale.displayNames.languages
 
