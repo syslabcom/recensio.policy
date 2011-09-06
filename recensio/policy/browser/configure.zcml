@@ -12,7 +12,7 @@
     name="mail_results"
     class=".email.MailCollection"
     layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="zope2.View"
+    permission="cmf.ManagePortal"
 
     />
 

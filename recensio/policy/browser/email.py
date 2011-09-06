@@ -248,7 +248,7 @@ class MailCollection(BrowserView):
                     self.ts.translate(
                         _('mail_sending_prepared',
                           default=("Mailversand wird vorbereitet. "
-                                   "Mail wird versandt an ${mail_to}")),
+                                   "Mail wird versandt an %(mail_to)s")),
                         context=self.context,
                         mapping={u'mail_to': mail_to}),
                     type="info")
