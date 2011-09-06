@@ -1,6 +1,16 @@
 <div id="extra-design-elements"
      tal:define="language context/@@plone_portal_state/language;
-                 portal_url context/portal_url;">
+                 portal_url context/portal_url;
+                 isAnon context/@@plone_portal_state/anonymous;">
+  <div id="my_homepage_container" tal:condition="not:isAnon"
+       tal:define="url_quote_plus python:modules['Products.PythonScripts.standard'].url_quote_plus;
+                   member context/@@plone_portal_state/member;
+                   memberurl python:url_quote_plus(member.getId());">
+    <a id="my_homepage"
+       tal:attributes="href string:${portal_url}/author/${memberurl}"
+       tal:content="python:member.getProperty('fullname')"/>
+  </div>
+
   <div id="footer"
        i18n:domain="recensio">
 
