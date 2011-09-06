@@ -275,8 +275,6 @@ class MailNewComment(BrowserView):
 
         args = {}
         args['url'] = review.absolute_url()
-        args['author'] = get_formatted_names(u' / ', ' ', self.context.getAuthors())
-        args['recipient'] = args['author']
         args['date'] = review.created().strftime('%d.%m.%Y')
         args['title'] = review.title + (review.subtitle and ': ' + review.subtitle or '')
         args['year'] = getattr(review, 'yearOfPublication', '')
@@ -296,6 +294,7 @@ class MailNewComment(BrowserView):
         if review.portal_type in REVIEW_TYPES:
             authors = getattr(review, 'authors', [])
             args['recipient'] = get_formatted_names(u' / ', ' ', authors)
+            args['author'] = args['recipient']
             mail_to = mail_from
             pref_lang = 'de'
             for author in authors:
@@ -309,7 +308,10 @@ class MailNewComment(BrowserView):
         # for presentation types, notify presentation author
         else:
             args['recipient'] = get_formatted_names(u' / ', ' ', self.context.getReviewAuthors())
+            args['author'] = get_formatted_names(u' / ', ' ', self.context.getAuthors())
             mail_to, pref_lang = self.findRecipient()
+            if not mail_to:
+                mail_to = getattr(review, 'reviewAuthorEmail', '')
             subject = self.ts.translate(_('mail_new_comment_subject_presentation_author',
                                           mapping=args), target_language=pref_lang)
             msg_template = self.ts.translate(_('mail_new_comment_body_presentation_author',
@@ -412,15 +414,14 @@ class MailNewPublication(BrowserView):
                 u' / ', ' ', self.context.reviewAuthors)
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
             args['context_url'] = self.context.absolute_url()
+            pref_lang = author['preferred_language']
             if author.has_key('email') and author['email']:
                 args['mail_to'] = author['email']
-                pref_lang = get_preferred_language(author['email'], pref_lang)
                 msg_template = self.ts.translate(
                     _('mail_new_publication_body',
                       mapping=args), target_language=pref_lang)
             else:
                 args['mail_to'] = args['mail_from']
-                pref_lang = get_preferred_language(args['mail_from'], pref_lang)
                 msg_template = (
                     self.ts.translate(
                         _('mail_new_publication_intro',
