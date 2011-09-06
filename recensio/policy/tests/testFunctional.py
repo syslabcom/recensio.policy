@@ -98,3 +98,5 @@ class TestMainSiteSections(unittest.TestCase):
                    "publicationlisting viewlet")
             )
 
+    def test_search_form(self):
+        self.is_successful_status("search_form")

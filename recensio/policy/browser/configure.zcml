@@ -66,14 +66,6 @@
       />
 
   <browser:page
-      for="*"
-      name="recensioview"
-      class=".views.RecensioView"
-      permission="zope.Public"
-      allowed_interface="recensio.policy.interfaces.IRecensioView"
-      />
-
-  <browser:page
       name="opac"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       class=".opac.OPAC"

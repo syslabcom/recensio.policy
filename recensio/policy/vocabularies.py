@@ -42,7 +42,8 @@ class AvailableContentLanguages(object):
         # get user-defined languages
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRecensioSettings)
-        allowed_langs = getattr(settings, 'available_content_languages', '').split('\n')
+        allowed_langs = getattr(
+            settings, 'available_content_languages', '').split('\n')
         # get names for language codes
         gsm = getGlobalSiteManager()
         util = gsm.queryUtility(ILanguageAvailability)
