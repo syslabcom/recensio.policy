@@ -219,6 +219,7 @@ def getMemberInfo(memberId=None):
                    'username'    : member.getUserName(),
                    'has_email'   : bool(member.getProperty('email')),
                    'academic_title': member.getProperty('academic_title'),
+                   'preferred_language': member.getProperty('preferred_language'),
                  }
 
     return memberinfo
