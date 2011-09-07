@@ -51,16 +51,16 @@
                         <span tal:condition="not: reply/Creator">Anonymous</span>
                     </tal:name>
                     <tal:posted i18n:translate="label_says">says:</tal:posted>
-                    <div class="commentDate" 
+                    <div class="commentDate"
                          tal:content="python:view.format_time(reply.modification_date)">
                          8/23/2001 12:40:44 PM
                     </div>
                 </div>
-                
+
                 <div class="commentBody">
-                
+
                     <span tal:replace="structure python:view.cook(reply.getText())" />
-                
+
                     <div class="commentActions">
                         <form name="delete"
                               action=""
@@ -74,7 +74,7 @@
                                    i18n:attributes="value label_delete;"
                                    />
                         </form>
-    
+
                         <!-- Workflow actions (e.g. 'publish') -->
                         <form name=""
                               action=""
@@ -99,7 +99,7 @@
                             Notify portal owner about this comment
                         </a>
                      </div>
-                     
+
 
                 </div>
                 <button class="context reply-to-comment-button hide allowMultiSubmit"
@@ -127,7 +127,7 @@
 
         <div class="message notice">
           <h2 i18n:translate="heading_commenting_explanation">Kommentieren</h2>
-<p i18n:translate="commenting_explanation">Sie haben hier die Gelegenheit, die Rezension/Präsentation zu kommentieren. Dafür ist eine kurze, kostenlose Registrierung mit Namen und E-Mail-Adresse notwendig, die lediglich dazu dient, Missbrauch der Kommentarfunktion zu verhindern und den wissenschaftlichen Anspruch der Plattform zu wahren. 
+<p i18n:translate="commenting_explanation">Sie haben hier die Gelegenheit, die Rezension/Präsentation zu kommentieren. Dafür ist eine kurze, kostenlose Registrierung mit Namen und E-Mail-Adresse notwendig, die lediglich dazu dient, Missbrauch der Kommentarfunktion zu verhindern und den wissenschaftlichen Anspruch der Plattform zu wahren.
 <br />
 Bitte beachten Sie, dass eingehende Kommentare vor der Veröffentlichung auf die Einhaltung der <a href="/recensio/ueberuns/benutzerrichtlinien" class="internal-link" i18n:name="benutzerrichtlinien" i18n:translate="benutzerrichtlinien">Benutzerrichtlinien</a> geprüft werden. Aus diesem Grund können 1 bis 3 Werktage vergehen, bis Ihr Kommentar auf recensio.net sichtbar wird. Darüber hinaus gibt es die Möglichkeit, der Redaktion als problematisch empfundene Äußerungen über einen neben Kommentaren befindlichen Button zu melden.
 <br />
@@ -143,7 +143,9 @@ Für Rückfragen steht Ihnen die recensio.net-Redaktion jederzeit zur Verfügung
             </p>
 
             <div tal:replace="structure view/form/render" />
-
+            <p i18n:translate="help_comment_licence"> All comments are
+published under the creative-commons-licence
+Attribution-NonCommercial-NoDerivs (CC-BY-NC-ND)</p>
         </fieldset>
 
     </div>
