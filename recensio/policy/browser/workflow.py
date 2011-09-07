@@ -60,21 +60,8 @@ class WorkflowHelper(BrowserView):
             pref_lang = owner.getProperty('preferred_language', 'de')
             title = ts.translate(_(u'label_item_published', default=u'Your item has been published'), target_language=pref_lang)
             rtool = getToolByName(self.context, 'portal_repository')
-            skip = []
-            try:
-                history = rtool.getHistory(info.object)
-                if len(history) > 1:
-                    prev_version = history[0].object
-                    for refauth in info.object.referenceAuthors:
-                        if refauth['email'] in map(lambda x: x['email'], prev_version.referenceAuthors):
-                            mail = refauth.get('email', None)
-                            if mail:
-                                log.debug('skipping %s' % mail)
-                                skip.append(mail)
-            except:
-                log.debug('No previous object version found. Not comparing reference authors')
 
-            info.object.restrictedTraverse('@@mail_new_presentation')(skip_addrs=skip)
+            info.object.restrictedTraverse('@@mail_new_presentation')()
 
             publish_notification_template = _('publish_notification_template',
                 default=u"""Ihr Artikel "${title}" wurde freigeschaltet und ist nun unter ${url} verfügbar.""",
