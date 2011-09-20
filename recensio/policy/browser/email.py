@@ -25,6 +25,8 @@ _ = recensioMessageFactory
 
 REVIEW_TYPES = ["Review Monograph", "Review Journal"]
 
+NOTIFICATION_LOG_ADDR = 'notification.archive@lists.recensio.net'
+
 class ValidationError(Exception):
     pass
 
@@ -355,7 +357,13 @@ class MailNewComment(BrowserView):
 
     def sendMail(self, msg, mail_from, mail_to, subject):
         if mail_to:
-            self.mailhost.send(messageText=msg, mto=mail_to,
+            bcc_to = []
+            if NOTIFICATION_LOG_ADDR:
+                msg = u'From: %s\nTo: %s\nBcc: %s\nSubject: %s\n\n' % (mail_from, mail_to, NOTIFICATION_LOG_ADDR, subject) + msg
+                bcc_to = bcc_to + [NOTIFICATION_LOG_ADDR]
+            if not isinstance(mail_to, list):
+                mail_to = [mail_to]
+            self.mailhost.send(messageText=msg, mto=mail_to + bcc_to,
                                mfrom=mail_from,
                                subject=subject, charset='utf-8')
         else:
@@ -441,7 +449,13 @@ class MailNewPublication(BrowserView):
             self.sendMail(msg_template, args['mail_to'], mail_from, subject)
 
     def sendMail(self, msg, mail_to, mail_from, subject):
-        self.mailhost.send(messageText=msg, mto=mail_to,
+        bcc_to = []
+        if NOTIFICATION_LOG_ADDR:
+            msg = u'From: %s\nTo: %s\nBcc: %s\nSubject: %s\n\n' % (mail_from, mail_to, NOTIFICATION_LOG_ADDR, subject) + msg
+            bcc_to = bcc_to + [NOTIFICATION_LOG_ADDR]
+        if not isinstance(mail_to, list):
+            mail_to = [mail_to]
+        self.mailhost.send(messageText=msg, mto=mail_to + bcc_to,
                            mfrom=mail_from,
                            subject=subject, charset='utf-8')
 

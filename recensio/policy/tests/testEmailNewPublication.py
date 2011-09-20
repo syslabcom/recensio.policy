@@ -23,7 +23,12 @@ class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testFormat(self):
-        expected_mail = u'''Dear Fran\xe7ois Lam\xe8re,
+        expected_mail = u'''From: Recensio.net <fake>
+To: dev0@syslab.com
+Bcc: notification.archive@lists.recensio.net
+Subject: Test PresentationArticleReview No 0 has been presented on recensio.net - your comments are welcome
+
+Dear Fran\xe7ois Lam\xe8re,
 
 Recently a text on the topic Test PresentationArticleReview No 0 Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 has been published.
 Its author \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 has presented the text on the review platform recensio.net. Since it falls into the realm of your own research, we would like to let you know that you can comment on the presented statements on recensio.net.
@@ -39,7 +44,11 @@ Yours sincerely
 The recensio.net editorial team
 
 recensio.net is a joint project of the Bavarian State Library (BSB) Munich, the German Historical Institute Paris (DHIP) and the Institute for European History (IEG) Mainz – funded by the German Research Foundation (DFG). Further information http://nohost/plone/ueberuns/konzept'''
-        expected_mail_de = u'''Sehr geehrter Herr Fran\xe7ois Lam\xe8re,
+        expected_mail_de = u'''From: Recensio.net <fake>
+To: dev0@syslab.com
+Bcc: notification.archive@lists.recensio.net
+
+Sehr geehrter Herr Fran\xe7ois Lam\xe8re,
 
 vor Kurzem ist eine Schrift zum Thema Test PresentationArticleReview No 0 Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 erschienen. Der Autor \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 hat diese Schrift auf der Rezensionsplattform recensio.net pr\xe4sentiert und gibt an, sich mit Ihren Forschungen auseinandergesetzt zu haben.
 

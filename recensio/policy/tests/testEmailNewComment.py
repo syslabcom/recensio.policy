@@ -29,7 +29,12 @@ class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testFormat(self):
-        expected_mail = {'Review Monograph': [u'''Sehr geehrte/r Tadeusz Kotłowski,
+        expected_mail = {'Review Monograph': [u'''From: Recensio.net <fake>
+To: Recensio.net <fake>
+Bcc: notification.archive@lists.recensio.net
+Subject: Benachrichtigung über Kommentareingang
+
+Sehr geehrte/r Tadeusz Kotłowski,
 
 zu Ihrer Schrift
     Tadeusz Kotłowski: Test ReviewMonograph No 0: Dzieje państwa i społeczeństwa 1890–1945, 2008, 978-83-60448-39-7 (rezensiert von Стоичков, Христо)
@@ -44,7 +49,12 @@ Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: Rec
 
 Mit freundlichen Grüßen,
 Ihr recensio.net-Team''',
-                                            u'''Sehr geehrte/r Hugh Commenter,
+                                            u'''From: Recensio.net <fake>
+To: hc@example.org
+Bcc: notification.archive@lists.recensio.net
+Subject: Benachrichtigung über Kommentareingang
+
+Sehr geehrte/r Hugh Commenter,
 
 Sie haben die Schrift bzw. die Internetressource
     Tadeusz Kotłowski: Test ReviewMonograph No 0: Dzieje państwa i społeczeństwa 1890–1945, 2008, 978-83-60448-39-7 (rezensiert von Стоичков, Христо) in Zeitschrift 1, Summer, Issue 2
@@ -57,7 +67,12 @@ Für Rückfragen steht Ihnen die recensio.net-Redaktion gern zur Verfügung: Rec
 
 Mit freundlichen Grüßen,
 Ihr recensio.net-Team'''],
-                         'Presentation Article Review': [u'''Sehr geehrte/r Hugh Commenter,
+                         'Presentation Article Review': [u'''From: Recensio.net <fake>
+To: hc@example.org
+Bcc: notification.archive@lists.recensio.net
+Subject: Benachrichtigung über Kommentareingang
+
+Sehr geehrte/r Hugh Commenter,
 
 Sie haben die Schrift bzw. die Internetressource
     Tadeusz Kotłowski: Test PresentationArticleReview No 0: Dzieje państwa i społeczeństwa 1890–1945, 2008,  (präsentiert von Стоичков, Христо)
