@@ -1,6 +1,7 @@
 from collective.solr import indexer, mangler
 #from collective.solr.indexer import datehandler
 from collective.solr.mangler import *
+from Products.CMFPlone.utils import safe_unicode
 
 # This seems to be fixed with Solr 3.3, but keep an eye out for problems!
 
@@ -24,6 +25,7 @@ def mangleQuery(keywords, config, schema):
         with equivalent constructs for solr """
     extras = {}
     for key, value in keywords.items():
+        value = safe_unicode(value)
         if key.endswith('_usage'):          # convert old-style parameters
             category, spec = value.split(':', 1)
             extras[key[:-6]] = {category: spec}
@@ -56,6 +58,7 @@ def mangleQuery(keywords, config, schema):
         epi_indexes = ['path']
 
     for key, value in keywords.items():
+        value = safe_unicode(value)
         args = extras.get(key, {})
         if key == 'SearchableText':
             pattern = getattr(config, 'search_pattern', '')
@@ -63,17 +66,17 @@ def mangleQuery(keywords, config, schema):
             if pattern and isSimpleSearch(value):
                 base_value = value
                 if simple_term:             # use prefix/wildcard search
-                    value = '(%s* OR %s)' % (value.lower(), value)
+                    value = u'(%s* OR %s)' % (value.lower(), value)
                 elif isWildCard(value):     # wildcard searches need lower-case
                     value = value.lower()
-                    base_value = quote(value.replace('*', '').replace('?', ''))
+                    base_value = safe_unicode(quote(value.replace('*', '').replace('?', '')))
                 # simple queries use custom search pattern
-                value = pattern.format(value=quote(value),
+                value = pattern.format(value=safe_unicode(quote(value)),
                     base_value=base_value)
                 keywords[key] = set([value])    # add literal query parameter
                 continue
             elif simple_term:               # use prefix/wildcard search
-                keywords[key] = '(%s* OR %s)' % (value.lower(), value)
+                keywords[key] = u'(%s* OR %s)' % (value.lower(), value)
                 continue
         if key in epi_indexes:
             path = keywords['%s_parents' % key] = value
