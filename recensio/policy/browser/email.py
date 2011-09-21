@@ -25,7 +25,8 @@ _ = recensioMessageFactory
 
 REVIEW_TYPES = ["Review Monograph", "Review Journal"]
 
-NOTIFICATION_LOG_ADDR = 'notification.archive@lists.recensio.net'
+#NOTIFICATION_LOG_ADDR = 'notification.archive@lists.recensio.net'
+NOTIFICATION_LOG_ADDR = 'maillog@recensio.net'
 
 class ValidationError(Exception):
     pass
