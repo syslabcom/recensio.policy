@@ -31,7 +31,7 @@ class TestEmailFormat(unittest.TestCase):
     def testFormat(self):
         expected_mail = {'Review Monograph': [u'''From: Recensio.net <fake>
 To: Recensio.net <fake>
-Bcc: notification.archive@lists.recensio.net
+Bcc: maillog@recensio.net
 Subject: Benachrichtigung über Kommentareingang
 
 Sehr geehrte/r Tadeusz Kotłowski,
@@ -51,7 +51,7 @@ Mit freundlichen Grüßen,
 Ihr recensio.net-Team''',
                                             u'''From: Recensio.net <fake>
 To: hc@example.org
-Bcc: notification.archive@lists.recensio.net
+Bcc: maillog@recensio.net
 Subject: Benachrichtigung über Kommentareingang
 
 Sehr geehrte/r Hugh Commenter,
@@ -69,7 +69,7 @@ Mit freundlichen Grüßen,
 Ihr recensio.net-Team'''],
                          'Presentation Article Review': [u'''From: Recensio.net <fake>
 To: hc@example.org
-Bcc: notification.archive@lists.recensio.net
+Bcc: maillog@recensio.net
 Subject: Benachrichtigung über Kommentareingang
 
 Sehr geehrte/r Hugh Commenter,

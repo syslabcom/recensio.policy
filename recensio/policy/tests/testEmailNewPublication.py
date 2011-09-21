@@ -25,7 +25,7 @@ class TestEmailFormat(unittest.TestCase):
     def testFormat(self):
         expected_mail = u'''From: Recensio.net <fake>
 To: dev0@syslab.com
-Bcc: notification.archive@lists.recensio.net
+Bcc: maillog@recensio.net
 Subject: Test PresentationArticleReview No 0 has been presented on recensio.net - your comments are welcome
 
 Dear Fran\xe7ois Lam\xe8re,
@@ -46,7 +46,7 @@ The recensio.net editorial team
 recensio.net is a joint project of the Bavarian State Library (BSB) Munich, the German Historical Institute Paris (DHIP) and the Institute for European History (IEG) Mainz – funded by the German Research Foundation (DFG). Further information http://nohost/plone/ueberuns/konzept'''
         expected_mail_de = u'''From: Recensio.net <fake>
 To: dev0@syslab.com
-Bcc: notification.archive@lists.recensio.net
+Bcc: maillog@recensio.net
 
 Sehr geehrter Herr Fran\xe7ois Lam\xe8re,
 
