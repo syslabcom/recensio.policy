@@ -416,9 +416,7 @@ class MailNewPublication(BrowserView):
             args['reviewed_author'] = u' '.join(fuckup)
             args['mail_from'] = safe_unicode(mail_from)
             pref_lang = 'en'
-            args['title'] = safe_unicode(self.context.title)
-            args['subtitle'] = safe_unicode(getattr(
-                self.context, 'subtitle', ''))
+            args['title'] = self.context.title + (self.context.subtitle and ': ' + self.context.subtitle or '')
             args['review_author'] = get_formatted_names(
                 u' / ', ' ', self.context.reviewAuthors)
             args['concept_url'] = root.absolute_url() + '/ueberuns/konzept'
