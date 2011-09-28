@@ -26,11 +26,11 @@ class TestEmailFormat(unittest.TestCase):
         expected_mail = u'''From: Recensio.net <fake>
 To: dev0@syslab.com
 Bcc: maillog@recensio.net
-Subject: Test PresentationArticleReview No 0 has been presented on recensio.net - your comments are welcome
+Subject: Test PresentationArticleReview No 0: Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 has been presented on recensio.net - your comments are welcome
 
 Dear Fran\xe7ois Lam\xe8re,
 
-Recently a text on the topic Test PresentationArticleReview No 0 Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 has been published.
+Recently a text on the topic Test PresentationArticleReview No 0: Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 has been published.
 Its author \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 has presented the text on the review platform recensio.net. Since it falls into the realm of your own research, we would like to let you know that you can comment on the presented statements on recensio.net.
 
 You will only need to register first (fast and free of charge) with your name and e-mail-address. This is necessary to prevent any misuse of the comment function and to maintain the platform's scholarly claim.
