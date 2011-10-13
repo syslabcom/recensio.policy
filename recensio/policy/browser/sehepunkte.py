@@ -1,22 +1,16 @@
-from zope.i18n import translate
-from zope.event import notify
-
+from BeautifulSoup import BeautifulSoup
 from Products.Archetypes.event import ObjectEditedEvent
-from Products.ATVocabularyManager import NamedVocabulary
-from Products.Five.browser import BrowserView
 from Products.CMFCore.utils import getToolByName
-
+from Products.Five.browser import BrowserView
 from guess_language import guessLanguage
 from itertools import chain
-import re
-import urllib
-import json
+from zope.event import notify
 import datetime
 import htmlentitydefs
-from BeautifulSoup import BeautifulSoup
+import re
+import urllib
 
 from recensio.policy.importSehepunkte import sehepunkte_parser
-from recensio.policy.opacsearch import opac
 from recensio.policy.tools import convertToString
 
 def convert(vocab):
@@ -116,24 +110,32 @@ class Import(BrowserView):
 
 def superclean(text):
     def unescape(text):
-        def fixup(m):
+        def fixup1(m):
+            return inner_fixup(m)
+        def fixup2(m):
+            return inner_fixup(m, True)
+        def inner_fixup(m, i_thought_i_can_write_html_by_hand_but_i_cant = False):
+            tailcut = -1
+            if i_thought_i_can_write_html_by_hand_but_i_cant:
+                tailcut = 1000
             text = m.group(0)
             if text[:2] == "&#":
                 # character reference
                 try:
                     if text[:3] == "&#x":
-                        return unichr(int(text[3:-1], 16))
+                        return unichr(int(text[3:tailcut], 16))
                     else:
-                        return unichr(int(text[2:-1]))
+                        return unichr(int(text[2:tailcut]))
                 except ValueError:
                     pass
             else:
                 # named entity
                 try:
-                    text = unichr(htmlentitydefs.name2codepoint[text[1:-1]])
+                    text = unichr(htmlentitydefs.name2codepoint[text[1:tailcut]])
                 except KeyError:
                     pass
             return text # leave as is
-        return re.sub("&#?\w+;", fixup, text)
+        return re.sub("&#?\d+", fixup2,
+                      re.sub("&#?\w+;", fixup1, text))
     return unescape(text.decode('utf-8'))
     
