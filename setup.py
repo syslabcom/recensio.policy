@@ -49,7 +49,7 @@ setup(name='recensio.policy',
           'collective.solr',
       ],
       extras_require = {
-        'test' : ['plone.app.testing', 'PILwoTk', 'mock']
+        'test' : ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
       },
       entry_points="""
       # -*- Entry points: -*-
