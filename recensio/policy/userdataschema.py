@@ -3,6 +3,7 @@
 
 from zope.interface import implements
 from zope import schema
+from zope.app.form.interfaces import ConversionError
 from plone.app.users.userdataschema import IUserDataSchemaProvider, IUserDataSchema
 from collective.captcha.form import Captcha
 from zope.i18nmessageid import MessageFactory
@@ -15,7 +16,6 @@ UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES = (
     'pdelete',
     )
 
-
 class UserDataSchemaProvider(object):
     implements(IUserDataSchemaProvider)
 
@@ -26,7 +26,7 @@ class UserDataSchemaProvider(object):
 
 def validateAccept(value):
     if not value == True:
-        return False
+        raise ConversionError(_(u'text_declaration_not_confirmed', default=u"You must confirm the declaration of identity"))
     return True
 
 
