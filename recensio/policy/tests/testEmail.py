@@ -40,7 +40,7 @@ class TestNewsletter(unittest.TestCase):
         view.root = root
         view()
         self.assertEquals(1, len(mailhost.method_calls))
-        self.assertTrue(len(mailhost.method_calls[0][2]['messageText']))
+        self.assertTrue(len(mailhost.method_calls[0][2]['message']))
 
     def makeReviews(self):
         for art_num in range(10):
