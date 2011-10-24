@@ -52,18 +52,17 @@ class MailCollection(BrowserView):
         mag_keys.sort()
         for mag_title in mag_keys:
             mag_results = magazines[mag_title]
-            retval += mag_title + '\n' + '-' * len(mag_title)
+            retval += u"<h3>%s</h3>\n" %mag_title 
             for i, result in enumerate(mag_results):
                 if i < 9999:
                     title = result.getDecoratedTitle()
-                    msg = u'\n%s\n(%s)\n\n' % (title, \
-                                             result.absolute_url())
+                    msg = u'<p>%s<br>\n(<a href="%s">%s</a>)</p>\n\n' % (title, \
+                                             result.absolute_url(), result.absolute_url())
                     retval += msg
                 if i == 9999:
-                    msg = ('\n'+ self.ts.translate(_('more_results_here'),
-                                                   context=self.context) +
-                           '\n' + self.context.new_reviews.absolute_url() +
-                           '\n\n\n')
+                    msg = u'<p>\n%s<br>\n<a href="%s">%s</a>\n</p>' % (self.ts.translate(_('more_results_here'), context=self.context), 
+                         self.context.new_reviews.absolute_url(),
+                         self.context.new_reviews.absolute_url())
                     retval += msg
                     break
         return retval
@@ -73,7 +72,7 @@ class MailCollection(BrowserView):
         for result in self.context.new_issues.queryCatalog():
             volume = result.getObject().getParentNode()
             publication = volume.getParentNode()
-            retval += u'%s: %s, %s\n' % (
+            retval += u'<h3>%s: %s, %s</h3>\n' % (
                 safe_unicode(publication.Title()), safe_unicode(volume.Title()),
                 safe_unicode(result.Title))
         return retval
@@ -84,11 +83,11 @@ class MailCollection(BrowserView):
             label_comments = result.total_comments == 1 \
                 and self.ts.translate(_('comment')) \
                 or  self.ts.translate(_('comments'), context=self.context)
-            line = '%s (%s %s)\n' % (
+            line = u'%s (%s %s)\n' % (
                 result.getObject().getDecoratedTitle(), result.total_comments,
                 label_comments)
             line += '\n'
-            retval += '%s\n(%s)\n\n' % (line, result.getURL())
+            retval += u'<p>%s<br>\n(<a href="%s">%s</a>)</p>\n' % (line, result.getURL(), result.getURL())
         return retval
 
     def getNewPresentations(self):
@@ -106,8 +105,8 @@ class MailCollection(BrowserView):
                          key_articles : [],
                          key_onlineres : []}
 
-        formatted_result = lambda x: u'\n%s\n%s\n(%s)\n\n' % \
-            (x.getObject().getDecoratedTitle(), '\n', x.getURL())
+        formatted_result = lambda x: u'<p>%s<br>(<a href="%s">%s</a>)</p>\n' % \
+            (x.getObject().getDecoratedTitle(),  x.getURL(), x.getURL())
 
         for result in self.context.new_presentations.queryCatalog():
             if result.portal_type == 'Presentation Article Review':
@@ -137,7 +136,7 @@ class MailCollection(BrowserView):
                 presentations[key] = presentations[key][:10000]
         retval = ''
         for key in presentations.keys():
-            retval += u'' + key + '\n' + '-' * len(key) + u'\n'
+            retval += u'<h3>%s</h3>\n' % key 
             for result in presentations[key]:
                 retval += result
         return retval
@@ -162,6 +161,7 @@ class MailCollection(BrowserView):
         mail_to = mail_from = ""
         try:
             mail_from, mail_to = self.getMailAddresses()
+            #mail_from, mail_to = ('testemail@syslab.com', 'pilz@syslab.com')
             settings = self.getNewsletterSettings()
             if not settings.mail_format:
                 msg = _('Mailsettings not configured')
@@ -174,13 +174,16 @@ class MailCollection(BrowserView):
             sections['new_presentations'] = self.getNewPresentations()
             sections['new_discussions'] = self.getComments()
             msg = settings.mail_template % sections
-
+            msg = msg.encode('utf-8')
             if self.errors:
                 raise ValidationError("Errors: %s" %self.errors)
             else:
-                self.mailhost.send(
-                    messageText=msg, mto=mail_to, mfrom=mail_from,
-                    subject=settings.subject, charset='utf-8')
+                self.mailhost.secureSend(message=msg, mto=mail_to,
+                    mfrom=mail_from, subject=settings.subject, subtype="html",
+                    charset='utf-8')
+                #self.mailhost.send(
+                #    messageText=msg, mto=mail_to, mfrom=mail_from,
+                #    subject=settings.subject, charset='utf-8')
 
             # Copy mail to archive folder
             try:
@@ -233,7 +236,7 @@ class MailCollection(BrowserView):
                 new_ob = arch[id]
                 new_ob.setTitle(name)
                 new_ob.setText(msg)
-                new_ob.setContentType('text/restructured')
+                new_ob.setContentType('text/html')
                 messages.addStatusMessage(
                     'Mail archived as %s' % '/'.join(new_ob.getPhysicalPath()),
                     type='info')
