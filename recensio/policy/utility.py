@@ -17,7 +17,7 @@ from Products.CMFCore.utils import getToolByName
 from AccessControl import ClassSecurityInfo
 
 browsing_facets = ['ddcPlace', 'ddcTime', 'ddcSubject']
-filter_facets = ['languageReviewedText']
+filter_facets = ['languageReview']
 
 class Reader(object):
 
