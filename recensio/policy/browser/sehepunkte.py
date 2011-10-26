@@ -136,6 +136,6 @@ def superclean(text):
                     pass
             return text # leave as is
         return re.sub("&#?\d+", fixup2,
-                      re.sub("&#?\w+;", fixup1, text))
+                      re.sub("&#?\d+;", fixup1, text))
     return unescape(text.decode('utf-8'))
     

@@ -64,16 +64,18 @@ def createResult(result):
         if getString(thing) not in ['', '\n'] and key:
             raw_stuff[key] += getString(thing)
     authors = []
-    for author in raw_stuff.get('Verfasser:', '').split(';'):
-        if not author:
-            continue
-        if author.count(',') == 1:
-            lastname, firstname = author.split(',')
-            lastname, firstname = map(unicode.strip, (lastname, firstname))
-        else:
-            firstname = None
-            lastname = author.strip()
-        authors.append({'firstname' : firstname, 'lastname' : lastname})
+    for author_field in [raw_stuff.get(x, '') for x in 'Verfasser:', 
+                                                        'Autor/Person:']:
+        for author in author_field.split(';'):
+            if not author:
+                continue
+            if author.count(',') == 1:
+                lastname, firstname = author.split(',')
+                lastname, firstname = map(unicode.strip, (lastname, firstname))
+            else:
+                firstname = None
+                lastname = author.strip()
+            authors.append({'firstname' : firstname, 'lastname' : lastname})
     title = raw_stuff.get('Titel:', '').split('|')[0].strip().replace(u'\xac', '')
     subtitle = ("|".join([x.strip() for x in raw_stuff.get('Titel:', '').split('|')[1:]])).replace(u'\xac', '')
     language = raw_stuff.get('Sprache:', '')
