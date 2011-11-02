@@ -966,5 +966,5 @@ class TestSehepunkteImport(unittest.TestCase):
 
     def testEncodingFunny1(self):
         from recensio.policy.browser.sehepunkte import superclean
-        data = 'Hallo &#255; &gt; Argl&#203bla'
-        self.assertEquals(u'Hallo \xff > Argl\xcbbla', superclean(data))
+        data = 'Hallo &#255; Argl&#203bla'
+        self.assertEquals(u'Hallo \xff Argl\xcbbla', superclean(data))
