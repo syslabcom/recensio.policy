@@ -2,7 +2,7 @@ from BeautifulSoup import BeautifulSoup
 from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from guess_language import guessLanguage
+from guess_language import guessLanguage as originalGuessLanguage
 from itertools import chain
 from zope.event import notify
 import datetime
@@ -67,6 +67,12 @@ class Import(BrowserView):
         new_id = self.plone_utils.normalizeString(review['title'])
         if new_id in issue:
             return
+
+        def guessLanguage(text):
+            lang = originalGuessLanguage(text)
+            if lang == 'UNKNOWN':
+                lang = 'de'
+            return lang
         review = self._extractAndSanitizeHTML(review)
         languageReview = guessLanguage(review['review'])
         languageReviewedText = guessLanguage(review['title'])
