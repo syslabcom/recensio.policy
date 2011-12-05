@@ -41,15 +41,18 @@ class TestExcelImportUnit(unittest.TestCase):
         converter._supported_languages = ('en', 'fr')
         for i in ('en,fr', 'fr,en', 'fr,,en', 'fr:en', 'fr;en', 'fr.en',
                   'fr    en', 'fr\nen', 'fr\ten', 'fr\ren'):
-            self.assertEquals(set(('en', 'fr')), set(converter.convertLanguages(i)),
+            self.assertEquals(
+                set(('en', 'fr')), set(converter.convertLanguages(i)),
                               "%s not as expected" % str(i))
 
     def testLanguageValidationMissingLang(self):
         from recensio.imports.excel_converter import ExcelConverter
         converter = ExcelConverter()
         converter._supported_languages = ('en', 'fr')
-        self.assertEquals(('en', 'fr'), converter.convertLanguages("en, fr, es"))
-        self.assertEquals(['The language "${lang}" is unknown'], converter.warnings)
+        self.assertEquals(
+            ('en', 'fr'), converter.convertLanguages("en, fr, es"))
+        self.assertEquals(
+            ['The language "${lang}" is unknown'], converter.warnings)
 
 class TestZipImport(unittest.TestCase):
     def testZipImport(self):
@@ -97,7 +100,7 @@ class TestZipImport(unittest.TestCase):
                                      '/recensioupload_DE_zip.xls'))
         results = list(converter.convert_zip(xls))
         self.assertEquals(2, len(results))
-        
+
 class testexcelimport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
@@ -142,8 +145,8 @@ class testexcelimport(unittest.TestCase):
                 self.assertEquals('http://www.1.de', obj.uri)
                 self.assertEquals(('en',), obj.languageReview)
                 self.assertEquals(('de',), obj.languageReviewedText)
-                self.assertEquals(3, obj.pageStart)
-                self.assertEquals(4, obj.pageEnd)
+                self.assertEquals(3, obj.pageStartOfReviewInJournal)
+                self.assertEquals(4, obj.pageEndOfReviewInJournal)
                 self.assertEquals('Zitierschema', obj.customCitation)
                 found += 1
             if obj.title == 'Titel Rezension 2010':
@@ -153,8 +156,8 @@ class testexcelimport(unittest.TestCase):
                                   obj.reviewAuthors[0]["firstname"])
                 self.assertEquals('Rez. Nachname',
                                   obj.reviewAuthors[0]["lastname"])
-                self.assertEquals(5, obj.pageStart)
-                self.assertEquals(6, obj.pageEnd)
+                self.assertEquals(5, obj.pageStartOfReviewInJournal)
+                self.assertEquals(6, obj.pageEndOfReviewInJournal)
                 self.assertEquals('http://www.1.de', obj.uri)
                 self.assertEquals(tuple(), obj.languageReview)
                 self.assertEquals(tuple(), obj.languageReviewedText)
