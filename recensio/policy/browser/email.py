@@ -53,6 +53,13 @@ class MailCollection(BrowserView):
         for mag_title in mag_keys:
             mag_results = magazines[mag_title]
             retval += u"<h3>%s</h3>\n" %mag_title 
+            # bad hack for issue title
+            try:
+                issue = mag_results[0].aq_parent
+                if issue.portal_type == 'Issue':
+                    retval += u"<h4>%s</h4>\n" % issue.Title()
+            except:
+                logger.error('Couldnt calculate issue title in MailCollection/getNewReviews')
             for i, result in enumerate(mag_results):
                 if i < 9999:
                     title = result.getDecoratedTitle()
