@@ -289,7 +289,7 @@ class MailNewComment(BrowserView):
         args = {}
         args['url'] = review.absolute_url()
         args['date'] = review.created().strftime('%d.%m.%Y')
-        args['title'] = review.title + (review.subtitle and ': ' + review.subtitle or '')
+        args['title'] = review.title + ((hasattr(review, 'subtitle') and review.subtitle) and ': ' + review.subtitle or '')
         args['year'] = getattr(review, 'yearOfPublication', '')
         args['isbn'] = getattr(review, 'isbn', '')
         args['reviewers'] = '/'.join(review.listReviewAuthors())
@@ -321,7 +321,11 @@ class MailNewComment(BrowserView):
         # for presentation types, notify presentation author
         else:
             args['recipient'] = get_formatted_names(u' / ', ' ', self.context.getReviewAuthors())
-            args['author'] = get_formatted_names(u' / ', ' ', self.context.getAuthors())
+            args['author'] = 'someone'
+            if hasattr(self.context, 'getAuthors'):
+                args['author'] = get_formatted_names(u' / ', ' ', self.context.getAuthors())
+            elif hasattr(self.context, 'getInstitution'):
+                args['author'] = get_formatted_names(u' / ', ' ', self.context.getInstitution())
             mail_to, pref_lang = self.findRecipient()
             if not mail_to:
                 mail_to = getattr(review, 'reviewAuthorEmail', '')
