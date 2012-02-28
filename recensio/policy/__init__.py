@@ -3,8 +3,29 @@ import sys
 from zc.testbrowser.browser import Browser
 from zope.i18nmessageid import MessageFactory
 import patches
+from zope.component import provideHandler
+from plone.app.async.interfaces import IJobSuccess, IJobFailure
+from zope.app.component.hooks import getSite
 
 recensioMessageFactory = MessageFactory('recensio')
+
+# Subscribing to all successes/Failures of async
+
+def successHandler(event):
+    site = getSite()
+#    results = getattr(site, 'async_results', [])
+#    results.append(event.object)
+    print "Success!!! %s " % event.object
+     
+def failureHandler(event):
+    site = getSite()
+#    results = getattr(site, 'async_results', [])
+    exc = event.object
+#    results.append("%s: %s" % (exc.type, exc.value))
+    print "Failure!!!: %s" % exc
+    
+provideHandler(successHandler, [IJobSuccess])
+provideHandler(failureHandler, [IJobFailure])
 
 def viewPage(br):
     file('/tmp/bla.html', 'w').write(br.contents)
