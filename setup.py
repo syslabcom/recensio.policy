@@ -47,6 +47,7 @@ setup(name='recensio.policy',
           'setuptools',
           'collective.logbook',
           'collective.solr',
+          'zope.keyreference',
       ],
       extras_require = {
         'test' : ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
