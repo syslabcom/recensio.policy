@@ -9,9 +9,13 @@ import datetime
 import htmlentitydefs
 import re
 import urllib
+import logging
+from transaction import commit
 
 from recensio.policy.importSehepunkte import sehepunkte_parser
 from recensio.policy.tools import convertToString
+
+log = logging.getLogger(__name__)
 
 def convert(vocab):
     retval = {}
@@ -44,9 +48,17 @@ class Import(BrowserView):
             except IOError:
                 pass # The library takes care of logging a failure
         for review in chain(*data):
-            self._addReview(self._convertVocabulary(\
-                             convertToString(\
-                              review)))
+            try:
+                self._addReview(self._convertVocabulary(\
+                                 convertToString(\
+                                  review)))
+                commit()
+            except:
+                log.exception("Warning, sehepunkte import failed! Exception "
+                    "has not been catched, but bubbled. Probably sehepunkte "
+                    "is broken now! Please see #4656 for fixes")
+                raise
+
         return "Success"
 
     def _getTargetURLs(self):
