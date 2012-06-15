@@ -22,6 +22,8 @@ setup(name='recensio.policy',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'rdflib',
+          'sparql-client',
           'BeautifulSoup',
           'Products.ATVocabularyManager>=1.6', # Only here Plone 4 compatibility started
           'Products.CMFDiffTool>=2.0', # This fixed important issues related to Plone 4
