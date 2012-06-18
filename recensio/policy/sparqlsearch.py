@@ -13,9 +13,6 @@ from logging import getLogger
 
 log = getLogger(__name__)
 
-SKOS_PREFLABEL = URIRef('http://www.w3.org/2004/02/skos/core#prefLabel')
-RDF_LABEL = URIRef('http://www.w3.org/2000/01/rdf-schema#label')
-
 QUERY = \
     '''PREFIX  rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX  rdfs:<http://www.w3.org/2000/01/rdf-schema#>
@@ -58,7 +55,7 @@ def genericStore(target_attribute):
             if 'en' in possible_values:
                 retval[target_attribute] = possible_values['en']
             else:
-                raise Exception('No handler for %s' % obj)
+                log.error('No handler for %s' % str(obj))
 
     return storeLiteralImpl
 
@@ -95,9 +92,7 @@ def keywords_and_ddc(obj, retval):
         if possible_values:
             retval['keywords'].extend(possible_values)
         else:
-            import pdb
-            pdb.set_trace()
-            raise Exception('Don\'t know how to extract stuff')
+            log.error("Don't know how to handle this: %s" % raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
             retval['ddc'] = obj.value
@@ -171,9 +166,7 @@ def getMetadata(isbn):
     for (subject, predicate, obj) in result:
         if predicate.value not in HANDLERS and predicate \
             not in KNOWN_IGNORED:
-            import pdb
-            pdb.set_trace()
-            log.warning('Don\'t know how to handle ' + str(predicate))
+            log.error('Don\'t know how to handle ' + str(predicate))
         HANDLERS[predicate.value](obj, retval)
     for (key, values) in retval.items():
         if hasattr(values, 'sort'):
@@ -183,5 +176,4 @@ def getMetadata(isbn):
                 if value not in uniques:
                     uniques.append(value)
             retval[key] = uniques
-    print subject
     return retval

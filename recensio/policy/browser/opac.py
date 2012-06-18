@@ -8,7 +8,8 @@ from Products.Five.browser import BrowserView
 import urllib
 import json
 
-from recensio.policy.opacsearch import opac
+#from recensio.policy.opacsearch import opac
+from recensio.policy.sparqlsearch import getMetadata
 
 geo_mapping = {
 'xa' : '4',
@@ -254,7 +255,7 @@ topic_mapping = {
 
 class OPAC(BrowserView):
     def __call__(self, identifier):
-        data = opac.getMetadataForISBN(identifier)
+        data = getMetadata(identifier)
         for i in range(len(data)):
             data[i]['language'] = \
                 self._convertLanguageToLangCode(data[i]['language'])
