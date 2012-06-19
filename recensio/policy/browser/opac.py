@@ -256,11 +256,10 @@ topic_mapping = {
 class OPAC(BrowserView):
     def __call__(self, identifier):
         data = getMetadata(identifier)
-        for i in range(len(data)):
-            data[i]['language'] = \
-                self._convertLanguageToLangCode(data[i]['language'])
-            self._convertKeywords(data[i])
-        return json.dumps(data)
+        data['language'] = \
+            self._convertLanguageToLangCode(data['language'])
+        self._convertKeywords(data)
+        return json.dumps([data])
 
     def _convertLanguageToLangCode(self, language):
         if not language:
