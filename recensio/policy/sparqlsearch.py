@@ -1,9 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-from rdflib.graph import Graph
-from rdflib.term import URIRef
 from collections import defaultdict
+from rdflib.graph import Graph
+from rdflib.plugins.parsers.rdfa import RDFaError
+from rdflib.term import URIRef
 import re
 
 import sparql
@@ -55,7 +56,7 @@ def genericStore(target_attribute):
             if 'en' in possible_values:
                 retval[target_attribute] = possible_values['en']
             else:
-                log.error('No handler for %s' % str(obj))
+                log.error('No handler for %s', str(obj))
 
     return storeLiteralImpl
 
@@ -92,7 +93,7 @@ def keywords_and_ddc(obj, retval):
         if possible_values:
             retval['keywords'].extend(possible_values)
         else:
-            log.error("Don't know how to handle this: %s" % raw_data)
+            log.error("Don't know how to handle this: %s", raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
             retval['ddc'] = obj.value
@@ -105,7 +106,12 @@ def authorsStore(obj, retval):
         retval['authors'].append(obj.value)
     else:
         g = Graph()
-        g.parse(obj.value)
+        try:
+            g.parse(obj.value)
+        except RDFaError, e:
+            log.error("Bad answer from '%s': '%s', ignoring",
+                      obj.value, e, exc_info=True)
+            return
         firstnames = [x.title() for x in
                       g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#forename'
                       ))]
@@ -166,7 +172,7 @@ def getMetadata(isbn):
     for (subject, predicate, obj) in result:
         if predicate.value not in HANDLERS and predicate \
             not in KNOWN_IGNORED:
-            log.error('Don\'t know how to handle ' + str(predicate))
+            log.error('Don\'t know how to handle %s', str(predicate))
         HANDLERS[predicate.value](obj, retval)
     for (key, values) in retval.items():
         if hasattr(values, 'sort'):

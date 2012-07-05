@@ -14,6 +14,7 @@ class TestSparql(unittest.TestCase):
         self.maxDiff = 2000
 
     def tearDown(self):
+        pass
         self.handler.uninstall()
 
     def testGetLabels(self):
@@ -32,8 +33,6 @@ class TestSparql(unittest.TestCase):
         # http://lod.b3kat.de/title/BV013575871
 
         expected = {
-            'authors': [{'firstname': u'Asger',
-                        'lastname': u'Berthelsen'}],
             'ddc': None,
             'isbn': u'123',
             'keywords': [],
@@ -46,7 +45,10 @@ class TestSparql(unittest.TestCase):
             'year': u'1960',
             }
 
-        self.assertEquals(expected, getMetadata('123'))
+        is_ = getMetadata('123')
+        is_.pop('authors')
+
+        self.assertEquals(expected, is_)
 
     def testGetMetadata(self):
         from recensio.policy.sparqlsearch import getMetadata

@@ -30,20 +30,23 @@ Subject: Test PresentationArticleReview No 0: Dzieje pa\u0144stwa i spo\u0142ecz
 
 Dear Fran\xe7ois Lam\xe8re,
 
-Recently a text on the topic Test PresentationArticleReview No 0: Dzieje pa\u0144stwa i spo\u0142ecze\u0144stwa 1890\u20131945 has been published.
-Its author \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 has presented the text on the review platform recensio.net. Since it falls into the realm of your own research, we would like to let you know that you can comment on the presented statements on recensio.net.
+a publication on "Test PresentationArticleReview No 0: Dzieje państwa i społeczeństwa 1890–1945" was recently released.
+The author \u0425\u0440\u0438\u0441\u0442\u043e \u0421\u0442\u043e\u0438\u0447\u043a\u043e\u0432 has presented this title on recensio.net.
 
-You will only need to register first (fast and free of charge) with your name and e-mail-address. This is necessary to prevent any misuse of the comment function and to maintain the platform's scholarly claim.
+http://...
 
-http://nohost/plone/...
+Since the publication is relevant for your research, we would like to inform you about the possibility of commenting upon the presentation on recensio.net and thereby contributing to a live review.
 
-For any further information/questions please feel free to contact the recensio.net editorial team:
-Recensio.net <fake>.
+In order to do this, you would need to register with your name and e-mail-address. This is merely to prevent misuse of the comment function and to maintain the scholary standards of the platform.
 
-Yours sincerely
+Should you have any questions, you may contact the recensio.net editorial team at any time: Recensio net Recensio.net <fake>.
+
+Best regards
+
 The recensio.net editorial team
 
-recensio.net is a joint project of the Bavarian State Library (BSB) Munich, the German Historical Institute Paris (DHIP) and the Institute for European History (IEG) Mainz – funded by the German Research Foundation (DFG). Further information http://nohost/plone/ueberuns/konzept'''
+recensio.net is a joint project of the Bavarian State Library, the University ol Cologne, and the Leibniz Institute for European History (IEG) Mainz. It is funded by the German Research Foundation (DFG). You can find more information on http://nohost/plone/ueberuns/konzept
+'''
         expected_mail_de = u'''From: Recensio.net <fake>
 To: dev0@syslab.com
 Bcc: maillog@recensio.net
