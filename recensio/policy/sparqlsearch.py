@@ -85,6 +85,36 @@ def keywords_and_ddc(obj, retval):
             # We don't handle Concepts
 
             return
+        if URIRef('http://d-nb.info/vocab/gnd-sc#16.5p') in [x for x in
+                g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
+                ))]:
+
+            # We don't handle persons as keywords
+
+            return
+        if URIRef('http://d-nb.info/vocab/gnd-sc#16.5') in [x for x in
+                g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
+                ))]:
+
+            # OK, I really don't know whats happening right now. THis
+            # example is from: http://d-nb.info/gnd/4240685-7
+
+            return
+        if URIRef('http://d-nb.info/vocab/gnd-sc#6.6') in [x for x in
+                g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
+                ))]:
+
+            # We don't handle organizations as keywords
+
+            return
+        if URIRef('http://d-nb.info/vocab/gnd-sc#8.2b') in [x for x in
+                g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
+                ))]:
+
+            # We don't handle organizations as keywords (again?)
+
+            return
+
         possible_values = [x.title() for x in
                            g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#preferredNameForTheSubjectHeading'
                            ))] + [x.title() for x in
@@ -93,7 +123,8 @@ def keywords_and_ddc(obj, retval):
         if possible_values:
             retval['keywords'].extend(possible_values)
         else:
-            log.error("Don't know how to handle this: %s", raw_data)
+            log.error('Don\'t know how to handle this for keyword and ddc: %s'
+                      , raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
             retval['ddc'] = obj.value
@@ -109,7 +140,7 @@ def authorsStore(obj, retval):
         try:
             g.parse(obj.value)
         except RDFaError, e:
-            log.error("Bad answer from '%s': '%s', ignoring",
+            log.error('Bad answer from \'%s\': \'%s\', ignoring',
                       obj.value, e, exc_info=True)
             return
         firstnames = [x.title() for x in
@@ -123,6 +154,7 @@ def authorsStore(obj, retval):
         retval['authors'].append(dict(firstname=firstname,
                                  lastname=surname))
 
+
 HANDLERS = defaultdict(lambda : lambda a, b: None)
 HANDLERS['http://purl.org/dc/elements/1.1/title'] = genericStore('title'
         )
@@ -132,6 +164,8 @@ HANDLERS['http://purl.org/dc/elements/1.1/creator'] = authorsStore
 HANDLERS['http://purl.org/dc/elements/1.1/contributor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/editor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/isbn'] = genericStore('isbn')
+HANDLERS['http://purl.org/dc/elements/1.1/identifier'] = \
+    genericStore('isbn')  # XXX In the tests is an example where both are set. Both isbn setters override each other right now!
 HANDLERS['http://purl.org/dc/elements/1.1/language'] = \
     genericStore('language')
 HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = \
@@ -140,7 +174,7 @@ HANDLERS['http://purl.org/dc/elements/1.1/subject'] = keywords_and_ddc
 HANDLERS['http://purl.org/dc/elements/1.1/publisher'] = \
     genericStore('publisher')
 
-KNOWN_IGNORED = map(IRI, [
+KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publication anyway
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
     'http://www.w3.org/2002/07/owl#sameAs',
     'http://purl.org/dc/elements/1.1/description',
@@ -148,6 +182,9 @@ KNOWN_IGNORED = map(IRI, [
     'http://xmlns.com/foaf/0.1/homepage',
     'http://purl.org/vocab/frbr/core#exemplar',
     'http://purl.org/dc/terms/isPartOf',
+    'http://www.geonames.org/ontology#countryCode',
+    'http://purl.org/dc/terms/hasPart',
+    'http://purl.org/dc/terms/alternative',
     ])
 
 
