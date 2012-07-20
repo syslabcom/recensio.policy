@@ -8,6 +8,7 @@ from zope.testing.loggingsupport import InstalledHandler
 
 
 class TestSparql(unittest.TestCase):
+    level = 100
 
     def setUp(self):
         self.handler = InstalledHandler('recensio')
