@@ -4,7 +4,15 @@ Changelog
 2.5.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added more handlers to SPARQL.
+  [gerken]
+- Improved logging.
+  [gerken]
+- Removed tests that did not add value.
+  [gerken]
+- Sparql tests have a level of 100 now, since they
+  are unreliable anyways
+  [gerken]
 
 
 2.5.2 (2012-06-19)

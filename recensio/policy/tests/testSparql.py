@@ -15,7 +15,6 @@ class TestSparql(unittest.TestCase):
         self.maxDiff = 2000
 
     def tearDown(self):
-        pass
         self.handler.uninstall()
 
     def testGetLabels(self):
