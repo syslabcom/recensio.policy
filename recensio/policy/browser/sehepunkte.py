@@ -61,7 +61,7 @@ class Import(BrowserView):
                     "is broken now! Please see #4656 for fixes")
                 raise
 
-        total = (datetime.datetime.now() - before).total_seconds()
+        total = (datetime.datetime.now() - before).seconds / 1.0
         log.info("Sehepunkte finished. Imported %i reviews "
             "in %f seconds. %f reviews/s",
             review_count, total, review_count / total)
