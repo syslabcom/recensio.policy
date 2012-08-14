@@ -42,6 +42,8 @@ class Import(BrowserView):
 
     def __call__(self):
         data = []
+        before = datetime.datetime.now()
+        review_count = 0
         for url in self._getTargetURLs():
             try:
                 data.append(sehepunkte_parser.parse(urllib.urlopen(url).read()))
@@ -52,13 +54,17 @@ class Import(BrowserView):
                 self._addReview(self._convertVocabulary(\
                                  convertToString(\
                                   review)))
-                commit()
+                review_count += 1
             except:
                 log.exception("Warning, sehepunkte import failed! Exception "
                     "has not been catched, but bubbled. Probably sehepunkte "
                     "is broken now! Please see #4656 for fixes")
                 raise
 
+        total = (datetime.datetime.now() - before).total_seconds()
+        log.info("Sehepunkte finished. Imported %i reviews "
+            "in %f seconds. %f reviews/s",
+            review_count, total, review_count / total)
         return "Success"
 
     def _getTargetURLs(self):
