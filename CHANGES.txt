@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.5.7 (unreleased)
+2.5.7 (2012-08-14)
 ------------------
 
 - total_seconds is not available in python 2.6
