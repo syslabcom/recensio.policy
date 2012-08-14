@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.5.6.dev0'
+version = '2.5.6'
 
 setup(name='recensio.policy',
       version=version,
@@ -50,6 +50,7 @@ setup(name='recensio.policy',
           'collective.logbook',
           'collective.solr',
           'zope.keyreference',
+          'five.intid', # Bugfix for plone.app.async
       ],
       extras_require = {
         'test' : ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
