@@ -1,10 +1,11 @@
 Changelog
 =========
 
-2.5.4 (unreleased)
+2.5.4 (2012-08-14)
 ------------------
 
-- Nothing changed yet.
+- Improved sehepunkte import, should now stop to fail
+  [gerken]
 
 
 2.5.3 (2012-07-22)
