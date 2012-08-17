@@ -27,6 +27,15 @@
     provides="Products.GenericSetup.interfaces.EXTENSION"
     />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="7"
+   destination="8"
+   title="Upgrade to 8, pageImage conversion"
+   description=""
+   profile='recensio.policy:default'
+   handler=".upgrades.v7to8"
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
