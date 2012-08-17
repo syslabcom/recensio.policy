@@ -35,6 +35,7 @@
    description=""
    profile='recensio.policy:default'
    handler=".upgrades.v7to8"
+   />
 
  <genericsetup:registerProfile
     name="demo"
