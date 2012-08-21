@@ -43,15 +43,28 @@ class AsyncMonitor(BrowserView):
     
     def get_job_data(self, job):
         lastused = DateTime(job._p_mtime)
+        if len(job.args) > 3:
+            user = job.args[3]
+        else: 
+            user = ''
+        if len(job.args) > 4:
+            intro = job.args[4]
+        else:
+            intro = {}
+        if isinstance(job.args[0], list):
+            object_path = '/'.join(job.args[0])
+        else:
+            object_path = str(job.args[0])
+
         if job.status != 'pending-status':
             timerunning = time_since(lastused)
         else:
             timerunning = '-'
         return {
             'status' : job.status,
-            'user' : job.args[3],
-            'object_path' : '/'.join(job.args[0]),
-            'description' : (getattr(job.args[4], '__doc__') or job.args[4].__name__).strip(),
+            'user' : user,
+            'object_path' : object_path,
+            'description' : (getattr(intro, '__doc__', '') or getattr(intro, '__name__', '')).strip(),
             'lastused' : lastused.toZone('UTC').pCommon(),
             'timerunning' : timerunning
         }
