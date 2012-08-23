@@ -12,7 +12,7 @@ def v7to8(portal_setup):
         try:
             obj = brain.getObject()
             try:
-                if hasattr(obj, 'pagePicutes') and len(obj.pagePictures):
+                if hasattr(obj, 'pagePictures') and len(obj.pagePictures):
                     len(obj.pagePictures[0])
                     continue
                 else:
