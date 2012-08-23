@@ -138,7 +138,7 @@
   <browser:page
     for="plone.app.layout.navigation.interfaces.INavigationRoot"
     name="subject_list_json"
-    class=".json.SubjectList"
+    class=".jsonviews.SubjectList"
     layer="recensio.theme.interfaces.IRecensioLayer"
     permission="zope2.View"
     />
