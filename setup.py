@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '2.5.9.2'
+version = '2.5.9.3.dev0'
 
 setup(name='recensio.policy',
       version=version,
