@@ -4,7 +4,8 @@ Changelog
 2.5.9.2 (unreleased)
 --------------------
 
-- Nothing changed yet.
+- More manifest stuff.
+  [gerken]
 
 
 2.5.9.1 (2012-08-30)
