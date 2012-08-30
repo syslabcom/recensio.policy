@@ -37,6 +37,16 @@
    handler=".upgrades.v7to8"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="2"
+   source="8"
+   destination="9"
+   title="Upgrade to 9"
+   description="Activate popup forms, show folder_contents tab on translations"
+   profile='recensio.policy:default'
+   handler=".upgrades.v8to9"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
