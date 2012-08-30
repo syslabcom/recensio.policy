@@ -1,1 +1,5 @@
 include *.txt
+recursive-include recensio/policy/profiles *
+recursive-include recensio/policy/ *.xml
+recursive-include recensio/policy/ *.pt
+include vocabularies/*.vdex

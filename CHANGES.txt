@@ -4,7 +4,8 @@ Changelog
 2.5.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Updated manifest in.
+  [gerken]
 
 
 2.5.9 (2012-08-30)
