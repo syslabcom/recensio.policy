@@ -18,4 +18,4 @@ class SubjectList(BrowserView):
             }).facet_counts['facet_fields']['Subject'].items()
         facets.sort(key=lambda x: x[1])
         return json.dumps([x[0] for x in facets[:int(len(facets)
-                          * 0.2)]])
+                          * 1)]])
