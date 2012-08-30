@@ -121,7 +121,7 @@ class MailCollection(BrowserView):
     def getComments(self):
         retval = ''
         for result in self.context.new_discussions.queryCatalog():
-            label_comments = result.total_comments == 1 \
+            label_comments = str(result.total_comments) == '1' \
                 and self.ts.translate(_('comment')) \
                 or self.ts.translate(_('comments'),
                     context=self.context)
@@ -136,14 +136,9 @@ class MailCollection(BrowserView):
         return retval
 
     def getNewPresentations(self):
-        key_monographs = \
-            self.ts.translate(_('presentations_of_monographs'),
-                              context=self.context)
-        key_articles = self.ts.translate(_('presentations_of_articles'
-                ), context=self.context)
-        key_onlineres = \
-            self.ts.translate(_('presentations_of_online_resources'),
-                              context=self.context)
+        key_monographs = u"Monographien / Monographs / Monographies"
+        key_articles = u"Aufsätze / Articles / Articles"
+        key_onlineres = u"Internetressourcen / Online resources / Ressources Internet"
 
         presentations = {key_monographs: [], key_articles: [],
                          key_onlineres: []}
