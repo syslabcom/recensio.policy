@@ -1,4 +1,4 @@
-from zope.schema.interfaces import IVocabularyFactory
+from zope.app.schema.vocabulary import IVocabularyFactory
 from zope.component import getUtility
 from zope.i18n import translate
 from zope.i18n.locales import locales
