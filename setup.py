@@ -22,6 +22,8 @@ setup(name='recensio.policy',
       include_package_data=True,
       zip_safe=False,
       install_requires=[
+          'setuptools',
+          'Products.CMFPlone',
           'rdflib',
           'sparql-client',
           'BeautifulSoup',

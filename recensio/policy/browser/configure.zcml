@@ -7,6 +7,8 @@
 
   <include package="plone.app.registry" />
 
+  <include package="Products.CMFCore" />
+
   <browser:page
     name="async-monitor"
     for="*"

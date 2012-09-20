@@ -1,8 +1,8 @@
-from zope.app.schema.vocabulary import IVocabularyFactory
+from zope.schema.interfaces import IVocabularyFactory
 from Products.CMFCore.utils import getToolByName
 from zope.interface import implements
 from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from zope.app.component.hooks import getSite
+from zope.component.hooks import getSite
 from constants import interface_languages
 
 from plone.registry.interfaces import IRegistry
