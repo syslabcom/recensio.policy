@@ -13,7 +13,7 @@
            provides=".userdataschema.IRecensioUserDataSchema"
            for="Products.CMFCore.interfaces.ISiteRoot"
            factory=".adapter.RecensioUserDataPanelAdapter" />
-  
+
   <adapter factory=".indexer.ddcPlace" name="ddcPlace" />
   <adapter factory=".indexer.ddcTime" name="ddcTime" />
   <adapter factory=".indexer.authors" name="authors" />
@@ -36,14 +36,14 @@
     permission="cmf.SetOwnProperties"
     />
 
-  <browser:viewlet
+<!--  <browser:viewlet
     name="plone.app.i18n.locales.languageselector"
     manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
     class=".browser.selector.RecensioLanguageSelector"
     permission="zope2.View"
     layer="Products.LinguaPlone.interfaces.ILinguaPloneProductLayer"
     />
-
+-->
   <utility
     component=".caching.choose_cache"
     provides="plone.memoize.interfaces.ICacheChooser"
