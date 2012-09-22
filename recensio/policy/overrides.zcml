@@ -36,14 +36,15 @@
     permission="cmf.SetOwnProperties"
     />
 
-<!--  <browser:viewlet
+  <browser:viewlet
     name="plone.app.i18n.locales.languageselector"
     manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
     class=".browser.selector.RecensioLanguageSelector"
     permission="zope2.View"
     layer="Products.LinguaPlone.interfaces.ILinguaPloneProductLayer"
+    template="browser/templates/selector.pt"
     />
--->
+
   <utility
     component=".caching.choose_cache"
     provides="plone.memoize.interfaces.ICacheChooser"
