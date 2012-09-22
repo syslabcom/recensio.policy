@@ -22,7 +22,6 @@ from plone.app.portlets.utils import assignment_mapping_from_key
 from plone.portlet.static import static
 from Products.Archetypes.interfaces.base import IBaseFolder
 from Products.CMFCore.utils import getToolByName
-from Products.CMFEditions.setuphandlers import VERSIONING_ACTIONS, ADD_POLICIES, DEFAULT_POLICIES
 from Products.DCWorkflow.Guard import Guard
 from Products.LinguaPlone.utils import linkTranslations
 from Products.LinguaPlone.public import AlreadyTranslated

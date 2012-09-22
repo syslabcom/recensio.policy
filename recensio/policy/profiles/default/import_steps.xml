@@ -47,10 +47,6 @@
          <dependency step="content" />
          setViewsOnFolders
     </import-step>
-    <import-step id="recensio_policy_set_versioned_types" version="20100920-01"
-            handler="recensio.policy.setuphandlers.setVersionedTypes"
-            description="Activate versioning for our custom types"
-            title="Set versioned types" />
     <import-step id="recensio_portal_tabs" version="20101001-01"
             handler="recensio.policy.setuphandlers.fixPortalTabs"
             description="Remove index_html from the default portal_actions/portal_tabs"
