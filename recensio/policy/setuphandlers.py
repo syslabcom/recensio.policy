@@ -22,7 +22,6 @@ from plone.app.portlets.utils import assignment_mapping_from_key
 from plone.portlet.static import static
 from Products.Archetypes.interfaces.base import IBaseFolder
 from Products.CMFCore.utils import getToolByName
-# from Products.CMFEditions.setuphandlers import VERSIONING_ACTIONS, ADD_POLICIES, DEFAULT_POLICIES
 from Products.DCWorkflow.Guard import Guard
 from Products.LinguaPlone.utils import linkTranslations
 from Products.LinguaPlone.public import AlreadyTranslated
@@ -407,21 +406,6 @@ def publishImportedContent(context):
                 log.warning('Object %s not found. Please run import step "Recensio initial content"' % (id + lang))
                 continue
             doPublish(obj, pwt)
-
-#@guard
-#def setVersionedTypes(context):
-#    portal = context.getSite()
-#
-#    for versioning_actions in PORTAL_TYPES:
-#        VERSIONING_ACTIONS[versioning_actions] = 'version_document_view'
-#        portal_repository = getToolByName(portal, 'portal_repository')
-#        portal_repository.setAutoApplyMode(True)
-#        portal_repository.setVersionableContentTypes(VERSIONING_ACTIONS.keys())
-#        portal_repository._migrateVersionPolicies()
-#        portal_repository.manage_changePolicyDefs(ADD_POLICIES)
-#        for ctype in VERSIONING_ACTIONS:
-#            for policy_id in DEFAULT_POLICIES:
-#                portal_repository.addPolicyForContentType(ctype, policy_id)
 
 @guard
 def fixPortalTabs(self):
