@@ -66,6 +66,4 @@ setup(name='recensio.policy',
       recensio-policy-reset = recensio.policy:reset
       createSite = recensio.policy:createSite
       """,
-      setup_requires=["PasteScript"],
-      paster_plugins = ["ZopeSkel"],
       )
