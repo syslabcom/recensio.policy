@@ -408,21 +408,6 @@ def publishImportedContent(context):
             doPublish(obj, pwt)
 
 @guard
-def setVersionedTypes(context):
-    portal = context.getSite()
-
-    for versioning_actions in PORTAL_TYPES:
-        VERSIONING_ACTIONS[versioning_actions] = 'version_document_view'
-        portal_repository = getToolByName(portal, 'portal_repository')
-        portal_repository.setAutoApplyMode(True)
-        portal_repository.setVersionableContentTypes(VERSIONING_ACTIONS.keys())
-        portal_repository._migrateVersionPolicies()
-        portal_repository.manage_changePolicyDefs(ADD_POLICIES)
-        for ctype in VERSIONING_ACTIONS:
-            for policy_id in DEFAULT_POLICIES:
-                portal_repository.addPolicyForContentType(ctype, policy_id)
-
-@guard
 def fixPortalTabs(self):
     """ Remove index_html from the default portal_actions/portal_tabs """
     site = self.getSite()
