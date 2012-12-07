@@ -379,11 +379,56 @@
  </object>
  <object name="portal_tabs" meta_type="CMF Action Category">
   <property name="title"></property>
-  <object name="authors" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="label_tab_authors">Authors</property>
+  <object name="rezensionen" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">label_reviews</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">string:${globals_view/navigationRootUrl}/autoren</property>
+      name="url_expr">string:${globals_view/navigationRootUrl}/rezensionen</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="praesentationen" meta_type="CMF Action"
+     i18n:domain="recensio">
+   <property name="title" i18n:translate="">label_presentations</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">string:${globals_view/navigationRootUrl}/praesentationen</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="faq" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">label_participate</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">python:portal.restrictedTraverse('faq').getTranslation().absolute_url()</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="presse" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">label_press</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">python:portal.restrictedTraverse('presse').getTranslation().absolute_url()</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions"/>
+   <property name="visible">True</property>
+  </object>
+  <object name="authors" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">Authors</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">python:portal.restrictedTraverse('autoren').getTranslation().absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
@@ -393,10 +438,10 @@
    <property name="visible">True</property>
   </object>
   <object name="themes" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="label_tab_themes">Themes</property>
+   <property name="title" i18n:translate="">Themes</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">string:${globals_view/navigationRootUrl}/themen-epochen-regionen</property>
+      name="url_expr">python:portal.restrictedTraverse('themen-epochen-regionen').getTranslation().absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
@@ -406,10 +451,10 @@
    <property name="visible">True</property>
   </object>
   <object name="aboutus" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="label_tab_about_us">About us</property>
+   <property name="title" i18n:translate="">About us</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">string:${globals_view/navigationRootUrl}/ueberuns</property>
+      name="url_expr">python:portal.restrictedTraverse('ueberuns').getTranslation().absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
