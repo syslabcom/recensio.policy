@@ -402,6 +402,45 @@
    <property name="permissions"/>
    <property name="visible">True</property>
   </object>
+  <object name="themes" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">Themes</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">python:portal.restrictedTraverse('themen-epochen-regionen').getTranslation().absolute_url()</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
+  <object name="authors" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">Authors</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">python:portal.restrictedTraverse('autoren').getTranslation().absolute_url()</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
+  <object name="aboutus" meta_type="CMF Action" i18n:domain="recensio">
+   <property name="title" i18n:translate="">About us</property>
+   <property name="description" i18n:translate=""></property>
+   <property
+      name="url_expr">python:portal.restrictedTraverse('ueberuns').getTranslation().absolute_url()</property>
+   <property name="link_target"></property>
+   <property name="icon_expr"></property>
+   <property name="available_expr"></property>
+   <property name="permissions">
+    <element value="View"/>
+   </property>
+   <property name="visible">True</property>
+  </object>
   <object name="faq" meta_type="CMF Action" i18n:domain="recensio">
    <property name="title" i18n:translate="">label_participate</property>
    <property name="description" i18n:translate=""></property>
@@ -422,45 +461,6 @@
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
    <property name="permissions"/>
-   <property name="visible">True</property>
-  </object>
-  <object name="authors" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="">Authors</property>
-   <property name="description" i18n:translate=""></property>
-   <property
-      name="url_expr">python:portal.restrictedTraverse('autoren').getTranslation().absolute_url()</property>
-   <property name="link_target"></property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
-  <object name="themes" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="">Themes</property>
-   <property name="description" i18n:translate=""></property>
-   <property
-      name="url_expr">python:portal.restrictedTraverse('themen-epochen-regionen').getTranslation().absolute_url()</property>
-   <property name="link_target"></property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
-   <property name="visible">True</property>
-  </object>
-  <object name="aboutus" meta_type="CMF Action" i18n:domain="recensio">
-   <property name="title" i18n:translate="">About us</property>
-   <property name="description" i18n:translate=""></property>
-   <property
-      name="url_expr">python:portal.restrictedTraverse('ueberuns').getTranslation().absolute_url()</property>
-   <property name="link_target"></property>
-   <property name="icon_expr"></property>
-   <property name="available_expr"></property>
-   <property name="permissions">
-    <element value="View"/>
-   </property>
    <property name="visible">True</property>
   </object>
  </object>
