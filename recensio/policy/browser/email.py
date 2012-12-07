@@ -10,6 +10,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
+from smtplib import SMTPServerDisconnected
 from zope.component import getUtility
 import logging
 
@@ -43,9 +44,13 @@ class MailCollection(BrowserView):
         self.root = getToolByName(self.context, 'portal_url'
                                   ).getPortalObject()
 
+    def is_dev_mode(self):
+        qi = getToolByName(self.root, 'portal_quickinstaller')
+        return qi.isDevelopmentMode()
+
     def getNewReviews(self):
         magazines = {}
-        for result in self.context.new_reviews.queryCatalog():
+        for result in self.context.new_reviews.queryCatalog(batch=True, b_size=10000):
             obj = result.getObject()
             mag_title = safe_unicode(obj.get_publication_title())
             if not mag_title in magazines:
@@ -60,13 +65,16 @@ class MailCollection(BrowserView):
 
             # bad hack for issue title
 
-            try:
-                issue = mag_results[0].aq_parent
-                if issue.portal_type == 'Issue':
-                    retval += u'<h4>%s</h4>\n' % issue.Title()
-            except:
-                logger.error('Couldn\'t calculate issue title in MailCollection/getNewReviews'
-                             )
+            subtitle = []
+            issue = mag_results[0].aq_parent
+            if issue.portal_type in ('Issue', 'Volume'):
+                subtitle.append(issue.Title())
+                volume = issue.aq_parent
+                if volume.portal_type == 'Volume':
+                    subtitle.append(volume.Title())
+            subtitle.reverse()
+            if subtitle:
+                retval += u'<h4>%s</h4>\n' % (', '.join(subtitle))
             for (i, result) in enumerate(mag_results):
                 if i < 9999:
                     title = result.getDecoratedTitle()
@@ -221,14 +229,21 @@ class MailCollection(BrowserView):
             if self.errors:
                 raise ValidationError('Errors: %s' % self.errors)
             else:
-                self.mailhost.secureSend(
-                    message=msg,
-                    mto=mail_to,
-                    mfrom=mail_from,
-                    subject=settings.subject,
-                    subtype='html',
-                    charset='utf-8',
-                    )
+                try:
+                    self.mailhost.secureSend(
+                        message=msg,
+                        mto=mail_to,
+                        mfrom=mail_from,
+                        subject=settings.subject,
+                        subtype='html',
+                        charset='utf-8',
+                        )
+                except SMTPServerDisconnected:
+                    if not self.is_dev_mode():
+                        raise
+                    else:
+                        logger.info("Could not send mail: " + msg)
+
 
                 # self.mailhost.send( messageText=msg, mto=mail_to,
                 # mfrom=mail_from, subject=settings.subject,
