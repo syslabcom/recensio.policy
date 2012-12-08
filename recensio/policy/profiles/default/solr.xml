@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object name="solr">
+ <connection>
+  <base value="/solr"/>
+ </connection>
+ <settings>
+  <async value="True"/>
+  <auto-commit value="False"/>
+  <commit-within value="0"/>
+  <index-timeout value="0.0"/>
+  <search-timeout value="0.0"/>
+  <max-results value="1000"/>
+  <required-query-parameters/>
+  <search-pattern value="(Title:{value}^5 OR Description:{value}^2 OR SearchableText:{value} OR SearchableText:({base_value}))"/>
+  <search-facets>
+   <parameter name="portal_type"/>
+   <parameter name="ddcPlace"/>
+   <parameter name="ddcTime"/>
+   <parameter name="ddcSubject"/>
+   <parameter name="languageReview"/>
+  </search-facets>
+  <filter-query-parameters>
+   <parameter name="portal_type"/>
+  </filter-query-parameters>
+  <slow-query-threshold value="500"/>
+  <effective-steps value="1"/>
+  <exclude-user value="False"/>
+  <highlight_fields/>
+  <highlight_formatter_pre value=""/>
+  <highlight_formatter_post value=""/>
+  <highlight_fragsize value="100"/>
+  <field-list/>
+ </settings>
+</object>
