@@ -32,11 +32,11 @@
           <a href="http://www.bsb-muenchen.de/"
              ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
              alt="Logo der Bayerischen Staatsbibliothek" /></a>
-          <a href="http://www.dhi-paris.fr/"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/dhip_logo.png" src="imgs/logos/dhip_logo.png"
-             alt="Logo des deutschen historischen Instituts Paris" /></a>
+          <a href="http://www.uni-koeln.de/"
+             ><img tal:attributes="src string:${portal_url}/imgs/logos/uni-koeln-logo.png" src="imgs/logos/uni-koeln-logo.png"
+             alt="Logo der Universität Köln" /></a>
           <a href="http://www.ieg-mainz.de/likecms/index.php"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.gif" src="imgs/logos/ieg_logo.gif"
+             ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.png" src="imgs/logos/ieg_logo.jpg"
              alt="Logo des Institus für europäische Geschichte" /></a>
       </div>
 
