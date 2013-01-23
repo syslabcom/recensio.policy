@@ -7,6 +7,12 @@ Changelog
 - Nothing changed yet.
 
 
+2.5.10 (2013-01-23)
+-------------------
+
+- Nothing changed yet.
+
+
 2.5.9.5 (2012-09-10)
 --------------------
 
