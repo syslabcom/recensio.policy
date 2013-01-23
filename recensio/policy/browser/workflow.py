@@ -8,6 +8,7 @@ from plone.app.controlpanel.mail import IMailSchema
 from zope.component import queryUtility
 from zope.i18n import translate
 import logging
+from DateTime import DateTime
 
 from recensio.policy.interfaces import IWorkflowHelper, IRecensioSettings
 from recensio.policy import recensioMessageFactory as _
@@ -26,7 +27,7 @@ class WorkflowHelper(BrowserView):
     """
     implements(IWorkflowHelper)
 
-    
+
     def handleTransition(self, info):
         membership_tool = getToolByName(self.context, 'portal_membership')
         user = membership_tool.getAuthenticatedMember()
@@ -41,8 +42,13 @@ class WorkflowHelper(BrowserView):
             settings = registry.forInterface(IRecensioSettings)
         except KeyError:
             settings = dict()
-        
+
         msg = ''
+
+        if info.transition.id == 'publish':
+            info.object.setEffectiveDate(DateTime())
+            info.object.reindexObject()
+
         if info.transition.id == 'submit':
             title = _(u"label_item_submitted", default=u"Content was submitted")
             mail_to = getattr(settings, 'review_submitted_email', None) or mail_from
