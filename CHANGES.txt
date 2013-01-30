@@ -1,7 +1,13 @@
 Changelog
 =========
 
-2.5.10 (unreleased)
+2.6.0 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+2.5.10 (2013-01-23)
 -------------------
 
 - Nothing changed yet.
