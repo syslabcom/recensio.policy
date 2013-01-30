@@ -8,7 +8,7 @@
  </property>
  <property name="email_from_address"
     type="string">redaktion@recensio.net</property>
- <property name="email_from_name" type="string">Recensio.net</property>
+ <property name="email_from_name" type="string">recensio.net</property>
  <property name="validate_email" type="boolean">True</property>
  <property name="email_charset" type="string">utf-8</property>
  <property name="enable_permalink" type="boolean">False</property>
