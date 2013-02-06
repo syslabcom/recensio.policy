@@ -30,7 +30,9 @@ class RecensioLanguageSelector(TranslatableLanguageSelector):
         first_pass = True
         _checkPermission = getSecurityManager().checkPermission
         for item in chain:
-            if ISiteRoot.providedBy(item):
+            if ISiteRoot.providedBy(item)
+                or not ITranslatable.providedBy(item)
+                or not item.Language():
                 # We have a site root, which works as a fallback
                 has_view_permission = bool(_checkPermission('View', item))
                 for c in missing:
