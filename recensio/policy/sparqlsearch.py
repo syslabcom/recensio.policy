@@ -85,6 +85,11 @@ def keywords_and_ddc(obj, retval):
             # We don't handle Concepts
 
             return
+        if URIRef('http://www.w3.org/2004/02/skos/core#Concept') in \
+            [x for x in g.objects(predicate=URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'))]:
+            # We still don't handle Concepts
+            return
+
         if URIRef('http://d-nb.info/vocab/gnd-sc#16.5p') in [x for x in
                 g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
                 ))]:
@@ -123,6 +128,7 @@ def keywords_and_ddc(obj, retval):
         if possible_values:
             retval['keywords'].extend(possible_values)
         else:
+            import pdb;pdb.set_trace()
             log.error('Don\'t know how to handle this for keyword and ddc: %s'
                       , raw_data)
     else:
@@ -156,23 +162,24 @@ def authorsStore(obj, retval):
 
 
 HANDLERS = defaultdict(lambda : lambda a, b: None)
-HANDLERS['http://purl.org/dc/elements/1.1/title'] = genericStore('title'
-        )
+HANDLERS['http://iflastandards.info/ns/isbd/elements/P1016'] = genericStore("location")
+HANDLERS['http://purl.org/dc/elements/1.1/contributor'] = authorsStore
+HANDLERS['http://purl.org/dc/elements/1.1/creator'] = authorsStore
+HANDLERS['http://purl.org/dc/elements/1.1/identifier'] = genericStore('isbn')  # XXX In the tests is an example where both are set. Both isbn setters override each other right now!
+HANDLERS['http://purl.org/dc/elements/1.1/language'] = genericStore('language')
+HANDLERS['http://purl.org/dc/terms/language'] = genericStore('language')
+HANDLERS['http://purl.org/dc/elements/1.1/publisher'] = genericStore('publisher')
+HANDLERS['http://purl.org/dc/terms/publisher'] = genericStore('publisher')
+HANDLERS['http://purl.org/dc/elements/1.1/subject'] = keywords_and_ddc
+HANDLERS['http://purl.org/dc/terms/subject'] = keywords_and_ddc
+HANDLERS['http://purl.org/dc/elements/1.1/title'] = genericStore('title')
+HANDLERS['http://purl.org/dc/terms/title'] = genericStore('title')
+HANDLERS['http://purl.org/dc/terms/creator'] = authorsStore
 HANDLERS['http://purl.org/dc/terms/extent'] = numberStore
 HANDLERS['http://purl.org/dc/terms/issued'] = genericStore('year')
-HANDLERS['http://purl.org/dc/elements/1.1/creator'] = authorsStore
-HANDLERS['http://purl.org/dc/elements/1.1/contributor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/editor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/isbn'] = genericStore('isbn')
-HANDLERS['http://purl.org/dc/elements/1.1/identifier'] = \
-    genericStore('isbn')  # XXX In the tests is an example where both are set. Both isbn setters override each other right now!
-HANDLERS['http://purl.org/dc/elements/1.1/language'] = \
-    genericStore('language')
-HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = \
-    genericStore('location')
-HANDLERS['http://purl.org/dc/elements/1.1/subject'] = keywords_and_ddc
-HANDLERS['http://purl.org/dc/elements/1.1/publisher'] = \
-    genericStore('publisher')
+HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = genericStore('location')
 
 KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publication anyway
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
@@ -182,9 +189,11 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
     'http://xmlns.com/foaf/0.1/homepage',
     'http://purl.org/vocab/frbr/core#exemplar',
     'http://purl.org/dc/terms/isPartOf',
+    'http://purl.org/dc/terms/description',
     'http://www.geonames.org/ontology#countryCode',
     'http://purl.org/dc/terms/hasPart',
     'http://purl.org/dc/terms/alternative',
+    'http://iflastandards.info/ns/isbd/elements/P1006',
     ])
 
 
@@ -209,7 +218,13 @@ def getMetadata(isbn):
     for (subject, predicate, obj) in result:
         if predicate.value not in HANDLERS and predicate \
             not in KNOWN_IGNORED:
-            log.error('Don\'t know how to handle %s', str(predicate))
+            log.error(u'Don\'t know how to handle %s. Contents: %s',
+                str(predicate.value),
+                obj.value)
+        if predicate in KNOWN_IGNORED:
+            log.info(u"We ignore the following information: '%s', Content: '%s'",
+                str(predicate.value),
+                obj.value)
         HANDLERS[predicate.value](obj, retval)
     for (key, values) in retval.items():
         if hasattr(values, 'sort'):
