@@ -1,6 +1,6 @@
 <metadata>
     <description>Recensio policy product</description>
-    <version>9</version>
+    <version>10</version>
     <dependencies>
         <dependency>profile-Products.ATVocabularyManager:default</dependency>
         <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>

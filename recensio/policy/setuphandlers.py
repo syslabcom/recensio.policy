@@ -35,6 +35,8 @@ mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
 imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen',
         'images', 'RSS-feeds', 'beste-kommentare', 'rezensionen', 'front-page', 'praesentationen']
 
+PROFILE_ID = 'profile-recensio.policy:default'
+
 
 def guard(func):
     def wrapper(self):
@@ -415,3 +417,6 @@ def fixPortalTabs(self):
     tabs = pat.get("portal_tabs")
     if tabs and "index_html" in tabs.objectIds():
         tabs.manage_delObjects("index_html")
+
+def upgradeViewlets(setup_tool):
+    setup_tool.runImportStepFromProfile(PROFILE_ID, 'viewlets')

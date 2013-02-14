@@ -17,6 +17,15 @@
         description="Install and configure the Recensio XDV theme"
         handler=".setuphandlers.setupXDVTheme">
     </genericsetup:importStep>
+
+    <genericsetup:upgradeStep
+        title="Upgrade viewlets"
+        source="9"
+        destionation="10"
+        handler=".setuphandlers.upgradeViewlets"
+        sortkey="1"
+        profile="recensio.policy:default"
+        />
         
 </configure>
 
