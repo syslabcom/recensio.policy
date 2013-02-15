@@ -1,7 +1,7 @@
 Changelog
 =========
 
-2.6.0 (unreleased)
+3.0.0 (2013-02-15)
 ------------------
 
 - New release for Plone 4.2 and many changes
