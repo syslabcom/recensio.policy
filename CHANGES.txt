@@ -4,7 +4,8 @@ Changelog
 2.6.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- New release for Plone 4.2 and many changes
+  [gerken]
 
 
 2.5.11 (2013-01-30)
