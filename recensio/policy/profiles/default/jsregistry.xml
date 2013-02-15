@@ -1,4 +1,5 @@
 <?xml version="1.0"?>
 <object name="portal_javascripts" meta_type="JavaScripts Registry">
  <javascript enabled="false" id="++resource++search.js" insert-after="livesearch.js" />
+ <javascript enabled="false" id="jquery.highlightsearchterms.js" />
 </object>
