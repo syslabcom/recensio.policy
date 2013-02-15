@@ -34,7 +34,6 @@ setup(name='recensio.policy',
           'Products.LinguaPlone',
           'collective.captcha>1.5', # We have permission problems in 1.5
           'collective.indexing',
-          'collective.xdv',
           'collective.portlet.tal',
           'guess-language',
           'lxml',
