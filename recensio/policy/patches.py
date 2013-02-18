@@ -71,8 +71,8 @@ def mangleQuery(keywords, config, schema):
                     value = value.lower()
                     base_value = safe_unicode(quote(value.replace('*', '').replace('?', '')))
                 # simple queries use custom search pattern
-                value = pattern.format(value=safe_unicode(quote(value)),
-                    base_value=base_value).encode('utf8')
+                value = safe_unicode(pattern.format(value=quote(value),
+                                     base_value=quote(value))).encode('utf8')
                 keywords[key] = set([value])    # add literal query parameter
                 continue
             elif simple_term:               # use prefix/wildcard search
