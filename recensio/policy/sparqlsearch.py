@@ -128,7 +128,6 @@ def keywords_and_ddc(obj, retval):
         if possible_values:
             retval['keywords'].extend(possible_values)
         else:
-            import pdb;pdb.set_trace()
             log.error('Don\'t know how to handle this for keyword and ddc: %s'
                       , raw_data)
     else:
