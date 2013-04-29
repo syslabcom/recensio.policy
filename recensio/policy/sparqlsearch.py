@@ -188,6 +188,7 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
     'http://xmlns.com/foaf/0.1/homepage',
     'http://purl.org/vocab/frbr/core#exemplar',
     'http://purl.org/dc/terms/isPartOf',
+    'http://purl.org/dc/terms/identifier',
     'http://purl.org/dc/terms/description',
     'http://www.geonames.org/ontology#countryCode',
     'http://purl.org/dc/terms/hasPart',

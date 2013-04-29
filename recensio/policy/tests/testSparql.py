@@ -12,7 +12,7 @@ class TestSparql(unittest.TestCase):
 
     def setUp(self):
         self.handler = InstalledHandler('recensio')
-        self.maxDiff = 2000
+        self.maxDiff = None
 
     def tearDown(self):
         self.handler.uninstall()
@@ -202,20 +202,48 @@ class TestSparql(unittest.TestCase):
             'keywords': [u'Aufsatzsammlung', u'Geschichte',
                          u'Kollektives Ged\xe4chtnis',
                          u'Weltkrieg <1914-1918>'],
-            'language': u'Undetermined',
+            'language': u'German',
             'location': u'Essen',
             'pages': u'222',
             'publisher': u'Klartext',
             'subtitle': None,
-            'title': u'Der Erste Weltkrieg in der popul\xe4ren Erinnerungskultur',
+            'title': u'\x98Der\x9c Erste Weltkrieg in der popul\xe4ren Erinnerungskultur',
             'year': u'2008',
         }
+        ignored = [
+  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'hrsg von Barbara Korte'",
+  u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783898617277'",
+  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV007921367'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023169149'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M472/item/BV023169149'",
+  u"We ignore the following information: 'http://www.geonames.org/ontology#countryCode', Content: 'DE'",
+  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://d-nb.info/987356151'",
+  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV007921367/vol/22'",
+  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/DNB-987356151'",
+  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/244057457'"
+
+        ]
+
+        ignored.sort()
+
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783898617277')
+        errors = [x.msg % x.args for x in self.handler.records]
+        errors.sort()
         metadata.pop('authors')
         self.assertEquals(expected, metadata)
-        self.assertFalse([x.getMessage() for x in self.handler.records])
+        self.assertEquals(ignored, errors)
 
     def testGetMetadata04(self):
         expected = {
