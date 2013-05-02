@@ -138,6 +138,7 @@ def keywords_and_ddc(obj, retval):
 
 
 def authorsStore(obj, retval):
+    import pdb;pdb.set_trace()
     if not obj.value.startswith('http'):
         retval['authors'].append(obj.value)
     else:
@@ -162,6 +163,7 @@ def authorsStore(obj, retval):
 
 HANDLERS = defaultdict(lambda : lambda a, b: None)
 HANDLERS['http://iflastandards.info/ns/isbd/elements/P1016'] = genericStore("location")
+HANDLERS['http://iflastandards.info/ns/isbd/elements/P1006'] = genericStore('subtitle')
 HANDLERS['http://purl.org/dc/elements/1.1/contributor'] = authorsStore
 HANDLERS['http://purl.org/dc/elements/1.1/creator'] = authorsStore
 HANDLERS['http://purl.org/dc/elements/1.1/identifier'] = genericStore('isbn')  # XXX In the tests is an example where both are set. Both isbn setters override each other right now!
@@ -193,7 +195,6 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
     'http://www.geonames.org/ontology#countryCode',
     'http://purl.org/dc/terms/hasPart',
     'http://purl.org/dc/terms/alternative',
-    'http://iflastandards.info/ns/isbd/elements/P1006',
     ])
 
 

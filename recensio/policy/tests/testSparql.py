@@ -112,7 +112,7 @@ class TestSparql(unittest.TestCase):
             'location': u'M\xfcnster ; New York NY ; M\xfcnchen ; Berlin',
             'pages': u'162',
             'publisher': u'Waxmann',
-            'subtitle': None,
+            'subtitle': u'Sprachentwicklung und Sprachf\xf6rderung in Kindertagesst\xe4tten ; [anl\xe4sslich des Landeskongresses \"Kinder Bilden Sprache - Sprache Bildet Kinder\" am 4. November 2008 in Recklinghausen]',
             # XXX 'title': u'Kinder bilden Sprache - Sprache bildet Kinder :
             # Sprachentwicklung und Sprachf\xf6rderung in Kindertagesst\xe4tten
             # ; [anl\xe4sslich des Landeskongresses "Kinder Bilden Sprache -
@@ -123,7 +123,6 @@ class TestSparql(unittest.TestCase):
         }
 
         ignored = sorted([
-            u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'Sprachentwicklung und Sprachf\xf6rderung in Kindertagesst\xe4tten ; [anl\xe4sslich des Landeskongresses \"Kinder Bilden Sprache - Sprache Bildet Kinder\" am 4. November 2008 in Recklinghausen]'",
             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Literaturangaben'",
             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: '[Ministerium f\xfcr Generationen, Familie, Frauen und Integration des Landes Nordrhein-Westfalen, Referat \xd6ffentlichkeitsarbeit]'",
             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV035724519'",
@@ -287,17 +286,14 @@ class TestSparql(unittest.TestCase):
             'location': u'Berlin ; Heidelberg ; New York',
             'pages': u'2081',
             'publisher': u'Springer',
-            'subtitle': None,
+            'subtitle': u'eine Dokumentensammlung nebst Einf\xfchrungen',
 #            'title': u'Deutsches Verfassungsrecht 1806 - 1918 : eine Dokumentensammlung nebst Einf\xfchrungen. 3: Berg und Braunschweig',
             'title': u'Deutsches Verfassungsrecht 1806 - 1918. 3: Berg und Braunschweig',
             'year': u'2010',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: '1806 - 1918 ; eine Dokumentensammlung nebst Einf\xfchrungen'",
-             u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: '1806 - 1918 ; eine Dokumentensammlung nebst Einf\xfchrungen'",
-             u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'eine Dokumentensammlung nebst Einf\xfchrungen'",
-             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Michael Kotulla'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Michael Kotulla'",
              u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Michael Kotulla'",
              u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Michael Kotulla'",
              u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '10.1007/978-3-540-29497-9'",
@@ -369,16 +365,13 @@ class TestSparql(unittest.TestCase):
             'location': u'D\xfcsseldorf',
             'pages': u'616',
             'publisher': u'Droste',
-            'subtitle': None,
+            'subtitle': u'die Sitzungsprotokolle der preu\xdfischen Landtagsfraktion der DDP und DStP ; 1919 - 1932',
             'title': u'Linksliberalismus in Preu\xdfen. 2: Januar 1923 bis M\xe4rz 1932',
             'year': u'2009',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'die Sitzungsprotokolle der preu\xdfischen Landtagsfraktion der DDP und DStP ; 1919 - 1932'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'die Sitzungsprotokolle der preu\xdfischen Landtagsfraktion der DDP und DStP ; 1919 - 1932'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'die Sitzungsprotokolle der preu\xdfischen Landtagsfraktion der DDP und DStP ; 1919 - 1932'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
   u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV023363266/vol/1'",
@@ -447,15 +440,13 @@ class TestSparql(unittest.TestCase):
             'location': u'Ath\u0113na',
             'pages': None,
             'publisher': u'Hell\u0113nika Grammata',
-            'subtitle': None,
+            'subtitle': u'praktika tu 3. Eur\u014dpa\xefku Synedriu Neoell\u0113nik\u014dn Spud\u014dn t\u0113s Eur\u014dpa\xefk\u0113s Etaireias Neoell\u0113nik\u014dn Spud\u014dn (EENS), Bucurest',
             'title': u'\x98O\x9c ell\u0113nikos kosmos anamesa epoch\u0113 tu Diaph\u014dtismu kai ston eikosto ai\u014dna',
             'year': None,
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'praktika tu 3. Eur\u014dpa\xefku Synedriu Neoell\u0113nik\u014dn Spud\u014dn t\u0113s Eur\u014dpa\xefk\u0113s Etaireias Neoell\u0113nik\u014dn Spud\u014dn (EENS), Bucurest'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'praktika tu 3. Eur\u014dpa\xefku Synedriu Neoell\u0113nik\u014dn Spud\u014dn t\u0113s Eur\u014dpa\xefk\u0113s Etaireias Neoell\u0113nik\u014dn Spud\u014dn (EENS), Bukuresti, 2 - 4 Iuniu 2006'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: 'elell\u0113nikos'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: 'elell\u0113nikos'",
   u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: '\x98Ho\x9c Hell\u0113nikos kosmos anamesa st\u0113n epoch\u0113 tu Diaph\u014dtismu kai ston eikosto ai\u014dna'",
   u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: '\x98The\x9c Greek world between the Age of Enlightenment and the twentieth century'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Beitr teilw griech, neugriech, teilw engl, teilw ital, teilw franz - Teilw in griech Schr'",
@@ -613,14 +604,13 @@ class TestSparql(unittest.TestCase):
             'location': u'Praha',
             'pages': u'438',
             'publisher': u'Pulchra',
-            'subtitle': None,
+            'subtitle': u'syst\xe9mov\xe1 anal\xfdza sudeton\u011bmeck\xe9 politiky v \u010ceskoslovensk\xe9 republice 1918 - 1938',
             'title': u'Odep\u0159en\xe1 integrace',
             'year': u'2009',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'syst\xe9mov\xe1 anal\xfdza sudeton\u011bmeck\xe9 politiky v \u010ceskoslovensk\xe9 republice 1918 - 1938'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Ladislav Josef Beran'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Ladislav Josef Beran'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Verweigerte Integration'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035973071'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035973071'",
@@ -659,18 +649,13 @@ class TestSparql(unittest.TestCase):
             'location': u'M\xfcnchen',
             'pages': u'350',
             'publisher': u'Siedler',
-            'subtitle': None,
+            'subtitle':  u'eine Bilanz',
             'title': u'Au\xdfer Dienst',
             'year': u'2008',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'eine Bilanz'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'eine Bilanz'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'eine Bilanz'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'eine Bilanz'",
-  u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'eine Bilanz'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
   u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
@@ -728,7 +713,7 @@ class TestSparql(unittest.TestCase):
         metadata = getMetadata('9783886808632')
         errors = [x.msg % x.args for x in self.handler.records]
         errors.sort()
-        metadata.pop('authors')
+        #metadata.pop('authors')
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
@@ -741,14 +726,13 @@ class TestSparql(unittest.TestCase):
             'location': u'Paderborn [u.a.]',
             'pages': u'403',
             'publisher': u'Sch\xf6ningh',
-            'subtitle': None,
+            'subtitle': u'deutsche Historiker an der Reichsuniversit\xe4t Posen (1941 - 1945)',
             'title': u'Utopie einer besseren Tyrannis',
             'year': u'2011',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'deutsche Historiker an der Reichsuniversit\xe4t Posen (1941 - 1945)'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'B\u0142a\u017cej Bia\u0142kowski'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'B\u0142a\u017cej Bia\u0142kowski'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV037330325'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV037330325'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV037330325'",
@@ -783,14 +767,13 @@ class TestSparql(unittest.TestCase):
             'location': u'Basingstoke',
             'pages': u'306',
             'publisher': u'Palgrave Macmillan',
-            'subtitle': None,
+            'subtitle': u'teaching the past in twentieth-century England',
             'title': u'\x98The\x9c right kind of history',
             'year': u'2011',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'teaching the past in twentieth-century England'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'David Cannadine ; Jenny Keating ; Nicola Sheldon'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'David Cannadine ; Jenny Keating ; Nicola Sheldon'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV039643545'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV039643545'",
   u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
@@ -814,14 +797,13 @@ class TestSparql(unittest.TestCase):
             'location': u'Madison Wis.',
             'pages': u'139',
             'publisher': u'Univ. of Wisconsin Press',
-            'subtitle': None,
+            'subtitle': u'the Potato bug and other essays on Czech culture',
             'title': u'\x98The\x9c mystifications of a nation',
             'year': u'2010',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'the Potato bug and other essays on Czech culture'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Vladim\xedr Macura'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Vladim\xedr Macura'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV036741017'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV036741017'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV036741017'",
@@ -854,14 +836,13 @@ class TestSparql(unittest.TestCase):
             'location': u'Katowice',
             'pages': None,
             'publisher': u'Oddzia\u0142 Instytutu Pami\u0119ci Narodowej - Komisji \u015acigania Zbrodni przeciwko Narodowi Polskiemu',
-            'subtitle': None,
+            'subtitle': u'obsada stanowisk kierowniczych aparatu bezpiecze\u0144stwa w wojew\xf3dztwach \u015bl\u0105skim/katowickim, bielskim i cz\u0119stochowskim',
             'title': u'Kadra bezpieki 1945 - 1990',
             'year': u'2009',
         }
 
         ignored = sorted(
-            [u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1006', Content: 'obsada stanowisk kierowniczych aparatu bezpiecze\u0144stwa w wojew\xf3dztwach \u015bl\u0105skim/katowickim, bielskim i cz\u0119stochowskim'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'wst\u0119p i red Wac\u0142aw Dubia\u0144ski, Adam Dziuba i Adam Dziurok ; oprac Kornelia Bana\u015b [et al]'",
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'wst\u0119p i red Wac\u0142aw Dubia\u0144ski, Adam Dziuba i Adam Dziurok ; oprac Kornelia Bana\u015b [et al]'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035905206'",
   u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
   u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035905206'",
