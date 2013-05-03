@@ -4,7 +4,10 @@ Changelog
 3.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Declared dependency
+  [reinhardt]
+- Updated sparql search
+  [do3cc]
 
 
 3.0.3 (2013-02-18)
