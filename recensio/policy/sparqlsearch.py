@@ -138,8 +138,6 @@ def keywords_and_ddc(obj, retval):
 
 
 def authorsStore(obj, retval):
-    import pdb
-    pdb.set_trace()
     if not obj.value.startswith('http'):
         retval['authors'].append(obj.value)
     else:
