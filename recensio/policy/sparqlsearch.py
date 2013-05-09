@@ -214,6 +214,7 @@ def getMetadata(isbn):
         'year': None,
     }
     import pdb;pdb.set_trace()
+    import pdb;pdb.set_trace()
     isbn = isbn.replace('-', '').replace(' ', '')
     service = sparql.Service('http://lod.b3kat.de/sparql')
     result = service.query(QUERY % isbn)
