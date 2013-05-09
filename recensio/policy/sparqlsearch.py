@@ -132,14 +132,12 @@ def keywords_and_ddc(obj, retval):
                 'Don\'t know how to handle this for keyword and ddc: %s', raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
-            retval['ddc'] = obj.value
+            retval['ddc'].append(obj.value)
         else:
             retval['keywords'].append(obj.value)
 
 
 def authorsStore(obj, retval):
-    import pdb
-    pdb.set_trace()
     if not obj.value.startswith('http'):
         retval['authors'].append(obj.value)
     else:
@@ -150,15 +148,13 @@ def authorsStore(obj, retval):
             log.error('Bad answer from \'%s\': \'%s\', ignoring',
                       obj.value, e, exc_info=True)
             return
-        for subject in g.subjects():
-            firstnames = [x.title() for x in
-                          g.objects(subject=subject, predicate=URIRef('http://d-nb.info/standards/elementset/gnd#forename'))]
-            surnames = [x.title() for x in
-                        g.objects(subject=subject, predicate=URIRef('http://d-nb.info/standards/elementset/gnd#surname'))]
-            firstname = (firstnames[0] if firstnames else None)
-            surname = (surnames[0] if surnames else None)
-            retval['authors'].append(dict(firstname=firstname,
-                                     lastname=surname))
+        fullnames = list(g.query("PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:preferredNameEntityForThePerson ?entity . ?entity gnd:forename ?forename ; gnd:surname ?surname}"))
+        if not fullnames:
+            fullnames = list(g.query("PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:forename ?forename ; gnd:surname ?surname}"))
+
+        for (firstname, surname) in fullnames:
+            retval['authors'].append(dict(firstname=firstname.title(),
+                lastname=surname.title()))
 
 
 HANDLERS = defaultdict(lambda: lambda a, b: None)
@@ -210,7 +206,7 @@ def getMetadata(isbn):
         'authors': [],
         'language': None,
         'isbn': None,
-        'ddc': None,
+        'ddc': [],
         'location': None,
         'keywords': [],
         'publisher': None,

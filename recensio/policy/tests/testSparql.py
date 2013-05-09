@@ -33,7 +33,7 @@ class TestSparql(unittest.TestCase):
         # http://lod.b3kat.de/title/BV013575871
 
         expected = {
-            'ddc': None,
+            'ddc': [],
             'isbn': u'123',
             'keywords': [],
             'language': u'English',
@@ -87,8 +87,7 @@ class TestSparql(unittest.TestCase):
             u"'SA aus: Meddelelser om Gronland ; 123,1'"
         ])
 
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
+        errors = sorted([x.msg % x.args for x in self.handler.records])
 
         self.assertEquals(ignored, errors)
 
@@ -101,7 +100,7 @@ class TestSparql(unittest.TestCase):
 
         expected = {
             'authors': [],
-            'ddc': u'372.6049',
+            'ddc': [u'372.6049'],
             'isbn': u'9783830921929',
             'keywords': [u'Kindertagesst\xe4tte',
                          u'Kindertagesst\xe4tte - Spracherziehung - Kongress - Recklinghausen <2008>',
@@ -141,15 +140,15 @@ class TestSparql(unittest.TestCase):
 
         result = getMetadata('9783830921929')
 
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
+        errors = sorted([x.msg % x.args for x in self.handler.records])
         self.assertEquals(ignored, errors)
         self.assertEquals(expected, result)
 
     def testGetMetadata02(self):
         from recensio.policy.sparqlsearch import getMetadata
         expected = {
-            'ddc': u'900',
+        'authors': [{'firstname': u'Anthony', 'lastname': u'Mcelligott'}],
+            'ddc': [u'900', u'943.085'],
             'isbn': u'9780199280070',
             'keywords': [u'Deutschland',
                          u'Geschichte 1918-1933'],
@@ -184,16 +183,16 @@ class TestSparql(unittest.TestCase):
         ])
 
         metadata = getMetadata('978-0-19-928007-0')
-        metadata.pop('authors')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
+
+        errors = sorted([x.msg % x.args for x in self.handler.records])
 
         self.assertEquals(ignored, errors)
         self.assertEquals(expected, metadata)
 
     def testGetMetadata03(self):
         expected = {
-            'ddc': u'355.009',
+        'authors': [{'firstname': u'Barbara', 'lastname': u'Korte'}],
+            'ddc': [u'355.009', u'940.3'],
             'isbn': u'9783898617277',
             'keywords': [u'Aufsatzsammlung', u'Geschichte',
                          u'Kollektives Ged\xe4chtnis',
@@ -232,15 +231,17 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783898617277')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata04(self):
         expected = {
-            'ddc': None,
+        'authors': [{'firstname': u'Konrad', 'lastname': u'Canis'},
+              {'firstname': u'Michael', 'lastname': u'Epkenhans'},
+              {'firstname': u'Otto', 'lastname': u'Bismarck'}],
+            'ddc': [],
             'isbn': u'9783506770707',
             'keywords': [u'Deutschland', u'Politik', u'Quelle'],
             'language': u'German',
@@ -271,15 +272,15 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783506770707')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata05(self):
         expected = {
-            'ddc': None,
+        'authors': [{'firstname': u'Michael', 'lastname': u'Kotulla'}],
+            'ddc': [],
             'isbn': u'3540294961',
             'keywords': [],
             'language': u'German',
@@ -307,58 +308,58 @@ class TestSparql(unittest.TestCase):
              u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV025801664'",
              u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV035943745'",
              u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV035943745'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-525/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-526/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV035943745'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035943745'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV035943745'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-858/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-859/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-860/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-862/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-863/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-898/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-92/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-Aug4/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B1533/item/BV035980226'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B721/item/BV035980226'",
- u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M347/item/BV035980226'",
- u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M483/item/BV035980226'",
- u"We ignore the following information: 'http://www.geonames.org/ontology#countryCode', Content: 'DE'",
- u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/dc/dcmitype/Software'",
- u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
- u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
- u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
- u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV019888935/vol/3'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV022360137/vol/3'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV023552539/vol/3'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV025801664'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035943745'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035980226'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://dx.doi.org/10.1007/978-3-540-29497-9'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/501310806'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643865927'"])
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV035943745'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-525/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-526/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV035943745'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035943745'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV035943745'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-858/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-859/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-860/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-862/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-863/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-898/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-92/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-Aug4/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B1533/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B721/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M347/item/BV035980226'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M483/item/BV035980226'",
+             u"We ignore the following information: 'http://www.geonames.org/ontology#countryCode', Content: 'DE'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/dc/dcmitype/Software'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV019888935/vol/3'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV022360137/vol/3'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV023552539/vol/3'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV025801664'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035943745'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035980226'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://dx.doi.org/10.1007/978-3-540-29497-9'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/501310806'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643865927'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783540294962')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata07(self):
         expected = {
-            'ddc': None,
+            'authors': [{'firstname': u'Volker', 'lastname': u'Stalmann'}],
+            'ddc': [],
             'isbn': u'9783770052882',
             'keywords': [u'Geschichte', u'Quelle'],
             'language': u'German',
@@ -372,17 +373,17 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV023363266/vol/1'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV023363266/vol/2'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV000006150'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV000006150'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV023363266'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV023363266'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'eingel und bearb von Volker Stalmann'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV023363266/vol/1'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV023363266/vol/2'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV000006150'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV000006150'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV023363266'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV023363266'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023363321'",
+                        u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363303'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363321'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023363303'",
   u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023363321'",
@@ -424,15 +425,16 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783770052882')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata08(self):
         expected = {
-#            'ddc': u'880',
+            'ddc': [u'480', u'880', u'900'],
+            'authors': [{'firstname': u'K\u014dnstantinos A.',
+               'lastname': u'D\u0113mad\u0113s'}],
             'isbn': u'9789601900780',
             'keywords': [u'Bukarest <2006>', u'Geschichte 1700-2000', u'Griechenland',
                          u'Kongress', u'Neogr\xe4zistik'],
@@ -470,16 +472,16 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9789601900780')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
-        metadata.pop('ddc')  # Unstable...
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
+        # metadata.pop('ddc')  # Unstable...
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata09(self):
         expected = {
-            'ddc': u'909',
+        'authors': [{'firstname': u'Edward', 'lastname': u'Rymar'}],
+            'ddc': [u'909'],
             'isbn': u'8387879509',
             'keywords': [
                 u'Genealogie',
@@ -510,15 +512,15 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('8387879509')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata10(self):
         expected = {
-            'ddc': None,
+        'authors': [{'firstname': u'B\xe4rbel', 'lastname': u'Holtz'}],
+            'ddc': [],
             'isbn': u'9783050045719',
             'keywords': [],
             'language': u'German',
@@ -551,15 +553,18 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783050045719')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata11(self):
         expected = {
-            'ddc': None,
+        'authors': [{'firstname': u'Horst', 'lastname': u'Brettner-Messler'},
+              {'firstname': u'Stefan', 'lastname': u'Malf\xe8r'},
+              {'firstname': u'Waltraud', 'lastname': u'Heindl'}],
+
+            'ddc': [],
             'isbn': u'3209054649',
             'keywords': [],
             'language': u'German',
@@ -589,15 +594,15 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('3209054649')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata12(self):
         expected = {
-            'ddc': u'909',
+        'authors': [{'firstname': u'Ladislav Josef', 'lastname': u'Beran'}],
+            'ddc': [u'909'],
             'isbn': u'9788087377024',
             'keywords': [u'Geschichte 1918-1938', u'Minderheitenpolitik', u'Sudetendeutsche', u'Tschechoslowakei'],
             'language': u'Czech',
@@ -623,15 +628,15 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9788087377024')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata13(self):
         expected = {
-            'ddc': u'320.943',
+        'authors': [{'firstname': u'Helmut', 'lastname': u'Schmidt'}],
+            'ddc': [u'320.943', u'909'],
             'isbn': u'9783886808632',
             'keywords': [
                 u'Autobiographie',
@@ -711,15 +716,16 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783886808632')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        #metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata14(self):
         expected = {
-            'ddc': u'901',
+        'authors': [{'firstname': u'B\u0142a\u017cej',
+               'lastname': u'Bia\u0142kowski'}],
+            'ddc': [u'901'],
             'isbn': u'9783506771674',
             'keywords': [u'Geschichte 1941-1945', u'Historiker'],
             'language': u'German',
@@ -752,15 +758,18 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783506771674')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata15(self):
         expected = {
-            'ddc': u'370.9',
+        'authors': [{'firstname': u'David', 'lastname': u'Cannadine'},
+              {'firstname': u'Jenny', 'lastname': u'Keating'},
+              {'firstname': u'Nicola', 'lastname': u'Sheldon'}],
+
+            'ddc': [u'370.9', u'901'],
             'isbn': u'9780230300873',
             'keywords': [u'England', u'Geschichte 1900-2010', u'Geschichtsunterricht'],
             'language': u'English',
@@ -782,15 +791,15 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9780230300866')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata16(self):
         expected = {
-            'ddc': None,
+        'authors': [{'firstname': u'Vladim\xedr', 'lastname': u'Macura'}],
+            'ddc': [],
             'isbn': u'9780299248949',
             'keywords': [],
             'language': u'English',
@@ -813,15 +822,15 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9780299248949')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata17(self):
         expected = {
-            'ddc': u'909',
+        'authors': [{'firstname': u'Wac\u0142aw', 'lastname': u'Dubia\u0144ski'}],
+            'ddc': [u'909'],
             'isbn': u'9788361458258',
             'keywords': [
                 u'Biographie',
@@ -850,15 +859,52 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9788361458258')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
 
     def testGetMetadata18(self):
         expected = {
-            'ddc': None,
+        'authors': [{'firstname': u'Jacek', 'lastname': u'Gzella'}],
+        'ddc': [u'909'],
+  'isbn': u'9788323126270',
+  'keywords': [u'Au\xdfenpolitik',
+               u'Deutschland',
+               u'Geschichte 1922-1939',
+               u'Polen',
+               u'Sowjetunion',
+               u'\xd6ffentliche Meinung'],
+  'language': u'Polish',
+  'location': u'Toru\u0144',
+  'pages': u'477',
+  'publisher': u'Wydawn. Naukowe Uniwersytetu Miko\u0142aja Kopernika',
+  'subtitle': u'koncepcje polskiej polityki zagranicznej konserwatyst\xf3w wile\u0144skich zgrupowanych wok\xf3\u0142 "S\u0142owa" (1922 - 1939)',
+  'title': u'Mi\u0119dzy Sowietami a Niemcami',
+  'year': u'2011'}
+
+        ignored = sorted([
+ u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Jacek Gzella'",
+  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Zwischen Sowjets und Deutschen'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV037483285'",
+  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV037483285'",
+  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV037483285'",
+  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/734083964'"
+
+            ])
+
+        from recensio.policy.sparqlsearch import getMetadata
+        metadata = getMetadata('9788323126270')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
+        self.assertEquals(expected, metadata)
+        self.assertEquals(ignored, errors)
+
+    def testGetMetadata19(self):
+        expected = {
+            'authors': [],
+            'ddc': [],
             'isbn': None,
             'keywords': [],
             'language': None,
@@ -874,8 +920,7 @@ class TestSparql(unittest.TestCase):
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('00157902')
-        errors = [x.msg % x.args for x in self.handler.records]
-        errors.sort()
-        metadata.pop('authors')
+        errors = sorted([x.msg % x.args for x in self.handler.records])
+
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)

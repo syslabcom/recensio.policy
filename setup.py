@@ -25,6 +25,7 @@ setup(name='recensio.policy',
           'setuptools',
           'Products.CMFPlone',
           'rdflib',
+          'rdflib-sparql',
           'sparql-client',
           'BeautifulSoup',
           'Products.ATVocabularyManager>=1.6', # Only here Plone 4 compatibility started
