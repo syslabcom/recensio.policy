@@ -148,13 +148,15 @@ def authorsStore(obj, retval):
             log.error('Bad answer from \'%s\': \'%s\', ignoring',
                       obj.value, e, exc_info=True)
             return
-        fullnames = list(g.query("PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:preferredNameEntityForThePerson ?entity . ?entity gnd:forename ?forename ; gnd:surname ?surname}"))
+        fullnames = list(g.query(
+            "PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:preferredNameEntityForThePerson ?entity . ?entity gnd:forename ?forename ; gnd:surname ?surname}"))
         if not fullnames:
-            fullnames = list(g.query("PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:forename ?forename ; gnd:surname ?surname}"))
+            fullnames = list(g.query(
+                "PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:forename ?forename ; gnd:surname ?surname}"))
 
         for (firstname, surname) in fullnames:
             retval['authors'].append(dict(firstname=firstname.title(),
-                lastname=surname.title()))
+                                          lastname=surname.title()))
 
 
 HANDLERS = defaultdict(lambda: lambda a, b: None)
@@ -213,8 +215,6 @@ def getMetadata(isbn):
         'pages': None,
         'year': None,
     }
-    import pdb;pdb.set_trace()
-    import pdb;pdb.set_trace()
     isbn = isbn.replace('-', '').replace(' ', '')
     service = sparql.Service('http://lod.b3kat.de/sparql')
     result = service.query(QUERY % isbn)
