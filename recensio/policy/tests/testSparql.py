@@ -6,6 +6,9 @@ import unittest2 as unittest
 import logging
 from zope.testing.loggingsupport import InstalledHandler
 
+if False:  # Make pep8 happy
+    logging
+
 
 class TestSparql(unittest.TestCase):
     level = 100
@@ -33,6 +36,7 @@ class TestSparql(unittest.TestCase):
         # http://lod.b3kat.de/title/BV013575871
 
         expected = {
+            'bv': 'BV013575871',
             'ddc': [],
             'isbn': u'123',
             'keywords': [],
@@ -99,6 +103,7 @@ class TestSparql(unittest.TestCase):
         # http://lod.b3kat.de/title/BV035724519
 
         expected = {
+            'bv': u'BV035724519',
             'authors': [],
             'ddc': [u'372.6049'],
             'isbn': u'9783830921929',
@@ -147,7 +152,8 @@ class TestSparql(unittest.TestCase):
     def testGetMetadata02(self):
         from recensio.policy.sparqlsearch import getMetadata
         expected = {
-        'authors': [{'firstname': u'Anthony', 'lastname': u'Mcelligott'}],
+            'bv': u'BV035356471',
+            'authors': [{'firstname': u'Anthony', 'lastname': u'Mcelligott'}],
             'ddc': [u'900', u'943.085'],
             'isbn': u'9780199280070',
             'keywords': [u'Deutschland',
@@ -191,7 +197,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata03(self):
         expected = {
-        'authors': [{'firstname': u'Barbara', 'lastname': u'Korte'}],
+            'bv': u'BV023169149',
+            'authors': [{'firstname': u'Barbara', 'lastname': u'Korte'}],
             'ddc': [u'355.009', u'940.3'],
             'isbn': u'9783898617277',
             'keywords': [u'Aufsatzsammlung', u'Geschichte',
@@ -238,9 +245,10 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata04(self):
         expected = {
-        'authors': [{'firstname': u'Konrad', 'lastname': u'Canis'},
-              {'firstname': u'Michael', 'lastname': u'Epkenhans'},
-              {'firstname': u'Otto', 'lastname': u'Bismarck'}],
+            'bv': u'BV039685251',
+            'authors': [{'firstname': u'Konrad', 'lastname': u'Canis'},
+                   {'firstname': u'Michael', 'lastname': u'Epkenhans'},
+                {'firstname': u'Otto', 'lastname': u'Bismarck'}],
             'ddc': [],
             'isbn': u'9783506770707',
             'keywords': [u'Deutschland', u'Politik', u'Quelle'],
@@ -279,7 +287,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata05(self):
         expected = {
-        'authors': [{'firstname': u'Michael', 'lastname': u'Kotulla'}],
+            'bv': u'BV035980226',
+            'authors': [{'firstname': u'Michael', 'lastname': u'Kotulla'}],
             'ddc': [],
             'isbn': u'3540294961',
             'keywords': [],
@@ -358,6 +367,7 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata07(self):
         expected = {
+            'bv': u'BV023363321',
             'authors': [{'firstname': u'Volker', 'lastname': u'Stalmann'}],
             'ddc': [],
             'isbn': u'9783770052882',
@@ -383,45 +393,45 @@ class TestSparql(unittest.TestCase):
              u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV023363266'",
              u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023363303'",
              u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023363321'",
-                        u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-83/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-83/item/BV023363321'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023363303'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023363321'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/MultiVolumeBook'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://xmlns.com/foaf/0.1/Document'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000006150/vol/111'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000006150/vol/112'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV023363266/vol/1'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV023363266/vol/2'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV023363266'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV023363303'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV023363321'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643316263'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643316280'"])
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-83/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-83/item/BV023363321'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023363303'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023363321'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/MultiVolumeBook'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://xmlns.com/foaf/0.1/Document'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000006150/vol/111'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000006150/vol/112'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV023363266/vol/1'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV023363266/vol/2'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV023363266'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV023363303'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV023363321'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643316263'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643316280'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783770052882')
@@ -432,9 +442,10 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata08(self):
         expected = {
+            'bv': None,
             'ddc': [u'480', u'880', u'900'],
             'authors': [{'firstname': u'K\u014dnstantinos A.',
-               'lastname': u'D\u0113mad\u0113s'}],
+                         'lastname': u'D\u0113mad\u0113s'}],
             'isbn': u'9789601900780',
             'keywords': [u'Bukarest <2006>', u'Geschichte 1700-2000', u'Griechenland',
                          u'Kongress', u'Neogr\xe4zistik'],
@@ -449,26 +460,26 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: 'elell\u0113nikos'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: '\x98Ho\x9c Hell\u0113nikos kosmos anamesa st\u0113n epoch\u0113 tu Diaph\u014dtismu kai ston eikosto ai\u014dna'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: '\x98The\x9c Greek world between the Age of Enlightenment and the twentieth century'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Beitr teilw griech, neugriech, teilw engl, teilw ital, teilw franz - Teilw in griech Schr'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'epimeleia: K\u014dnstantinos A D\u0113mad\u0113s'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'epimeleia: K\u014dnstantinos A D\u0113mad\u0113s'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV026650936/vol/1'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV026650936/vol/2'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV026650936/vol/3'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV035182368/vol/1'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV035182368/vol/2'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV035182368/vol/3'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/MultiVolumeBook'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/MultiVolumeBook'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Proceedings'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Proceedings'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://xmlns.com/foaf/0.1/Document'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://xmlns.com/foaf/0.1/Document'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV026650936'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035182368'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/644960505'"])
+             u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: '\x98Ho\x9c Hell\u0113nikos kosmos anamesa st\u0113n epoch\u0113 tu Diaph\u014dtismu kai ston eikosto ai\u014dna'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/alternative', Content: '\x98The\x9c Greek world between the Age of Enlightenment and the twentieth century'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Beitr teilw griech, neugriech, teilw engl, teilw ital, teilw franz - Teilw in griech Schr'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'epimeleia: K\u014dnstantinos A D\u0113mad\u0113s'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'epimeleia: K\u014dnstantinos A D\u0113mad\u0113s'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV026650936/vol/1'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV026650936/vol/2'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV026650936/vol/3'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV035182368/vol/1'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV035182368/vol/2'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/hasPart', Content: 'http://lod.b3kat.de/title/BV035182368/vol/3'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/MultiVolumeBook'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/MultiVolumeBook'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Proceedings'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Proceedings'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://xmlns.com/foaf/0.1/Document'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://xmlns.com/foaf/0.1/Document'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV026650936'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035182368'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/644960505'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9789601900780')
@@ -480,7 +491,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata09(self):
         expected = {
-        'authors': [{'firstname': u'Edward', 'lastname': u'Rymar'}],
+            'bv': u'BV022409054',
+            'authors': [{'firstname': u'Edward', 'lastname': u'Rymar'}],
             'ddc': [u'909'],
             'isbn': u'8387879509',
             'keywords': [
@@ -504,11 +516,11 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Edward Rymar'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Genealogie der Herzoge von Pommern'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV022409054'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV022409054'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/69296056'"])
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Genealogie der Herzoge von Pommern'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV022409054'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV022409054'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/69296056'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('8387879509')
@@ -519,7 +531,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata10(self):
         expected = {
-        'authors': [{'firstname': u'B\xe4rbel', 'lastname': u'Holtz'}],
+            'bv': u'BV035589116',
+            'authors': [{'firstname': u'B\xe4rbel', 'lastname': u'Holtz'}],
             'ddc': [],
             'isbn': u'9783050045719',
             'keywords': [],
@@ -534,22 +547,22 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'mit Beitr von B\xe4rbel Holtz'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV035589104'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV035624943'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-578/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV035589116'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV035589116'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV035589104/vol/11'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV035624943/vol/11'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035589116'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/634960083'"])
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV035589104'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV035624943'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-578/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV035589116'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV035589116'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV035589104/vol/11'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV035624943/vol/11'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035589116'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/634960083'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783050045719')
@@ -560,9 +573,10 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata11(self):
         expected = {
-        'authors': [{'firstname': u'Horst', 'lastname': u'Brettner-Messler'},
-              {'firstname': u'Stefan', 'lastname': u'Malf\xe8r'},
-              {'firstname': u'Waltraud', 'lastname': u'Heindl'}],
+            'bv': u'BV021824202',
+            'authors': [{'firstname': u'Horst', 'lastname': u'Brettner-Messler'},
+                   {'firstname': u'Stefan', 'lastname': u'Malf\xe8r'},
+                {'firstname': u'Waltraud', 'lastname': u'Heindl'}],
 
             'ddc': [],
             'isbn': u'3209054649',
@@ -578,19 +592,19 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'bearb und eingel von Thomas Klete\u010dka'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV000497061'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib//item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M333/item/BV021824202'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV021824202'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000497061/vol/123'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/162254391'"])
+             u"We ignore the following information: 'http://purl.org/dc/terms/isPartOf', Content: 'http://lod.b3kat.de/title/BV000497061'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib//item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M333/item/BV021824202'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV021824202'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000497061/vol/123'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/162254391'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('3209054649')
@@ -601,7 +615,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata12(self):
         expected = {
-        'authors': [{'firstname': u'Ladislav Josef', 'lastname': u'Beran'}],
+            'bv': u'BV035973071',
+            'authors': [{'firstname': u'Ladislav Josef', 'lastname': u'Beran'}],
             'ddc': [u'909'],
             'isbn': u'9788087377024',
             'keywords': [u'Geschichte 1918-1938', u'Minderheitenpolitik', u'Sudetendeutsche', u'Tschechoslowakei'],
@@ -616,15 +631,15 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Ladislav Josef Beran'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Verweigerte Integration'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035973071'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035973071'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV035973071'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV035973071'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035973071'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/603386928'"])
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Verweigerte Integration'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035973071'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035973071'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV035973071'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV035973071'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035973071'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/603386928'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9788087377024')
@@ -635,7 +650,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata13(self):
         expected = {
-        'authors': [{'firstname': u'Helmut', 'lastname': u'Schmidt'}],
+            'bv': u'BV023424327',
+            'authors': [{'firstname': u'Helmut', 'lastname': u'Schmidt'}],
             'ddc': [u'320.943', u'909'],
             'isbn': u'9783886808632',
             'keywords': [
@@ -654,65 +670,65 @@ class TestSparql(unittest.TestCase):
             'location': u'M\xfcnchen',
             'pages': u'350',
             'publisher': u'Siedler',
-            'subtitle':  u'eine Bilanz',
+            'subtitle': u'eine Bilanz',
             'title': u'Au\xdfer Dienst',
             'year': u'2008',
         }
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783886808632'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783886808632'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783886808632'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-1046/item/BV035364569'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-1102/item/BV035666334'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-127/item/BV035154634'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-154/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV035364569'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-209/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV035154634'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-70/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035236436'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-860/item/BV035364569'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B721/item/BV035154634'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-Di1/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M25/item/BV035666334'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023424327'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M497/item/BV035666334'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M501/item/BV035236436'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-Met1/item/BV035154634'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://d-nb.info/988528975'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BSZ-302278524'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035154634'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035157816'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035236436'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035666334'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/DNB-988528975'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'"])
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Helmut Schmidt'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783886808632'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783886808632'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/identifier', Content: '9783886808632'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-1046/item/BV035364569'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-1102/item/BV035666334'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-127/item/BV035154634'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-154/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-188/item/BV035364569'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-20/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-209/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-384/item/BV035154634'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-473/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-70/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-703/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-706/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV035236436'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-860/item/BV035364569'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B721/item/BV035154634'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-Di1/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M25/item/BV035666334'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV023424327'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M497/item/BV035666334'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M501/item/BV035236436'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-Met1/item/BV035154634'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://d-nb.info/988528975'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BSZ-302278524'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035154634'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035157816'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035236436'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035666334'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/DNB-988528975'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/251302367'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783886808632')
@@ -723,8 +739,9 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata14(self):
         expected = {
-        'authors': [{'firstname': u'B\u0142a\u017cej',
-               'lastname': u'Bia\u0142kowski'}],
+            'bv': u'BV037330325',
+            'authors': [{'firstname': u'B\u0142a\u017cej',
+            'lastname': u'Bia\u0142kowski'}],
             'ddc': [u'901'],
             'isbn': u'9783506771674',
             'keywords': [u'Geschichte 1941-1945', u'Historiker'],
@@ -739,22 +756,22 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'B\u0142a\u017cej Bia\u0142kowski'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-521/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-83/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B220/item/BV037330325'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV037330325'",
-  u"We ignore the following information: 'http://www.geonames.org/ontology#countryCode', Content: 'DE'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://d-nb.info/1009008978'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/DNB-1009008978'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/706979236'"])
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-355/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-521/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-739/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-824/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-83/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-B220/item/BV037330325'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M352/item/BV037330325'",
+             u"We ignore the following information: 'http://www.geonames.org/ontology#countryCode', Content: 'DE'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://d-nb.info/1009008978'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/DNB-1009008978'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/706979236'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9783506771674')
@@ -765,9 +782,10 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata15(self):
         expected = {
-        'authors': [{'firstname': u'David', 'lastname': u'Cannadine'},
-              {'firstname': u'Jenny', 'lastname': u'Keating'},
-              {'firstname': u'Nicola', 'lastname': u'Sheldon'}],
+            'bv': u'BV039643545',
+            'authors': [{'firstname': u'David', 'lastname': u'Cannadine'},
+                        {'firstname': u'Jenny', 'lastname': u'Keating'},
+                        {'firstname': u'Nicola', 'lastname': u'Sheldon'}],
 
             'ddc': [u'370.9', u'901'],
             'isbn': u'9780230300873',
@@ -780,14 +798,15 @@ class TestSparql(unittest.TestCase):
             'title': u'\x98The\x9c right kind of history',
             'year': u'2011',
         }
+        9788323126270
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'David Cannadine ; Jenny Keating ; Nicola Sheldon'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV039643545'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV039643545'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV039643545'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/713185358'"])
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV039643545'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-29/item/BV039643545'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV039643545'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/713185358'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9780230300866')
@@ -798,7 +817,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata16(self):
         expected = {
-        'authors': [{'firstname': u'Vladim\xedr', 'lastname': u'Macura'}],
+            'bv': u'BV036741017',
+            'authors': [{'firstname': u'Vladim\xedr', 'lastname': u'Macura'}],
             'ddc': [],
             'isbn': u'9780299248949',
             'keywords': [],
@@ -813,12 +833,12 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Vladim\xedr Macura'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV036741017'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV036741017'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV036741017'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV036741017'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/711801203'"])
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV036741017'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV036741017'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-M457/item/BV036741017'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV036741017'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/711801203'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9780299248949')
@@ -829,7 +849,8 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata17(self):
         expected = {
-        'authors': [{'firstname': u'Wac\u0142aw', 'lastname': u'Dubia\u0144ski'}],
+            'bv': u'BV035905206',
+            'authors': [{'firstname': u'Wac\u0142aw', 'lastname': u'Dubia\u0144ski'}],
             'ddc': [u'909'],
             'isbn': u'9788361458258',
             'keywords': [
@@ -852,10 +873,10 @@ class TestSparql(unittest.TestCase):
 
         ignored = sorted(
             [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'wst\u0119p i red Wac\u0142aw Dubia\u0144ski, Adam Dziuba i Adam Dziurok ; oprac Kornelia Bana\u015b [et al]'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035905206'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035905206'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643765360'"])
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV035905206'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV035905206'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/643765360'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9788361458258')
@@ -866,33 +887,32 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata18(self):
         expected = {
-        'authors': [{'firstname': u'Jacek', 'lastname': u'Gzella'}],
-        'ddc': [u'909'],
-  'isbn': u'9788323126270',
-  'keywords': [u'Au\xdfenpolitik',
-               u'Deutschland',
-               u'Geschichte 1922-1939',
-               u'Polen',
-               u'Sowjetunion',
-               u'\xd6ffentliche Meinung'],
-  'language': u'Polish',
-  'location': u'Toru\u0144',
-  'pages': u'477',
-  'publisher': u'Wydawn. Naukowe Uniwersytetu Miko\u0142aja Kopernika',
-  'subtitle': u'koncepcje polskiej polityki zagranicznej konserwatyst\xf3w wile\u0144skich zgrupowanych wok\xf3\u0142 "S\u0142owa" (1922 - 1939)',
-  'title': u'Mi\u0119dzy Sowietami a Niemcami',
-  'year': u'2011'}
+            'bv': u'BV037483285',
+            'authors': [{'firstname': u'Jacek', 'lastname': u'Gzella'}],
+            'ddc': [u'909'],
+            'isbn': u'9788323126270',
+            'keywords': [u'Au\xdfenpolitik',
+                         u'Deutschland',
+                         u'Geschichte 1922-1939',
+                         u'Polen',
+                         u'Sowjetunion',
+                         u'\xd6ffentliche Meinung'],
+            'language': u'Polish',
+            'location': u'Toru\u0144',
+            'pages': u'477',
+            'publisher': u'Wydawn. Naukowe Uniwersytetu Miko\u0142aja Kopernika',
+            'subtitle': u'koncepcje polskiej polityki zagranicznej konserwatyst\xf3w wile\u0144skich zgrupowanych wok\xf3\u0142 "S\u0142owa" (1922 - 1939)',
+            'title': u'Mi\u0119dzy Sowietami a Niemcami',
+            'year': u'2011'}
 
-        ignored = sorted([
- u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Jacek Gzella'",
-  u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Zwischen Sowjets und Deutschen'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV037483285'",
-  u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV037483285'",
-  u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
-  u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV037483285'",
-  u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/734083964'"
-
-            ])
+        ignored = sorted(
+            [u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Jacek Gzella'",
+             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'Zsfassung in dt Sprache udT: Zwischen Sowjets und Deutschen'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-11/item/BV037483285'",
+             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-12/item/BV037483285'",
+             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
+             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://www.culturegraph.org/about/BVB-BV037483285'",
+             u"We ignore the following information: 'http://xmlns.com/foaf/0.1/homepage', Content: 'http://worldcat.org/oclc/734083964'"])
 
         from recensio.policy.sparqlsearch import getMetadata
         metadata = getMetadata('9788323126270')
@@ -903,6 +923,7 @@ class TestSparql(unittest.TestCase):
 
     def testGetMetadata19(self):
         expected = {
+            'bv': None,
             'authors': [],
             'ddc': [],
             'isbn': None,

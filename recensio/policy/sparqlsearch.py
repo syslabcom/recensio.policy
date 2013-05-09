@@ -188,10 +188,10 @@ HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = genericStore(
 KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publication anyway
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
     'http://www.w3.org/2002/07/owl#sameAs',
+    'http://purl.org/vocab/frbr/core#exemplar',
     'http://purl.org/dc/elements/1.1/description',
     'http://purl.org/ontology/bibo/volume',
     'http://xmlns.com/foaf/0.1/homepage',
-    'http://purl.org/vocab/frbr/core#exemplar',
     'http://purl.org/dc/terms/isPartOf',
     'http://purl.org/dc/terms/identifier',
     'http://purl.org/dc/terms/description',
@@ -214,10 +214,30 @@ def getMetadata(isbn):
         'publisher': None,
         'pages': None,
         'year': None,
+        'bv': None
     }
     isbn = isbn.replace('-', '').replace(' ', '')
     service = sparql.Service('http://lod.b3kat.de/sparql')
     result = service.query(QUERY % isbn)
+
+    # NEW STYLE, BETTER
+    service.setPrefix('purl', 'http://purl.org/vocab/frbr/core#')
+    try:
+        bv = service.query('''select DISTINCT ?bv_best, ?bv_alt WHERE
+        {
+            {?docid bibo:isbn "%s"} .
+            {?docid purl:exemplar ?bv_alt}
+            OPTIONAL {?docid purl:exemplar ?bv_best .
+                    FILTER regex(?bv_best, "bib/DE-12/")}
+        } ORDER BY desc(?bv_best)''' % (isbn,)).fetchone().next()
+        bv = bv[0].value if bv[0] else bv[1].value
+        bv = bv.split('/')[-1]
+        retval['bv'] = bv
+    except StopIteration:
+        pass
+
+    # Old Style, worse
+
     for (subject, predicate, obj) in result:
         if predicate.value not in HANDLERS and predicate \
                 not in KNOWN_IGNORED:
