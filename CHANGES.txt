@@ -4,7 +4,8 @@ Changelog
 3.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Updated sparql search
+  [do3cc]
 
 
 3.0.4 (2013-05-03)
