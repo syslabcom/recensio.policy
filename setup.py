@@ -1,17 +1,16 @@
 from setuptools import setup, find_packages
-import os
 
-version = '3.0.5.dev0'
+version = '3.0.6.dev0'
 
 setup(name='recensio.policy',
       version=version,
       description="Policy Product for the Recensio project",
       long_description=open("README.txt").read() + "\n" +
-                       open("CHANGES.txt").read(),
+      open("CHANGES.txt").read(),
       classifiers=[
-        "Framework :: Plone",
-        "Programming Language :: Python",
-        ],
+          "Framework :: Plone",
+          "Programming Language :: Python",
+      ],
       keywords='plone zope recensio policy',
       author='Syslab.com GmbH',
       author_email='info@syslab.com',
@@ -28,12 +27,14 @@ setup(name='recensio.policy',
           'rdflib-sparql',
           'sparql-client',
           'BeautifulSoup',
-          'Products.ATVocabularyManager>=1.6', # Only here Plone 4 compatibility started
-          'Products.CMFDiffTool>=2.0', # This fixed important issues related to Plone 4
+          'Products.ATVocabularyManager>=1.6',
+              # Only here Plone 4 compatibility started
+          'Products.CMFDiffTool>=2.0',
+              # This fixed important issues related to Plone 4
           'Products.CMFPlacefulWorkflow',
           'Products.DataGridField',
           'Products.LinguaPlone',
-          'collective.captcha>1.5', # We have permission problems in 1.5
+          'collective.captcha>1.5',  # We have permission problems in 1.5
           'collective.indexing',
           'collective.portlet.tal',
           'guess-language',
@@ -53,10 +54,10 @@ setup(name='recensio.policy',
           'collective.logbook',
           'collective.solr',
           'zope.keyreference',
-          'five.intid', # Bugfix for plone.app.async
+          'five.intid',  # Bugfix for plone.app.async
       ],
-      extras_require = {
-        'test' : ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
+      extras_require={
+      'test': ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
       },
       entry_points="""
       # -*- Entry points: -*-
