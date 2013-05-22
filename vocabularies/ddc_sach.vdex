@@ -31,11 +31,11 @@
 
 </term>
 <term>
-<termIdentifier>920</termIdentifier>
+<termIdentifier>929</termIdentifier>
 <caption>
-<langstring language="de">Biographien, Familiengeschichte</langstring>
-<langstring language="en">Biographies, genealogy</langstring>
-<langstring language="fr">Biographies, généalogie</langstring>
+<langstring language="de">Familiengeschichte, Genealogie (Stammtafeln, Insignien, Heraldik, Sphragistik, Namenkunde)</langstring>
+<langstring language="en">Family History, Genealogy (Pedigrees, Insignia, Heraldry, Sigillography, Onomatology)</langstring>
+<langstring language="fr">Histoire de famille, généalogie (ascendance, insignes, héraldique, sphragistique, nom du client)</langstring>
 </caption>
 
 </term>
@@ -112,25 +112,15 @@
 
 </term>
 <term>
-<termIdentifier>902.8</termIdentifier>
+<termIdentifier>907.2</termIdentifier>
 <caption>
 <langstring language="de">Historische Hilfswissenschaften </langstring>
 <langstring language="en">Auxiliary sciences of history</langstring>
 <langstring language="fr">Sciences auxiliaires de l'Histoire</langstring>
 </caption>
-
 </term>
 <term>
-<termIdentifier>902.85</termIdentifier>
-<caption>
-<langstring language="de">Historische Statistik und Fachinformatik</langstring>
-<langstring language="en">Historical Computer Science</langstring>
-<langstring language="fr">Statistique historique et informatique appliquée</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>001.09 (alt: 109)</termIdentifier>
+<termIdentifier>001.09</termIdentifier>
 <caption>
 <langstring language="de">Ideen- und Geistesgeschichte</langstring>
 <langstring language="en">Intellectual History</langstring>
@@ -157,16 +147,7 @@
 
 </term>
 <term>
-<termIdentifier>306.09</termIdentifier>
-<caption>
-<langstring language="de">Kulturgeschichte</langstring>
-<langstring language="en">Cultural History</langstring>
-<langstring language="fr">Histoire culturelle</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>700.9</termIdentifier>
+<termIdentifier>709</termIdentifier>
 <caption>
 <langstring language="de">Kunstgeschichte</langstring>
 <langstring language="en">Art History</langstring>
@@ -175,7 +156,7 @@
 
 </term>
 <term>
-<termIdentifier>800.09</termIdentifier>
+<termIdentifier>809</termIdentifier>
 <caption>
 <langstring language="de">Literaturgeschichte</langstring>
 <langstring language="en">History of literature</langstring>
@@ -211,7 +192,7 @@
 
 </term>
 <term>
-<termIdentifier>320.9</termIdentifier>
+<termIdentifier>909</termIdentifier>
 <caption>
 <langstring language="de">Politikgeschichte</langstring>
 <langstring language="en">Political History</langstring>
@@ -222,8 +203,8 @@
 <term>
 <termIdentifier>340.09</termIdentifier>
 <caption>
-<langstring language="de">Recht- und Verfassungsgeschichte</langstring>
-<langstring language="en">History of law</langstring>
+<langstring language="de">Rechtsgeschichte</langstring>
+<langstring language="en">Legal History</langstring>
 <langstring language="fr">Histoire du droit</langstring>
 </caption>
 
@@ -238,11 +219,11 @@
 
 </term>
 <term>
-<termIdentifier>300.9</termIdentifier>
+<termIdentifier>306.9</termIdentifier>
 <caption>
-<langstring language="de">Sozial- und Gesellschaftsgeschichte</langstring>
-<langstring language="en">Social History</langstring>
-<langstring language="fr">Histoire sociale</langstring>
+<langstring language="de">Sozial- und Kulturgeschichte</langstring>
+<langstring language="en">Social and Cultural History</langstring>
+<langstring language="fr">Histoire culturelle et sociale</langstring>
 </caption>
 
 </term>
@@ -285,8 +266,8 @@
 <term>
 <termIdentifier>901</termIdentifier>
 <caption>
-<langstring language="de">Geschichtsphilosophie und Geschichtstheorie </langstring>
-<langstring language="en">Philosophy of History and Historiology</langstring>
+<langstring language="de">Theorie + Methode der Geschichtswissenschaft</langstring>
+<langstring language="en">Historiography</langstring>
 <langstring language="fr">Épistémologie et historiographie</langstring>
 </caption>
 
@@ -297,15 +278,6 @@
 <langstring language="de">Verwaltungsgeschichte</langstring>
 <langstring language="en">History of administration</langstring>
 <langstring language="fr">Histoire de l'administration</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>909</termIdentifier>
-<caption>
-<langstring language="de">Weltgeschichte</langstring>
-<langstring language="en">World History</langstring>
-<langstring language="fr">Histoire globale</langstring>
 </caption>
 
 </term>

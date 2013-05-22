@@ -13,14 +13,14 @@
   </vocabName>
   <vocabIdentifier>ISCO88</vocabIdentifier>
   <term>
-<termIdentifier>t1:0901</termIdentifier>
+<termIdentifier>0901</termIdentifier>
 <caption>
 <langstring language="de">bis 499 n. Chr.</langstring>
 <langstring language="en">until 499 AD</langstring>
 <langstring language="fr">jusqu'à 499 ap. J.-C.</langstring>
 </caption>
 <term>
-<termIdentifier>t1:09012</termIdentifier>
+<termIdentifier>09012</termIdentifier>
 <caption>
 <langstring language="de">vor 4000 v. Chr.</langstring>
 <langstring language="en">before 4000 BC</langstring>
@@ -29,7 +29,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09013</termIdentifier>
+<termIdentifier>09013</termIdentifier>
 <caption>
 <langstring language="de">3999-1000 v. Chr.</langstring>
 <langstring language="en">3999-1000 BC</langstring>
@@ -38,7 +38,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09014</termIdentifier>
+<termIdentifier>09014</termIdentifier>
 <caption>
 <langstring language="de">999 - 1  v. Chr.</langstring>
 <langstring language="en">999 - 1 BC</langstring>
@@ -47,7 +47,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09015</termIdentifier>
+<termIdentifier>09015</termIdentifier>
 <caption>
 <langstring language="de">1 - 5.  Jh. n. Chr.</langstring>
 <langstring language="en">1st - 5th century AD</langstring>
@@ -57,14 +57,14 @@
 </term>
 </term>
 <term>
-<termIdentifier>t1:0902</termIdentifier>
+<termIdentifier>0902</termIdentifier>
 <caption>
 <langstring language="de">Mittelalter</langstring>
 <langstring language="en">Middle Ages</langstring>
 <langstring language="fr">Moyen Âge</langstring>
 </caption>
 <term>
-<termIdentifier>t1:09021</termIdentifier>
+<termIdentifier>09021</termIdentifier>
 <caption>
 <langstring language="de">6. - 12. Jh.</langstring>
 <langstring language="en">6th - 12th century</langstring>
@@ -73,7 +73,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09022</termIdentifier>
+<termIdentifier>09022</termIdentifier>
 <caption>
 <langstring language="de">13. Jh.</langstring>
 <langstring language="en">13th century</langstring>
@@ -82,7 +82,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09023</termIdentifier>
+<termIdentifier>09023</termIdentifier>
 <caption>
 <langstring language="de">14. Jh.</langstring>
 <langstring language="en">14th century</langstring>
@@ -91,7 +91,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09024</termIdentifier>
+<termIdentifier>09024</termIdentifier>
 <caption>
 <langstring language="de">15. Jh.</langstring>
 <langstring language="en">15th century</langstring>
@@ -101,14 +101,14 @@
 </term>
 </term>
 <term>
-<termIdentifier>t1:0903</termIdentifier>
+<termIdentifier>0903</termIdentifier>
 <caption>
 <langstring language="de">Neuzeit bis 1900</langstring>
 <langstring language="en">Modern age until 1900</langstring>
 <langstring language="fr">Époque moderne jusqu'à 1900</langstring>
 </caption>
 <term>
-<termIdentifier>t1:09031</termIdentifier>
+<termIdentifier>09031</termIdentifier>
 <caption>
 <langstring language="de">16. Jh.</langstring>
 <langstring language="en">16th century</langstring>
@@ -117,7 +117,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09032</termIdentifier>
+<termIdentifier>09032</termIdentifier>
 <caption>
 <langstring language="de">17. Jh.</langstring>
 <langstring language="en">17th century</langstring>
@@ -126,7 +126,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09033</termIdentifier>
+<termIdentifier>09033</termIdentifier>
 <caption>
 <langstring language="de">18. Jh.</langstring>
 <langstring language="en">18th century</langstring>
@@ -135,7 +135,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09034</termIdentifier>
+<termIdentifier>09034</termIdentifier>
 <caption>
 <langstring language="de">19. Jh.</langstring>
 <langstring language="en">19th century</langstring>
@@ -145,23 +145,14 @@
 </term>
 </term>
 <term>
-<termIdentifier>t1:0904</termIdentifier>
+<termIdentifier>0904</termIdentifier>
 <caption>
 <langstring language="de">20. Jahrhundert</langstring>
 <langstring language="en">20th century</langstring>
 <langstring language="fr">XXe siècle</langstring>
 </caption>
 <term>
-<termIdentifier>t1:09040</termIdentifier>
-<caption>
-<langstring language="de">1900 - 1949</langstring>
-<langstring language="en">1900 - 1949</langstring>
-<langstring language="fr">1900 - 1949</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>t1:09041</termIdentifier>
+<termIdentifier>09041</termIdentifier>
 <caption>
 <langstring language="de">1900 - 1919</langstring>
 <langstring language="en">1900 - 1919</langstring>
@@ -170,7 +161,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09042</termIdentifier>
+<termIdentifier>09042</termIdentifier>
 <caption>
 <langstring language="de">1920 - 1929</langstring>
 <langstring language="en">1920 - 1929</langstring>
@@ -179,7 +170,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09043</termIdentifier>
+<termIdentifier>09043</termIdentifier>
 <caption>
 <langstring language="de">1930 - 1939</langstring>
 <langstring language="en">1930 - 1939</langstring>
@@ -188,7 +179,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09044</termIdentifier>
+<termIdentifier>09044</termIdentifier>
 <caption>
 <langstring language="de">1940 - 1949</langstring>
 <langstring language="en">1940 - 1949</langstring>
@@ -197,16 +188,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:090441</termIdentifier>
-<caption>
-<langstring language="de">1950 - 1999</langstring>
-<langstring language="en">1950 - 1999</langstring>
-<langstring language="fr">1950 - 1999</langstring>
-</caption>
-
-</term>
-<term>
-<termIdentifier>t1:09045</termIdentifier>
+<termIdentifier>09045</termIdentifier>
 <caption>
 <langstring language="de">1950 - 1959</langstring>
 <langstring language="en">1950 - 1959</langstring>
@@ -215,7 +197,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09046</termIdentifier>
+<termIdentifier>09046</termIdentifier>
 <caption>
 <langstring language="de">1960 - 1969</langstring>
 <langstring language="en">1960 - 1969</langstring>
@@ -224,7 +206,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09047</termIdentifier>
+<termIdentifier>09047</termIdentifier>
 <caption>
 <langstring language="de">1970 - 1979</langstring>
 <langstring language="en">1970 - 1979</langstring>
@@ -233,7 +215,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09048</termIdentifier>
+<termIdentifier>09048</termIdentifier>
 <caption>
 <langstring language="de">1980 - 1989</langstring>
 <langstring language="en">1980 - 1989</langstring>
@@ -242,7 +224,7 @@
 
 </term>
 <term>
-<termIdentifier>t1:09049</termIdentifier>
+<termIdentifier>09049</termIdentifier>
 <caption>
 <langstring language="de">1990 - 1999</langstring>
 <langstring language="en">1990 - 1999</langstring>
@@ -252,18 +234,27 @@
 </term>
 </term>
 <term>
-<termIdentifier>t1:0905</termIdentifier>
+<termIdentifier>0905</termIdentifier>
 <caption>
 <langstring language="de">21. Jahrhundert</langstring>
 <langstring language="en">21st century</langstring>
 <langstring language="fr">XXIe siècle</langstring>
 </caption>
 <term>
-<termIdentifier>t1:09051</termIdentifier>
+<termIdentifier>09051</termIdentifier>
 <caption>
-<langstring language="de">2000-2019</langstring>
-<langstring language="en">2000-2019</langstring>
-<langstring language="fr">2000-2019</langstring>
+<langstring language="de">2000-2009</langstring>
+<langstring language="en">2000-2009</langstring>
+<langstring language="fr">2000-2009</langstring>
+</caption>
+
+</term>
+<term>
+<termIdentifier>09052</termIdentifier>
+<caption>
+<langstring language="de">2010-2019</langstring>
+<langstring language="en">2010-2019</langstring>
+<langstring language="fr">2010-2019</langstring>
 </caption>
 
 </term>
