@@ -395,7 +395,7 @@ class MailNewComment(BrowserView):
             elif hasattr(self.context, 'getInstitution'):
                 institutions = self.context.getInstitution()
                 if institutions:
-                    args['author'] = institutions[0]['Name']
+                    args['author'] = institutions[0]['name']
             (mail_to, pref_lang) = self.findRecipient()
             if not mail_to:
                 mail_to = getattr(review, 'reviewAuthorEmail', '')
