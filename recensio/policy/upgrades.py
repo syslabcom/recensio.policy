@@ -66,11 +66,17 @@ def v9to10(portal_setup):
         "800.09": "809",  # Literaturgeschichte
         "320.9": "909",  # Politikgeschichte
         "300.9": "306.09",  # Sozial un Gesellschaftsgeschichte
+        "400": "417.7",
+        "390": None,
+        "902": "907.2"
     }
     for doc in all_docs:
         for old, new in sache_mappings.items():
             if old in doc.ddcSubject:
-                new_list = [new] + list(doc.ddcSubject)
+                if new:
+                    new_list = [new] + list(doc.ddcSubject)
+                else:
+                    new_list = list(doc.ddcSubject)
                 new_list.pop(old)
                 doc.ddcSubject = tuple(set(new_list))
                 changed_docs.append(doc)
