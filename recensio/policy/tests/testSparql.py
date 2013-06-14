@@ -576,7 +576,7 @@ class TestSparql(unittest.TestCase):
             'bv': u'BV021824202',
             'authors': [{'firstname': u'Horst', 'lastname': u'Brettner-Messler'},
                    {'firstname': u'Stefan', 'lastname': u'Malf\xe8r'},
-                {'firstname': u'Waltraud', 'lastname': u'Heindl'}],
+                {'firstname': u'Waltraud', 'lastname': u'Heindl-Langer'}],
 
             'ddc': [],
             'isbn': u'3209054649',
