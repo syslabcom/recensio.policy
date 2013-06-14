@@ -945,3 +945,6 @@ class TestSparql(unittest.TestCase):
 
         self.assertEquals(expected, metadata)
         self.assertEquals(ignored, errors)
+
+if __name__ == "__main__":
+    unittest.main()
