@@ -113,6 +113,30 @@ def v9to10(portal_setup):
         "t1:09051": "090511",
     }
 
+    sach_mappings = {
+        "43.0": "43",
+        "43.10": "44.6",
+        "43.11": "44.7",
+        "43.12": "44.8",
+        "44.68": "44.69",
+        "44.69": "44.70",
+        "51.0": "51",
+        "52.0": "52",
+        "54.0": "54",
+        "56.0": "56",
+        "57.0": "57",
+        "58.0": "58",
+        "59.0": "59",
+        "61.0": "61",
+        "62.0": "62",
+        "63.0": "63",
+        "64.0": "64",
+        "65.0": "65",
+        "66.0": "66",
+        "67.0": "67",
+        "68.0": "68",
+    }
+
     for doc in all_docs:
         for old, news in zeit_mappings.items():
             if old in doc.ddcTime:
@@ -122,6 +146,12 @@ def v9to10(portal_setup):
                     new_list = [new] + list(doc.ddcTime)
                     new_list.pop(old)
                     doc.ddcTime = tuple(set(new_list))
+                changed_docs.append(doc)
+        for old, new in sach_mappings.items():
+            if old in doc.ddcPlace:
+                new_list = [new] + list(doc.ddcPlace)
+                new_list.pop(old)
+                doc.ddcPlace = tuple(set(new_list))
                 changed_docs.append(doc)
 
     for doc in documents_containing_909:
