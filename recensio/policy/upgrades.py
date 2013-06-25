@@ -47,9 +47,9 @@ def v8to9(portal_setup):
 
 
 def v9to10(portal_setup):
-    #XXX 909 soll von Sache zu Raum werden
-    #
-    #
+    """
+    Please be careful, conversions have to be done in a specific order.
+    """
     portal = getToolByName(portal_setup, 'portal_url').getPortalObject()
     cat = getToolByName(portal, 'portal_catalog')
 
@@ -58,7 +58,6 @@ def v9to10(portal_setup):
     for (filenamepart, vocabname) in (('geo.vdex', 'region_values'),
                                       ('sach.vdex', 'topic_values'),
                                       ('zeit.vdex', 'epoch_values')):
-        pvm.invokeFactory('VdexFileVocabulary', vocabname)
         pvm[vocabname].importXMLBinding(pkg_resources.resource_string(
             __name__, path_tmpl % filenamepart))
 
@@ -85,16 +84,6 @@ def v9to10(portal_setup):
         "390": None,
         "902": "907.2"
     }
-    for doc in all_docs:
-        for old, new in sache_mappings.items():
-            if old in doc.ddcSubject:
-                if new:
-                    new_list = [new] + list(doc.ddcSubject)
-                else:
-                    new_list = list(doc.ddcSubject)
-                new_list.pop(old)
-                doc.ddcSubject = tuple(set(new_list))
-                changed_docs.append(doc)
 
     zeit_mappings = {
         "t1:0901": "0901",
@@ -153,26 +142,36 @@ def v9to10(portal_setup):
     }
 
     for doc in all_docs:
+        for old, new in sache_mappings.items():
+            if old in doc.ddcSubject:
+                if new:
+                    new_list = [new] + list(doc.ddcSubject)
+                else:
+                    new_list = list(doc.ddcSubject)
+                new_list.remove(old)
+                doc.ddcSubject = tuple(set(new_list))
+                changed_docs.append(doc)
         for old, news in zeit_mappings.items():
             if old in doc.ddcTime:
                 if not isinstance(news, list):
                     news = [news]
+                new_list = list(doc.ddcTime)
+                new_list.remove(old)
                 for new in news:
-                    new_list = [new] + list(doc.ddcTime)
-                    new_list.pop(old)
-                    doc.ddcTime = tuple(set(new_list))
+                    new_list = new_list + [new]
+                doc.ddcTime = tuple(set(new_list))
                 changed_docs.append(doc)
         for old, new in sach_mappings.items():
             if old in doc.ddcPlace:
                 new_list = [new] + list(doc.ddcPlace)
-                new_list.pop(old)
+                new_list.remove(old)
                 doc.ddcPlace = tuple(set(new_list))
                 changed_docs.append(doc)
 
     for doc in documents_containing_909:
         doc.ddcPlace = tuple(set(doc.ddcPlace + tuple('909')))
 
-    log.warning("To 10 Migration migrated %i documents" %
+    log.warning("To 10 Migration migrated %i documents",
                 len(set(changed_docs)))
 
     for doc in list(set(changed_docs)):
