@@ -1,8 +1,13 @@
-from Products.CMFCore.utils import getToolByName
-from transaction import commit
 from plone.app.controlpanel.skins import ISkinsSchema
+from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.eventhandlers import review_pdf_updated_eventhandler
 from recensio.contenttypes.interfaces.review import IReview
+from transaction import commit
+import pkg_resources
+from logging import getLogger
+
+
+log = getLogger(__name__)
 
 
 def v7to8(portal_setup):
@@ -47,6 +52,16 @@ def v9to10(portal_setup):
     #
     portal = getToolByName(portal_setup, 'portal_url').getPortalObject()
     cat = getToolByName(portal, 'portal_catalog')
+
+    pvm = getToolByName(portal, 'portal_vocabularies')
+    path_tmpl = '../../vocabularies/ddc_%s'
+    for (filenamepart, vocabname) in (('geo.vdex', 'region_values'),
+                                      ('sach.vdex', 'topic_values'),
+                                      ('zeit.vdex', 'epoch_values')):
+        pvm.invokeFactory('VdexFileVocabulary', vocabname)
+        pvm[vocabname].importXMLBinding(pkg_resources.resource_string(
+            __name__, path_tmpl % filenamepart))
+
     all_docs = [x.getObject() for x in
                 cat(object_provides="recensio.contenttypes.interfaces.review.IReview",
                     b_size=100000) if x]
@@ -156,6 +171,9 @@ def v9to10(portal_setup):
 
     for doc in documents_containing_909:
         doc.ddcPlace = tuple(set(doc.ddcPlace + tuple('909')))
+
+    log.warning("To 10 Migration migrated %i documents" %
+                len(set(changed_docs)))
 
     for doc in list(set(changed_docs)):
         doc.reindexObject()
