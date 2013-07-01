@@ -260,7 +260,7 @@
         </caption>
       </term>
       <term>
-        <termIdentifier>44.6</termIdentifier>
+        <termIdentifier>43.10</termIdentifier>
         <caption>
           <langstring language="de">Armenien</langstring>
           <langstring language="en">Armenia</langstring>
@@ -493,20 +493,20 @@
       </caption>
     </term>
     <term>
-      <termIdentifier>59.1</termIdentifier>
-      <caption>
-        <langstring language="de">Palästina, Israel</langstring>
-        <langstring language="en">Palestine, Israel</langstring>
-        <langstring language="fr">Palestine, Israël</langstring>
-      </caption>
-    </term>
-    <term>
       <termIdentifier>59.2</termIdentifier>
       <caption>
         <langstring language="de">Arabische Halbinsel und
 benachbarte Gebiete</langstring>
         <langstring language="en">Arabian Peninsula and neighbouring territories</langstring>
         <langstring language="fr">Arabie et territoires voisins</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>59.1</termIdentifier>
+      <caption>
+        <langstring language="de">Israel, Palästina</langstring>
+        <langstring language="en">Israel, Palestine</langstring>
+        <langstring language="fr">Israël, Palestine</langstring>
       </caption>
     </term>
   </term>
