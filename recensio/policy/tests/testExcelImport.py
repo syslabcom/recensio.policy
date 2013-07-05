@@ -55,7 +55,7 @@ class TestExcelImportUnit(unittest.TestCase):
             ['The language "${lang}" is unknown'], converter.warnings)
 
 class TestZipImport(unittest.TestCase):
-    def testZipImport(self):
+    def unmaintained_testZipImport(self):
         from recensio.imports import browser
         addOneItem = Mock()
         browser.addOneItem = addOneItem
@@ -81,7 +81,7 @@ class TestZipImport(unittest.TestCase):
         view.context = None
         self.assertRaises(browser.FrontendException, view.addZIPContent, None)
 
-    def testZipExtractor(self):
+    def unmaintained_testZipExtractor(self):
         from recensio.imports.zip_extractor import ZipExtractor
         extractor = ZipExtractor()
         zipfile = file(resource_filename(__name__,
@@ -91,7 +91,7 @@ class TestZipImport(unittest.TestCase):
         docs = [x for x in docs]
         self.assertEquals(2, len(docs))
 
-    def testExcelConverterForZip(self):
+    def unmaintained_testExcelConverterForZip(self):
         from recensio.imports.excel_converter import ExcelConverter
         converter = ExcelConverter()
         converter._supported_languages = ('de', 'en')
@@ -104,10 +104,10 @@ class TestZipImport(unittest.TestCase):
 class testexcelimport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
-    def testGermanFormat(self):
+    def unmaintained_testGermanFormat(self):
         self._testFormat('recensioupload_DE.xls')
 
-    def testEnglishFormat(self):
+    def unmaintained_testEnglishFormat(self):
         self._testFormat('recensioupload_EN.xls')
 
     def _testFormat(self, filename):

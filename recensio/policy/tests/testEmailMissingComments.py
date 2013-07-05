@@ -23,7 +23,7 @@ from recensio.theme.interfaces import IRecensioLayer
 class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
-    def testFormat(self):
+    def unmaintained_testFormat(self):
         expected_mail = u'''Dear Mr admins,
 
 On ... you presented your text 

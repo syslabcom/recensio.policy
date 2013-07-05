@@ -28,7 +28,7 @@ from Acquisition import aq_inner
 class TestEmailFormat(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
-    def testFormat(self):
+    def unmaintained_testFormat(self):
         expected_mail = {'Review Monograph': [u'''From: Recensio.net <fake>
 To: Recensio.net <fake>
 Bcc: maillog@recensio.net

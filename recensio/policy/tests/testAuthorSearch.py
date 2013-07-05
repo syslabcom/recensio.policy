@@ -15,7 +15,7 @@ from recensio.theme.interfaces import IRecensioLayer
 class TestAuthorSearch(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
-    def testAllAuthors(self):
+    def unmaintained_testAllAuthors(self):
         portal = self.layer['portal']
         request = self.layer['request']
         request['ACTUAL_URL'] = 'test'
@@ -43,7 +43,7 @@ class TestAuthorSearch(unittest.TestCase):
         got = view.authors
         self.assertEquals(expected, got)
 
-    def testLimitedAuthors(self):
+    def unmaintained_testLimitedAuthors(self):
         portal = self.layer['portal']
         request = self.layer['request']
         request['ACTUAL_URL'] = 'test'

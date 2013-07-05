@@ -50,42 +50,42 @@ class TestMainSiteSections(unittest.TestCase):
             self.browser.headers.dict["status"] == "200 Ok",
             msg="Error when trying to view %s" % self.browser.url)
 
-    def test_authorsearch_view(self):
+    def unmaintained_test_authorsearch_view(self):
         path = "autoren/index_html"
         self.is_successful_status(path)
         obj = self.portal.unrestrictedTraverse(path)
         self.assertEquals(obj.getProperty("layout", ""), "authorsearch")
 
-    def test_browse_topics(self):
+    def unmaintained_test_browse_topics(self):
         path = "themen-epochen-regionen/index_html"
         self.is_successful_status(path)
         obj = self.portal.unrestrictedTraverse(path)
         self.assertEquals(obj.getProperty("layout", ""), "browse-topics")
 
-    def test_publications_view(self):
+    def unmaintained_test_publications_view(self):
         path = "rezensionen/zeitschriften"
         self.is_successful_status(path)
         obj = self.portal.unrestrictedTraverse(path)
         self.assertEquals(obj.layout, "publications-view")
 
-    def test_personal_information_view(self):
+    def unmaintained_test_personal_information_view(self):
         path = "personal-information"
         self.is_successful_status(path)
 
-    def test_personal_information_view(self):
+    def unmaintained_test_personal_information_view(self):
         path = "register"
         self.is_successful_status(path)
 
-    def test_presentations(self):
+    def unmaintained_test_presentations(self):
         self.is_successful_status("praesentationen")
 
-    def test_content_browsing_batching(self):
+    def unmaintained_test_content_browsing_batching(self):
         self.is_successful_status("themen-epochen-regionen-en?b_start:int=10")
 
-    def test_authors_batching(self):
+    def unmaintained_test_authors_batching(self):
         self.is_successful_status("autoren?b_start:int=30")
 
-    def test_publication(self):
+    def unmaintained_test_publication(self):
         self.is_successful_status("sample-reviews/newspapera")
         self.assertTrue(
             "Summer" in self.browser.contents,
@@ -98,5 +98,5 @@ class TestMainSiteSections(unittest.TestCase):
                    "publicationlisting viewlet")
             )
 
-    def test_search_form(self):
+    def unmaintained_test_search_form(self):
         self.is_successful_status("search_form")

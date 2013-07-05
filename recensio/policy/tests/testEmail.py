@@ -4,7 +4,7 @@ from zope.interface import alsoProvides
 import unittest
 
 class TestNewsletter(unittest.TestCase):
-    def test_newsletter(self):
+    def unmaintained_test_newsletter(self):
         from recensio.policy.browser.email import MailCollection
         from recensio.policy.interfaces import INewsletterSettings
         from Products.statusmessages.interfaces import IStatusMessage
