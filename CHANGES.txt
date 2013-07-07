@@ -4,7 +4,11 @@ Changelog
 3.0.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+
+- Test fixes [deroiste, ckirchhoff]
+- Remove 3 Klassifications [do3cc]
+- Institution are multivalued fields [do3cc]
+- newer DDC [do3cc]
 
 
 3.0.6 (2013-05-14)
