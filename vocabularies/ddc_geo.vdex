@@ -469,6 +469,23 @@
       </caption>
     </term>
     <term>
+      <termIdentifier>59.2</termIdentifier>
+      <caption>
+        <langstring language="de">Arabische Halbinsel und
+benachbarte Gebiete</langstring>
+        <langstring language="en">Arabian Peninsula and neighbouring territories</langstring>
+        <langstring language="fr">Arabie et territoires voisins</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>59.1</termIdentifier>
+      <caption>
+        <langstring language="de">Israel, Palästina</langstring>
+        <langstring language="en">Israel, Palestine</langstring>
+        <langstring language="fr">Israël, Palestine</langstring>
+      </caption>
+    </term>
+    <term>
       <termIdentifier>57</termIdentifier>
       <caption>
         <langstring language="de">Sibirien</langstring>
@@ -490,23 +507,6 @@
         <langstring language="de">Südostasien</langstring>
         <langstring language="en">South-Eastern Asia</langstring>
         <langstring language="fr">Asie du Sud-Est</langstring>
-      </caption>
-    </term>
-    <term>
-      <termIdentifier>59.2</termIdentifier>
-      <caption>
-        <langstring language="de">Arabische Halbinsel und
-benachbarte Gebiete</langstring>
-        <langstring language="en">Arabian Peninsula and neighbouring territories</langstring>
-        <langstring language="fr">Arabie et territoires voisins</langstring>
-      </caption>
-    </term>
-    <term>
-      <termIdentifier>59.1</termIdentifier>
-      <caption>
-        <langstring language="de">Israel, Palästina</langstring>
-        <langstring language="en">Israel, Palestine</langstring>
-        <langstring language="fr">Israël, Palestine</langstring>
       </caption>
     </term>
   </term>
