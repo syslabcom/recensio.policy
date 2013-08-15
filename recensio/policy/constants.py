@@ -1,5 +1,18 @@
 # -*- coding: utf-8 -*-
 
+EXPORT_MAX_ITEMS = 10
+
+EXPORT_OUTPUT_PATH = '/tmp/recensio'  
+
+EXPORTABLE_CONTENT_TYPES = (
+    'Presentation Online Resource',
+    'Presentation Article Review',
+    'Presentation Collection',
+    'Review Journal',
+    'Presentation Monograph',
+    'Review Monograph'
+    )
+    
 vocabularies = {
     'honorifics':{
         'frau':'Frau',

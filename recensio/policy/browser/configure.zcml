@@ -60,11 +60,19 @@
     permission="zope2.View"
     />
 
+	<!--    for="recensio.policy.interfaces.IDigitoolView"-->
 
   <browser:page
-    for="Products.ATContentTypes.interfaces.topic.IATTopic"
-    name="digitool_export"
+	for="*"
+    name="digitool-xml"
     class=".digitool.DigiToolRepresentation"
+    permission="zope.Public"
+    />
+
+  <browser:page
+	for="*"
+    name="digitool-export"
+    class=".digitool.DigiToolExport"
     permission="zope.Public"
     />
 

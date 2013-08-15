@@ -1,7 +1,17 @@
 from Products.Five.browser import BrowserView
 from zope.app.pagetemplate import ViewPageTemplateFile
+from datetime import datetime
+from Acquisition import aq_base
+from plone.uuid.interfaces import IUUID
+from os import path
+
+
+from recensio.policy.constants import \
+    EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
+
 
 class Book(object):
+    
     def __init__(self, obj):
         self.isbn = getattr(obj, 'getIsbn', getattr(obj, 'getIssn', lambda: None))()
         self.subtitle = obj.title
@@ -39,13 +49,63 @@ class Review(object):
                                                    # in our system
 
 class DigiToolRepresentation(BrowserView):
+    """ if this view is called, it iterates through the system and dumps every content type as xml to harddisk
+        and marks it as exported with a little flag. If the flag is set, it is not exported again. """
+        
     template = ViewPageTemplateFile('templates/digitool.pt')
 
     def __call__(self):
-        self.number = 'fake'
-        self.volume = 'fake'
-        self.year = 'fake'
         return self.template(self)
+
+
+
+
+class DigiToolExport(BrowserView):
+    """ if this view is called, it iterates through the system and dumps every content type as xml to harddisk
+        and marks it as exported with a little flag. If the flag is set, it is not exported again. """
+    
+    def __call__(self):
+        """ run idempotent. Handle a number of records and return. """
+        portal = self.context.portal_url.getPortalObject()
+
+        now = datetime.now()
+        count = 0
+        for key, value in portal.ZopeFind(portal, search_sub=1):
+            ob = value.aq_explicit
+            if hasattr(ob, '__digitool_exported__') or \
+                not hasattr(ob, 'portal_type') or \
+                ob.portal_type not in EXPORTABLE_CONTENT_TYPES:
+                continue
+
+            try:
+                self.dump_xml(value)
+            except KeyError, ke:
+                print ke
+                continue
+
+            #setattr(value, '__digitool_exported__', True)
+            count += 1  
+            if count > EXPORT_MAX_ITEMS:
+                break
+                
+        delta = datetime.now() - now
+        print "Exporting %s items takes %s secs" % (EXPORT_MAX_ITEMS, delta)
+        return "ok %s" % delta
+        
+
+    def dump_xml(self, item):
+        """ create an xml representation of the object and dump it to disk """
+        
+        data = item.unrestrictedTraverse('@@digitool-xml')
+        filename = "%s/%s.xml" % (EXPORT_OUTPUT_PATH, IUUID(item))
+        if path.exists(filename):
+            print "File exists, overwriting"
+            #raise KeyError, "File exists, but must not"
+            
+        fh = open (filename, "w")
+        fh.write(data())
+        fh.close()
+        
 
     @property
     def reviews(self):
