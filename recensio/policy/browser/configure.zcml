@@ -69,6 +69,41 @@
     permission="zope.Public"
     />
 
+
+  <!-- XML Representations for rj, rm and publication, which includes the former -->
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+    name="xml"
+    class=".digitool.XMLRepresentation_rm"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+    name="xml"
+    class=".digitool.XMLRepresentation_rj"
+    permission="zope.Public"
+    />
+
+  <browser:page
+	for="recensio.contenttypes.interfaces.publication.IPublication"
+    name="xml"
+    class=".digitool.XMLRepresentation_publication"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.volume.IVolume"
+    name="xml"
+    class=".digitool.XMLRepresentation_volume"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.issue.IIssue"
+    name="xml"
+    class=".digitool.XMLRepresentation_issue"
+    permission="zope.Public"
+    />
+
+
   <browser:page
 	for="*"
     name="digitool-export"
