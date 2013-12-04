@@ -70,9 +70,7 @@ class DigiToolRepresentation(BrowserView):
 
 class XMLRepresentation(BrowserView):
     template = None
-
-    def __call__(self):
-        return self.template(self)
+    filename = "recensio_exportx.xml"
 
     def get_lang_name(self, code):
         return _languagelist.get(code, {'native':code})['native']
@@ -113,13 +111,27 @@ class XMLRepresentation(BrowserView):
 class XMLRepresentation_rj(XMLRepresentation):
     template = ViewPageTemplateFile('templates/export_rj.pt')
 
+    def __call__(self):
+        return self.template(self)
+
 
 class XMLRepresentation_rm(XMLRepresentation):
     template = ViewPageTemplateFile('templates/export_rm.pt')
 
+    def __call__(self):
+        return self.template(self)
+
 
 class XMLRepresentation_publication(XMLRepresentation):
     template = ViewPageTemplateFile('templates/export_container.pt')
+
+    def __call__(self):
+        self.request.response.setHeader('Content-type', 'application/xml')
+        self.request.response.setHeader('Content-disposition', 'inline;filename=%s' % self.filename())
+        return self.template(self)
+
+    def filename(self):
+        return "recensio_%s_%s_%s.xml" % (self.get_publication_shortname(), "0", "0")
 
     def reviews(self):
         pc = self.context.portal_catalog
@@ -127,6 +139,9 @@ class XMLRepresentation_publication(XMLRepresentation):
         results = pc(review_state="published", portal_type=("Review Monograph", "Review Journal"), path=path)
         for item in results:
             yield item.getObject()
+
+    def get_publication_shortname(self):
+        return unicode(self.get_parent("Publication").getId(), 'utf-8')
 
     def get_package_journal_pubyear(self):
         return u"?? Wo kommt das her ??"
@@ -151,14 +166,17 @@ class XMLRepresentation_volume(XMLRepresentation_publication):
     def get_package_journal_issue(self):
         return u"0"
 
+    def filename(self):
+        return "recensio_%s_%s_%s.xml" % (self.get_publication_shortname(), self.get_package_journal_volume(), "0")
 
 class XMLRepresentation_issue(XMLRepresentation_volume):
     template = ViewPageTemplateFile('templates/export_container.pt')
 
-
     def get_package_journal_issue(self):
         return unicode(self.get_parent("Issue").Title(), 'utf-8')
 
+    def filename(self):
+        return "recensio_%s_%s_%s.xml" % (self.get_publication_shortname(), self.get_package_journal_volume(), self.get_package_journal_issue())
 
 
 
