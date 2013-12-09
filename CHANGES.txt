@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.1.1 (unreleased)
+3.1.1 (2013-12-09)
 ------------------
 
 - prepared export of xml files for content. We don't have the final xml files
