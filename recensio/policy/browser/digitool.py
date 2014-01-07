@@ -89,7 +89,10 @@ class XMLRepresentation(BrowserView):
         self.vocDict['ddcSubject'] = voc.getVocabularyByName(
             'topic_values')
             
-        return self.vocDict[typ].getTermByKey(term)
+        term = self.vocDict[typ].getTermByKey(term)
+        if not term:
+            return ''
+        return term
 
     def list_authors(self):
         out = ""
