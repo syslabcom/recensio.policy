@@ -18,7 +18,7 @@
 			<reviewed_journal_title tal:content="context/Title">!Germanoslavica. Zeitschrift für germano-slawische Studien</reviewed_journal_title>
 			<reviewed_journal_title_short />
 			<reviewed_journal_volume tal:content="context/getVolumeNumber">!20</reviewed_journal_volume>
-			<language_reviewed_object  tal:content="python:', '.join([context.portal_languages.getAvailableLanguages()[x]['native'] for x in context.getLanguageReviewedText()])">!English, Deutsch</language_reviewed_object>
+			<language_reviewed_object  tal:content="python:', '.join([view.get_lang_name(x) for x in context.getLanguageReviewedText()])">!English, Deutsch</language_reviewed_object>
     </journal>
 	  <classification_place tal:content="python:context.getDdcPlace() and ', '.join([view.get_voc_title('ddcPlace', x) for x in context.getDdcPlace() if x]) or ''">Slowenien, Polen, Lettland, Deutschland, Tschechien</classification_place>
 	  <classification_subject tal:content="python:context.getDdcSubject() and ', '.join([view.get_voc_title('ddcSubject', x) for x in context.getDdcSubject() if x]) or ''">Sprachgeschichte, Wirtschaftsgeschichte, Literaturgeschichte, Siedlungs-, Stadt- und Ortsgeschichte, Bildungs-, Wissenschafts-, Schul- und Universitätsgeschichte, Sozial- und Kulturgeschichte</classification_subject>
