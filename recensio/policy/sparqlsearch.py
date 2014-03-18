@@ -14,7 +14,7 @@ from logging import getLogger
 
 log = getLogger(__name__)
 
-QUERY = \
+PREFIX_HEADER = \
     '''PREFIX  rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX  rdfs:<http://www.w3.org/2000/01/rdf-schema#>
 PREFIX  owl:<http://www.w3.org/2002/07/owl#>
@@ -28,14 +28,23 @@ PREFIX  foaf:<http://xmlns.com/foaf/0.1/>
 PREFIX  skos:<http://w3.org/2004/02/skos/core#>
 PREFIX  geonames:<http://www.geonames.org/ontology#>
 PREFIX  marcrel:<http://id.loc.gov/vocabulary/relators/>
+PREFIX  rdagr1:<http://rdvocab.info/Elements/>
+'''
 
-PREFIX  bibo:<http://purl.org/ontology/bibo/>
-
-SELECT * WHERE {
+QUERY = PREFIX_HEADER + \
+'''SELECT * WHERE {
     ?docid bibo:isbn "%s".
         ?docid ?p ?o
-        }LIMIT 200'''
+        } LIMIT 200'''
 
+QUERY2 = PREFIX_HEADER + \
+'''SELECT DISTINCT ?bv_best ?bv_alt WHERE
+        {
+            ?docid bibo:isbn "%s" .
+            ?docid frbr:exemplar ?bv_alt
+            OPTIONAL {?docid frbr:exemplar ?bv_best .
+                    FILTER regex(?bv_best, "bib/DE-12/")}
+        } ORDER BY desc(?bv_best)'''
 
 def getLabels(subject_url, graph):
     retval = {}
@@ -198,6 +207,12 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
     'http://www.geonames.org/ontology#countryCode',
     'http://purl.org/dc/terms/hasPart',
     'http://purl.org/dc/terms/alternative',
+    'http://id.loc.gov/vocabulary/relators/ctb',
+    'http://iflastandards.info/ns/isbd/elements/P1053',
+    'http://purl.org/dc/terms/bibliographicCitation',
+    'http://purl.org/ontology/bibo/edition',
+    'http://purl.org/ontology/bibo/oclcnum',
+    'http://rdvocab.info/Elements/publicationStatement',
 ])
 
 
@@ -218,18 +233,14 @@ def getMetadata(isbn):
     }
     isbn = isbn.replace('-', '').replace(' ', '')
     service = sparql.Service('http://lod.b3kat.de/sparql')
+    log.info("Sparql query:\n%s" % (QUERY % isbn))
     result = service.query(QUERY % isbn)
 
     # NEW STYLE, BETTER
-    service.setPrefix('purl', 'http://purl.org/vocab/frbr/core#')
     try:
-        bv = service.query('''select DISTINCT ?bv_best, ?bv_alt WHERE
-        {
-            {?docid bibo:isbn "%s"} .
-            {?docid purl:exemplar ?bv_alt}
-            OPTIONAL {?docid purl:exemplar ?bv_best .
-                    FILTER regex(?bv_best, "bib/DE-12/")}
-        } ORDER BY desc(?bv_best)''' % (isbn,)).fetchone().next()
+        Q2 = QUERY2 % isbn
+        log.info("Second Sparql query:\n%s" % Q2)
+        bv = service.query( Q2 ).fetchone().next()
         bv = bv[0].value if bv[0] else bv[1].value
         bv = bv.split('/')[-1]
         retval['bv'] = bv
@@ -250,6 +261,7 @@ def getMetadata(isbn):
                 str(predicate.value),
                 obj.value)
         HANDLERS[predicate.value](obj, retval)
+
     for (key, values) in retval.items():
         if hasattr(values, 'sort'):
             values.sort()
