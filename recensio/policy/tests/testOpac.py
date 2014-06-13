@@ -110,7 +110,7 @@ class TestOpacSearch(unittest.TestCase):
         self.assertEquals(None, createResult(soup2)['title'])
 
     def testCreateResultSubtitle(self):
-        soup1 = BeautifulSoup('''<td><strong>Titel:</strong>
+        soup1 = BeautifulSoup(u'''<td><strong>Titel:</strong>
 
 
     Some Book|Einführung und Dokumentation zur Entwicklung von Webanwendungen<br><br>
