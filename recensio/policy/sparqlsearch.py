@@ -32,19 +32,20 @@ PREFIX  rdagr1:<http://rdvocab.info/Elements/>
 '''
 
 QUERY = PREFIX_HEADER + \
-'''SELECT * WHERE {
+    '''SELECT * WHERE {
     ?docid bibo:isbn "%s".
         ?docid ?p ?o
         } LIMIT 200'''
 
 QUERY2 = PREFIX_HEADER + \
-'''SELECT DISTINCT ?bv_best ?bv_alt WHERE
+    '''SELECT DISTINCT ?bv_best ?bv_alt WHERE
         {
             ?docid bibo:isbn "%s" .
             ?docid frbr:exemplar ?bv_alt
             OPTIONAL {?docid frbr:exemplar ?bv_best .
                     FILTER regex(?bv_best, "bib/DE-12/")}
         } ORDER BY desc(?bv_best)'''
+
 
 def getLabels(subject_url, graph):
     retval = {}
@@ -87,58 +88,59 @@ def keywords_and_ddc(obj, retval):
     if raw_data.startswith('http'):
         g = Graph()
         g.parse(raw_data, format='application/rdf+xml')
-        if [x for x in
-            g.predicates(object=URIRef('http://w3.org/2004/02/skos/core#Concept'
-                                       ))]:
+        if [x for x in g.predicates(
+                object=URIRef('http://w3.org/2004/02/skos/core#Concept'))]:
 
             # We don't handle Concepts
 
             return
-        if URIRef('http://www.w3.org/2004/02/skos/core#Concept') in \
-                [x for x in g.objects(predicate=URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'))]:
+        if URIRef('http://www.w3.org/2004/02/skos/core#Concept') in [
+            x for x in g.objects(
+                predicate=URIRef('http://www.w3.org/1999/02/22-rdf-syntax-ns#type'))]:
             # We still don't handle Concepts
             return
 
-        if URIRef('http://d-nb.info/vocab/gnd-sc#16.5p') in [x for x in
-                                                             g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
-                                                                                        ))]:
+        if URIRef('http://d-nb.info/vocab/gnd-sc#16.5p') in [
+            x for x in g.objects(
+                predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'))]:
 
             # We don't handle persons as keywords
 
             return
-        if URIRef('http://d-nb.info/vocab/gnd-sc#16.5') in [x for x in
-                                                            g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
-                                                                                       ))]:
+        if URIRef('http://d-nb.info/vocab/gnd-sc#16.5') in [
+            x for x in g.objects(
+                predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'))]:
 
             # OK, I really don't know whats happening right now. THis
             # example is from: http://d-nb.info/gnd/4240685-7
 
             return
-        if URIRef('http://d-nb.info/vocab/gnd-sc#6.6') in [x for x in
-                                                           g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
-                                                                                      ))]:
+        if URIRef('http://d-nb.info/vocab/gnd-sc#6.6') in [
+            x for x in g.objects(
+                predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'))]:
 
             # We don't handle organizations as keywords
 
             return
-        if URIRef('http://d-nb.info/vocab/gnd-sc#8.2b') in [x for x in
-                                                            g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'
-                                                                                       ))]:
+        if URIRef('http://d-nb.info/vocab/gnd-sc#8.2b') in [
+            x for x in g.objects(
+                predicate=URIRef('http://d-nb.info/standards/elementset/gnd#gndSubjectCategory'))]:
 
             # We don't handle organizations as keywords (again?)
 
             return
 
-        possible_values = [x.title() for x in
-                           g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#preferredNameForTheSubjectHeading'
-                                                      ))] + [x.title() for x in
-                                                             g.objects(predicate=URIRef('http://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName'
-                                                                                        ))]
+        possible_values = [
+            x.title() for x in g.objects(
+                predicate=URIRef('http://d-nb.info/standards/elementset/gnd#preferredNameForTheSubjectHeading'))] + [
+            x.title() for x in g.objects(
+                predicate=URIRef('http://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName'))]
         if possible_values:
             retval['keywords'].extend(possible_values)
         else:
             log.error(
-                'Don\'t know how to handle this for keyword and ddc: %s', raw_data)
+                'Don\'t know how to handle this for keyword and ddc: %s',
+                raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
             retval['ddc'].append(obj.value)
@@ -175,8 +177,9 @@ HANDLERS['http://iflastandards.info/ns/isbd/elements/P1006'] = genericStore(
     'subtitle')
 HANDLERS['http://purl.org/dc/elements/1.1/contributor'] = authorsStore
 HANDLERS['http://purl.org/dc/elements/1.1/creator'] = authorsStore
-HANDLERS['http://purl.org/dc/elements/1.1/identifier'] = genericStore(
-    'isbn')  # XXX In the tests is an example where both are set. Both isbn setters override each other right now!
+# XXX In the tests is an example where both are set. Both isbn setters
+# override each other right now!
+HANDLERS['http://purl.org/dc/elements/1.1/identifier'] = genericStore('isbn')
 HANDLERS['http://purl.org/dc/elements/1.1/language'] = genericStore('language')
 HANDLERS['http://purl.org/dc/terms/language'] = genericStore('language')
 HANDLERS['http://purl.org/dc/elements/1.1/publisher'] = genericStore(
@@ -240,7 +243,7 @@ def getMetadata(isbn):
     try:
         Q2 = QUERY2 % isbn
         log.info("Second Sparql query:\n%s" % Q2)
-        bv = service.query( Q2 ).fetchone().next()
+        bv = service.query(Q2).fetchone().next()
         bv = bv[0].value if bv[0] else bv[1].value
         bv = bv.split('/')[-1]
         retval['bv'] = bv
