@@ -143,7 +143,7 @@ def keywords_and_ddc(obj, retval):
                 raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
-            retval['ddc'].append(obj.value)
+            retval['ddcSubject'].append(obj.value)
         else:
             retval['keywords'].append(obj.value)
 
@@ -196,6 +196,10 @@ HANDLERS['http://purl.org/ontology/bibo/editor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/isbn'] = genericStore('isbn')
 HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = genericStore(
     'location')
+HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcGeo'] = genericStore(
+    'ddcPlace')
+HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcTime'] = genericStore(
+    'ddcTime')
 
 KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publication anyway
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
