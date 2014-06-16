@@ -240,7 +240,6 @@ class TestOpacSearch(unittest.TestCase):
         self.assertEquals(should_be,is_)
 
     def testGetStringWithBr(self):
-        # import pdb;pdb.set_trace()
         is_ = getString(BeautifulSoup('''<strong>  Text
 <!-- Comment --></strong><br><a>lala</a>''')).strip()
         should_be = 'Text'
