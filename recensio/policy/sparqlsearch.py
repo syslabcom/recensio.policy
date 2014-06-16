@@ -1,16 +1,15 @@
-#!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 from collections import defaultdict
+from logging import getLogger
+from plone.memoize import ram
 from rdflib.graph import Graph
 from rdflib.plugins.parsers.rdfa import RDFaError
 from rdflib.term import URIRef
-import re
-
-import sparql
 from sparql import IRI
+from time import time
 
-from logging import getLogger
+import re
+import sparql
 
 log = getLogger(__name__)
 
@@ -48,23 +47,23 @@ QUERY2 = PREFIX_HEADER + \
 
 
 def getLabels(subject_url, graph):
-    retval = {}
+    returnval = {}
     for (predicate, obj) in graph.preferredLabel(URIRef(subject_url)):
-        retval[obj.language] = obj.title()
-    return retval
+        returnval[obj.language] = obj.title()
+    return returnval
 
 
 def genericStore(target_attribute):
 
-    def storeLiteralImpl(obj, retval):
+    def storeLiteralImpl(obj, returnval):
         if not obj.value.startswith('http'):
-            retval[target_attribute] = obj.value
+            returnval[target_attribute] = obj.value
         else:
             g = Graph()
             g.parse(obj.value)
             possible_values = getLabels(obj.value, g)
             if 'en' in possible_values:
-                retval[target_attribute] = possible_values['en']
+                returnval[target_attribute] = possible_values['en']
             else:
                 log.error('No handler for %s', str(obj))
 
@@ -74,14 +73,14 @@ def genericStore(target_attribute):
 numberStore_re = re.compile('(\d+) S\.')
 
 
-def numberStore(obj, retval):
+def numberStore(obj, returnval):
     raw_data = obj.value
     pages = numberStore_re.findall(raw_data)
     if pages:
-        retval['pages'] = pages[0]
+        returnval['pages'] = pages[0]
 
 
-def keywords_and_ddc(obj, retval):
+def keywords_and_ddc(obj, returnval):
     if 'dewey' in unicode(obj).lower():
         return
     raw_data = obj.value
@@ -136,21 +135,21 @@ def keywords_and_ddc(obj, retval):
             x.title() for x in g.objects(
                 predicate=URIRef('http://d-nb.info/standards/elementset/gnd#preferredNameForThePlaceOrGeographicName'))]
         if possible_values:
-            retval['keywords'].extend(possible_values)
+            returnval['keywords'].extend(possible_values)
         else:
             log.error(
                 'Don\'t know how to handle this for keyword and ddc: %s',
                 raw_data)
     else:
         if obj.datatype == 'http://purl.org/dc/terms/DDC':
-            retval['ddcSubject'].append(obj.value)
+            returnval['ddcSubject'].append(obj.value)
         else:
-            retval['keywords'].append(obj.value)
+            returnval['keywords'].append(obj.value)
 
 
-def authorsStore(obj, retval):
+def authorsStore(obj, returnval):
     if not obj.value.startswith('http'):
-        retval['authors'].append(obj.value)
+        returnval['authors'].append(obj.value)
     else:
         g = Graph()
         try:
@@ -166,7 +165,7 @@ def authorsStore(obj, retval):
                 "PREFIX gnd:<http://d-nb.info/standards/elementset/gnd#>  SELECT ?forename ?surname where {[] gnd:forename ?forename ; gnd:surname ?surname}"))
 
         for (firstname, surname) in fullnames:
-            retval['authors'].append(dict(firstname=firstname.title(),
+            returnval['authors'].append(dict(firstname=firstname.title(),
                                           lastname=surname.title()))
 
 
@@ -224,7 +223,7 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
 
 
 def getMetadata(isbn):
-    retval = {  # dc:creator, bibo:editor, dc:contributor
+    returnval = {  # dc:creator, bibo:editor, dc:contributor
         'title': None,
         'subtitle': None,
         'authors': [],
@@ -240,22 +239,20 @@ def getMetadata(isbn):
     }
     isbn = isbn.replace('-', '').replace(' ', '')
     service = sparql.Service('http://lod.b3kat.de/sparql')
-    log.info("Sparql query:\n%s" % (QUERY % isbn))
-    result = service.query(QUERY % isbn)
 
-    # NEW STYLE, BETTER
+    # Try to get the BV number
     try:
         Q2 = QUERY2 % isbn
-        log.info("Second Sparql query:\n%s" % Q2)
+        log.debug("Sparql query for BV number:\n%s" % Q2)
         bv = service.query(Q2).fetchone().next()
         bv = bv[0].value if bv[0] else bv[1].value
         bv = bv.split('/')[-1]
-        retval['bv'] = bv
+        returnval['bv'] = bv
     except StopIteration:
         pass
 
-    # Old Style, worse
-
+    log.debug("Sparql query:\n%s" % (QUERY % isbn))
+    result = service.query(QUERY % isbn)
     for (subject, predicate, obj) in result:
         if predicate.value not in HANDLERS and predicate \
                 not in KNOWN_IGNORED:
@@ -263,18 +260,19 @@ def getMetadata(isbn):
                       str(predicate.value),
                       obj.value)
         if predicate in KNOWN_IGNORED:
-            log.info(
+            log.debug(
                 u"We ignore the following information: '%s', Content: '%s'",
                 str(predicate.value),
                 obj.value)
-        HANDLERS[predicate.value](obj, retval)
+        HANDLERS[predicate.value](obj, returnval)
 
-    for (key, values) in retval.items():
+    for (key, values) in returnval.items():
         if hasattr(values, 'sort'):
             values.sort()
             uniques = []
             for value in values:
                 if value not in uniques:
                     uniques.append(value)
-            retval[key] = uniques
-    return retval
+            returnval[key] = uniques
+
+    return returnval
