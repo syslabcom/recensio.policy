@@ -11,10 +11,11 @@ from recensio.policy.sparqlsearch import getMetadata
 class OPAC(BrowserView):
 
     def __call__(self, identifier):
-        data = getMetadata(identifier)
-        data['language'] = \
-            self._convertLanguageToLangCode(data['language'])
-        return json.dumps([data])
+        metadata = getMetadata(identifier)
+        metadata['language'] = \
+            self._convertLanguageToLangCode(metadata['language'])
+        metadata['ddcTime'] = ["t1:" + i for i in metadata['ddcTime']]
+        return json.dumps([metadata])
 
     def _convertLanguageToLangCode(self, language):
         if not language:
