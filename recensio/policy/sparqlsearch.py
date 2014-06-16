@@ -46,6 +46,25 @@ QUERY2 = PREFIX_HEADER + \
         } ORDER BY desc(?bv_best)'''
 
 
+def _iri_cachekey(function, iri, **kw):
+    """It's expensive to get remote data and it rarely changes, so we can
+    cache this heavily.
+
+    Many queries are repeated e.g. language:
+    http://id.loc.gov/vocabulary/iso639-2/ger
+
+    These could be cached for longer
+    """
+    six_hours = time() // (60 * 60 * 6)
+    return (iri, six_hours)
+
+
+@ram.cache(_iri_cachekey)
+def graph_parse(iri, **kw):
+    graph = Graph()
+    return graph.parse(iri, **kw)
+
+
 def getLabels(subject_url, graph):
     returnval = {}
     for (predicate, obj) in graph.preferredLabel(URIRef(subject_url)):
@@ -59,8 +78,7 @@ def genericStore(target_attribute):
         if not obj.value.startswith('http'):
             returnval[target_attribute] = obj.value
         else:
-            g = Graph()
-            g.parse(obj.value)
+            g = graph_parse(obj.value)
             possible_values = getLabels(obj.value, g)
             if 'en' in possible_values:
                 returnval[target_attribute] = possible_values['en']
@@ -68,6 +86,17 @@ def genericStore(target_attribute):
                 log.error('No handler for %s', str(obj))
 
     return storeLiteralImpl
+
+
+def list_store(target_attribute):
+
+    def _list_store(obj, returnval):
+        if target_attribute in returnval.keys():
+            returnval[target_attribute].append(obj.value)
+        else:
+            returnval[target_attribute] = [obj.value]
+
+    return _list_store
 
 
 numberStore_re = re.compile('(\d+) S\.')
@@ -85,8 +114,7 @@ def keywords_and_ddc(obj, returnval):
         return
     raw_data = obj.value
     if raw_data.startswith('http'):
-        g = Graph()
-        g.parse(raw_data, format='application/rdf+xml')
+        g = graph_parse(raw_data, format='application/rdf+xml')
         if [x for x in g.predicates(
                 object=URIRef('http://w3.org/2004/02/skos/core#Concept'))]:
 
@@ -151,9 +179,8 @@ def authorsStore(obj, returnval):
     if not obj.value.startswith('http'):
         returnval['authors'].append(obj.value)
     else:
-        g = Graph()
         try:
-            g.parse(obj.value)
+            g = graph_parse(obj.value)
         except RDFaError as e:
             log.error('Bad answer from \'%s\': \'%s\', ignoring',
                       obj.value, e, exc_info=True)
@@ -195,9 +222,9 @@ HANDLERS['http://purl.org/ontology/bibo/editor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/isbn'] = genericStore('isbn')
 HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = genericStore(
     'location')
-HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcGeo'] = genericStore(
+HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcGeo'] = list_store(
     'ddcPlace')
-HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcTime'] = genericStore(
+HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcTime'] = list_store(
     'ddcTime')
 
 KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publication anyway
@@ -219,6 +246,8 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
     'http://purl.org/ontology/bibo/edition',
     'http://purl.org/ontology/bibo/oclcnum',
     'http://rdvocab.info/Elements/publicationStatement',
+    'http://id.loc.gov/vocabulary/relators/aut',
+    'http://rdvocab.info/Elements/otherTitleInformation'
 ])
 
 
@@ -229,7 +258,7 @@ def getMetadata(isbn):
         'authors': [],
         'language': None,
         'isbn': None,
-        'ddc': [],
+        'ddcSubject': [],
         'location': None,
         'keywords': [],
         'publisher': None,
