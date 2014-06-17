@@ -14,7 +14,6 @@ class OPAC(BrowserView):
         metadata = getMetadata(identifier)
         metadata['language'] = \
             self._convertLanguageToLangCode(metadata['language'])
-        metadata['ddcTime'] = ["t1:" + i for i in metadata['ddcTime']]
         return json.dumps([metadata])
 
     def _convertLanguageToLangCode(self, language):
