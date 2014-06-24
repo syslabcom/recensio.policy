@@ -406,7 +406,7 @@
    <property name="title" i18n:translate="">Themes</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">python:portal.restrictedTraverse('themen-epochen-regionen').getTranslation().absolute_url()</property>
+      name="url_expr">python:(portal.restrictedTraverse('themen-epochen-regionen').getTranslation() or portal.restrictedTraverse('themen-epochen-regionen')).absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
@@ -419,7 +419,7 @@
    <property name="title" i18n:translate="">Authors</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">python:portal.restrictedTraverse('autoren').getTranslation().absolute_url()</property>
+      name="url_expr">python:(portal.restrictedTraverse('autoren').getTranslation() or portal.restrictedTraverse('autoren')).absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
@@ -432,7 +432,7 @@
    <property name="title" i18n:translate="">About us</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">python:portal.restrictedTraverse('ueberuns').getTranslation().absolute_url()</property>
+      name="url_expr">python:(portal.restrictedTraverse('ueberuns').getTranslation() or portal.restrictedTraverse('ueberuns')).absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
@@ -445,7 +445,7 @@
    <property name="title" i18n:translate="">label_participate</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">python:portal.restrictedTraverse('faq').getTranslation().absolute_url()</property>
+      name="url_expr">python:(portal.restrictedTraverse('faq').getTranslation() or portal.restrictedTraverse('faq')).absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
@@ -456,7 +456,7 @@
    <property name="title" i18n:translate="">label_press</property>
    <property name="description" i18n:translate=""></property>
    <property
-      name="url_expr">python:portal.restrictedTraverse('presse').getTranslation().absolute_url()</property>
+      name="url_expr">python:(portal.restrictedTraverse('presse').getTranslation() or portal.restrictedTraverse('presse')).absolute_url()</property>
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property name="available_expr"></property>
