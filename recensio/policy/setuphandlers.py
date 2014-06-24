@@ -32,8 +32,9 @@ log = getLogger('recensio.policy.setuphandlers.py')
 mdfile = os.path.join(os.path.dirname(__file__), 'profiles', 'default',
     'metadata.xml')
 
-imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen',
-        'images', 'RSS-feeds', 'beste-kommentare', 'rezensionen', 'front-page', 'praesentationen']
+imported_content = ['autoren', 'ueberuns', 'themen-epochen-regionen', 'faq',
+                    'presse', 'images', 'RSS-feeds', 'beste-kommentare',
+                    'rezensionen', 'front-page', 'praesentationen']
 
 PROFILE_ID = 'profile-recensio.policy:default'
 
