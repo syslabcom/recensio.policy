@@ -14,9 +14,9 @@
 			<reviewed_journal_publisher tal:content="context/getPublisher">!Slovanský ústav AV ČR</reviewed_journal_publisher>
 			<reviewed_journal_pubplace tal:content="context/getPlaceOfPublication">!Praha</reviewed_journal_pubplace>
 			<reviewed_journal_pubyear_real tal:content="context/getYearOfPublication">!2009</reviewed_journal_pubyear_real>
-			<reviewed_journal_pubyear_fictive />
+            <reviewed_journal_pubyear_fictive tal:content="context/getOfficialYearOfPublication">2010</reviewed_journal_pubyear_fictive>
 			<reviewed_journal_title tal:content="context/Title">!Germanoslavica. Zeitschrift für germano-slawische Studien</reviewed_journal_title>
-			<reviewed_journal_title_short />
+            <reviewed_journal_title_short tal:content="context/getShortnameJournal">Germanoslavica</reviewed_journal_title_short>
 			<reviewed_journal_volume tal:content="context/getVolumeNumber">!20</reviewed_journal_volume>
 			<language_reviewed_object  tal:content="python:', '.join([view.get_lang_name(x) for x in context.getLanguageReviewedText()])">!English, Deutsch</language_reviewed_object>
     </journal>

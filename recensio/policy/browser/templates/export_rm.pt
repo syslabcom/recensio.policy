@@ -15,10 +15,10 @@
 		<pages tal:content="context/getPages">896</pages>
 		<place_of_publication tal:content="context/getPlaceOfPublication">Moskva</place_of_publication>
 		<publishing_company tal:content="context/getPublisher">AIRO-XXI</publishing_company>
-		<series />
-		<subtitle tal:content="context/getSubtitle">2: Burnye proryvy, rasbitye nadeždy. Russkie i nemcy v mežvoennye gody</subtitle>
 		<title tal:content="context/Title">Rossija i Germanija v XX veke</title>
-		<volume_number />
+		<subtitle tal:content="context/getSubtitle">2: Burnye proryvy, rasbitye nadeždy. Russkie i nemcy v mežvoennye gody</subtitle>
+        <series tal:content="context/getSeries">Quellen und Darstellungen zur Zeitgeschichte</series>
+        <volume_number tal:content="context/getSeriesVol">2</volume_number>
         <year tal:content="context/getYearOfPublication">2010</year>
     </book>
 	  <classification_place tal:content="python:context.getDdcPlace() and ', '.join([view.get_voc_title('ddcPlace', x) for x in context.getDdcPlace() if x]) or ''">Slowenien, Polen, Lettland, Deutschland, Tschechien</classification_place>
