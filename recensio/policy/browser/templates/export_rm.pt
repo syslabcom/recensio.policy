@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <rm xmlns:tal="http://xml.zope.org/namespaces/tal"
 	id="ed891fc49fdbbb562278aa88e9ffb40d" tal:attributes="id context/UID">
-    <reviewer>
-		<!-- XXX what if we have multiple review authors? -->
-		<tal:r repeat="author context/getReviewAuthors">
+    <reviewer tal:repeat="author context/getReviewAuthors">
         <reviewer_last_name tal:content="author/lastname">Blažek</reviewer_last_name>
         <reviewer_first_name tal:content="author/firstname">David</reviewer_first_name>
-		</tal:r>
     </reviewer>
     <book>
 <tal:repl replace="structure view/list_authors" />
