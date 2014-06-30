@@ -196,6 +196,27 @@ def authorsStore(obj, returnval):
                                           lastname=surname.title()))
 
 
+def mergeStore(target_attribute):
+
+    def storeMergeImpl(obj, returnval):
+        if not obj.value.startswith('http'):
+            value = obj.value
+        else:
+            g = graph_parse(obj.value)
+            possible_values = getLabels(obj.value, g)
+            if 'en' in possible_values:
+                value = possible_values['en']
+            else:
+                log.error('No handler for %s', str(obj))
+        if returnval[target_attribute]:
+            returnval[target_attribute] = ', '.join(
+                (returnval[target_attribute], value))
+        else:
+            returnval[target_attribute] = value
+
+    return storeMergeImpl
+
+
 HANDLERS = defaultdict(lambda: lambda a, b: None)
 HANDLERS['http://iflastandards.info/ns/isbd/elements/P1016'] = genericStore(
     "location")
@@ -220,7 +241,7 @@ HANDLERS['http://purl.org/dc/terms/extent'] = numberStore
 HANDLERS['http://purl.org/dc/terms/issued'] = genericStore('year')
 HANDLERS['http://purl.org/ontology/bibo/editor'] = authorsStore
 HANDLERS['http://purl.org/ontology/bibo/isbn'] = genericStore('isbn')
-HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = genericStore(
+HANDLERS['http://rdvocab.info/Elements/placeOfPublication'] = mergeStore(
     'location')
 HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcGeo'] = list_store(
     'ddcPlace')
