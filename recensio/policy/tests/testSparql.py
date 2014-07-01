@@ -8,7 +8,7 @@ import unittest2 as unittest
 class TestSparqlBase(unittest.TestCase):
 
     def setUp(self):
-        self.handler = InstalledHandler('recensio', level=logging.INFO)
+        self.handler = InstalledHandler('recensio', level=logging.DEBUG)
         self.maxDiff = None
 
     def tearDown(self):
@@ -74,7 +74,8 @@ class TestSparqlStable(TestSparqlBase):
             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV013568231/vol/2'",
         ])
 
-        errors = sorted([x.msg % x.args for x in self.handler.records])
+        errors = sorted([x.msg % x.args for x in self.handler.records
+                         if not x.msg.startswith("Sparql query")])
 
         self.assertEquals(ignored, errors)
 
