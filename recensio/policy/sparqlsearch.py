@@ -218,6 +218,15 @@ def mergeStore(target_attribute):
     return storeMergeImpl
 
 
+def seriesVolumeStore(obj, returnval):
+    values = [v.strip() for v in obj.value.rsplit(':', 1)]
+    if len(values) > 1:
+        returnval['series'] = values[0]
+        returnval['seriesVol'] = values[1]
+    else:
+        returnval['series'] = values[0]
+
+
 HANDLERS = defaultdict(lambda: lambda a, b: None)
 HANDLERS['http://iflastandards.info/ns/isbd/elements/P1016'] = genericStore(
     "location")
@@ -248,6 +257,8 @@ HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcGeo'] = list_store(
     'ddcPlace')
 HANDLERS['http://bsb-muenchen.de/ont/b3katOntology#ddcTime'] = list_store(
     'ddcTime')
+HANDLERS['http://purl.org/dc/terms/bibliographicCitation'] = seriesVolumeStore
+
 
 KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publication anyway
     'http://www.w3.org/1999/02/22-rdf-syntax-ns#type',
@@ -264,12 +275,11 @@ KNOWN_IGNORED = map(IRI, [  # What is a country code in the context of a publica
     'http://purl.org/dc/terms/alternative',
     'http://id.loc.gov/vocabulary/relators/ctb',
     'http://iflastandards.info/ns/isbd/elements/P1053',
-    'http://purl.org/dc/terms/bibliographicCitation',
     'http://purl.org/ontology/bibo/edition',
     'http://purl.org/ontology/bibo/oclcnum',
     'http://rdvocab.info/Elements/publicationStatement',
     'http://id.loc.gov/vocabulary/relators/aut',
-    'http://rdvocab.info/Elements/otherTitleInformation'
+    'http://rdvocab.info/Elements/otherTitleInformation',
 ])
 
 
@@ -285,6 +295,8 @@ def getMetadata(isbn):
         'keywords': [],
         'publisher': None,
         'pages': None,
+        'series': None,
+        'seriesVol': None,
         'year': None,
         'bv': None
     }
