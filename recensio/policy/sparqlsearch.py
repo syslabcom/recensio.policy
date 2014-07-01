@@ -209,8 +209,9 @@ def mergeStore(target_attribute):
             else:
                 log.error('No handler for %s', str(obj))
         if returnval[target_attribute]:
-            returnval[target_attribute] = ', '.join(
-                (returnval[target_attribute], value))
+            if not value in returnval[target_attribute]:
+                returnval[target_attribute] = ', '.join(
+                    (returnval[target_attribute], value))
         else:
             returnval[target_attribute] = value
 
