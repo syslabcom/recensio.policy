@@ -47,6 +47,33 @@ class TestSparqlStable(TestSparqlBase):
             'Oldenbourg-Grundriss der Geschichte')
         self.assertEquals(returnval['seriesVol'], '23')
 
+    def testSeriesVolumeStoreMultipleEntries(self):
+        returnval = {
+            'series': None,
+            'seriesVol': None,
+        }
+
+        class mockCitation(object):
+            value = ''
+
+            def __init__(self, value):
+                self.value = value
+
+        obj1 = mockCitation('Oldenbourg-Grundriss der Geschichte : 23')
+        obj2 = mockCitation(u'Schriften der Bibliothek für Zeitgeschichte '
+                            u': Neue Folge : 22')
+        obj3 = mockCitation('Oldenbourg-Grundriss der Geschichte : 23')
+
+        from recensio.policy.sparqlsearch import seriesVolumeStore
+        seriesVolumeStore(obj1, returnval)
+        seriesVolumeStore(obj2, returnval)
+        seriesVolumeStore(obj3, returnval)
+        self.assertEquals(
+            returnval['series'],
+            u'Oldenbourg-Grundriss der Geschichte; '
+            u'Schriften der Bibliothek für Zeitgeschichte : Neue Folge')
+        self.assertEquals(returnval['seriesVol'], '23; 22')
+
     def testGetEmptyMetadata(self):
         from recensio.policy.sparqlsearch import getMetadata
         # http://lod.b3kat.de/title/BV013575871
@@ -60,7 +87,7 @@ class TestSparqlStable(TestSparqlBase):
             'location': u'K\xf8benhavn',
             'pages': u'223',
             'publisher': None,
-            'series': u'Grønlands Geologiske Undersøgelse: Bulletin',
+            'series': u'2; Grønlands Geologiske Undersøgelse: Bulletin',
             'seriesVol': u'25',
             'subtitle': None,
             'title': u'Structural studies in the Pre-Cambrian of western Greenland',
@@ -83,6 +110,7 @@ class TestSparqlStable(TestSparqlBase):
             u"We ignore the following information: 'http://purl.org/vocab/frbr/core#exemplar', Content: 'http://lod.b3kat.de/bib/DE-19/item/BV013575871'",
             u"We ignore the following information: 'http://rdvocab.info/Elements/otherTitleInformation', Content: '2: Geology of Tovqussap Nun\xe1'",
             u"We ignore the following information: 'http://rdvocab.info/Elements/publicationStatement', Content: 'K\xf8benhavn 1960'",
+            u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/dc/dcmitype/Text'",
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Book'",
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Document'",
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",

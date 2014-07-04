@@ -220,11 +220,14 @@ def mergeStore(target_attribute):
 
 def seriesVolumeStore(obj, returnval):
     values = [v.strip() for v in obj.value.rsplit(':', 1)]
+    returnval['series'] = returnval['series'] or values[0]
+    if not values[0] in returnval['series']:
+        returnval['series'] = '; '.join((returnval['series'], values[0]))
     if len(values) > 1:
-        returnval['series'] = values[0]
-        returnval['seriesVol'] = values[1]
-    else:
-        returnval['series'] = values[0]
+        returnval['seriesVol'] = returnval['seriesVol'] or values[1]
+        if not values[1] in returnval['seriesVol']:
+            returnval['seriesVol'] = '; '.join((
+                returnval['seriesVol'], values[1]))
 
 
 HANDLERS = defaultdict(lambda: lambda a, b: None)
