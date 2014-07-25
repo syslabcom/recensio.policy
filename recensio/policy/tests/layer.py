@@ -18,6 +18,9 @@ class RecensioPolicy(PloneSandboxLayer):
         import recensio.policy
         xmlconfig.file('configure.zcml', recensio.policy, \
             context=configurationContext)
+        import plone.app.theming
+        xmlconfig.file('configure.zcml', plone.app.theming, \
+            context=configurationContext)
 
         z2.installProduct(app, 'recensio.contenttypes')
         z2.installProduct(app, 'Products.PythonScripts')
