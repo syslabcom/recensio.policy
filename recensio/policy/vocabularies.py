@@ -25,7 +25,7 @@ class AvailableUserLanguages(object):
 
         info = language_tool.getAvailableLanguageInformation()
         terms = [SimpleTerm(lang, lang, info.get(lang).get('native'))
-            for lang in interface_languages]
+                 for lang in info]
         return SimpleVocabulary(terms)
 
 AvailableUserLanguagesFactory = AvailableUserLanguages()
