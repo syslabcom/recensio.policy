@@ -330,12 +330,6 @@ def setViewsOnFoldersUnguarded(context):
     rezensionen = getattr(portal, 'rezensionen', None)
     if not rezensionen :
         log.warning('Folder "rezensionen " not found on portal. Please run recensio.contenttypes.initial_content')
-    else:
-        fp = rezensionen
-        id = 'default_page'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='zeitschriften', type='string')
 
     zeitschriften = getattr(rezensionen, 'zeitschriften', None)
     if not zeitschriften:
