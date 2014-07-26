@@ -330,16 +330,16 @@ def setViewsOnFoldersUnguarded(context):
     rezensionen = getattr(portal, 'rezensionen', None)
     if not rezensionen :
         log.warning('Folder "rezensionen " not found on portal. Please run recensio.contenttypes.initial_content')
-
-    zeitschriften = getattr(rezensionen, 'zeitschriften', None)
-    if not zeitschriften:
-        log.warning('Folder "zeitschriften" not found on portal. Please run recensio.contenttypes.initial_content')
     else:
-        fp = zeitschriften
-        id = 'layout'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='publications-view', type='string')
+        zeitschriften = getattr(rezensionen, 'zeitschriften', None)
+        if not zeitschriften:
+            log.warning('Folder "zeitschriften" not found on portal. Please run recensio.contenttypes.initial_content')
+        else:
+            fp = zeitschriften
+            id = 'layout'
+            if fp.hasProperty(id):
+                fp._delProperty(id)
+            fp._setProperty(id=id, value='publications-view', type='string')
 
 def doSetLanguage(obj, language):
     obj.setLanguage(language)
