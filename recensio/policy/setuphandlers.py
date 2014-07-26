@@ -46,6 +46,15 @@ def guard(func):
         return func(self)
     return wrapper
 
+def guard_policy_or_initial_content(func):
+    def wrapper(self):
+        if (self.readDataFile('recensio.policy_marker.txt') is None and
+                self.readDataFile('recensio.contenttypes_initial_content_marker.txt') is None):
+            return
+        return func(self)
+    return wrapper
+
+
 @guard
 def importVocabularies(self):
     path_tmpl = '../../vocabularies/ddc_%s'
@@ -260,7 +269,7 @@ def addCatalogIndexes(context):
     addColumn('getYearOfPublication')
     addColumn('getOfficialYearOfPublication')
 
-@guard
+@guard_policy_or_initial_content
 def hideAllFolders(context):
     hideAllFoldersUnguarded(context)
 
@@ -274,7 +283,7 @@ def hideAllFoldersUnguarded(context):
             ob.setExcludeFromNav(True)
             ob.reindexObject()
 
-@guard
+@guard_policy_or_initial_content
 def setupHomepage(context):
     site = context.getSite()
     for fp_id in ['front-page', 'front-page-en', 'front-page-fr']:
@@ -282,14 +291,12 @@ def setupHomepage(context):
         if not fp:
             log.warning('%s not found' % fp_id)
             continue
-        id = 'layout'
-        if fp.hasProperty(id):
-            fp._delProperty(id)
-        fp._setProperty(id=id, value='homepage-view', type='string')
+        fp.setLayout('homepage-view')
         log.debug('Homepage view was set on the front page')
 
 
-@guard
+
+@guard_policy_or_initial_content
 def setViewsOnFolders(context):
     setViewsOnFoldersUnguarded(context)
 
@@ -346,7 +353,7 @@ def doSetLanguage(obj, language):
         for item in obj.objectValues():
             doSetLanguage(item, language)
 
-@guard
+@guard_policy_or_initial_content
 def setImportedContentLanguages(context):
     portal = context.getSite()
     for id in imported_content:
@@ -398,7 +405,7 @@ def doPublish(obj, pwt):
     except:
         log.info('Could not publish %s' % obj.absolute_url())
 
-@guard
+@guard_policy_or_initial_content
 def publishImportedContent(context):
     portal = context.getSite()
     pwt = getToolByName(portal, 'portal_workflow')
