@@ -22,7 +22,38 @@
     <property name="disable_folder_sections" type="boolean">True</property>
     <property name="disable_nonfolderish_sections"
               type="boolean">True</property>
-
+    <property name="types_not_searched" type="lines">
+       <element value="ATBooleanCriterion"/>
+       <element value="ATDateCriteria"/>
+       <element value="ATDateRangeCriterion"/>
+       <element value="ATListCriterion"/>
+       <element value="ATPortalTypeCriterion"/>
+       <element value="ATReferenceCriterion"/>
+       <element value="ATSelectionCriterion"/>
+       <element value="ATSimpleIntCriterion"/>
+       <element value="ATSimpleStringCriterion"/>
+       <element value="ATSortCriterion"/>
+       <element value="ChangeSet"/>
+       <element value="Discussion Item"/>
+       <element value="Plone Site"/>
+       <element value="TempFolder"/>
+       <element value="ATCurrentAuthorCriterion"/>
+       <element value="ATPathCriterion"/>
+       <element value="ATRelativePathCriterion"/>
+       <element value="AliasVocabulary"/>
+       <element value="SimpleVocabulary"/>
+       <element value="SimpleVocabularyTerm"/>
+       <element value="SortedSimpleVocabulary"/>
+       <element value="TreeVocabulary"/>
+       <element value="TreeVocabularyTerm"/>
+       <element value="VdexFileVocabulary"/>
+       <element value="VdexLangstring"/>
+       <element value="VdexMediaDescriptor"/>
+       <element value="VdexRelationEndPoint"/>
+       <element value="VdexTerm"/>
+       <element value="VdexVocabulary"/>
+       <element value="VocabularyLibrary"/>
+    </property>
 
   </object>
 </object>
