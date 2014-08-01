@@ -173,3 +173,9 @@ def v9to10(portal_setup):
 
     for doc in list(set(changed_docs)):
         doc.reindexObject()
+
+
+def v10to11(portal_setup):
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'propertiestool')

@@ -57,6 +57,16 @@
    handler=".upgrades.v9to10"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="10"
+   destination="11"
+   title="Upgrade to 11"
+   description="Reload portal properties to exclude File and Publication from search"
+   profile='recensio.policy:default'
+   handler=".upgrades.v10to11"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
