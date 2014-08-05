@@ -4,8 +4,21 @@ Changelog
 3.1.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Refs #9813 retrieve ddcGeo and ddcTime from the sparql query, clean up
+  [deroiste]
+- Refs #9813 Add ddcGeo and ddcTime lookups, cache network queries for 6 hours
+  [deroiste]
+- more robust portal_tabs expressions [reinhardt]
+- added missing ids to imported_content [reinhardt]
+- added more fields to xml export, refs #5578 [reinhardt]
+- repeat the <reviewer> tag if multiple reviewers, refs #5578 [reinhardt]
+- merge all provided values for placeOfPublication instead of overwriting
+  earlier ones, refs #9813 [reinhardt]
+- fixed duplication in location field, fixed 2 tests, refs #9813 [reinhardt]
+- get series and seriesVol from OPAC, refs #9813 [reinhardt]
+- make sure recnsio.translations gets loaded first and overrides any
+  conflicting translations in other packages, refs #8196 [reinhardt]
+- exclude File and Publication from search, refs #8196 [reinhardt]
 
 3.1.3 (2014-03-18)
 ------------------
