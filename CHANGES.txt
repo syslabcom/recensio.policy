@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.1.4 (unreleased)
-------------------
+3.2 (2014-08-05)
+----------------
 
 - Refs #9813 retrieve ddcGeo and ddcTime from the sparql query, clean up
   [deroiste]
