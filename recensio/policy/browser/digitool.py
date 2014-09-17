@@ -180,6 +180,9 @@ class XMLRepresentation_publication(XMLRepresentation):
 class XMLRepresentation_volume(XMLRepresentation_publication):
     template = ViewPageTemplateFile('templates/export_container.pt')
 
+    def get_package_journal_pubyear(self):
+        return self.get_parent("Volume").getYearOfPublication() or None
+
     def get_package_journal_volume(self):
         return unicode(self.get_parent("Volume").Title(), 'utf-8')
 
