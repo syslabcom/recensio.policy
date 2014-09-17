@@ -147,7 +147,7 @@ class XMLRepresentation_publication(XMLRepresentation):
         return unicode(self.get_parent("Publication").getId(), 'utf-8')
 
     def get_package_journal_pubyear(self):
-        return u"?? Wo kommt das her ??"
+        return None
         #return self.get_parent("Publication")
 
     def get_package_journal_name(self):
@@ -157,7 +157,7 @@ class XMLRepresentation_publication(XMLRepresentation):
         return u"Not Available" 
 
     def get_package_journal_issue(self):
-        return u"Not Available" 
+        return None
 
 class XMLRepresentation_volume(XMLRepresentation_publication):
     template = ViewPageTemplateFile('templates/export_container.pt')
@@ -167,7 +167,7 @@ class XMLRepresentation_volume(XMLRepresentation_publication):
         return unicode(self.get_parent("Volume").Title(), 'utf-8')
 
     def get_package_journal_issue(self):
-        return u"0"
+        return None
 
     def filename(self):
         return "recensio_%s_%s_%s.xml" % (self.get_publication_shortname(), self.get_package_journal_volume(), "0")
