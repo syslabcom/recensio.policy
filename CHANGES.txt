@@ -1,8 +1,8 @@
 Changelog
 =========
 
-3.3 (unreleased)
-----------------
+3.2.1 (2014-10-07)
+------------------
 
 - default to None for get_package_journal_issue, refs #5578 [reinhardt]
 - use new field yearOfPublication on Volume for XML export, refs #10554
