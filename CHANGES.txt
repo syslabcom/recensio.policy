@@ -4,7 +4,9 @@ Changelog
 3.3 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- default to None for get_package_journal_issue, refs #5578 [reinhardt]
+- use new field yearOfPublication on Volume for XML export, refs #10554
+  [reinhardt]
 
 
 3.2 (2014-08-05)
