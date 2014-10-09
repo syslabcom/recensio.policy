@@ -1,5 +1,6 @@
 from Products.Five.browser import BrowserView
 from zope.app.pagetemplate import ViewPageTemplateFile
+from cgi import escape
 from datetime import datetime
 from plone.uuid.interfaces import IUUID
 from os import path
@@ -103,8 +104,8 @@ class XMLRepresentation(BrowserView):
         for author in self.context.getAuthors():
             out += AUTHOR_TMPL % dict(
                 num=num,
-                firstname=author['firstname'],
-                lastname=author['lastname'])
+                firstname=escape(author['firstname']),
+                lastname=escape(author['lastname']))
             num += 1
         return out
 
@@ -114,8 +115,8 @@ class XMLRepresentation(BrowserView):
         for editor in self.context.getEditorial():
             out += EDITOR_TMPL % dict(
                 num=num,
-                firstname=editor['firstname'],
-                lastname=editor['lastname'])
+                firstname=escape(editor['firstname']),
+                lastname=escape(editor['lastname']))
             num += 1
         return out
 
