@@ -144,7 +144,7 @@ class XMLRepresentation_publication(XMLRepresentation):
             'application/xml')
         self.request.response.setHeader(
             'Content-disposition',
-            'inline;filename=%s' % self.filename())
+            'inline;filename=%s' % self.filename().encode('utf-8'))
         return self.template(self)
 
     def filename(self):
@@ -169,7 +169,7 @@ class XMLRepresentation_publication(XMLRepresentation):
         #return self.get_parent("Publication")
 
     def get_package_journal_name(self):
-        return unicode(self.get_parent("Publication").Title(), 'utf-8')
+        return unicode(self.get_parent("Publication").getId(), 'utf-8')
 
     def get_package_journal_volume(self):
         return u"Not Available"
@@ -185,7 +185,7 @@ class XMLRepresentation_volume(XMLRepresentation_publication):
         return self.get_parent("Volume").getYearOfPublication() or None
 
     def get_package_journal_volume(self):
-        return unicode(self.get_parent("Volume").Title(), 'utf-8')
+        return unicode(self.get_parent("Volume").getId(), 'utf-8')
 
     def get_package_journal_issue(self):
         return None
@@ -201,7 +201,7 @@ class XMLRepresentation_issue(XMLRepresentation_volume):
     template = ViewPageTemplateFile('templates/export_container.pt')
 
     def get_package_journal_issue(self):
-        return unicode(self.get_parent("Issue").Title(), 'utf-8')
+        return unicode(self.get_parent("Issue").getId(), 'utf-8')
 
     def filename(self):
         return "recensio_%s_%s_%s.xml" % (
