@@ -17,27 +17,6 @@
     <div class="column_footer">
 
       <div>
-        <span>
-          <a href="http://www.dfg.de"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/dfg_logo.png" src="imgs/logos/dfg_logo.png"
-             alt="Logo der deutschen Forschungsgemeinschaft"
-             class="logo"/></a>
-          &nbsp;
-          <span i18n:translate="message_supported_by">
-            recensio.net ist ein von der Deutschen
-            Forschungsgemeinschaft gefoerdertes Gemeinschaftsprojekt
-            folgender Institutionen
-          </span>
-          </span><br />
-          <a href="http://www.bsb-muenchen.de/"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
-             alt="Logo der Bayerischen Staatsbibliothek" /></a>
-          <a href="http://www.uni-koeln.de/"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/unikoeln-logo.png" src="imgs/logos/unikoeln-logo.png"
-             alt="Logo der Universität Köln" /></a>
-          <a href="http://www.ieg-mainz.de/likecms/index.php"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.png" src="imgs/logos/ieg_logo.jpg"
-             alt="Logo des Institus für europäische Geschichte" /></a>
       </div>
 
       <div id="notes">
@@ -55,11 +34,11 @@
        title="Recensio.net"
        alt="Recensio.net Logo"/>
 
-<object type="application/x-shockwave-flash" 
+<object type="application/x-shockwave-flash"
         id="page_image"
         tal:define="swf_path string:${portal_url}/++resource++recensio.theme.images/main_${language}.swf;
                     alt_img_path string:${portal_url}/++resource++recensio.theme.images/mainimage_${language}.png"
-        tal:attributes="data swf_path" 
+        tal:attributes="data swf_path"
         width="900" height="150">
 
     <param name="movie" tal:attributes="value swf_path"/>
@@ -68,10 +47,10 @@
            width="900" height="150"
            tal:attributes="src swf_path">
     </embed>
- 
-    <img 
+
+    <img
         id="page_image"
-        tal:attributes="src alt_img_path"> 
+        tal:attributes="src alt_img_path">
 
 </object>
 </div>
