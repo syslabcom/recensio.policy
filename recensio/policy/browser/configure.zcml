@@ -85,6 +85,12 @@
     />
 
   <browser:page
+	for="Products.CMFCore.interfaces.IFolderish"
+    name="xml"
+    class=".digitool.XMLRepresentation_folder"
+    permission="zope2.View"
+    />
+  <browser:page
 	for="recensio.contenttypes.interfaces.publication.IPublication"
     name="xml"
     class=".digitool.XMLRepresentation_publication"

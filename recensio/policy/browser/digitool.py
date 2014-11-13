@@ -143,7 +143,7 @@ class XMLRepresentation_rm(XMLRepresentation):
         return self.template(self)
 
 
-class XMLRepresentation_publication(XMLRepresentation):
+class XMLRepresentation_folder(XMLRepresentation):
 
     def __call__(self):
         self.request.response.setHeader(
@@ -167,7 +167,7 @@ class XMLRepresentation_publication(XMLRepresentation):
 
     def filename(self):
         return "recensio_%s.zip" % (
-            self.get_publication_shortname()
+            self.context.getId()
         )
 
     def issues(self):
@@ -179,6 +179,14 @@ class XMLRepresentation_publication(XMLRepresentation):
                      path=parent_path)
         for item in results:
             yield item.getObject()
+
+
+class XMLRepresentation_publication(XMLRepresentation_folder):
+
+    def filename(self):
+        return "recensio_%s.zip" % (
+            self.get_publication_shortname()
+        )
 
 
 class XMLRepresentation_volume(XMLRepresentation_publication):
