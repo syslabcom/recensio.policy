@@ -84,6 +84,12 @@ class XMLRepresentation(BrowserView):
     def get_parent(self, meta_type):
         return IParentGetter(self.context).get_parent_object_of_type(meta_type)
 
+    def get_publication_shortname(self):
+        return unicode(self.get_parent("Publication").getId(), 'utf-8')
+
+    def get_package_journal_volume(self):
+        return unicode(self.get_parent("Volume").getId(), 'utf-8')
+
     def get_voc_title(self, typ, term):
         voc = getToolByName(self.context, 'portal_vocabularies', None)
 
@@ -174,34 +180,8 @@ class XMLRepresentation_publication(XMLRepresentation):
         for item in results:
             yield item.getObject()
 
-    def get_publication_shortname(self):
-        return unicode(self.get_parent("Publication").getId(), 'utf-8')
-
-    def get_package_journal_pubyear(self):
-        return None
-        #return self.get_parent("Publication")
-
-    def get_package_journal_name(self):
-        return unicode(self.get_parent("Publication").getId(), 'utf-8')
-
-    def get_package_journal_volume(self):
-        return u"Not Available"
-
-    def get_package_journal_issue(self):
-        return None
-
 
 class XMLRepresentation_volume(XMLRepresentation_publication):
-    template = ViewPageTemplateFile('templates/export_container.pt')
-
-    def get_package_journal_pubyear(self):
-        return self.get_parent("Volume").getYearOfPublication() or None
-
-    def get_package_journal_volume(self):
-        return unicode(self.get_parent("Volume").getId(), 'utf-8')
-
-    def get_package_journal_issue(self):
-        return None
 
     def filename(self):
         return "recensio_%s_%s.zip" % (
@@ -210,7 +190,7 @@ class XMLRepresentation_volume(XMLRepresentation_publication):
         )
 
 
-class XMLRepresentation_issue(XMLRepresentation_volume):
+class XMLRepresentation_issue(XMLRepresentation):
     template = ViewPageTemplateFile('templates/export_container.pt')
 
     def __call__(self):
@@ -221,6 +201,9 @@ class XMLRepresentation_issue(XMLRepresentation_volume):
             'Content-disposition',
             'inline;filename=%s' % self.filename().encode('utf-8'))
         return self.template(self)
+
+    def get_package_journal_pubyear(self):
+        return self.get_parent("Volume").getYearOfPublication() or None
 
     def get_package_journal_issue(self):
         return unicode(self.get_parent("Issue").getId(), 'utf-8')
