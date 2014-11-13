@@ -3,10 +3,12 @@ from zope.app.pagetemplate import ViewPageTemplateFile
 from cgi import escape
 from datetime import datetime
 from plone.uuid.interfaces import IUUID
+from io import BytesIO
 from os import path
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.interfaces.review import IParentGetter
 from plone.i18n.locales.languages import _languagelist
+from zipfile import ZipFile
 
 from recensio.policy.constants import \
     EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
@@ -136,27 +138,38 @@ class XMLRepresentation_rm(XMLRepresentation):
 
 
 class XMLRepresentation_publication(XMLRepresentation):
-    template = ViewPageTemplateFile('templates/export_container.pt')
 
     def __call__(self):
         self.request.response.setHeader(
             'Content-type',
-            'application/xml')
+            'application/zip')
         self.request.response.setHeader(
             'Content-disposition',
             'inline;filename=%s' % self.filename().encode('utf-8'))
-        return self.template(self)
+        stream = BytesIO()
+        zipfile = ZipFile(stream, 'w')
+        for issue in self.issues():
+            xmlview = issue.restrictedTraverse('xml')
+            xml = xmlview.template(xmlview)
+            filename = xmlview.filename()
+            zipfile.writestr(filename, bytes(xml.encode('utf-8')))
+        zipfile.close()
+        zipdata = stream.getvalue()
+        stream.close()
+        self.request.response.setHeader('content-length', str(len(zipdata)))
+        return zipdata
 
     def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(), "0", "0")
+        return "recensio_%s.zip" % (
+            self.get_publication_shortname()
+        )
 
-    def reviews(self):
+    def issues(self):
         pc = self.context.portal_catalog
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()),
                            depth=3)
         results = pc(review_state="published",
-                     portal_type=("Review Monograph", "Review Journal"),
+                     portal_type=("Issue"),
                      path=parent_path)
         for item in results:
             yield item.getObject()
@@ -191,14 +204,23 @@ class XMLRepresentation_volume(XMLRepresentation_publication):
         return None
 
     def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
+        return "recensio_%s_%s.zip" % (
             self.get_publication_shortname(),
             self.get_package_journal_volume(),
-            "0")
+        )
 
 
 class XMLRepresentation_issue(XMLRepresentation_volume):
     template = ViewPageTemplateFile('templates/export_container.pt')
+
+    def __call__(self):
+        self.request.response.setHeader(
+            'Content-type',
+            'application/xml')
+        self.request.response.setHeader(
+            'Content-disposition',
+            'inline;filename=%s' % self.filename().encode('utf-8'))
+        return self.template(self)
 
     def get_package_journal_issue(self):
         return unicode(self.get_parent("Issue").getId(), 'utf-8')
@@ -208,6 +230,16 @@ class XMLRepresentation_issue(XMLRepresentation_volume):
             self.get_publication_shortname(),
             self.get_package_journal_volume(),
             self.get_package_journal_issue())
+
+    def reviews(self):
+        pc = self.context.portal_catalog
+        parent_path = dict(query='/'.join(self.context.getPhysicalPath()),
+                           depth=3)
+        results = pc(review_state="published",
+                     portal_type=("Review Monograph", "Review Journal"),
+                     path=parent_path)
+        for item in results:
+            yield item.getObject()
 
 
 class DigiToolExport(BrowserView):
