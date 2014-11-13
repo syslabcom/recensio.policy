@@ -1,6 +1,7 @@
 from Products.Five.browser import BrowserView
 from zope.app.pagetemplate import ViewPageTemplateFile
 from cgi import escape
+from datetime import date
 from datetime import datetime
 from plone.uuid.interfaces import IUUID
 from io import BytesIO
@@ -143,7 +144,7 @@ class XMLRepresentation_rm(XMLRepresentation):
         return self.template(self)
 
 
-class XMLRepresentation_folder(XMLRepresentation):
+class XMLRepresentation_root(XMLRepresentation):
 
     def __call__(self):
         self.request.response.setHeader(
@@ -166,14 +167,13 @@ class XMLRepresentation_folder(XMLRepresentation):
         return zipdata
 
     def filename(self):
-        return "recensio_%s.zip" % (
-            self.context.getId()
+        return "recensio_%s_all.zip" % (
+            date.today().strftime("%d%m%y"),
         )
 
     def issues(self):
         pc = self.context.portal_catalog
-        parent_path = dict(query='/'.join(self.context.getPhysicalPath()),
-                           depth=3)
+        parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
         results = pc(review_state="published",
                      portal_type=("Issue"),
                      path=parent_path)
@@ -181,7 +181,7 @@ class XMLRepresentation_folder(XMLRepresentation):
             yield item.getObject()
 
 
-class XMLRepresentation_publication(XMLRepresentation_folder):
+class XMLRepresentation_publication(XMLRepresentation_root):
 
     def filename(self):
         return "recensio_%s.zip" % (

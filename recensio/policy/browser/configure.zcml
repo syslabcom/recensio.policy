@@ -85,9 +85,9 @@
     />
 
   <browser:page
-	for="Products.CMFCore.interfaces.IFolderish"
+	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     name="xml"
-    class=".digitool.XMLRepresentation_folder"
+    class=".digitool.XMLRepresentation_root"
     permission="zope2.View"
     />
   <browser:page
