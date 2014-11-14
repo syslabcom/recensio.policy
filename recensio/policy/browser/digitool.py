@@ -3,16 +3,25 @@ from zope.app.pagetemplate import ViewPageTemplateFile
 from cgi import escape
 from datetime import date
 from datetime import datetime
+from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from io import BytesIO
+from paramiko import SFTPClient
+from paramiko import Transport
+from paramiko.ssh_exception import SSHException
 from os import path
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.interfaces.review import IParentGetter
+from recensio.policy.interfaces import IRecensioSettings
 from plone.i18n.locales.languages import _languagelist
 from zipfile import ZipFile
+from zope.component import getUtility
+import logging
 
 from recensio.policy.constants import \
     EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
+
+log = logging.getLogger(__name__)
 
 AUTHOR_TMPL = """        <author_%(num)s_first_name>%(firstname)s</author_%(num)s_first_name>
         <author_%(num)s_last_name>%(lastname)s</author_%(num)s_last_name>
@@ -153,6 +162,11 @@ class XMLRepresentation_root(XMLRepresentation):
         self.request.response.setHeader(
             'Content-disposition',
             'inline;filename=%s' % self.filename().encode('utf-8'))
+        zipdata = self.get_zipdata()
+        self.request.response.setHeader('content-length', str(len(zipdata)))
+        return zipdata
+
+    def get_zipdata(self):
         stream = BytesIO()
         zipfile = ZipFile(stream, 'w')
         for issue in self.issues():
@@ -163,7 +177,6 @@ class XMLRepresentation_root(XMLRepresentation):
         zipfile.close()
         zipdata = stream.getvalue()
         stream.close()
-        self.request.response.setHeader('content-length', str(len(zipdata)))
         return zipdata
 
     def filename(self):
@@ -179,6 +192,39 @@ class XMLRepresentation_root(XMLRepresentation):
                      path=parent_path)
         for item in results:
             yield item.getObject()
+
+
+class XMLExportSFTP(XMLRepresentation_root):
+
+    def __call__(self):
+        registry = getUtility(IRegistry)
+        recensio_settings = registry.forInterface(IRecensioSettings)
+        host = recensio_settings.xml_export_server
+        username = recensio_settings.xml_export_username
+        password = recensio_settings.xml_export_password
+        if not host:
+            return 'no host configured'
+        log.info("Starting XML export to sftp")
+        zipdata = self.get_zipdata()
+        zipstream = BytesIO(zipdata)
+        try:
+            transport = Transport((host, 22))
+            transport.connect(username=username, password=password)
+            sftp = SFTPClient.from_transport(transport)
+            attribs = sftp.putfo(zipstream, self.filename())
+        except (IOError, SSHException) as ioe:
+            msg = "Export failed, {0}: {1}".format(ioe.__class__.__name__, ioe)
+            log.error(msg)
+            return msg
+        if attribs.st_size == len(zipdata):
+            msg = "Export successful"
+            log.info(msg)
+            return msg
+        else:
+            msg = "Export failed, {0}/{1} bytes transferred".format(
+                attribs.st_size, len(zipdata))
+            log.error(msg)
+            return msg
 
 
 class XMLRepresentation_publication(XMLRepresentation_root):

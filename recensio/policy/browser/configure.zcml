@@ -91,6 +91,12 @@
     permission="zope2.View"
     />
   <browser:page
+	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+    name="xml-export-sftp"
+    class=".digitool.XMLExportSFTP"
+    permission="cmf.ManagePortal"
+    />
+  <browser:page
 	for="recensio.contenttypes.interfaces.publication.IPublication"
     name="xml"
     class=".digitool.XMLRepresentation_publication"
