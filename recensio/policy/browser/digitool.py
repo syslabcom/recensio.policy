@@ -1,8 +1,10 @@
+from DateTime import DateTime
 from Products.Five.browser import BrowserView
 from zope.app.pagetemplate import ViewPageTemplateFile
 from cgi import escape
 from datetime import date
 from datetime import datetime
+from datetime import timedelta
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from io import BytesIO
@@ -11,6 +13,7 @@ from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from os import path
+from os import remove
 from os import stat
 from time import time
 from Products.CMFCore.utils import getToolByName
@@ -157,32 +160,38 @@ class XMLRepresentation_rm(XMLRepresentation):
         return self.template(self)
 
 
-class XMLRepresentation_root(XMLRepresentation):
+class XMLExport_root(XMLRepresentation):
+
+    export_filename = 'export_metadata_xml.zip'
 
     def __call__(self):
-        self.request.response.setHeader(
-            'Content-type',
-            'application/zip')
-        self.request.response.setHeader(
-            'Content-disposition',
-            'inline;filename=%s' % self.filename.encode('utf-8'))
-        zipdata = self.get_zipdata()
-        self.request.response.setHeader('content-length', str(len(zipdata)))
-        return zipdata
+        try:
+            export_xml = self.context.unrestrictedTraverse(
+                self.export_filename)
+        except (KeyError, ValueError):
+            export_xml = None
+        if export_xml is not None:
+            modified = export_xml.modified()
+            if DateTime() - 7 < modified:
+                return ('current file found ({0}, {1})'.format(
+                    self.export_filename, modified.ISO8601()))
+        if path.exists(self.cache_filename):
+            mtime = stat(self.cache_filename).st_mtime
+            cache_time = datetime.fromtimestamp(mtime)
+            if datetime.now() - cache_time < timedelta(0, 60 * 60):
+                return ('export in progress since {0}'. format(
+                    cache_time.isoformat()))
+
+        pt = getToolByName(self, 'portal_types')
+        type_info = pt.getTypeInfo('File')
+        export_xml = type_info._constructInstance(
+            self.context, self.export_filename)
+        export_xml.setFile(self.get_zipdata(), filename=self.export_filename)
+        return "{0} created".format(self.export_filename)
 
     @property
     def cache_filename(self):
         return path.join(tempfile.gettempdir(), 'recensio_cached_all.zip')
-
-    def get_zipdata(self):
-        filename = self.cache_filename
-        if path.exists(filename):
-            day = 60 * 60 * 24
-            if time() - stat(filename).st_mtime < 7 * day:
-                cached_file = FileIO(filename, mode='r')
-                return cached_file.readall()
-        zipdata = self.get_zipdata_and_write_cache()
-        return zipdata
 
     def write_zipfile(self, zipfile):
         for issue in self.issues():
@@ -191,7 +200,7 @@ class XMLRepresentation_root(XMLRepresentation):
             filename = xmlview.filename
             zipfile.writestr(filename, bytes(xml.encode('utf-8')))
 
-    def get_zipdata_and_write_cache(self):
+    def get_zipdata(self):
         cache_file_name = self.cache_filename
         stream = FileIO(cache_file_name, mode='w')
         zipfile = ZipFile(stream, 'w')
@@ -202,6 +211,7 @@ class XMLRepresentation_root(XMLRepresentation):
         stream = FileIO(cache_file_name, mode='r')
         zipdata = stream.readall()
         stream.close()
+        remove(cache_file_name)
         return zipdata
 
     @property
@@ -220,7 +230,7 @@ class XMLRepresentation_root(XMLRepresentation):
             yield item.getObject()
 
 
-class XMLExportSFTP(XMLRepresentation_root):
+class XMLExportSFTP(XMLExport_root):
 
     def __call__(self):
         registry = getUtility(IRegistry)
@@ -231,29 +241,51 @@ class XMLExportSFTP(XMLRepresentation_root):
         if not host:
             return 'no host configured'
         log.info("Starting XML export to sftp")
-        zipdata = self.get_zipdata()
-        zipstream = BytesIO(zipdata)
+
+        try:
+            export_xml = self.context.unrestrictedTraverse(
+                self.export_filename)
+        except (KeyError, ValueError):
+            export_xml = None
+        if export_xml is None:
+            msg = "Could not get export file object: {0}".format(
+                self.export_filename)
+            log.error(msg)
+            return msg
+
+        zipstream = export_xml.getFile()
         try:
             transport = Transport((host, 22))
             transport.connect(username=username, password=password)
             sftp = SFTPClient.from_transport(transport)
-            attribs = sftp.putfo(zipstream, self.filename)
+            attribs = sftp.putfo(zipstream.getBlob().open(), self.filename)
         except (IOError, SSHException) as ioe:
             msg = "Export failed, {0}: {1}".format(ioe.__class__.__name__, ioe)
             log.error(msg)
             return msg
-        if attribs.st_size == len(zipdata):
+        if attribs.st_size == zipstream.get_size():
             msg = "Export successful"
             log.info(msg)
             return msg
         else:
             msg = "Export failed, {0}/{1} bytes transferred".format(
-                attribs.st_size, len(zipdata))
+                attribs.st_size, zipstream.get_size())
             log.error(msg)
             return msg
 
 
-class XMLRepresentation_publication(XMLRepresentation_root):
+class XMLRepresentation_publication(XMLRepresentation):
+
+    def __call__(self):
+        self.request.response.setHeader(
+            'Content-type',
+            'application/zip')
+        self.request.response.setHeader(
+            'Content-disposition',
+            'inline;filename=%s' % self.filename.encode('utf-8'))
+        zipdata = self.get_zipdata()
+        self.request.response.setHeader('content-length', str(len(zipdata)))
+        return zipdata
 
     def get_zipdata(self):
         stream = BytesIO()

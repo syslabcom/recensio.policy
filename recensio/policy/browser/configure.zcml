@@ -86,8 +86,8 @@
 
   <browser:page
 	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    name="xml"
-    class=".digitool.XMLRepresentation_root"
+    name="xml-export"
+    class=".digitool.XMLExport_root"
     permission="zope2.View"
     />
   <browser:page
