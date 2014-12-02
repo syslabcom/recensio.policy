@@ -164,12 +164,16 @@ class XMLExport_root(XMLRepresentation):
 
     export_filename = 'export_metadata_xml.zip'
 
-    def __call__(self):
+    def get_export_obj(self):
         try:
             export_xml = self.context.unrestrictedTraverse(
                 self.export_filename)
         except (KeyError, ValueError):
             export_xml = None
+        return export_xml
+
+    def __call__(self):
+        export_xml = self.get_export_obj()
         if export_xml is not None:
             modified = export_xml.modified()
             if DateTime() - 7 < modified:
@@ -182,11 +186,13 @@ class XMLExport_root(XMLRepresentation):
                 return ('export in progress since {0}'. format(
                     cache_time.isoformat()))
 
+        log.info('Starting XML export')
         pt = getToolByName(self, 'portal_types')
         type_info = pt.getTypeInfo('File')
         export_xml = type_info._constructInstance(
             self.context, self.export_filename)
         export_xml.setFile(self.get_zipdata(), filename=self.export_filename)
+        log.info('XML export finished')
         return "{0} created".format(self.export_filename)
 
     @property
@@ -242,11 +248,7 @@ class XMLExportSFTP(XMLExport_root):
             return 'no host configured'
         log.info("Starting XML export to sftp")
 
-        try:
-            export_xml = self.context.unrestrictedTraverse(
-                self.export_filename)
-        except (KeyError, ValueError):
-            export_xml = None
+        export_xml = self.get_export_obj()
         if export_xml is None:
             msg = "Could not get export file object: {0}".format(
                 self.export_filename)
