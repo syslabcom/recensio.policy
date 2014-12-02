@@ -6,10 +6,13 @@ from datetime import datetime
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from io import BytesIO
+from io import FileIO
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from os import path
+from os import stat
+from time import time
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.interfaces.review import IParentGetter
 from recensio.policy.interfaces import IRecensioSettings
@@ -17,6 +20,7 @@ from plone.i18n.locales.languages import _languagelist
 from zipfile import ZipFile
 from zope.component import getUtility
 import logging
+import tempfile
 
 from recensio.policy.constants import \
     EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
@@ -161,24 +165,46 @@ class XMLRepresentation_root(XMLRepresentation):
             'application/zip')
         self.request.response.setHeader(
             'Content-disposition',
-            'inline;filename=%s' % self.filename().encode('utf-8'))
+            'inline;filename=%s' % self.filename.encode('utf-8'))
         zipdata = self.get_zipdata()
         self.request.response.setHeader('content-length', str(len(zipdata)))
         return zipdata
 
+    @property
+    def cache_filename(self):
+        return path.join(tempfile.gettempdir(), 'recensio_cached_all.zip')
+
     def get_zipdata(self):
-        stream = BytesIO()
-        zipfile = ZipFile(stream, 'w')
+        filename = self.cache_filename
+        if path.exists(filename):
+            day = 60 * 60 * 24
+            if time() - stat(filename).st_mtime < 7 * day:
+                cached_file = FileIO(filename, mode='r')
+                return cached_file.readall()
+        zipdata = self.get_zipdata_and_write_cache()
+        return zipdata
+
+    def write_zipfile(self, zipfile):
         for issue in self.issues():
             xmlview = issue.restrictedTraverse('xml')
             xml = xmlview.template(xmlview)
-            filename = xmlview.filename()
+            filename = xmlview.filename
             zipfile.writestr(filename, bytes(xml.encode('utf-8')))
+
+    def get_zipdata_and_write_cache(self):
+        cache_file_name = self.cache_filename
+        stream = FileIO(cache_file_name, mode='w')
+        zipfile = ZipFile(stream, 'w')
+        self.write_zipfile(zipfile)
         zipfile.close()
-        zipdata = stream.getvalue()
+        stream.close()
+
+        stream = FileIO(cache_file_name, mode='r')
+        zipdata = stream.readall()
         stream.close()
         return zipdata
 
+    @property
     def filename(self):
         return "recensio_%s_all.zip" % (
             date.today().strftime("%d%m%y"),
@@ -211,7 +237,7 @@ class XMLExportSFTP(XMLRepresentation_root):
             transport = Transport((host, 22))
             transport.connect(username=username, password=password)
             sftp = SFTPClient.from_transport(transport)
-            attribs = sftp.putfo(zipstream, self.filename())
+            attribs = sftp.putfo(zipstream, self.filename)
         except (IOError, SSHException) as ioe:
             msg = "Export failed, {0}: {1}".format(ioe.__class__.__name__, ioe)
             log.error(msg)
@@ -229,6 +255,16 @@ class XMLExportSFTP(XMLRepresentation_root):
 
 class XMLRepresentation_publication(XMLRepresentation_root):
 
+    def get_zipdata(self):
+        stream = BytesIO()
+        zipfile = ZipFile(stream, 'w')
+        self.write_zipfile(zipfile)
+        zipfile.close()
+        zipdata = stream.getvalue()
+        stream.close()
+        return zipdata
+
+    @property
     def filename(self):
         return "recensio_%s.zip" % (
             self.get_publication_shortname()
@@ -237,6 +273,7 @@ class XMLRepresentation_publication(XMLRepresentation_root):
 
 class XMLRepresentation_volume(XMLRepresentation_publication):
 
+    @property
     def filename(self):
         return "recensio_%s_%s.zip" % (
             self.get_publication_shortname(),
@@ -253,7 +290,7 @@ class XMLRepresentation_issue(XMLRepresentation):
             'application/xml')
         self.request.response.setHeader(
             'Content-disposition',
-            'inline;filename=%s' % self.filename().encode('utf-8'))
+            'inline;filename=%s' % self.filename.encode('utf-8'))
         return self.template(self)
 
     def get_package_journal_pubyear(self):
@@ -262,6 +299,7 @@ class XMLRepresentation_issue(XMLRepresentation):
     def get_package_journal_issue(self):
         return unicode(self.get_parent("Issue").getId(), 'utf-8')
 
+    @property
     def filename(self):
         return "recensio_%s_%s_%s.xml" % (
             self.get_publication_shortname(),
