@@ -58,7 +58,7 @@ setup(name='recensio.policy',
           'five.intid',  # Bugfix for plone.app.async
       ],
       extras_require={
-      'test': ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
+      'test': ['plone.api', 'plone.app.testing', 'PILwoTk', 'mock', 'ipython']
       },
       entry_points="""
       # -*- Entry points: -*-
