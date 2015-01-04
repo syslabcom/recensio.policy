@@ -1,30 +1,26 @@
-from DateTime import DateTime
 from Products.Five.browser import BrowserView
 from zope.app.pagetemplate import ViewPageTemplateFile
 from cgi import escape
 from datetime import date
 from datetime import datetime
-from datetime import timedelta
 from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
 from io import BytesIO
-from io import FileIO
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from os import path
-from os import remove
-from os import stat
-from time import time
 from Products.CMFCore.utils import getToolByName
-from recensio.contenttypes.interfaces.review import IParentGetter
-from recensio.policy.interfaces import IRecensioSettings
 from plone.i18n.locales.languages import _languagelist
 from zipfile import ZipFile
+from zope.component import getFactoriesFor
 from zope.component import getUtility
+from zope.component.interfaces import IFactory
 import logging
-import tempfile
 
+from recensio.contenttypes.interfaces.review import IParentGetter
+from recensio.policy.interfaces import IRecensioExporter
+from recensio.policy.interfaces import IRecensioSettings
 from recensio.policy.constants import \
     EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
 
@@ -162,69 +158,29 @@ class XMLRepresentation_rm(XMLRepresentation):
 
 class XMLExport_root(XMLRepresentation):
 
-    export_filename = 'export_metadata_xml.zip'
-
-    def get_export_obj(self):
-        try:
-            export_xml = self.context.unrestrictedTraverse(
-                self.export_filename)
-        except (KeyError, ValueError):
-            export_xml = None
-        return export_xml
-
     def __call__(self):
-        export_xml = self.get_export_obj()
-        if export_xml is not None:
-            modified = export_xml.modified()
-            if DateTime() - 7 < modified:
-                return ('current file found ({0}, {1})'.format(
-                    self.export_filename, modified.ISO8601()))
-        if path.exists(self.cache_filename):
-            mtime = stat(self.cache_filename).st_mtime
-            cache_time = datetime.fromtimestamp(mtime)
-            if datetime.now() - cache_time < timedelta(0, 60 * 60):
-                return ('export in progress since {0}'. format(
-                    cache_time.isoformat()))
-
-        log.info('Starting XML export')
-        pt = getToolByName(self, 'portal_types')
-        type_info = pt.getTypeInfo('File')
-        export_xml = type_info._constructInstance(
-            self.context, self.export_filename)
-        export_xml.setFile(self.get_zipdata(), filename=self.export_filename)
-        log.info('XML export finished')
-        return "{0} created".format(self.export_filename)
-
-    @property
-    def cache_filename(self):
-        return path.join(tempfile.gettempdir(), 'recensio_cached_all.zip')
-
-    def write_zipfile(self, zipfile):
+        log.info('Starting export')
+        exporters = [(name, factory()) for name, factory in
+                     getFactoriesFor(IRecensioExporter)]
         for issue in self.issues():
-            xmlview = issue.restrictedTraverse('xml')
-            xml = xmlview.template(xmlview)
-            filename = xmlview.filename
-            zipfile.writestr(filename, bytes(xml.encode('utf-8')))
-
-    def get_zipdata(self):
-        cache_file_name = self.cache_filename
-        stream = FileIO(cache_file_name, mode='w')
-        zipfile = ZipFile(stream, 'w')
-        self.write_zipfile(zipfile)
-        zipfile.close()
-        stream.close()
-
-        stream = FileIO(cache_file_name, mode='r')
-        zipdata = stream.readall()
-        stream.close()
-        remove(cache_file_name)
-        return zipdata
-
-    @property
-    def filename(self):
-        return "recensio_%s_all.zip" % (
-            date.today().strftime("%d%m%y"),
-        )
+            for review in self.reviews(issue):
+                for name, exporter in exporters:
+                    try:
+                        exporter.add_review(review)
+                    except Exception as e:
+                        log.error('Error in {0} - {1}: {2}'.format(
+                            review.getId(), e.__class__.__name__, str(e)))
+        statuses = []
+        for name, exporter in exporters:
+            try:
+                status = exporter.export()
+                statuses.append((name, status))
+            except Exception as e:
+                log.error('Error in {0} - {1}: {2}'.format(
+                    name, e.__class__.__name__, str(e)))
+        log.info('export finished')
+        return '\n'.join(
+            [name + ': ' + str(status) for name, status in statuses])
 
     def issues(self):
         pc = self.context.portal_catalog
@@ -235,8 +191,24 @@ class XMLExport_root(XMLRepresentation):
         for item in results:
             yield item.getObject()
 
+    def reviews(self, issue):
+        pc = self.context.portal_catalog
+        parent_path = dict(query='/'.join(issue.getPhysicalPath()),
+                           depth=3)
+        results = pc(review_state="published",
+                     portal_type=("Review Monograph", "Review Journal"),
+                     path=parent_path)
+        for item in results:
+            yield item.getObject()
+
 
 class XMLExportSFTP(XMLExport_root):
+
+    @property
+    def filename(self):
+        return "recensio_%s_all.zip" % (
+            date.today().strftime("%d%m%y"),
+        )
 
     def __call__(self):
         registry = getUtility(IRegistry)
@@ -248,7 +220,8 @@ class XMLExportSFTP(XMLExport_root):
             return 'no host configured'
         log.info("Starting XML export to sftp")
 
-        export_xml = self.get_export_obj()
+        exporter = getUtility(IFactory, name='chronicon_exporter')()
+        export_xml = exporter.get_export_obj(self.context)
         if export_xml is None:
             msg = "Could not get export file object: {0}".format(
                 self.export_filename)

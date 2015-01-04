@@ -1,16 +1,31 @@
 import re
 import unittest2 as unittest
 from collective.solr.interfaces import ISolrConnectionConfig
-from io import BytesIO
 from plone import api
 from plone.app.testing.helpers import login
 from plone.app.testing.interfaces import SITE_OWNER_NAME
 from plone.app.testing.interfaces import TEST_USER_NAME
 from zipfile import ZipFile
+from recensio.policy.interfaces import IRecensioExporter
+from zope.component import getGlobalSiteManager
+from zope.component.factory import Factory
+from zope.component.interfaces import IFactory
+from zope.interface import implements
 
 from recensio.policy.export import ChroniconExporter
+from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
+
+
+class BrokenExporter(object):
+    implements(IRecensioExporter)
+
+    def add_review(self, review):
+        raise Exception('some error')
+
+    def export(self):
+        return StatusFailure()
 
 
 class TextExporter(unittest.TestCase):
@@ -110,7 +125,7 @@ class TestXMLExport(unittest.TestCase):
         output = self._force_fresh_export_run()
         self.assertIn('created', output)
 
-        filename = output.split(' ')[0]
+        filename = output.split(' ')[1]
         export_file = self.portal[filename]
         fp = export_file.getFile().getBlob().open()
         export_zip = ZipFile(fp)
@@ -122,3 +137,12 @@ class TestXMLExport(unittest.TestCase):
         self.assertIn('<rm id="' + self.review_1.UID() + '">', xml_data)
         self.assertIn('<bvid>' + self.review_1.getBv() + '</bvid>', xml_data)
         #TODO: assert full text not contained
+
+    def test_broken_exporter_not_fatal(self):
+        gsm = getGlobalSiteManager()
+        gsm.registerUtility(
+            Factory(BrokenExporter, IFactory, 'broken_exporter'),
+            name='broken')
+        xml_export = self.portal.restrictedTraverse('@@xml-export')
+        output = xml_export()
+        self.assertIn('broken', output)

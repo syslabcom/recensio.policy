@@ -8,7 +8,9 @@ from os import path
 from os import remove
 from os import stat
 from zipfile import ZipFile
+from zope.component.factory import Factory
 from zope.component.hooks import getSite
+from zope.component.interfaces import IFactory
 from zope.interface import implements
 from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 
@@ -19,9 +21,15 @@ from recensio.policy.interfaces import IRecensioExporter
 class StatusSuccess(object):
     value = True
 
+    def __repr__(self):
+        return 'Success'
+
 
 class StatusFailure(object):
     value = False
+
+    def __repr__(self):
+        return 'Failure'
 
 
 class StatusSuccessFile(StatusSuccess):
@@ -30,8 +38,10 @@ class StatusSuccessFile(StatusSuccess):
         self.filename = filename
 
 
-class StatusSuccesFileCreated(StatusSuccessFile):
-    pass
+class StatusSuccessFileCreated(StatusSuccessFile):
+
+    def __repr__(self):
+        return "{0} created".format(self.filename)
 
 
 class StatusSuccessFileExists(StatusSuccessFile):
@@ -40,11 +50,18 @@ class StatusSuccessFileExists(StatusSuccessFile):
         self.filename = filename
         self.modified = modified
 
+    def __repr__(self):
+        return 'current file found ({0}, {1})'.format(
+            self.filename, self.modified)
+
 
 class StatusFailureAlreadyInProgress(StatusFailure):
 
     def __init__(self, since=None):
         self.since = since
+
+    def __repr__(self):
+        return 'export in progress since {0}'. format(self.since)
 
 
 class ChroniconExporter(object):
@@ -129,6 +146,7 @@ class ChroniconExporter(object):
         return export_xml
 
     def add_review(self, review):
+        """Expects reviews of the same issue to be added consecutively"""
         review_issue = IParentGetter(review).get_parent_object_of_type('Issue')
         if self.current_issue != review_issue:
             if self.current_issue:
@@ -156,7 +174,12 @@ class ChroniconExporter(object):
 
         pt = getToolByName(portal, 'portal_types')
         type_info = pt.getTypeInfo('File')
-        export_xml = type_info._constructInstance(
-            portal, self.export_filename)
+        if export_xml is None:
+            export_xml = type_info._constructInstance(
+                portal, self.export_filename)
         export_xml.setFile(self.get_zipdata(), filename=self.export_filename)
-        return StatusSuccesFileCreated(self.export_filename)
+        return StatusSuccessFileCreated(self.export_filename)
+
+
+ChroniconExporterFactory = Factory(
+    ChroniconExporter, IFactory, 'chronicon_exporter')

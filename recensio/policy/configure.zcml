@@ -95,4 +95,10 @@
         name="recensio.policy.vocabularies.available_content_languages"
         />
 
+  <utility
+    component=".export.ChroniconExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="chronicon_exporter"
+    />
+
 </configure>
