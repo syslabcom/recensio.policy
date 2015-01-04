@@ -1,15 +1,34 @@
+from DateTime import DateTime
 from Products.Five.browser import BrowserView
 from zope.app.pagetemplate import ViewPageTemplateFile
 from cgi import escape
+from datetime import date
 from datetime import datetime
+from datetime import timedelta
+from plone.registry.interfaces import IRegistry
 from plone.uuid.interfaces import IUUID
+from io import BytesIO
+from io import FileIO
+from paramiko import SFTPClient
+from paramiko import Transport
+from paramiko.ssh_exception import SSHException
 from os import path
+from os import remove
+from os import stat
+from time import time
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.interfaces.review import IParentGetter
+from recensio.policy.interfaces import IRecensioSettings
 from plone.i18n.locales.languages import _languagelist
+from zipfile import ZipFile
+from zope.component import getUtility
+import logging
+import tempfile
 
 from recensio.policy.constants import \
     EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
+
+log = logging.getLogger(__name__)
 
 AUTHOR_TMPL = """        <author_%(num)s_first_name>%(firstname)s</author_%(num)s_first_name>
         <author_%(num)s_last_name>%(lastname)s</author_%(num)s_last_name>
@@ -82,6 +101,12 @@ class XMLRepresentation(BrowserView):
     def get_parent(self, meta_type):
         return IParentGetter(self.context).get_parent_object_of_type(meta_type)
 
+    def get_publication_shortname(self):
+        return unicode(self.get_parent("Publication").getId(), 'utf-8')
+
+    def get_package_journal_volume(self):
+        return unicode(self.get_parent("Volume").getId(), 'utf-8')
+
     def get_voc_title(self, typ, term):
         voc = getToolByName(self.context, 'portal_vocabularies', None)
 
@@ -135,7 +160,162 @@ class XMLRepresentation_rm(XMLRepresentation):
         return self.template(self)
 
 
+class XMLExport_root(XMLRepresentation):
+
+    export_filename = 'export_metadata_xml.zip'
+
+    def get_export_obj(self):
+        try:
+            export_xml = self.context.unrestrictedTraverse(
+                self.export_filename)
+        except (KeyError, ValueError):
+            export_xml = None
+        return export_xml
+
+    def __call__(self):
+        export_xml = self.get_export_obj()
+        if export_xml is not None:
+            modified = export_xml.modified()
+            if DateTime() - 7 < modified:
+                return ('current file found ({0}, {1})'.format(
+                    self.export_filename, modified.ISO8601()))
+        if path.exists(self.cache_filename):
+            mtime = stat(self.cache_filename).st_mtime
+            cache_time = datetime.fromtimestamp(mtime)
+            if datetime.now() - cache_time < timedelta(0, 60 * 60):
+                return ('export in progress since {0}'. format(
+                    cache_time.isoformat()))
+
+        log.info('Starting XML export')
+        pt = getToolByName(self, 'portal_types')
+        type_info = pt.getTypeInfo('File')
+        export_xml = type_info._constructInstance(
+            self.context, self.export_filename)
+        export_xml.setFile(self.get_zipdata(), filename=self.export_filename)
+        log.info('XML export finished')
+        return "{0} created".format(self.export_filename)
+
+    @property
+    def cache_filename(self):
+        return path.join(tempfile.gettempdir(), 'recensio_cached_all.zip')
+
+    def write_zipfile(self, zipfile):
+        for issue in self.issues():
+            xmlview = issue.restrictedTraverse('xml')
+            xml = xmlview.template(xmlview)
+            filename = xmlview.filename
+            zipfile.writestr(filename, bytes(xml.encode('utf-8')))
+
+    def get_zipdata(self):
+        cache_file_name = self.cache_filename
+        stream = FileIO(cache_file_name, mode='w')
+        zipfile = ZipFile(stream, 'w')
+        self.write_zipfile(zipfile)
+        zipfile.close()
+        stream.close()
+
+        stream = FileIO(cache_file_name, mode='r')
+        zipdata = stream.readall()
+        stream.close()
+        remove(cache_file_name)
+        return zipdata
+
+    @property
+    def filename(self):
+        return "recensio_%s_all.zip" % (
+            date.today().strftime("%d%m%y"),
+        )
+
+    def issues(self):
+        pc = self.context.portal_catalog
+        parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
+        results = pc(review_state="published",
+                     portal_type=("Issue"),
+                     path=parent_path)
+        for item in results:
+            yield item.getObject()
+
+
+class XMLExportSFTP(XMLExport_root):
+
+    def __call__(self):
+        registry = getUtility(IRegistry)
+        recensio_settings = registry.forInterface(IRecensioSettings)
+        host = recensio_settings.xml_export_server
+        username = recensio_settings.xml_export_username
+        password = recensio_settings.xml_export_password
+        if not host:
+            return 'no host configured'
+        log.info("Starting XML export to sftp")
+
+        export_xml = self.get_export_obj()
+        if export_xml is None:
+            msg = "Could not get export file object: {0}".format(
+                self.export_filename)
+            log.error(msg)
+            return msg
+
+        zipstream = export_xml.getFile()
+        try:
+            transport = Transport((host, 22))
+            transport.connect(username=username, password=password)
+            sftp = SFTPClient.from_transport(transport)
+            attribs = sftp.putfo(zipstream.getBlob().open(), self.filename)
+        except (IOError, SSHException) as ioe:
+            msg = "Export failed, {0}: {1}".format(ioe.__class__.__name__, ioe)
+            log.error(msg)
+            return msg
+        if attribs.st_size == zipstream.get_size():
+            msg = "Export successful"
+            log.info(msg)
+            return msg
+        else:
+            msg = "Export failed, {0}/{1} bytes transferred".format(
+                attribs.st_size, zipstream.get_size())
+            log.error(msg)
+            return msg
+
+
 class XMLRepresentation_publication(XMLRepresentation):
+
+    def __call__(self):
+        self.request.response.setHeader(
+            'Content-type',
+            'application/zip')
+        self.request.response.setHeader(
+            'Content-disposition',
+            'inline;filename=%s' % self.filename.encode('utf-8'))
+        zipdata = self.get_zipdata()
+        self.request.response.setHeader('content-length', str(len(zipdata)))
+        return zipdata
+
+    def get_zipdata(self):
+        stream = BytesIO()
+        zipfile = ZipFile(stream, 'w')
+        self.write_zipfile(zipfile)
+        zipfile.close()
+        zipdata = stream.getvalue()
+        stream.close()
+        return zipdata
+
+    @property
+    def filename(self):
+        return "recensio_%s.zip" % (
+            self.get_publication_shortname()
+        )
+
+
+class XMLRepresentation_volume(XMLRepresentation_publication):
+
+    @property
+    def filename(self):
+        return "recensio_%s_%s.zip" % (
+            self.get_publication_shortname(),
+            self.get_package_journal_volume(),
+        )
+
+
+class XMLRepresentation_issue(XMLRepresentation):
     template = ViewPageTemplateFile('templates/export_container.pt')
 
     def __call__(self):
@@ -144,12 +324,21 @@ class XMLRepresentation_publication(XMLRepresentation):
             'application/xml')
         self.request.response.setHeader(
             'Content-disposition',
-            'inline;filename=%s' % self.filename().encode('utf-8'))
+            'inline;filename=%s' % self.filename.encode('utf-8'))
         return self.template(self)
 
+    def get_package_journal_pubyear(self):
+        return self.get_parent("Volume").getYearOfPublication() or None
+
+    def get_package_journal_issue(self):
+        return unicode(self.get_parent("Issue").getId(), 'utf-8')
+
+    @property
     def filename(self):
         return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(), "0", "0")
+            self.get_publication_shortname(),
+            self.get_package_journal_volume(),
+            self.get_package_journal_issue())
 
     def reviews(self):
         pc = self.context.portal_catalog
@@ -160,54 +349,6 @@ class XMLRepresentation_publication(XMLRepresentation):
                      path=parent_path)
         for item in results:
             yield item.getObject()
-
-    def get_publication_shortname(self):
-        return unicode(self.get_parent("Publication").getId(), 'utf-8')
-
-    def get_package_journal_pubyear(self):
-        return None
-        #return self.get_parent("Publication")
-
-    def get_package_journal_name(self):
-        return unicode(self.get_parent("Publication").getId(), 'utf-8')
-
-    def get_package_journal_volume(self):
-        return u"Not Available"
-
-    def get_package_journal_issue(self):
-        return None
-
-
-class XMLRepresentation_volume(XMLRepresentation_publication):
-    template = ViewPageTemplateFile('templates/export_container.pt')
-
-    def get_package_journal_pubyear(self):
-        return self.get_parent("Volume").getYearOfPublication() or None
-
-    def get_package_journal_volume(self):
-        return unicode(self.get_parent("Volume").getId(), 'utf-8')
-
-    def get_package_journal_issue(self):
-        return None
-
-    def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(),
-            self.get_package_journal_volume(),
-            "0")
-
-
-class XMLRepresentation_issue(XMLRepresentation_volume):
-    template = ViewPageTemplateFile('templates/export_container.pt')
-
-    def get_package_journal_issue(self):
-        return unicode(self.get_parent("Issue").getId(), 'utf-8')
-
-    def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(),
-            self.get_package_journal_volume(),
-            self.get_package_journal_issue())
 
 
 class DigiToolExport(BrowserView):
