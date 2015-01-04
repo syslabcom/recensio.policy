@@ -221,3 +221,13 @@ class IRecensioView(Interface):
 class IDigitoolView(Interface):
     """ Supports exporting XML to digitool """
 
+
+class IRecensioExporter(Interface):
+    """ Interface for bulk exporting review data"""
+
+    def add_review():
+        """ Accepts a review that is to be exported in the current run. """
+
+    def export():
+        """ Finishes the current export run. This should store the exported
+        data in a way appropriate for the export. """
