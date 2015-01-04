@@ -28,6 +28,7 @@ class TestXMLExport(unittest.TestCase):
         issue_2 = self.portal['sample-reviews']['newspapera']['summer']['issue-2']
         api.content.transition(obj=issue_2, to_state='published')
         self.review_1 = issue_2.objectValues()[0]
+        self.review_1.setBv('12345')
         api.content.transition(obj=self.review_1, to_state='published')
 
         login(self.portal, TEST_USER_NAME)
@@ -62,4 +63,5 @@ class TestXMLExport(unittest.TestCase):
         self.assertIn('<issue_recensio_package', xml_data)
         self.assertIn('<title>' + self.review_1.Title() + '</title>', xml_data)
         self.assertIn('<rm id="' + self.review_1.UID() + '">', xml_data)
+        self.assertIn('<bvid>' + self.review_1.getBv() + '</bvid>', xml_data)
         #TODO: assert full text not contained
