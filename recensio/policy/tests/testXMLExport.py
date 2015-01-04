@@ -12,7 +12,9 @@ from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import implements
 
+from recensio.policy.export import BVIDExporter
 from recensio.policy.export import ChroniconExporter
+from recensio.policy.export import MissingBVIDExporter
 from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
@@ -20,6 +22,9 @@ from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 
 class BrokenExporter(object):
     implements(IRecensioExporter)
+
+    def needs_to_run(self):
+        return True
 
     def add_review(self, review):
         raise Exception('some error')
@@ -80,6 +85,35 @@ class TextExporter(unittest.TestCase):
         xml_data = export_zip.read('recensio_newspaperb_summer_issue-2.xml')
         self.assertIn('<title>' + self.review_b.Title() + '</title>', xml_data)
 
+    def test_bvid_exporter(self):
+        self.review_b.setBv('12345')
+        exporter = BVIDExporter()
+        exporter.add_review(self.review_a)
+        exporter.add_review(self.review_b)
+        status = exporter.export()
+        self.assertTrue(isinstance(status, StatusSuccessFile))
+
+        filename = status.filename
+        export_file = self.portal[filename]
+        fp = export_file.getFile().getBlob().open()
+        csv_data = fp.read()
+        self.assertIn(self.review_b.getBv(), csv_data)
+
+        self.review_b.setBv('')
+
+    def test_missing_bvid_exporter(self):
+        exporter = MissingBVIDExporter()
+        exporter.add_review(self.review_a)
+        exporter.add_review(self.review_b)
+        status = exporter.export()
+        self.assertTrue(isinstance(status, StatusSuccessFile))
+
+        filename = status.filename
+        export_file = self.portal[filename]
+        fp = export_file.getFile().getBlob().open()
+        csv_data = fp.read()
+        self.assertIn(self.review_a.absolute_url(), csv_data)
+
 
 class TestXMLExport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
@@ -106,13 +140,14 @@ class TestXMLExport(unittest.TestCase):
         login(self.portal, TEST_USER_NAME)
 
     def tearDown(self):
+        self.review_1.setBv('')
         if self.solrcfg:
             self.solrcfg.active = self.old_solrcfg_active
 
     def _force_fresh_export_run(self):
         xml_export = self.portal.restrictedTraverse('@@xml-export')
         output = xml_export()
-        if 'found' in output:
+        if 'Nothing to do' in output:
             match = re.match('.*\((.*), .*\)', output)
             old_export_zip = self.portal[match.group(1)]
             login(self.layer['app'], SITE_OWNER_NAME)
@@ -125,7 +160,9 @@ class TestXMLExport(unittest.TestCase):
         output = self._force_fresh_export_run()
         self.assertIn('created', output)
 
-        filename = output.split(' ')[1]
+        for line in output.split('\n'):
+            if 'chronicon' in line:
+                filename = line.split(' ')[1]
         export_file = self.portal[filename]
         fp = export_file.getFile().getBlob().open()
         export_zip = ZipFile(fp)
@@ -138,11 +175,19 @@ class TestXMLExport(unittest.TestCase):
         self.assertIn('<bvid>' + self.review_1.getBv() + '</bvid>', xml_data)
         #TODO: assert full text not contained
 
+        xml_export = self.portal.restrictedTraverse('@@xml-export')
+        output = xml_export()
+        self.assertIn('Nothing to do', output)
+
     def test_broken_exporter_not_fatal(self):
         gsm = getGlobalSiteManager()
+        factory = Factory(BrokenExporter, IFactory, 'broken_exporter')
         gsm.registerUtility(
-            Factory(BrokenExporter, IFactory, 'broken_exporter'),
+            factory,
             name='broken')
         xml_export = self.portal.restrictedTraverse('@@xml-export')
         output = xml_export()
         self.assertIn('broken', output)
+        gsm.unregisterUtility(
+            factory,
+            name='broken')

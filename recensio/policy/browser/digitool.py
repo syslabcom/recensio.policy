@@ -162,6 +162,9 @@ class XMLExport_root(XMLRepresentation):
         log.info('Starting export')
         exporters = [(name, factory()) for name, factory in
                      getFactoriesFor(IRecensioExporter)]
+        if not True in [e.needs_to_run() for name, e in exporters]:
+            log.info('export finished, nothing to do')
+            return 'Nothing to do, no exporter requested an export run.'
         for issue in self.issues():
             for review in self.reviews(issue):
                 for name, exporter in exporters:
@@ -179,7 +182,7 @@ class XMLExport_root(XMLRepresentation):
                 log.error('Error in {0} - {1}: {2}'.format(
                     name, e.__class__.__name__, str(e)))
         log.info('export finished')
-        return '\n'.join(
+        return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
 
     def issues(self):

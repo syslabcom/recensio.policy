@@ -1,6 +1,8 @@
+import csv
 import tempfile
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
+from StringIO import StringIO
 from datetime import datetime
 from datetime import timedelta
 from io import FileIO
@@ -64,7 +66,18 @@ class StatusFailureAlreadyInProgress(StatusFailure):
         return 'export in progress since {0}'. format(self.since)
 
 
-class ChroniconExporter(object):
+class BaseExporter(object):
+
+    def get_export_obj(self, portal):
+        try:
+            export_xml = portal.unrestrictedTraverse(
+                self.export_filename)
+        except (KeyError, ValueError):
+            export_xml = None
+        return export_xml
+
+
+class ChroniconExporter(BaseExporter):
     implements(IRecensioExporter)
 
     template = 'browser/templates/export_container_contextless.pt'
@@ -137,13 +150,24 @@ class ChroniconExporter(object):
         remove(cache_file_name)
         return zipdata
 
-    def get_export_obj(self, portal):
-        try:
-            export_xml = portal.unrestrictedTraverse(
-                self.export_filename)
-        except (KeyError, ValueError):
-            export_xml = None
-        return export_xml
+    def is_recent(self, export_xml_obj):
+        if export_xml_obj is not None:
+            modified = export_xml_obj.modified()
+            if DateTime() - 7 < modified:
+                return True
+        return False
+
+    def current_export(self):
+        if path.exists(self.cache_filename):
+            mtime = stat(self.cache_filename).st_mtime
+            cache_time = datetime.fromtimestamp(mtime)
+            if datetime.now() - cache_time < timedelta(0, 60 * 60):
+                return cache_time
+
+    def needs_to_run(self):
+        portal = getSite()
+        export_xml_obj = self.get_export_obj(portal)
+        return not self.is_recent(export_xml_obj) and not self.current_export()
 
     def add_review(self, review):
         """Expects reviews of the same issue to be added consecutively"""
@@ -159,27 +183,71 @@ class ChroniconExporter(object):
             self.finish_issue()
 
         portal = getSite()
-        export_xml = self.get_export_obj(portal)
-        if export_xml is not None:
-            modified = export_xml.modified()
-            if DateTime() - 7 < modified:
-                return StatusSuccessFileExists(
-                    self.export_filename, modified.ISO8601())
-        if path.exists(self.cache_filename):
-            mtime = stat(self.cache_filename).st_mtime
-            cache_time = datetime.fromtimestamp(mtime)
-            if datetime.now() - cache_time < timedelta(0, 60 * 60):
-                return StatusFailureAlreadyInProgress(
-                    cache_time.isoformat())
+        export_xml_obj = self.get_export_obj(portal)
+        cache_time = self.current_export()
+        if cache_time:
+            return StatusFailureAlreadyInProgress(
+                cache_time.isoformat())
 
         pt = getToolByName(portal, 'portal_types')
         type_info = pt.getTypeInfo('File')
-        if export_xml is None:
-            export_xml = type_info._constructInstance(
+        if export_xml_obj is None:
+            export_xml_obj = type_info._constructInstance(
                 portal, self.export_filename)
-        export_xml.setFile(self.get_zipdata(), filename=self.export_filename)
+        export_xml_obj.setFile(self.get_zipdata(),
+                               filename=self.export_filename)
+        export_xml_obj.setModificationDate(DateTime())
         return StatusSuccessFileCreated(self.export_filename)
 
 
+class BVIDExporter(BaseExporter):
+    implements(IRecensioExporter)
+
+    export_filename = 'bvid_export.csv'
+
+    def __init__(self):
+        self.items = []
+
+    def needs_to_run(self):
+        portal = getSite()
+        export_file = self.get_export_obj(portal)
+        return export_file is None
+
+    def add_review(self, review):
+        if review.getBv():
+            self.items.append((review.getBv(), review.absolute_url()))
+
+    def export(self):
+        csvfile = StringIO()
+        csvwriter = csv.writer(csvfile)
+
+        csvwriter.writerows(self.items)
+
+        portal = getSite()
+        export_file = self.get_export_obj(portal)
+        if export_file is None:
+            pt = getToolByName(portal, 'portal_types')
+            type_info = pt.getTypeInfo('File')
+            export_file = type_info._constructInstance(
+                portal, self.export_filename)
+
+        export_file.setFile(csvfile.getvalue(), filename=self.export_filename)
+        return StatusSuccessFileCreated(self.export_filename)
+
+
+class MissingBVIDExporter(BVIDExporter):
+    implements(IRecensioExporter)
+
+    export_filename = 'missing_bvid.csv'
+
+    def add_review(self, review):
+        if not review.getBv():
+            self.items.append((review.Title(), review.absolute_url()))
+
+
+BVIDExporterFactory = Factory(
+    BVIDExporter, IFactory, 'exporter')
+MissingBVIDExporterFactory = Factory(
+    MissingBVIDExporter, IFactory, 'exporter')
 ChroniconExporterFactory = Factory(
-    ChroniconExporter, IFactory, 'chronicon_exporter')
+    ChroniconExporter, IFactory, 'exporter')

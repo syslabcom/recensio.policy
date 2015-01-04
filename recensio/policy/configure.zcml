@@ -101,4 +101,15 @@
     name="chronicon_exporter"
     />
 
+  <utility
+    component=".export.BVIDExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="bvid_exporter"
+    />
+
+  <utility
+    component=".export.MissingBVIDExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="missing_bvid_exporter"
+    />
 </configure>
