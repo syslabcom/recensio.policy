@@ -70,17 +70,35 @@
     />
 
 
-  <!-- XML Representations for rj, rm and publication, which includes the former -->
+  <!-- XML Representations for rj, rm and containers, which include the former -->
+  <browser:page
+	for="recensio.contenttypes.interfaces.publication.IPublication"
+    name="xml"
+    class=".xml.XMLRepresentationPublication"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.volume.IVolume"
+    name="xml"
+    class=".xml.XMLRepresentationVolume"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.issue.IIssue"
+    name="xml"
+    class=".xml.XMLRepresentationIssue"
+    permission="zope.Public"
+    />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
     name="xml"
-    class=".digitool.XMLRepresentation_rm"
+    class=".xml.XMLRepresentationRM"
     permission="zope.Public"
     />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
     name="xml"
-    class=".digitool.XMLRepresentation_rj"
+    class=".xml.XMLRepresentationRJ"
     permission="zope.Public"
     />
 
@@ -96,25 +114,6 @@
     class=".export.ChroniconExport"
     permission="cmf.ManagePortal"
     />
-  <browser:page
-	for="recensio.contenttypes.interfaces.publication.IPublication"
-    name="xml"
-    class=".digitool.XMLRepresentation_publication"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.volume.IVolume"
-    name="xml"
-    class=".digitool.XMLRepresentation_volume"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.issue.IIssue"
-    name="xml"
-    class=".digitool.XMLRepresentation_issue"
-    permission="zope.Public"
-    />
-
 
   <browser:page
 	for="*"
@@ -122,6 +121,7 @@
     class=".digitool.DigiToolExport"
     permission="zope.Public"
     />
+
 
   <browser:page
       for="*"
