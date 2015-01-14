@@ -115,7 +115,7 @@ class TextExporter(unittest.TestCase):
         self.assertIn(self.review_a.absolute_url(), csv_data)
 
 
-class TestXMLExport(unittest.TestCase):
+class TestMetadataExport(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def setUp(self):
@@ -145,7 +145,7 @@ class TestXMLExport(unittest.TestCase):
             self.solrcfg.active = self.old_solrcfg_active
 
     def _force_fresh_export_run(self):
-        xml_export = self.portal.restrictedTraverse('@@xml-export')
+        xml_export = self.portal.restrictedTraverse('@@metadata-export')
         output = xml_export()
         if 'Nothing to do' in output:
             match = re.match('.*\((.*), .*\)', output)
@@ -175,7 +175,7 @@ class TestXMLExport(unittest.TestCase):
         self.assertIn('<bvid>' + self.review_1.getBv() + '</bvid>', xml_data)
         #TODO: assert full text not contained
 
-        xml_export = self.portal.restrictedTraverse('@@xml-export')
+        xml_export = self.portal.restrictedTraverse('@@metadata-export')
         output = xml_export()
         self.assertIn('Nothing to do', output)
 
@@ -185,7 +185,7 @@ class TestXMLExport(unittest.TestCase):
         gsm.registerUtility(
             factory,
             name='broken')
-        xml_export = self.portal.restrictedTraverse('@@xml-export')
+        xml_export = self.portal.restrictedTraverse('@@metadata-export')
         output = xml_export()
         self.assertIn('broken', output)
         gsm.unregisterUtility(

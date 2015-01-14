@@ -86,14 +86,14 @@
 
   <browser:page
 	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    name="xml-export"
-    class=".digitool.XMLExport_root"
+    name="metadata-export"
+    class=".export.MetadataExport"
     permission="zope2.View"
     />
   <browser:page
 	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    name="xml-export-sftp"
-    class=".digitool.XMLExportSFTP"
+    name="chronicon-export"
+    class=".export.ChroniconExport"
     permission="cmf.ManagePortal"
     />
   <browser:page
