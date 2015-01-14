@@ -84,7 +84,7 @@ class XMLRepresentationRM(XMLRepresentation):
         return self.template(self)
 
 
-class XMLRepresentationPublication(XMLRepresentation):
+class XMLRepresentationContainer(XMLRepresentation):
 
     def __call__(self):
         self.request.response.setHeader(
@@ -122,6 +122,9 @@ class XMLRepresentationPublication(XMLRepresentation):
         stream.close()
         return zipdata
 
+
+class XMLRepresentationPublication(XMLRepresentationContainer):
+
     @property
     def filename(self):
         return "recensio_%s.zip" % (
@@ -129,7 +132,7 @@ class XMLRepresentationPublication(XMLRepresentation):
         )
 
 
-class XMLRepresentationVolume(XMLRepresentationPublication):
+class XMLRepresentationVolume(XMLRepresentationContainer):
 
     @property
     def filename(self):

@@ -63,7 +63,7 @@ class MetadataExport(BrowserView):
             yield item.getObject()
 
 
-class ChroniconExport(MetadataExport):
+class ChroniconExport(BrowserView):
 
     @property
     def filename(self):
