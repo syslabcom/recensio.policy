@@ -76,6 +76,13 @@ class BaseExporter(object):
             export_xml = None
         return export_xml
 
+    def is_recent(self, export_xml_obj):
+        if export_xml_obj is not None:
+            modified = export_xml_obj.modified()
+            if DateTime() - 7 < modified:
+                return True
+        return False
+
 
 class ChroniconExporter(BaseExporter):
     implements(IRecensioExporter)
@@ -150,13 +157,6 @@ class ChroniconExporter(BaseExporter):
         remove(cache_file_name)
         return zipdata
 
-    def is_recent(self, export_xml_obj):
-        if export_xml_obj is not None:
-            modified = export_xml_obj.modified()
-            if DateTime() - 7 < modified:
-                return True
-        return False
-
     def running_export(self):
         if path.exists(self.cache_filename):
             mtime = stat(self.cache_filename).st_mtime
@@ -211,7 +211,7 @@ class BVIDExporter(BaseExporter):
     def needs_to_run(self):
         portal = getSite()
         export_file = self.get_export_obj(portal)
-        return export_file is None
+        return not self.is_recent(export_file)
 
     def add_review(self, review):
         if review.getBv():
