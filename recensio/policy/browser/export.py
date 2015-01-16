@@ -12,6 +12,7 @@ from zope.component import getFactoriesFor
 from zope.component import getUtility
 from zope.component.interfaces import IFactory
 import logging
+import transaction
 
 log = logging.getLogger(__name__)
 
@@ -29,6 +30,7 @@ class MetadataExport(BrowserView):
             return 'An export is already running, aborting'
 
         annotations[EXPORT_KEY] = time()
+        transaction.commit()
 
         exporters = [(name, factory()) for name, factory in
                      getFactoriesFor(IRecensioExporter)]
