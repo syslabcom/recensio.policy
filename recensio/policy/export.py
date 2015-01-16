@@ -232,6 +232,7 @@ class BVIDExporter(BaseExporter):
                 portal, self.export_filename)
 
         export_file.setFile(csvfile.getvalue(), filename=self.export_filename)
+        export_file.setModificationDate(DateTime())
         return StatusSuccessFileCreated(self.export_filename)
 
 
