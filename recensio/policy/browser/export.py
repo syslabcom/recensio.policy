@@ -48,7 +48,7 @@ class MetadataExport(BrowserView):
                         log.error('Error in {0} - {1}: {2}'.format(
                             review.getId(), e.__class__.__name__, str(e)))
         statuses = []
-        for name, exporter in exporters:
+        for name, exporter in exporters_to_run:
             try:
                 status = exporter.export()
                 statuses.append((name, status))
