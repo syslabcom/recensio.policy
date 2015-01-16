@@ -16,7 +16,7 @@ import transaction
 
 log = logging.getLogger(__name__)
 
-EXPORT_KEY = 'recensio.policy.metadata_export'
+EXPORT_TIMESTAMP_KEY = 'recensio.policy.metadata_export_timestamp'
 
 
 class MetadataExport(BrowserView):
@@ -24,12 +24,12 @@ class MetadataExport(BrowserView):
     def __call__(self):
         log.info('Starting export')
         annotations = IAnnotations(self.context)
-        timestamp = annotations.get(EXPORT_KEY, 0)
+        timestamp = annotations.get(EXPORT_TIMESTAMP_KEY, 0)
         if time() - timestamp < 2 * 60 * 60:  # 2 hours
             log.info('export already running, abort')
             return 'An export is already running, aborting'
 
-        annotations[EXPORT_KEY] = time()
+        annotations[EXPORT_TIMESTAMP_KEY] = time()
         transaction.commit()
 
         exporters = [(name, factory()) for name, factory in
@@ -37,7 +37,7 @@ class MetadataExport(BrowserView):
         exporters_to_run = [(name, e) for name, e in exporters
                             if e.needs_to_run()]
         if not exporters_to_run:
-            del annotations[EXPORT_KEY]
+            del annotations[EXPORT_TIMESTAMP_KEY]
             log.info('export finished, nothing to do')
             return 'Nothing to do, no exporter requested an export run.'
 
@@ -58,7 +58,7 @@ class MetadataExport(BrowserView):
                 log.error('Error in {0} - {1}: {2}'.format(
                     name, e.__class__.__name__, e))
 
-        del annotations[EXPORT_KEY]
+        del annotations[EXPORT_TIMESTAMP_KEY]
         log.info('export finished')
 
         return '<br />\n'.join(

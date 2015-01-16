@@ -15,7 +15,7 @@ from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import implements
 
-from recensio.policy.browser.export import EXPORT_KEY
+from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
 from recensio.policy.export import BVIDExporter
 from recensio.policy.export import ChroniconExporter
 from recensio.policy.export import MissingBVIDExporter
@@ -199,7 +199,7 @@ class TestMetadataExport(unittest.TestCase):
 
         def mock_issues(_self):
             annotations = IAnnotations(self.portal)
-            self.assertIn(EXPORT_KEY, annotations)
+            self.assertIn(EXPORT_TIMESTAMP_KEY, annotations)
             return []
         _issues = MetadataExport.issues
         MetadataExport.issues = mock_issues
@@ -217,7 +217,7 @@ class TestMetadataExport(unittest.TestCase):
 
         annotations = IAnnotations(self.portal)
         # fake running export
-        annotations[EXPORT_KEY] = time()
+        annotations[EXPORT_TIMESTAMP_KEY] = time()
         self._clear_export_files()
         output = self.xml_export()
         self.assertFalse(mock_issues.called)
@@ -225,14 +225,14 @@ class TestMetadataExport(unittest.TestCase):
 
         mock_issues.reset_mock()
         # fake running export has finished
-        del annotations[EXPORT_KEY]
+        del annotations[EXPORT_TIMESTAMP_KEY]
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
         self.assertNotIn('abort', output)
 
-        if EXPORT_KEY in annotations:
-            del annotations[EXPORT_KEY]
+        if EXPORT_TIMESTAMP_KEY in annotations:
+            del annotations[EXPORT_TIMESTAMP_KEY]
         MetadataExport.issues = _issues
 
     def test_timestamp_not_left_behind(self):
@@ -255,8 +255,8 @@ class TestMetadataExport(unittest.TestCase):
         self.assertTrue(mock_issues.called)
         self.assertNotIn('abort', output)
 
-        if EXPORT_KEY in annotations:
-            del annotations[EXPORT_KEY]
+        if EXPORT_TIMESTAMP_KEY in annotations:
+            del annotations[EXPORT_TIMESTAMP_KEY]
         MetadataExport.issues = _issues
 
     def test_timestamp_not_left_behind_by_noop_export(self):
@@ -268,8 +268,8 @@ class TestMetadataExport(unittest.TestCase):
 
         # we don't care about the time stamp at this point, this is tested in
         # another test
-        if EXPORT_KEY in annotations:
-            del annotations[EXPORT_KEY]
+        if EXPORT_TIMESTAMP_KEY in annotations:
+            del annotations[EXPORT_TIMESTAMP_KEY]
         # not clearing files - this export has nothing to do
         output = self.xml_export()
 
@@ -277,8 +277,8 @@ class TestMetadataExport(unittest.TestCase):
         output = self.xml_export()
         self.assertNotIn('abort', output)
 
-        if EXPORT_KEY in annotations:
-            del annotations[EXPORT_KEY]
+        if EXPORT_TIMESTAMP_KEY in annotations:
+            del annotations[EXPORT_TIMESTAMP_KEY]
 
     def test_stale_timestamp_is_cleared(self):
         from recensio.policy.browser.export import MetadataExport
@@ -288,12 +288,12 @@ class TestMetadataExport(unittest.TestCase):
 
         annotations = IAnnotations(self.portal)
         # fake a four day old stale time stamp
-        annotations[EXPORT_KEY] = time() - 4 * 60 * 60
+        annotations[EXPORT_TIMESTAMP_KEY] = time() - 4 * 60 * 60
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
         self.assertNotIn('abort', output)
 
-        if EXPORT_KEY in annotations:
-            del annotations[EXPORT_KEY]
+        if EXPORT_TIMESTAMP_KEY in annotations:
+            del annotations[EXPORT_TIMESTAMP_KEY]
         MetadataExport.issues = _issues
