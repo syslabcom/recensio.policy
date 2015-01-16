@@ -1,17 +1,21 @@
-import re
 import unittest2 as unittest
 from collective.solr.interfaces import ISolrConnectionConfig
+from mock import Mock
 from plone import api
 from plone.app.testing.helpers import login
 from plone.app.testing.interfaces import SITE_OWNER_NAME
 from plone.app.testing.interfaces import TEST_USER_NAME
 from zipfile import ZipFile
 from recensio.policy.interfaces import IRecensioExporter
+from time import time
+from zope.annotation.interfaces import IAnnotations
+from zope.component import getFactoriesFor
 from zope.component import getGlobalSiteManager
 from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import implements
 
+from recensio.policy.browser.export import EXPORT_KEY
 from recensio.policy.export import BVIDExporter
 from recensio.policy.export import ChroniconExporter
 from recensio.policy.export import MissingBVIDExporter
@@ -138,26 +142,26 @@ class TestMetadataExport(unittest.TestCase):
         api.content.transition(obj=self.review_1, to_state='published')
 
         login(self.portal, TEST_USER_NAME)
+        self.xml_export = self.portal.restrictedTraverse('@@metadata-export')
 
     def tearDown(self):
         self.review_1.setBv('')
         if self.solrcfg:
             self.solrcfg.active = self.old_solrcfg_active
 
-    def _force_fresh_export_run(self):
-        xml_export = self.portal.restrictedTraverse('@@metadata-export')
-        output = xml_export()
-        if 'Nothing to do' in output:
-            match = re.match('.*\((.*), .*\)', output)
-            old_export_zip = self.portal[match.group(1)]
-            login(self.layer['app'], SITE_OWNER_NAME)
-            api.content.delete(old_export_zip)
-            login(self.portal, TEST_USER_NAME)
-            output = xml_export()
-        return output
+    def _clear_export_files(self):
+        login(self.layer['app'], SITE_OWNER_NAME)
+        exporters = [factory() for name, factory in
+                     getFactoriesFor(IRecensioExporter)]
+        for exporter in exporters:
+            old_export_file = self.portal.get(exporter.export_filename)
+            if old_export_file:
+                api.content.delete(old_export_file)
+        login(self.portal, TEST_USER_NAME)
 
     def test_export(self):
-        output = self._force_fresh_export_run()
+        self._clear_export_files()
+        output = self.xml_export()
         self.assertIn('created', output)
 
         for line in output.split('\n'):
@@ -175,8 +179,7 @@ class TestMetadataExport(unittest.TestCase):
         self.assertIn('<bvid>' + self.review_1.getBv() + '</bvid>', xml_data)
         #TODO: assert full text not contained
 
-        xml_export = self.portal.restrictedTraverse('@@metadata-export')
-        output = xml_export()
+        output = self.xml_export()
         self.assertIn('Nothing to do', output)
 
     def test_broken_exporter_not_fatal(self):
@@ -185,9 +188,61 @@ class TestMetadataExport(unittest.TestCase):
         gsm.registerUtility(
             factory,
             name='broken')
-        xml_export = self.portal.restrictedTraverse('@@metadata-export')
-        output = xml_export()
+        output = self.xml_export()
         self.assertIn('broken', output)
         gsm.unregisterUtility(
             factory,
             name='broken')
+
+    def test_export_sets_timestamp(self):
+        from recensio.policy.browser.export import MetadataExport
+
+        def mock_issues(_self):
+            annotations = IAnnotations(self.portal)
+            self.assertIn(EXPORT_KEY, annotations)
+            return []
+        _issues = MetadataExport.issues
+        MetadataExport.issues = mock_issues
+
+        self._clear_export_files()
+        self.xml_export()
+
+        MetadataExport.issues = _issues
+
+    def test_timestamp_prevents_export_run(self):
+        from recensio.policy.browser.export import MetadataExport
+        _issues = MetadataExport.issues
+        mock_issues = Mock(return_value=[])
+        MetadataExport.issues = mock_issues
+
+        annotations = IAnnotations(self.portal)
+        annotations[EXPORT_KEY] = time()
+        self._clear_export_files()
+        output = self.xml_export()
+        self.assertFalse(mock_issues.called)
+        self.assertIn('abort', output)
+
+        mock_issues.reset_mock()
+        del annotations[EXPORT_KEY]
+        self._clear_export_files()
+        output = self.xml_export()
+        self.assertTrue(mock_issues.called)
+        self.assertNotIn('abort', output)
+
+        # most recent run should not have left behind a time stamp
+        self._clear_export_files()
+        output = self.xml_export()
+        self.assertTrue(mock_issues.called)
+        self.assertNotIn('abort', output)
+
+        mock_issues.reset_mock()
+        # simulate a four day old stale time stamp
+        annotations[EXPORT_KEY] = time() - 4 * 60 * 60
+        self._clear_export_files()
+        output = self.xml_export()
+        self.assertTrue(mock_issues.called)
+        self.assertNotIn('abort', output)
+
+        if EXPORT_KEY in annotations:
+            del annotations[EXPORT_KEY]
+        MetadataExport.issues = _issues

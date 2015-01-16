@@ -6,6 +6,8 @@ from paramiko.ssh_exception import SSHException
 from plone.registry.interfaces import IRegistry
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
+from time import time
+from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
 from zope.component import getUtility
 from zope.component.interfaces import IFactory
@@ -13,11 +15,20 @@ import logging
 
 log = logging.getLogger(__name__)
 
+EXPORT_KEY = 'recensio.policy.metadata_export'
+
 
 class MetadataExport(BrowserView):
 
     def __call__(self):
         log.info('Starting export')
+        annotations = IAnnotations(self.context)
+        timestamp = annotations.get(EXPORT_KEY, 0)
+        if time() - timestamp < 2 * 60 * 60:  # 2 hours
+            log.info('export already running, abort')
+            return 'An export is already running, aborting'
+        annotations[EXPORT_KEY] = time()
+
         exporters = [(name, factory()) for name, factory in
                      getFactoriesFor(IRecensioExporter)]
         if not True in [e.needs_to_run() for name, e in exporters]:
@@ -39,6 +50,7 @@ class MetadataExport(BrowserView):
             except Exception as e:
                 log.error('Error in {0} - {1}: {2}'.format(
                     name, e.__class__.__name__, str(e)))
+        del annotations[EXPORT_KEY]
         log.info('export finished')
         return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
