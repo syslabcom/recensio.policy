@@ -46,7 +46,7 @@ class MetadataExport(BrowserView):
                         exporter.add_review(review)
                     except Exception as e:
                         log.error('Error in {0} - {1}: {2}'.format(
-                            review.getId(), e.__class__.__name__, str(e)))
+                            review.getId(), e.__class__.__name__, e))
         statuses = []
         for name, exporter in exporters_to_run:
             try:
@@ -54,7 +54,7 @@ class MetadataExport(BrowserView):
                 statuses.append((name, status))
             except Exception as e:
                 log.error('Error in {0} - {1}: {2}'.format(
-                    name, e.__class__.__name__, str(e)))
+                    name, e.__class__.__name__, e))
 
         del annotations[EXPORT_KEY]
         log.info('export finished')
