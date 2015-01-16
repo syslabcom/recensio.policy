@@ -130,7 +130,7 @@ class ChroniconExporter(BaseExporter):
 
     @property
     def cache_filename(self):
-        return path.join(tempfile.gettempdir(), 'recensio_cached_all.zip')
+        return path.join(tempfile.gettempdir(), 'chronicon_cache.zip')
 
     def write_zipfile(self, zipfile):
         for filename, xml in self.issues_xml.items():
@@ -157,7 +157,7 @@ class ChroniconExporter(BaseExporter):
                 return True
         return False
 
-    def current_export(self):
+    def running_export(self):
         if path.exists(self.cache_filename):
             mtime = stat(self.cache_filename).st_mtime
             cache_time = datetime.fromtimestamp(mtime)
@@ -167,7 +167,7 @@ class ChroniconExporter(BaseExporter):
     def needs_to_run(self):
         portal = getSite()
         export_xml_obj = self.get_export_obj(portal)
-        return not self.is_recent(export_xml_obj) and not self.current_export()
+        return not self.is_recent(export_xml_obj) and not self.running_export()
 
     def add_review(self, review):
         """Expects reviews of the same issue to be added consecutively"""
@@ -184,7 +184,7 @@ class ChroniconExporter(BaseExporter):
 
         portal = getSite()
         export_xml_obj = self.get_export_obj(portal)
-        cache_time = self.current_export()
+        cache_time = self.running_export()
         if cache_time:
             return StatusFailureAlreadyInProgress(
                 cache_time.isoformat())
