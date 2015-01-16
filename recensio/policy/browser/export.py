@@ -27,16 +27,21 @@ class MetadataExport(BrowserView):
         if time() - timestamp < 2 * 60 * 60:  # 2 hours
             log.info('export already running, abort')
             return 'An export is already running, aborting'
+
         annotations[EXPORT_KEY] = time()
 
         exporters = [(name, factory()) for name, factory in
                      getFactoriesFor(IRecensioExporter)]
-        if not True in [e.needs_to_run() for name, e in exporters]:
+        exporters_to_run = [(name, e) for name, e in exporters
+                            if e.needs_to_run()]
+        if not exporters_to_run:
+            del annotations[EXPORT_KEY]
             log.info('export finished, nothing to do')
             return 'Nothing to do, no exporter requested an export run.'
+
         for issue in self.issues():
             for review in self.reviews(issue):
-                for name, exporter in exporters:
+                for name, exporter in exporters_to_run:
                     try:
                         exporter.add_review(review)
                     except Exception as e:
@@ -50,8 +55,10 @@ class MetadataExport(BrowserView):
             except Exception as e:
                 log.error('Error in {0} - {1}: {2}'.format(
                     name, e.__class__.__name__, str(e)))
+
         del annotations[EXPORT_KEY]
         log.info('export finished')
+
         return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
 

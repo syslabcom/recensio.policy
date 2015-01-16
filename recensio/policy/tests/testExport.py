@@ -216,6 +216,7 @@ class TestMetadataExport(unittest.TestCase):
         MetadataExport.issues = mock_issues
 
         annotations = IAnnotations(self.portal)
+        # fake running export
         annotations[EXPORT_KEY] = time()
         self._clear_export_files()
         output = self.xml_export()
@@ -223,20 +224,70 @@ class TestMetadataExport(unittest.TestCase):
         self.assertIn('abort', output)
 
         mock_issues.reset_mock()
+        # fake running export has finished
         del annotations[EXPORT_KEY]
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
         self.assertNotIn('abort', output)
 
-        # most recent run should not have left behind a time stamp
+        if EXPORT_KEY in annotations:
+            del annotations[EXPORT_KEY]
+        MetadataExport.issues = _issues
+
+    def test_timestamp_not_left_behind(self):
+        from recensio.policy.browser.export import MetadataExport
+        _issues = MetadataExport.issues
+        mock_issues = Mock(return_value=[])
+        MetadataExport.issues = mock_issues
+
+        annotations = IAnnotations(self.portal)
+
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
         self.assertNotIn('abort', output)
 
         mock_issues.reset_mock()
-        # simulate a four day old stale time stamp
+        # recent run should not have left behind a time stamp
+        self._clear_export_files()
+        output = self.xml_export()
+        self.assertTrue(mock_issues.called)
+        self.assertNotIn('abort', output)
+
+        if EXPORT_KEY in annotations:
+            del annotations[EXPORT_KEY]
+        MetadataExport.issues = _issues
+
+    def test_timestamp_not_left_behind_by_noop_export(self):
+        annotations = IAnnotations(self.portal)
+
+        self._clear_export_files()
+        # regular export run
+        output = self.xml_export()
+
+        # we don't care about the time stamp at this point, this is tested in
+        # another test
+        if EXPORT_KEY in annotations:
+            del annotations[EXPORT_KEY]
+        # not clearing files - this export has nothing to do
+        output = self.xml_export()
+
+        # the most recent export should not have left behind a time stamp
+        output = self.xml_export()
+        self.assertNotIn('abort', output)
+
+        if EXPORT_KEY in annotations:
+            del annotations[EXPORT_KEY]
+
+    def test_stale_timestamp_is_cleared(self):
+        from recensio.policy.browser.export import MetadataExport
+        _issues = MetadataExport.issues
+        mock_issues = Mock(return_value=[])
+        MetadataExport.issues = mock_issues
+
+        annotations = IAnnotations(self.portal)
+        # fake a four day old stale time stamp
         annotations[EXPORT_KEY] = time() - 4 * 60 * 60
         self._clear_export_files()
         output = self.xml_export()
