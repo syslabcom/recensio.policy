@@ -21,6 +21,7 @@ from recensio.policy.export import ChroniconExporter
 from recensio.policy.export import MissingBVIDExporter
 from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
+from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 
 
@@ -120,7 +121,7 @@ class TextExporter(unittest.TestCase):
 
 
 class TestMetadataExport(unittest.TestCase):
-    layer = RECENSIO_INTEGRATION_TESTING
+    layer = RECENSIO_FUNCTIONAL_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
