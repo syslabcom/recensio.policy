@@ -15,6 +15,8 @@ from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import implements
 
+from recensio.contenttypes.setuphandlers import add_number_of_each_review_type
+from recensio.contenttypes.content.reviewmonograph import ReviewMonograph
 from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
 from recensio.policy.export import BVIDExporter
 from recensio.policy.export import ChroniconExporter
@@ -23,6 +25,7 @@ from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
+from recensio.policy.tests.layer import RECENSIO_BARE_INTEGRATION_TESTING
 
 
 class BrokenExporter(object):
@@ -38,11 +41,17 @@ class BrokenExporter(object):
         return StatusFailure()
 
 
-class TextExporter(unittest.TestCase):
-    layer = RECENSIO_INTEGRATION_TESTING
+class TestExporter(unittest.TestCase):
+    layer = RECENSIO_BARE_INTEGRATION_TESTING
 
     def setUp(self):
         self.portal = self.layer['portal']
+
+        login(self.layer['app'], SITE_OWNER_NAME)
+        add_number_of_each_review_type(
+            self.portal, 1, rez_classes=[ReviewMonograph])
+        login(self.portal, TEST_USER_NAME)
+
         summer_a = self.portal['sample-reviews']['newspapera']['summer']
         issue_2_a = summer_a['issue-2']
         summer_b = self.portal['sample-reviews']['newspaperb']['summer']
