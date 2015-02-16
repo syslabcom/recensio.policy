@@ -28,9 +28,9 @@
     </div>
   </div>
 
-  <img id="recensio_logo"
-       src="++resource++recensio.theme.images/de/logo_recensio.png"
-       tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/${language}/logo_recensio.png"
+  <img id="philrom_logo"
+       src="++theme++philrom.theme/++theme++philrom.theme/images/merlin-it.png"
+       tal:attributes="src string:${portal_url}/++theme++philrom.theme/++theme++philrom.theme/images/merlin-${language}.png"
        title="Recensio.net"
        alt="Recensio.net Logo"/>
 
