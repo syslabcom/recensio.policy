@@ -18,8 +18,6 @@ class RecensioSettingsEditForm(controlpanel.RegistryEditForm):
 
     def update(self):
         super(RecensioSettingsEditForm, self).update()
-        self.widgets['available_content_languages'].rows = 15
-        self.widgets['available_content_languages'].cols = 5
 
 
 class RecensioSettingsControlPanel(controlpanel.ControlPanelFormWrapper):

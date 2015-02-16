@@ -118,7 +118,19 @@ vocabularies = {
          u'normen_und_standards':u'Normen und Standards',
          u'anleitungen_handbuecher_lehrmaterial':u'Anleitungen, Handbücher, Lehrmaterial',
          u'sonstige_nachschlagewerke':u'Sonstige Nachschlagewerke',
-         }
+         },
+    'available_content_languages': {
+        u'italian': u'Italian',
+        u'french': u'French',
+        u'occitan': u'Occitan',
+        u'catalan': u'Catalan',
+        u'spanish': u'Spanish',
+        u'galician-portuguese': u'Galician-Portuguese',
+        u'romanian': u'Romanian',
+        u'other_romance_languages': u'Other Romance languages (Sicilian, Sardinian, Corsican, Ladin, etc.)',
+        u'medieval_latin': u'Medieval Latin',
+        u'non_romance_languages': u'Non-Romance languages',
+        },
     }
 
 
@@ -154,10 +166,3 @@ languages = [u'sq',
              u'sv',
              u'tr',
              u'uk']
-
-interface_languages = [
-        u'de',
-        u'fr',
-        u'en',
-        ]
-

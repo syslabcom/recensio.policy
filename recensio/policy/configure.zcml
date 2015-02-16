@@ -57,6 +57,16 @@
    handler=".upgrades.v9to10"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="3"
+   source="10"
+   destination="11"
+   title="Upgrade to 11"
+   description="Create the new available_content_languages vocabulary"
+   profile='recensio.policy:default'
+   handler=".upgrades.v10to11"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
@@ -68,11 +78,6 @@
     <utility
         component=".vocabularies.AvailableUserLanguagesFactory"
         name="recensio.policy.vocabularies.available_user_languages"
-        />
-
-    <utility
-        component=".vocabularies.AvailableContentLanguagesFactory"
-        name="recensio.policy.vocabularies.available_content_languages"
         />
 
 </configure>
