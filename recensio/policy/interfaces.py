@@ -169,17 +169,6 @@ class IRecensioSettings(Interface):
         default=u'',
         )
 
-    available_content_languages = schema.Text(
-        title=_(u'label_available_content_languages', default=u'Available '
-            u'languages for content in the site.'),
-        description=_(u'description_available_content_languages',
-             default=u'Enter one language (2 letter code) per line. These '
-             u'languages will be used for the fields "Language of '
-             u'Presentation" and "Language of reviewed text".'),
-        required=False,
-        default=u'',
-        )
-
 
 class IRecensioView(Interface):
 

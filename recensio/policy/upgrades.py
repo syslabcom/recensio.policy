@@ -1,7 +1,9 @@
 from plone.app.controlpanel.skins import ISkinsSchema
+from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.eventhandlers import review_pdf_updated_eventhandler
 from recensio.contenttypes.interfaces.review import IReview
+from recensio.policy import constants
 from transaction import commit
 import pkg_resources
 from logging import getLogger
@@ -173,3 +175,14 @@ def v9to10(portal_setup):
 
     for doc in list(set(changed_docs)):
         doc.reindexObject()
+
+
+def v10to11(portal_setup):
+    langtool = getToolByName(portal_setup, 'portal_languages')
+    default_lang = langtool.getDefaultLanguage()
+
+    pvm = getToolByName(portal_setup, 'portal_vocabularies')
+    for vocab_name, vocabulary in constants.vocabularies.items():
+        if not hasattr(pvm, vocab_name):
+            createSimpleVocabs(pvm, {vocab_name: vocabulary.items()})
+            pvm.get(vocab_name).setLanguage(default_lang)
