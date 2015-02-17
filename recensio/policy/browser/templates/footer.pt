@@ -17,17 +17,33 @@
     <div class="column_footer">
 
       <div>
+      <table width="100%" border="0"><tr><td align="center"><strong>Merlin</strong> is a joint project of the following institutions:</td></tr></table><br>
+<table width="100%" border="0">
+  <tr>
+    <td><img src="++theme++philrom.theme/images/siena.png"></td><td align="center"><a href="http://www.unisi.it/dipartimenti/dipartimento-filologia-e-critica-delle-letterature-antiche-e-moderne" target="_blank">Universit&agrave; degli Studi di Siena<br>Dip. di Filologia e Critica<br>delle Letterature Antiche e Moderne</a></td>
+    <td><img src="++theme++philrom.theme/images/venezia.png"></td><td align="center"><a href="http://www.unive.it/nqcontent.cfm?a_id=127252" target="_blank">Universit&agrave; Ca' Foscari Venezia<br>Dip. di Studi Umanistici</a></td>
+    <td><img src="++theme++philrom.theme/images/napoli.png"></td><td align="center"><a href="http://www.unior.it/ateneo/6782/1/dipartimento-di-studi-letterari-linguistici-e-comparati.html" target="_blank">Universit&agrave; degli Studi di Napoli "L'Orientale"<br>Dip. di Studi Letterari, Linguistici e Comparati</a></td>
+  </tr>
+</table>
+<br>
+<table width="100%" border="0">
+ <tr>
+    <td align="center">In collaboration with:<br><a href="http://www.fefonlus.it/" target="_blank"><img src="++theme++philrom.theme/images/fef.png"></a></td>
+    <td align="center" colspan="2">Funded by:<br><a href="http://cercauniversita.cineca.it/php5/prin/cerca.php?codice=2010FTHLZN" target="_blank"><img src="++theme++philrom.theme/images/miur.png"></a></td>
+  </tr>
+</table>
+<br>
       </div>
 
-      <div id="notes">
+     <!-- <div id="notes">
         <a href="#"
            tal:define="lang_suffix python:language != 'de' and '-'+language or ''"
            tal:attributes="href string:${portal_url}/impressum${lang_suffix}">Impressum</a>
       </div>
-
+-->
     </div>
   </div>
-
+<!--
   <img id="recensio_logo"
        src="++resource++recensio.theme.images/de/logo_recensio.png"
        tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/${language}/logo_recensio.png"
@@ -52,5 +68,5 @@
         id="page_image"
         tal:attributes="src alt_img_path">
 
-</object>
+</object> -->
 </div>
