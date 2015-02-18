@@ -115,6 +115,8 @@ class TestExporter(unittest.TestCase):
         self.assertIn('recensio_newspapera_summer_issue-2.xml',
                       [f.filename for f in export_zip.filelist])
         xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
+        xmltree = etree.parse(StringIO(xml_data))
+        self.assertValid(xmltree, 'recensio_frompublisher_2013-11-22.xsd')
         self.assertIn('<issue_recensio_package', xml_data)
         self.assertIn('<title>' + self.review_a.Title() + '</title>', xml_data)
         self.assertIn('<rm id="' + self.review_a.UID() + '">', xml_data)
