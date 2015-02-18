@@ -87,18 +87,21 @@
 	for="recensio.contenttypes.interfaces.issue.IIssue"
     name="xml"
     class=".xml.XMLRepresentationIssue"
+    template="templates/export_container.pt"
     permission="zope.Public"
     />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
     name="xml"
-    class=".xml.XMLRepresentationRM"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rm.pt"
     permission="zope.Public"
     />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
     name="xml"
-    class=".xml.XMLRepresentationRJ"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rj.pt"
     permission="zope.Public"
     />
 
@@ -106,13 +109,15 @@
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
     name="xml-dara"
-    class=".xml.XMLRepresentationRMDara"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rm_dara.pt"
     permission="zope.Public"
     />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
     name="xml-dara"
-    class=".xml.XMLRepresentationRJDara"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rj_dara.pt"
     permission="zope.Public"
     />
 
