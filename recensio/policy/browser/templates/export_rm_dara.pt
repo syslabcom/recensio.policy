@@ -13,7 +13,7 @@
     </titles>
     <creators>
         <creator>
-            <person tal:repeat="author context/getAuthors">
+            <person tal:repeat="author context/getReviewAuthors">
                 <firstName tal:content="author/firstname">Hans</firstName>
                 <lastName tal:content="author/lastname">Testperson</lastName>
             </person>
@@ -25,7 +25,7 @@
     <publicationDate>
         <year tal:content="context/getYearOfPublication">1970</year>
     </publicationDate>
-    <glPlace tal:content="context/getPlaceOfPublication">>Bochum</glPlace>
+    <glPlace tal:content="context/getPlaceOfPublication">Bochum</glPlace>
     <availability>
         <availabilityControlled>1</availabilityControlled>
     </availability>
@@ -38,4 +38,35 @@
             </rightsText>
         </right>
     </rights>
+    <publications>
+        <publication>
+            <structuredPublication>
+                <doctype>4</doctype>
+                <authorsEditors>
+                    <authorEditor tal:repeat="author context/getAuthors">
+                        <author>
+                            <firstName tal:content="author/firstname">Hans</firstName>
+                            <lastName tal:content="author/lastname">Testautor</lastName>
+                        </author>
+                    </authorEditor>
+                    <authorEditor tal:repeat="editor context/getEditorial">
+                        <editor>
+                            <name>
+                                <tal:lastName tal:replace="editor/lastname">Testautor</tal:lastName>,
+                                <tal:firstName tal:replace="editor/firstname">Hans</tal:firstName>
+                            </name>
+                        </editor>
+                    </authorEditor>
+                </authorsEditors>
+                <title tal:content="context/Title">Titel der Monographie</title>
+                <year tal:content="context/getYearOfPublication">1970</year>
+                <publisher tal:content="context/getPublisher"></publisher>
+                <places tal:content="context/getPlaceOfPublication"></places>
+                <anthology tal:condition="context/getSeries" tal:content="context/getSeries"></anthology>
+                <volume tal:condition="context/getSeriesVol" tal:content="context/getSeriesVol"></volume>
+                <pages tal:content="context/getPages"></pages>
+                <isbn tal:content="context/getIsbn"></isbn>
+            </structuredPublication>
+        </publication>
+    </publications>
 </resource>

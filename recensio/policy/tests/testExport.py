@@ -89,10 +89,10 @@ class TestExporter(unittest.TestCase):
             u'Rezension über ' + self.review_a.Title(),
             xmltree.xpath('/resource/titles/title/titleName/text()'))
         self.assertIn(
-            self.review_a.getAuthors()[0]['firstname'],
+            self.review_a.getReviewAuthors()[0]['firstname'],
             xmltree.xpath('/resource/creators/creator/person/firstName/text()'))
         self.assertIn(
-            self.review_a.getAuthors()[0]['lastname'],
+            self.review_a.getReviewAuthors()[0]['lastname'],
             xmltree.xpath('/resource/creators/creator/person/lastName/text()'))
         self.assertIn(
             self.review_a.absolute_url(),
