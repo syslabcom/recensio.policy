@@ -109,6 +109,13 @@
     class=".xml.XMLRepresentationRMDara"
     permission="zope.Public"
     />
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+    name="xml-dara"
+    class=".xml.XMLRepresentationRJDara"
+    permission="zope.Public"
+    />
+
 
   <browser:page
 	for="Products.CMFPlone.interfaces.IPloneSiteRoot"

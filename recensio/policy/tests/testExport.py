@@ -21,6 +21,7 @@ from zope.component.interfaces import IFactory
 from zope.interface import implements
 
 from recensio.contenttypes.setuphandlers import add_number_of_each_review_type
+from recensio.contenttypes.content.reviewjournal import ReviewJournal
 from recensio.contenttypes.content.reviewmonograph import ReviewMonograph
 from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
 from recensio.policy.export import BVIDExporter
@@ -54,7 +55,7 @@ class TestExporter(unittest.TestCase):
 
         login(self.layer['app'], SITE_OWNER_NAME)
         add_number_of_each_review_type(
-            self.portal, 1, rez_classes=[ReviewMonograph])
+            self.portal, 1, rez_classes=[ReviewMonograph, ReviewJournal])
 
         summer_a = self.portal['sample-reviews']['newspapera']['summer']
         issue_2_a = summer_a['issue-2']
@@ -64,6 +65,9 @@ class TestExporter(unittest.TestCase):
         self.review_a.setEffectiveDate(
             DateTime('2011/07/08 17:38:31.502979 GMT+2'))
         self.review_b = issue_2_b.objectValues()[0]
+        self.review_a2 = issue_2_a.objectValues()[1]
+        self.review_a2.setEffectiveDate(
+            DateTime('2013/03/09 11:42:52.827401 GMT+2'))
 
         login(self.portal, TEST_USER_NAME)
 
@@ -76,34 +80,36 @@ class TestExporter(unittest.TestCase):
         xmlschema.assertValid(xml)
 
     def test_dara_exporter(self):
+        reviews = [self.review_a, self.review_a2]
         exporter = DaraExporter()
-        exporter.add_review(self.review_a)
-        self.assertEqual(len(exporter.reviews_xml), 1)
-        xml = exporter.reviews_xml[0]
-        xmltree = etree.parse(StringIO(xml.encode('utf8')))
+        for review in reviews:
+            exporter.add_review(review)
+        self.assertEqual(len(exporter.reviews_xml), len(reviews))
+        for obj, xml in zip(reviews, exporter.reviews_xml):
+            xmltree = etree.parse(StringIO(xml.encode('utf8')))
 
-        self.assertValid(xmltree, 'dara_v3.1_de_en_18112014.xsd')
-        self.assertIn(
-            self.review_a.UID(),
-            xmltree.xpath('/resource/resourceIdentifier/identifier/text()'))
-        self.assertEqual(
-            len(xmltree.xpath('/resource/titles/title')),
-            1)
-        self.assertIn(
-            u'Rezension über ' + self.review_a.Title(),
-            xmltree.xpath('/resource/titles/title/titleName/text()'))
-        self.assertIn(
-            self.review_a.getReviewAuthors()[0]['firstname'],
-            xmltree.xpath('/resource/creators/creator/person/firstName/text()'))
-        self.assertIn(
-            self.review_a.getReviewAuthors()[0]['lastname'],
-            xmltree.xpath('/resource/creators/creator/person/lastName/text()'))
-        self.assertIn(
-            self.review_a.absolute_url(),
-            xmltree.xpath('/resource/dataURLs/dataURL/text()'))
-        self.assertIn(
-            'CC-BY',
-            '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
+            self.assertValid(xmltree, 'dara_v3.1_de_en_18112014.xsd')
+            self.assertIn(
+                obj.UID(),
+                xmltree.xpath('/resource/resourceIdentifier/identifier/text()'))
+            self.assertEqual(
+                len(xmltree.xpath('/resource/titles/title')),
+                1)
+            self.assertIn(
+                u'Rezension über ' + obj.Title(),
+                xmltree.xpath('/resource/titles/title/titleName/text()'))
+            self.assertIn(
+                obj.getReviewAuthors()[0]['firstname'],
+                xmltree.xpath('/resource/creators/creator/person/firstName/text()'))
+            self.assertIn(
+                obj.getReviewAuthors()[0]['lastname'],
+                xmltree.xpath('/resource/creators/creator/person/lastName/text()'))
+            self.assertIn(
+                obj.absolute_url(),
+                xmltree.xpath('/resource/dataURLs/dataURL/text()'))
+            self.assertIn(
+                'CC-BY',
+                '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
         status = exporter.export()
 
     def test_chronicon_exporter_one_issue(self):

@@ -94,6 +94,10 @@ class XMLRepresentationRMDara(XMLRepresentationRM):
     template = ViewPageTemplateFile('templates/export_rm_dara.pt')
 
 
+class XMLRepresentationRJDara(XMLRepresentationRJ):
+    template = ViewPageTemplateFile('templates/export_rj_dara.pt')
+
+
 class XMLRepresentationContainer(XMLRepresentation):
 
     def __call__(self):
