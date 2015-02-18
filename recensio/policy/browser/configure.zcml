@@ -102,6 +102,14 @@
     permission="zope.Public"
     />
 
+  <!-- XML Representations, dara versions  -->
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+    name="xml-dara"
+    class=".xml.XMLRepresentationRMDara"
+    permission="zope.Public"
+    />
+
   <browser:page
 	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     name="metadata-export"

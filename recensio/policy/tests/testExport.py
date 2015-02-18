@@ -1,5 +1,9 @@
+# -*- coding: utf-8 -*-
+import os
 import unittest2 as unittest
+from StringIO import StringIO
 from collective.solr.interfaces import ISolrConnectionConfig
+from lxml import etree
 from mock import Mock
 from plone import api
 from plone.app.testing.helpers import login
@@ -20,11 +24,11 @@ from recensio.contenttypes.content.reviewmonograph import ReviewMonograph
 from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
 from recensio.policy.export import BVIDExporter
 from recensio.policy.export import ChroniconExporter
+from recensio.policy.export import DaraExporter
 from recensio.policy.export import MissingBVIDExporter
 from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
-from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.policy.tests.layer import RECENSIO_BARE_INTEGRATION_TESTING
 
 
@@ -58,6 +62,45 @@ class TestExporter(unittest.TestCase):
         issue_2_b = summer_b['issue-2']
         self.review_a = issue_2_a.objectValues()[0]
         self.review_b = issue_2_b.objectValues()[0]
+
+    def assertValid(self, xml, schema_name):
+        schemafile = open(os.path.join(
+            os.path.dirname(__file__),
+            schema_name))
+        xmlschema = etree.XMLSchema(etree.parse(schemafile))
+        schemafile.close()
+        xmlschema.assertValid(xml)
+
+    def test_dara_exporter(self):
+        exporter = DaraExporter()
+        exporter.add_review(self.review_a)
+        self.assertEqual(len(exporter.reviews_xml), 1)
+        xml = exporter.reviews_xml[0]
+        xmltree = etree.parse(StringIO(xml.encode('utf8')))
+
+        self.assertValid(xmltree, 'dara_v3.1_de_en_18112014.xsd')
+        self.assertIn(
+            self.review_a.UID(),
+            xmltree.xpath('/resource/resourceIdentifier/identifier/text()'))
+        self.assertEqual(
+            len(xmltree.xpath('/resource/titles/title')),
+            1)
+        self.assertIn(
+            u'Rezension über ' + self.review_a.Title(),
+            xmltree.xpath('/resource/titles/title/titleName/text()'))
+        self.assertIn(
+            self.review_a.getAuthors()[0]['firstname'],
+            xmltree.xpath('/resource/creators/creator/person/firstName/text()'))
+        self.assertIn(
+            self.review_a.getAuthors()[0]['lastname'],
+            xmltree.xpath('/resource/creators/creator/person/lastName/text()'))
+        self.assertIn(
+            self.review_a.absolute_url(),
+            xmltree.xpath('/resource/dataURLs/dataURL/text()'))
+        self.assertIn(
+            'CC-BY',
+            '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
+        status = exporter.export()
 
     def test_chronicon_exporter_one_issue(self):
         exporter = ChroniconExporter()

@@ -255,6 +255,17 @@ class MissingBVIDExporter(BVIDExporter):
             self.items.append((review.Title(), review.absolute_url()))
 
 
+class DaraExporter(BaseExporter):
+
+    def __init__(self):
+        self.reviews_xml = []
+
+    def add_review(self, review):
+        self.reviews_xml.append(review.restrictedTraverse('@@xml-dara')())
+
+    def export(self):
+        pass
+
 BVIDExporterFactory = Factory(
     BVIDExporter, IFactory, 'exporter')
 MissingBVIDExporterFactory = Factory(
