@@ -117,9 +117,15 @@ class TestExporter(unittest.TestCase):
         xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
         xmltree = etree.parse(StringIO(xml_data))
         self.assertValid(xmltree, 'recensio_frompublisher_2013-11-22.xsd')
-        self.assertIn('<issue_recensio_package', xml_data)
-        self.assertIn('<title>' + self.review_a.Title() + '</title>', xml_data)
-        self.assertIn('<rm id="' + self.review_a.UID() + '">', xml_data)
+        self.assertEqual(
+            len(xmltree.xpath('/issue_recensio_package')),
+            1)
+        self.assertIn(
+            self.review_a.Title(),
+            xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
+        self.assertIn(
+            self.review_a.UID(),
+            xmltree.xpath('/issue_recensio_package/rm/@id'))
         #TODO: assert full text not contained
 
     def test_chronicon_exporter_two_issues(self):
