@@ -23,9 +23,8 @@
         <dataURL tal:content="context/absolute_url">http://www.recensio.net/</dataURL>
     </dataURLs>
     <publicationDate>
-        <year tal:content="context/getYearOfPublication">1970</year>
+        <date tal:content="python:context.getEffectiveDate().strftime('%Y-%m-%d')">1970</date>
     </publicationDate>
-    <glPlace tal:content="context/getPlaceOfPublication">Bochum</glPlace>
     <availability>
         <availabilityControlled>1</availabilityControlled>
     </availability>
@@ -38,6 +37,12 @@
             </rightsText>
         </right>
     </rights>
+    <freeKeywords tal:condition="context/Subject">
+        <freeKeyword>
+            <language>de</language>
+            <keywords tal:repeat="subject context/Subject" tal:content="subject">Aufsatzsammlung</keywords>
+        </freeKeyword>
+    </freeKeywords>
     <publications>
         <publication>
             <structuredPublication>

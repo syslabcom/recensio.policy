@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import unittest2 as unittest
+from DateTime import DateTime
 from StringIO import StringIO
 from collective.solr.interfaces import ISolrConnectionConfig
 from lxml import etree
@@ -54,14 +55,17 @@ class TestExporter(unittest.TestCase):
         login(self.layer['app'], SITE_OWNER_NAME)
         add_number_of_each_review_type(
             self.portal, 1, rez_classes=[ReviewMonograph])
-        login(self.portal, TEST_USER_NAME)
 
         summer_a = self.portal['sample-reviews']['newspapera']['summer']
         issue_2_a = summer_a['issue-2']
         summer_b = self.portal['sample-reviews']['newspaperb']['summer']
         issue_2_b = summer_b['issue-2']
         self.review_a = issue_2_a.objectValues()[0]
+        self.review_a.setEffectiveDate(
+            DateTime('2011/07/08 17:38:31.502979 GMT+2'))
         self.review_b = issue_2_b.objectValues()[0]
+
+        login(self.portal, TEST_USER_NAME)
 
     def assertValid(self, xml, schema_name):
         schemafile = open(os.path.join(
