@@ -6,16 +6,19 @@ from StringIO import StringIO
 from collective.solr.interfaces import ISolrConnectionConfig
 from lxml import etree
 from mock import Mock
+from mock import patch
 from plone import api
 from plone.app.testing.helpers import login
 from plone.app.testing.interfaces import SITE_OWNER_NAME
 from plone.app.testing.interfaces import TEST_USER_NAME
+from plone.registry.interfaces import IRegistry
 from zipfile import ZipFile
 from recensio.policy.interfaces import IRecensioExporter
 from time import time
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
 from zope.component import getGlobalSiteManager
+from zope.component import queryUtility
 from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import implements
@@ -30,6 +33,8 @@ from recensio.policy.export import DaraExporter
 from recensio.policy.export import MissingBVIDExporter
 from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
+from recensio.policy.export import register_doi
+from recensio.policy.interfaces import IRecensioSettings
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
 from recensio.policy.tests.layer import RECENSIO_BARE_INTEGRATION_TESTING
 
@@ -79,13 +84,10 @@ class TestExporter(unittest.TestCase):
         schemafile.close()
         xmlschema.assertValid(xml)
 
-    def test_dara_exporter(self):
+    def test_dara_xml(self):
         reviews = [self.review_a, self.review_a2]
-        exporter = DaraExporter()
-        for review in reviews:
-            exporter.add_review(review)
-        self.assertEqual(len(exporter.reviews_xml), len(reviews))
-        for obj, xml in zip(reviews, exporter.reviews_xml):
+        for obj in reviews:
+            xml = obj.restrictedTraverse('@@xml-dara')()
             xmltree = etree.parse(StringIO(xml.encode('utf8')))
 
             self.assertValid(xmltree, 'dara_v3.1_de_en_18112014.xsd')
@@ -110,7 +112,37 @@ class TestExporter(unittest.TestCase):
             self.assertIn(
                 'CC-BY',
                 '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
+
+    @patch('recensio.policy.export.urlopen')
+    def test_register_doi(self, urlopen):
+        registry = queryUtility(IRegistry)
+        settings = registry.forInterface(IRecensioSettings)
+        settings.doi_registration_username = u'user'
+        settings.doi_registration_password = u'secret'
+
+        register_doi(self.review_a)
+
+        self.assertTrue(urlopen.called)
+        request = urlopen.call_args[0][0]
+        self.assertEqual(
+            request.get_full_url(),
+            u'http://www.da-ra.de/dara/study/importXML?registration=true')
+        self.assertEqual(
+            request.get_data(),
+            self.review_a.restrictedTraverse('@@xml-dara')().encode('utf-8'))
+        self.assertEqual(
+            request.headers,
+            {'Content-type': 'application/xml;charset=UTF-8',
+             'Authorization': 'Basic dXNlcjpzZWNyZXQ='})
+
+    def test_dara_exporter(self):
+        reviews = [self.review_a, self.review_a2]
+        exporter = DaraExporter()
+        for review in reviews:
+            exporter.add_review(review)
+        self.assertEqual(len(exporter.reviews_xml), len(reviews))
         status = exporter.export()
+        #TODO: What should actually happen with the exported XML?
 
     def test_chronicon_exporter_one_issue(self):
         exporter = ChroniconExporter()

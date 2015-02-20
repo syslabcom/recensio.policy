@@ -210,6 +210,35 @@ class IRecensioSettings(Interface):
         default=u'',
     )
 
+    doi_registration_url = schema.TextLine(
+        title=_(u'label_doi_registration_url',
+                default=u'URL for DOI registration'),
+        description=_(u'description_doi_registration_url',
+                      default=u'Endpoint URL for registration of DOIs'),
+        required=False,
+        default=u'http://www.da-ra.de/dara/study/importXML?registration=true',
+    )
+
+    doi_registration_username = schema.TextLine(
+        title=_(u'label_doi_registration_username',
+                default=u'User name for DOI registration'),
+        description=_(u'description_doi_registration_username',
+                      default=u'User name to use as login for registration of '
+                      'DOIs'),
+        required=False,
+        default=u'',
+    )
+
+    doi_registration_password = schema.TextLine(
+        title=_(u'label_doi_registration_password',
+                default=u'Password for DOI registration'),
+        description=_(u'description_doi_registration_password',
+                      default=u'Password that belongs to the above user name '
+                      'for registration of DOIs'),
+        required=False,
+        default=u'',
+    )
+
 
 class IRecensioView(Interface):
 

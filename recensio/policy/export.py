@@ -3,13 +3,18 @@ import tempfile
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from StringIO import StringIO
+from base64 import b64encode
 from datetime import datetime
 from datetime import timedelta
 from io import FileIO
 from os import path
 from os import remove
 from os import stat
+from plone.registry.interfaces import IRegistry
+from urllib2 import Request
+from urllib2 import urlopen
 from zipfile import ZipFile
+from zope.component import queryUtility
 from zope.component.factory import Factory
 from zope.component.hooks import getSite
 from zope.component.interfaces import IFactory
@@ -18,6 +23,7 @@ from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 
 from recensio.contenttypes.interfaces.review import IParentGetter
 from recensio.policy.interfaces import IRecensioExporter
+from recensio.policy.interfaces import IRecensioSettings
 
 
 class StatusSuccess(object):
@@ -272,3 +278,18 @@ MissingBVIDExporterFactory = Factory(
     MissingBVIDExporter, IFactory, 'exporter')
 ChroniconExporterFactory = Factory(
     ChroniconExporter, IFactory, 'exporter')
+
+
+def register_doi(obj):
+    registry = queryUtility(IRegistry)
+    settings = registry.forInterface(IRecensioSettings)
+    username = settings.doi_registration_username
+    password = settings.doi_registration_password
+    auth = b64encode('{0}:{1}'.format(username, password))
+    url = settings.doi_registration_url
+
+    xml = obj.restrictedTraverse('@@xml-dara')().encode('utf-8')
+    headers = {
+        'Content-type': 'application/xml;charset=UTF-8',
+        'Authorization': 'Basic ' + auth}
+    urlopen(Request(url, xml, headers))
