@@ -113,6 +113,34 @@ class TestExporter(unittest.TestCase):
                 'CC-BY',
                 '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
 
+    def test_chronicon_xml_rm(self):
+        xml = self.review_a.restrictedTraverse('@@xml')()
+        xmltree = etree.parse(StringIO(xml))
+        self.assertEqual(
+            len(xmltree.xpath('/rm')),
+            1)
+        self.assertIn(
+            self.review_a.Title(),
+            xmltree.xpath('/rm/book/title/text()'))
+        self.assertIn(
+            self.review_a.UID(),
+            xmltree.xpath('/rm/@id'))
+        #TODO: assert full text not contained
+
+    def test_chronicon_xml_rj(self):
+        xml = self.review_a2.restrictedTraverse('@@xml')()
+        xmltree = etree.parse(StringIO(xml))
+        self.assertEqual(
+            len(xmltree.xpath('/rj')),
+            1)
+        self.assertIn(
+            self.review_a2.Title(),
+            xmltree.xpath('/rj/journal/reviewed_journal_title/text()'))
+        self.assertIn(
+            self.review_a2.UID(),
+            xmltree.xpath('/rj/@id'))
+        #TODO: assert full text not contained
+
     @patch('recensio.policy.export.urlopen')
     def test_register_doi(self, urlopen):
         registry = queryUtility(IRegistry)
@@ -158,6 +186,7 @@ class TestExporter(unittest.TestCase):
                       [f.filename for f in export_zip.filelist])
         xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
         xmltree = etree.parse(StringIO(xml_data))
+
         self.assertValid(xmltree, 'recensio_frompublisher_2013-11-22.xsd')
         self.assertEqual(
             len(xmltree.xpath('/issue_recensio_package')),
@@ -168,7 +197,6 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             self.review_a.UID(),
             xmltree.xpath('/issue_recensio_package/rm/@id'))
-        #TODO: assert full text not contained
 
     def test_chronicon_exporter_two_issues(self):
         exporter = ChroniconExporter()
@@ -180,20 +208,31 @@ class TestExporter(unittest.TestCase):
         export_file = self.portal[filename]
         fp = export_file.getFile().getBlob().open()
         export_zip = ZipFile(fp)
+        files_in_zip = [f.filename for f in export_zip.filelist]
 
-        self.assertIn('recensio_newspapera_summer_issue-2.xml',
-                      [f.filename for f in export_zip.filelist])
-        self.assertIn('recensio_newspaperb_summer_issue-2.xml',
-                      [f.filename for f in export_zip.filelist])
+        for issue_filename, contained_review, foreign_review in [
+            ('recensio_newspapera_summer_issue-2.xml',
+             self.review_a,
+             self.review_b),
+            ('recensio_newspaperb_summer_issue-2.xml',
+             self.review_b,
+             self.review_a),
+        ]:
+            self.assertIn(issue_filename, files_in_zip)
 
-        xml_data = export_zip.read('recensio_newspaperb_summer_issue-2.xml')
-        self.assertIn('<issue_recensio_package', xml_data)
-        self.assertIn('<title>' + self.review_b.Title() + '</title>', xml_data)
-        self.assertNotIn('<title>' + self.review_a.Title() + '</title>', xml_data)
+            xml_data = export_zip.read(issue_filename)
+            xmltree = etree.parse(StringIO(xml_data))
 
-        xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
-        self.assertIn('<title>' + self.review_a.Title() + '</title>', xml_data)
-        self.assertNotIn('<title>' + self.review_b.Title() + '</title>', xml_data)
+            self.assertValid(xmltree, 'recensio_frompublisher_2013-11-22.xsd')
+            self.assertIn(
+                contained_review.Title(),
+                xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
+            self.assertNotIn(
+                foreign_review.Title(),
+                xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
+            self.assertIn(
+                contained_review.UID(),
+                xmltree.xpath('/issue_recensio_package/rm/@id'))
 
     def test_bvid_exporter(self):
         self.review_b.setBv('12345')
