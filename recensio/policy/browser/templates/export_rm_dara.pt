@@ -22,6 +22,7 @@
     <dataURLs>
         <dataURL tal:content="context/absolute_url">http://www.recensio.net/</dataURL>
     </dataURLs>
+    <doiProposal tal:content="context/getDoi">10.15463/rec.1517192636</doiProposal>
     <publicationDate>
         <date tal:content="python:context.getEffectiveDate().strftime('%Y-%m-%d')">1970</date>
     </publicationDate>

@@ -98,6 +98,9 @@ class TestExporter(unittest.TestCase):
                 len(xmltree.xpath('/resource/titles/title')),
                 1)
             self.assertIn(
+                obj.getDoi(),
+                xmltree.xpath('/resource/doiProposal/text()'))
+            self.assertIn(
                 u'Rezension über ' + obj.Title(),
                 xmltree.xpath('/resource/titles/title/titleName/text()'))
             self.assertIn(
