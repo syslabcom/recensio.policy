@@ -182,30 +182,30 @@ class IRecensioSettings(Interface):
 
     xml_export_server = schema.TextLine(
         title=_(u'label_xml_export_server',
-                default=u'Server name for XML export'),
+                default=u'Server name for Chronicon export'),
         description=_(u'description_xml_export_server',
                       default=u'Enter the server name that should be used for '
-                      'exporting XML metadata over SFTP.'),
+                      'exporting XML metadata to Chronicon over SFTP.'),
         required=False,
         default=u'',
     )
 
     xml_export_username = schema.TextLine(
         title=_(u'label_xml_export_username',
-                default=u'User name for XML export'),
+                default=u'User name for Chronicon export'),
         description=_(u'description_xml_export_username',
                       default=u'Enter the user name that should be used for '
-                      'exporting XML metadata over SFTP.'),
+                      'exporting XML metadata to Chronicon over SFTP.'),
         required=False,
         default=u'',
     )
 
     xml_export_password = schema.TextLine(
         title=_(u'label_xml_export_password',
-                default=u'Password for XML export'),
+                default=u'Password for Chronicon export'),
         description=_(u'description_xml_export_password',
                       default=u'Enter the password that belongs to the above '
-                      'user name.'),
+                      'SFTP user name.'),
         required=False,
         default=u'',
     )
