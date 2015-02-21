@@ -72,7 +72,7 @@
    source="11"
    destination="12"
    title="Upgrade to 12"
-   description="Reload plone.app.registry to create xml_export_* and doi_registration_* records"
+   description="Reload plone.app.registry to create xml_export_* and doi_* records"
    profile='recensio.policy:default'
    handler=".upgrades.v11to12"
    />
