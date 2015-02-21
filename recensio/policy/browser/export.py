@@ -1,11 +1,14 @@
 from Products.Five.browser import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
 from datetime import date
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from plone.registry.interfaces import IRegistry
+from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
+from urllib2 import HTTPError
 from time import time
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
@@ -129,3 +132,35 @@ class ChroniconExport(BrowserView):
                 attribs.st_size, zipstream.get_size())
             log.error(msg)
             return msg
+
+
+class DaraUpdate(BrowserView):
+    """Send metadata to da|ra, in effect registering the object's DOI or
+    updating its metadata if already registered."""
+
+    def __call__(self):
+        if self.request.get('REQUEST_METHOD') == 'POST':
+            try:
+                status = register_doi(self.context)
+            except HTTPError as e:
+                if e.code == 401:
+                    message = ('Dara login failed - check DOI registration '
+                               'user name and password')
+                elif e.code == 400:
+                    message = ('Problem with generating XML')
+                elif e.code == 500:
+                    message = ('Dara server error - try again later')
+                else:
+                    message = 'Error: {0}'.format(e)
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='error')
+            else:
+                if status == 201:
+                    message = 'DOI successfully registered'
+                elif status == 200:
+                    message = 'Metadata updated'
+                else:
+                    message = 'Success (status {0})'.format(status)
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='info')
+        self.request.response.redirect(self.context.absolute_url())

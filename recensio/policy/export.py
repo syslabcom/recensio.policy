@@ -292,4 +292,5 @@ def register_doi(obj):
     headers = {
         'Content-type': 'application/xml;charset=UTF-8',
         'Authorization': 'Basic ' + auth}
-    urlopen(Request(url, xml, headers))
+    result = urlopen(Request(url, xml, headers))
+    return result.getcode()
