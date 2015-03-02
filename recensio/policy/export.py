@@ -132,7 +132,7 @@ class ChroniconExporter(BaseExporter):
         filename = self.get_issue_filename()
         xml = pt(**options)
         self.issues_xml[filename] = xml
-        self.reviews = []
+        self.reviews_xml = []
         self.current_issue = None
 
     @property

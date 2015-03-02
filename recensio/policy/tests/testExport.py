@@ -92,12 +92,15 @@ class TestExporter(unittest.TestCase):
                       [f.filename for f in export_zip.filelist])
         self.assertIn('recensio_newspaperb_summer_issue-2.xml',
                       [f.filename for f in export_zip.filelist])
-        xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
+
+        xml_data = export_zip.read('recensio_newspaperb_summer_issue-2.xml')
         self.assertIn('<issue_recensio_package', xml_data)
+        self.assertIn('<title>' + self.review_b.Title() + '</title>', xml_data)
+        self.assertNotIn('<title>' + self.review_a.Title() + '</title>', xml_data)
+
+        xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
         self.assertIn('<title>' + self.review_a.Title() + '</title>', xml_data)
         self.assertNotIn('<title>' + self.review_b.Title() + '</title>', xml_data)
-        xml_data = export_zip.read('recensio_newspaperb_summer_issue-2.xml')
-        self.assertIn('<title>' + self.review_b.Title() + '</title>', xml_data)
 
     def test_bvid_exporter(self):
         self.review_b.setBv('12345')
