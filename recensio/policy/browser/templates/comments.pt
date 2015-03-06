@@ -42,7 +42,7 @@
                     <tal:name>
                         <a href=""
                            tal:condition="has_author_link"
-                           tal:content="reply/Creator"
+                           tal:content="reply/author_name"
                            tal:attributes="href author_home_url">
                             Poster Name
                         </a>
