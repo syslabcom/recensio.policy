@@ -13,7 +13,7 @@
       <langstring language="fr">Europe</langstring>
     </caption>
     <term>
-      <termIdentifier>48</termIdentifier>
+      <termIdentifier>41</termIdentifier>
       <caption>
         <langstring language="de">Nordeuropa</langstring>
         <langstring language="en">Northern Europe</langstring>
@@ -268,7 +268,7 @@
         </caption>
       </term>
       <term>
-        <termIdentifier>44.7</termIdentifier>
+        <termIdentifier>43.11</termIdentifier>
         <caption>
           <langstring language="de">Aserbaidschan</langstring>
           <langstring language="en">Azerbaijan</langstring>
@@ -276,7 +276,7 @@
         </caption>
       </term>
       <term>
-        <termIdentifier>44.8</termIdentifier>
+        <termIdentifier>43.12</termIdentifier>
         <caption>
           <langstring language="de">Georgien</langstring>
           <langstring language="en">Georgia</langstring>
