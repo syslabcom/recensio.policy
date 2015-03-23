@@ -52,12 +52,14 @@ def importVocabularies(self):
     site = self.getSite()
     pvm = getToolByName(site, 'portal_vocabularies')
     for (filenamepart, vocabname) in (('geo.vdex', 'region_values'),\
+                                      ('geo_bsb.vdex', 'region_values_bsb'),\
                                       ('sach.vdex', 'topic_values'),\
                                       ('zeit.vdex', 'epoch_values')):
         if vocabname not in pvm:
             pvm.invokeFactory('VdexFileVocabulary', vocabname)
             pvm[vocabname].importXMLBinding(pkg_resources.resource_string(\
                 __name__, path_tmpl % filenamepart))
+            pvm[vocabname].showLeafsOnly = False
     for vocab_name, vocabulary in constants.vocabularies.items():
         if not hasattr(pvm, vocab_name):
             createSimpleVocabs(pvm, {vocab_name : vocabulary.items()})
