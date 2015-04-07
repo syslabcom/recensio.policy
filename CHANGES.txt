@@ -4,7 +4,9 @@ Changelog
 3.2.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- fixed typo that caused review xml to bleed into other issues, refs #11157
+  [reinhardt]
+- show full name instead of user name in the comments, refs #11156 [reinhardt]
 
 
 3.2.1 (2014-10-07)
