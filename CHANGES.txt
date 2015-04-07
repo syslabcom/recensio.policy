@@ -1,7 +1,7 @@
 Changelog
 =========
 
-3.2.2 (unreleased)
+3.3.0 (2015-04-07)
 ------------------
 
 - fixed typo that caused review xml to bleed into other issues, refs #11157
