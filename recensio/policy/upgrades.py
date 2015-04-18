@@ -179,3 +179,9 @@ def v10to11(portal_setup):
     portal_setup.runImportStepFromProfile(
         'profile-recensio.policy:default',
         'propertiestool')
+
+
+def v11to12(portal_setup):
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'plone.app.registry')

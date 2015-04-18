@@ -10,7 +10,8 @@ from zope.configuration import xmlconfig
 
 from Products.CMFCore.utils import getToolByName
 
-class RecensioPolicy(PloneSandboxLayer):
+
+class RecensioPolicyWithoutContent(PloneSandboxLayer):
 
     defaultBases = (PLONE_FIXTURE,)
 
@@ -30,9 +31,18 @@ class RecensioPolicy(PloneSandboxLayer):
         applyProfile(portal, 'Products.CMFPlone:plone-content')
         applyProfile(portal, 'recensio.policy:default')
         applyProfile(portal, 'recensio.policy:test')
+
+
+class RecensioPolicy(RecensioPolicyWithoutContent):
+
+    def setUpPloneSite(self, portal):
+        super(RecensioPolicy, self).setUpPloneSite(portal)
         applyProfile(portal, 'recensio.contenttypes:example_content')
 
 RECENSIO_FIXTURE = RecensioPolicy()
+RECENSIO_FIXTURE_WITHOUT_CONTENT = RecensioPolicyWithoutContent()
+RECENSIO_BARE_INTEGRATION_TESTING = IntegrationTesting(bases=(RECENSIO_FIXTURE_WITHOUT_CONTENT, ),
+    name="RecensioPolicy:IntegrationWithoutContent")
 RECENSIO_INTEGRATION_TESTING = IntegrationTesting(bases=(RECENSIO_FIXTURE, ),
     name="RecensioPolicy:Integration")
 RECENSIO_FUNCTIONAL_TESTING = FunctionalTesting(bases=(RECENSIO_FIXTURE, ),

@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '3.2.2.dev0'
+version = '3.3.1.dev0'
 
 setup(name='recensio.policy',
       version=version,
@@ -40,6 +40,7 @@ setup(name='recensio.policy',
           'collective.portlet.tal',
           'guess-language',
           'lxml',
+          'paramiko',
           'plone.app.async',
           'plone.app.caching',
           'plone.app.discussion',
@@ -57,7 +58,7 @@ setup(name='recensio.policy',
           'five.intid',  # Bugfix for plone.app.async
       ],
       extras_require={
-      'test': ['plone.app.testing', 'PILwoTk', 'mock', 'ipython']
+      'test': ['plone.api', 'plone.app.testing', 'PILwoTk', 'mock', 'ipython']
       },
       entry_points="""
       # -*- Entry points: -*-

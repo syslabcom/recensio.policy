@@ -1,10 +1,18 @@
 Changelog
 =========
 
-3.2.2 (unreleased)
+3.3.1 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+3.3.0 (2015-04-07)
+------------------
+
+- fixed typo that caused review xml to bleed into other issues, refs #11157
+  [reinhardt]
+- show full name instead of user name in the comments, refs #11156 [reinhardt]
 
 
 3.2.1 (2014-10-07)

@@ -180,6 +180,36 @@ class IRecensioSettings(Interface):
         default=u'',
         )
 
+    xml_export_server = schema.TextLine(
+        title=_(u'label_xml_export_server',
+                default=u'Server name for XML export'),
+        description=_(u'description_xml_export_server',
+                      default=u'Enter the server name that should be used for '
+                      'exporting XML metadata over SFTP.'),
+        required=False,
+        default=u'',
+    )
+
+    xml_export_username = schema.TextLine(
+        title=_(u'label_xml_export_username',
+                default=u'User name for XML export'),
+        description=_(u'description_xml_export_username',
+                      default=u'Enter the user name that should be used for '
+                      'exporting XML metadata over SFTP.'),
+        required=False,
+        default=u'',
+    )
+
+    xml_export_password = schema.TextLine(
+        title=_(u'label_xml_export_password',
+                default=u'Password for XML export'),
+        description=_(u'description_xml_export_password',
+                      default=u'Enter the password that belongs to the above '
+                      'user name.'),
+        required=False,
+        default=u'',
+    )
+
 
 class IRecensioView(Interface):
 
@@ -191,3 +221,18 @@ class IRecensioView(Interface):
 class IDigitoolView(Interface):
     """ Supports exporting XML to digitool """
 
+
+class IRecensioExporter(Interface):
+    """ Interface for bulk exporting review data"""
+
+    def needs_to_run():
+        """ True if the exporter needs to be run at the time of the call,
+            False if the exporter thinks it has nothing to do right now, e.g. a
+            recent export is still stored """
+
+    def add_review():
+        """ Accepts a review that is to be exported in the current run. """
+
+    def export():
+        """ Finishes the current export run. This should store the exported
+        data in a way appropriate for the export. """

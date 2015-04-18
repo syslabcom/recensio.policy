@@ -67,6 +67,16 @@
    handler=".upgrades.v10to11"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="11"
+   destination="12"
+   title="Upgrade to 12"
+   description="Reload plone.app.registry to create xml_export_* records"
+   profile='recensio.policy:default'
+   handler=".upgrades.v11to12"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
@@ -85,4 +95,21 @@
         name="recensio.policy.vocabularies.available_content_languages"
         />
 
+  <utility
+    component=".export.ChroniconExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="chronicon_exporter"
+    />
+
+  <utility
+    component=".export.BVIDExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="bvid_exporter"
+    />
+
+  <utility
+    component=".export.MissingBVIDExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="missing_bvid_exporter"
+    />
 </configure>

@@ -3,19 +3,12 @@ from zope.app.pagetemplate import ViewPageTemplateFile
 from datetime import datetime
 from plone.uuid.interfaces import IUUID
 from os import path
-from Products.CMFCore.utils import getToolByName
-from recensio.contenttypes.interfaces.review import IParentGetter
-from plone.i18n.locales.languages import _languagelist
+import logging
 
 from recensio.policy.constants import \
     EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
 
-AUTHOR_TMPL = """        <author_%(num)s_first_name>%(firstname)s</author_%(num)s_first_name>
-        <author_%(num)s_last_name>%(lastname)s</author_%(num)s_last_name>
-"""
-EDITOR_TMPL = """        <editor_%(num)s_first_name>%(firstname)s</editor_%(num)s_first_name>
-        <editor_%(num)s_last_name>%(lastname)s</editor_%(num)s_last_name>
-"""
+log = logging.getLogger(__name__)
 
 
 class Book(object):
@@ -69,144 +62,6 @@ class DigiToolRepresentation(BrowserView):
 
     def __call__(self):
         return self.template(self)
-
-
-class XMLRepresentation(BrowserView):
-    template = None
-    filename = "recensio_exportx.xml"
-
-    def get_lang_name(self, code):
-        return _languagelist.get(code, {'native': code})['native']
-
-    def get_parent(self, meta_type):
-        return IParentGetter(self.context).get_parent_object_of_type(meta_type)
-
-    def get_voc_title(self, typ, term):
-        voc = getToolByName(self.context, 'portal_vocabularies', None)
-
-        self.vocDict = dict()
-        self.vocDict['ddcPlace'] = voc.getVocabularyByName(
-            'region_values')
-        self.vocDict['ddcTime'] = voc.getVocabularyByName(
-            'epoch_values')
-        self.vocDict['ddcSubject'] = voc.getVocabularyByName(
-            'topic_values')
-
-        term = self.vocDict[typ].getTermByKey(term)
-        if not term:
-            return ''
-        return term
-
-    def list_authors(self):
-        out = ""
-        num = 1
-        for author in self.context.getAuthors():
-            out += AUTHOR_TMPL % dict(
-                num=num,
-                firstname=author['firstname'],
-                lastname=author['lastname'])
-            num += 1
-        return out
-
-    def list_editors(self):
-        out = ""
-        num = 1
-        for editor in self.context.getEditorial():
-            out += EDITOR_TMPL % dict(
-                num=num,
-                firstname=editor['firstname'],
-                lastname=editor['lastname'])
-            num += 1
-        return out
-
-
-class XMLRepresentation_rj(XMLRepresentation):
-    template = ViewPageTemplateFile('templates/export_rj.pt')
-
-    def __call__(self):
-        return self.template(self)
-
-
-class XMLRepresentation_rm(XMLRepresentation):
-    template = ViewPageTemplateFile('templates/export_rm.pt')
-
-    def __call__(self):
-        return self.template(self)
-
-
-class XMLRepresentation_publication(XMLRepresentation):
-    template = ViewPageTemplateFile('templates/export_container.pt')
-
-    def __call__(self):
-        self.request.response.setHeader(
-            'Content-type',
-            'application/xml')
-        self.request.response.setHeader(
-            'Content-disposition',
-            'inline;filename=%s' % self.filename())
-        return self.template(self)
-
-    def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(), "0", "0")
-
-    def reviews(self):
-        pc = self.context.portal_catalog
-        parent_path = dict(query='/'.join(self.context.getPhysicalPath()),
-                           depth=3)
-        results = pc(review_state="published",
-                     portal_type=("Review Monograph", "Review Journal"),
-                     path=parent_path)
-        for item in results:
-            yield item.getObject()
-
-    def get_publication_shortname(self):
-        return unicode(self.get_parent("Publication").getId(), 'utf-8')
-
-    def get_package_journal_pubyear(self):
-        return None
-        #return self.get_parent("Publication")
-
-    def get_package_journal_name(self):
-        return unicode(self.get_parent("Publication").Title(), 'utf-8')
-
-    def get_package_journal_volume(self):
-        return u"Not Available"
-
-    def get_package_journal_issue(self):
-        return None
-
-
-class XMLRepresentation_volume(XMLRepresentation_publication):
-    template = ViewPageTemplateFile('templates/export_container.pt')
-
-    def get_package_journal_pubyear(self):
-        return self.get_parent("Volume").getYearOfPublication() or None
-
-    def get_package_journal_volume(self):
-        return unicode(self.get_parent("Volume").Title(), 'utf-8')
-
-    def get_package_journal_issue(self):
-        return None
-
-    def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(),
-            self.get_package_journal_volume(),
-            "0")
-
-
-class XMLRepresentation_issue(XMLRepresentation_volume):
-    template = ViewPageTemplateFile('templates/export_container.pt')
-
-    def get_package_journal_issue(self):
-        return unicode(self.get_parent("Issue").Title(), 'utf-8')
-
-    def filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(),
-            self.get_package_journal_volume(),
-            self.get_package_journal_issue())
 
 
 class DigiToolExport(BrowserView):
