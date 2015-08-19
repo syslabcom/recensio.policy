@@ -189,7 +189,9 @@ class TestMetadataExport(unittest.TestCase):
         self.assertIn('<issue_recensio_package', xml_data)
         self.assertIn('<title>' + self.review_1.Title() + '</title>', xml_data)
         self.assertIn('<rm id="' + self.review_1.UID() + '">', xml_data)
-        self.assertIn('<bvid>' + self.review_1.getBv() + '</bvid>', xml_data)
+        self.assertIn('<page_first>' + str(self.review_1.getPageStartOfReviewInJournal()) + '</page_first>', xml_data)
+        self.assertIn('<page_last>' + str(self.review_1.getPageEndOfReviewInJournal()) + '</page_last>', xml_data)
+        self.assertIn('<originalurl>' + self.review_1.absolute_url() + '</originalurl>', xml_data)
         #TODO: assert full text not contained
 
         output = self.xml_export()

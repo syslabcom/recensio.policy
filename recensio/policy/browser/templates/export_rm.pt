@@ -25,5 +25,7 @@
 	  <subject_headings tal:content="python:context.Subject() and ', '.join(context.Subject()) or ''">Slowenisch-deutscher Sprachvergleich, Riga / Handel, Tschechisch-deutscher Sprachkontakt, Arnim, Bettina von</subject_headings>
     <filename tal:content="string:http://recensio.net/r/${context/UID}">http://recensio.net/r/8578c6f5e0304309991c1b12abeccc30</filename>
     <streamurl tal:content="string:${context/absolute_url}/@@generate-pdf-recension" >http://www.recensio.net/rezensionen/zeitschriften/jahrbuch-des-bundesinstituts-fur-kultur-und-geschichte-der-deutschen-im-ostlichen-europa/20-2012/ReviewJournal257151436/@@generate-pdf-recension</streamurl>
-    <bvid tal:condition="context/getBv|nothing" tal:content="context/getBv"></bvid>
+    <originalurl tal:content="context/absolute_url">http://www.recensio.net/rezensionen/zeitschriften/francia-recensio/2010-4/mittelalter-moyen-age-500-1500/die-inszenierung-der-vergangenheit-im-mittelalter</originalurl>
+    <page_first tal:condition="context/getPageStartOfReviewInJournal" tal:content="context/getPageStartOfReviewInJournal">2</page_first>
+    <page_last tal:condition="context/getPageEndOfReviewInJournal" tal:content="context/getPageEndOfReviewInJournal">3</page_last>
 </rm>
