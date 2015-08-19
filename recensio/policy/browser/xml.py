@@ -28,8 +28,14 @@ class XMLRepresentation(BrowserView):
     def get_publication_shortname(self):
         return unicode(self.get_parent("Publication").getId(), 'utf-8')
 
+    def get_publication_title(self):
+        return unicode(self.get_parent("Publication").Title(), 'utf-8')
+
     def get_package_journal_volume(self):
         return unicode(self.get_parent("Volume").getId(), 'utf-8')
+
+    def get_package_journal_volume_title(self):
+        return unicode(self.get_parent("Volume").Title(), 'utf-8')
 
     def get_voc_title(self, typ, term):
         voc = getToolByName(self.context, 'portal_vocabularies', None)
@@ -159,6 +165,9 @@ class XMLRepresentationIssue(XMLRepresentation):
 
     def get_package_journal_issue(self):
         return unicode(self.get_parent("Issue").getId(), 'utf-8')
+
+    def get_package_journal_issue_title(self):
+        return unicode(self.get_parent("Issue").Title(), 'utf-8')
 
     @property
     def filename(self):

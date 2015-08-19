@@ -103,14 +103,23 @@ class ChroniconExporter(BaseExporter):
     def get_publication_shortname(self):
         return unicode(self.get_parent("Publication").getId(), 'utf-8')
 
+    def get_publication_title(self):
+        return unicode(self.get_parent("Publication").Title(), 'utf-8')
+
     def get_package_journal_volume(self):
         return unicode(self.get_parent("Volume").getId(), 'utf-8')
+
+    def get_package_journal_volume_title(self):
+        return unicode(self.get_parent("Volume").Title(), 'utf-8')
 
     def get_package_journal_pubyear(self):
         return self.get_parent("Volume").getYearOfPublication() or None
 
     def get_package_journal_issue(self):
         return unicode(self.get_parent("Issue").getId(), 'utf-8')
+
+    def get_package_journal_issue_title(self):
+        return unicode(self.get_parent("Issue").Title(), 'utf-8')
 
     def get_issue_filename(self):
         return "recensio_%s_%s_%s.xml" % (
@@ -122,10 +131,10 @@ class ChroniconExporter(BaseExporter):
         pt = PageTemplateFile(self.template)
         options = {
             'package': {
-                'publication_shortname': self.get_publication_shortname,
-                'package_journal_volume': self.get_package_journal_volume,
+                'publication_title': self.get_publication_title,
+                'package_journal_volume_title': self.get_package_journal_volume_title,
                 'package_journal_pubyear': self.get_package_journal_pubyear,
-                'package_journal_issue': self.get_package_journal_issue,
+                'package_journal_issue_title': self.get_package_journal_issue_title,
             },
             'reviews': self.reviews_xml,
         }
