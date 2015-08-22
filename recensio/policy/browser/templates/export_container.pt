@@ -2,7 +2,7 @@
 <issue_recensio_package 
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
-	package_journal_name="Jahrbuch des Bundesinstituts für Kultur und Geschichte der Deutschen im östlichen Europa" package_journal_volume="20" package_journal_issue="" package_journal_pubyear="2012" xsi:schemaLocation="recensio_frompublisher_2013-07-30.xsd"
+	package_journal_name="Jahrbuch des Bundesinstituts für Kultur und Geschichte der Deutschen im östlichen Europa" package_journal_volume="20" package_journal_issue="" package_journal_pubyear="2012" xsi:schemaLocation="recensio_frompublisher_2015-08-19.xsd"
 	tal:attributes="package_journal_name view/get_publication_title;
 				    package_journal_volume view/get_package_journal_volume_title; 
 					package_journal_issue view/get_package_journal_issue_title; 
