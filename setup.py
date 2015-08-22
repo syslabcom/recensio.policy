@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '3.3.1.dev0'
+version = '3.3.2.dev0'
 
 setup(name='recensio.policy',
       version=version,
@@ -44,6 +44,7 @@ setup(name='recensio.policy',
           'plone.app.async',
           'plone.app.caching',
           'plone.app.discussion',
+          'plone.app.intid',
           'plone.app.iterate',
           'plone.app.uuid',
           'pyoai',

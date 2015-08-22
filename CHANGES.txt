@@ -1,10 +1,17 @@
 Changelog
 =========
 
-3.3.1 (unreleased)
+3.3.2 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+3.3.1 (2015-08-22)
+------------------
+
+- xml export: added originalurl, page_first and page_last; removed bvid; use
+  titles instead of ids in xml, refs #10873 [reinhardt]
 
 
 3.3.0 (2015-04-07)
