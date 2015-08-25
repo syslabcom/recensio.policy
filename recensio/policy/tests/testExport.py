@@ -152,6 +152,7 @@ class TestMetadataExport(unittest.TestCase):
         api.content.transition(obj=issue_2, to_state='published')
         self.review_1 = issue_2.objectValues()[0]
         self.review_1.setBv('12345')
+        self.review_1.setCanonical_uri(u'http://example.com/reviews/review1')
         api.content.transition(obj=self.review_1, to_state='published')
 
         login(self.portal, TEST_USER_NAME)
@@ -159,6 +160,7 @@ class TestMetadataExport(unittest.TestCase):
 
     def tearDown(self):
         self.review_1.setBv('')
+        self.review_1.setCanonical_uri(u'')
         if self.solrcfg:
             self.solrcfg.active = self.old_solrcfg_active
 
