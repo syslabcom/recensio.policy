@@ -41,30 +41,6 @@
           <langstring language="en">Scandinavia</langstring>
           <langstring language="fr">Pays scandinaves</langstring>
         </caption>
-        <term>
-          <termIdentifier>48</termIdentifier>
-          <caption>
-            <langstring language="de">D&#228;nemark</langstring>
-            <langstring language="en">Denmark</langstring>
-            <langstring language="fr"> Danemark</langstring>
-          </caption>
-        </term>
-        <term>
-          <termIdentifier>48</termIdentifier>
-          <caption>
-            <langstring language="de">Norwegen</langstring>
-            <langstring language="en">Norway</langstring>
-            <langstring language="fr"> Norv&#232;ge</langstring>
-          </caption>
-        </term>
-        <term>
-          <termIdentifier>48</termIdentifier>
-          <caption>
-            <langstring language="de">Schweden</langstring>
-            <langstring language="en">Sweden</langstring>
-            <langstring language="fr"> Su&#232;de</langstring>
-          </caption>
-        </term>
       </term>
       <term>
         <termIdentifier>479</termIdentifier>
