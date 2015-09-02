@@ -196,7 +196,7 @@ class TestExporter(unittest.TestCase):
         xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
         xmltree = etree.parse(StringIO(xml_data))
 
-        self.assertValid(xmltree, 'recensio_frompublisher_2015-08-19.xsd')
+        self.assertValid(xmltree, 'recensio_frompublisher_2015-09-02.xsd')
         self.assertEqual(
             len(xmltree.xpath('/issue_recensio_package')),
             1)
@@ -232,7 +232,7 @@ class TestExporter(unittest.TestCase):
             xml_data = export_zip.read(issue_filename)
             xmltree = etree.parse(StringIO(xml_data))
 
-            self.assertValid(xmltree, 'recensio_frompublisher_2015-08-19.xsd')
+            self.assertValid(xmltree, 'recensio_frompublisher_2015-09-02.xsd')
             self.assertIn(
                 contained_review.Title(),
                 xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
