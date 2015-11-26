@@ -1,10 +1,17 @@
 Changelog
 =========
 
-3.3.2 (unreleased)
+3.3.3 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+3.3.2 (2015-09-01)
+------------------
+
+- originalurl must correpsond to canonical_uri, refs #10873 [reinhardt]
+- removed terms with duplicate id, refs #10622 [reinhardt]
 
 
 3.3.1 (2015-08-22)
