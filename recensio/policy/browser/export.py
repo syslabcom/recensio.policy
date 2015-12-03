@@ -3,6 +3,7 @@ from datetime import date
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
+from plone import api
 from plone.registry.interfaces import IRegistry
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
@@ -32,10 +33,16 @@ class MetadataExport(BrowserView):
         annotations[EXPORT_TIMESTAMP_KEY] = time()
         transaction.commit()
 
-        exporters = [(name, factory()) for name, factory in
-                     getFactoriesFor(IRecensioExporter)]
-        exporters_to_run = [(name, e) for name, e in exporters
-                            if e.needs_to_run()]
+        try:
+            exporters = [(name, factory()) for name, factory in
+                        getFactoriesFor(IRecensioExporter)]
+            exporters_to_run = [(name, e) for name, e in exporters
+                                if e.needs_to_run()]
+        except Exception as e:
+            log.exception(e)
+            del annotations[EXPORT_TIMESTAMP_KEY]
+            return 'Error, aborting export: ' + str(e)
+
         if not exporters_to_run:
             del annotations[EXPORT_TIMESTAMP_KEY]
             log.info('export finished, nothing to do')
@@ -65,7 +72,7 @@ class MetadataExport(BrowserView):
             [name + ': ' + str(status) for name, status in statuses])
 
     def issues(self):
-        pc = self.context.portal_catalog
+        pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
         results = pc(review_state="published",
                      portal_type=("Issue"),
@@ -74,7 +81,7 @@ class MetadataExport(BrowserView):
             yield item.getObject()
 
     def reviews(self, issue):
-        pc = self.context.portal_catalog
+        pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(issue.getPhysicalPath()),
                            depth=3)
         results = pc(review_state="published",

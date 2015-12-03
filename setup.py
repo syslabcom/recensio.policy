@@ -41,6 +41,7 @@ setup(name='recensio.policy',
           'guess-language',
           'lxml',
           'paramiko',
+          'plone.api',
           'plone.app.async',
           'plone.app.caching',
           'plone.app.discussion',
@@ -69,5 +70,6 @@ setup(name='recensio.policy',
       [console_scripts]
       recensio-policy-reset = recensio.policy:reset
       createSite = recensio.policy:createSite
+      metadata-export = recensio.policy.scripts.export:metadata_export
       """,
       )

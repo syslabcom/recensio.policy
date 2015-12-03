@@ -9,6 +9,7 @@ from io import FileIO
 from os import path
 from os import remove
 from os import stat
+from zExceptions import NotFound
 from zipfile import ZipFile
 from zope.component.factory import Factory
 from zope.component.hooks import getSite
@@ -72,7 +73,7 @@ class BaseExporter(object):
         try:
             export_xml = portal.unrestrictedTraverse(
                 self.export_filename)
-        except (KeyError, ValueError):
+        except (KeyError, ValueError, NotFound):
             export_xml = None
         return export_xml
 
