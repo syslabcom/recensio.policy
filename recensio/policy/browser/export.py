@@ -41,7 +41,9 @@ class MetadataExport(BrowserView):
         except Exception as e:
             log.exception(e)
             del annotations[EXPORT_TIMESTAMP_KEY]
-            return 'Error, aborting export: ' + str(e)
+            msg = 'Error, aborting export: ' + str(e)
+            log.error(msg)
+            return msg
 
         if not exporters_to_run:
             del annotations[EXPORT_TIMESTAMP_KEY]

@@ -9,7 +9,7 @@ import logging
 import sys
 import transaction
 
-log = logging.getLogger(__name__)
+log = logging.getLogger()
 
 
 class ConsoleScript(object):
@@ -20,7 +20,7 @@ class ConsoleScript(object):
         self.portal = self.app.objectValues('Plone Site')[0]
         setSite(self.portal)
 
-        log.setLevel(logging.DEBUG)
+        log.setLevel(logging.INFO)
         handler = logging.StreamHandler(sys.stdout)
         formatter = logging.Formatter(
             "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
