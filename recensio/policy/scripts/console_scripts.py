@@ -2,6 +2,7 @@ from Testing.makerequest import makerequest
 from plone import api
 from recensio.policy.browser.export import MetadataExport
 from recensio.policy.browser.email import MailCollection
+from recensio.policy.browser.sehepunkte import Import
 from zope.component.hooks import setHooks
 from zope.component.hooks import setSite
 import Zope2
@@ -48,5 +49,12 @@ class NewsletterScript(ConsoleScript):
         mc()
 
 
+class SehepunkteImportScript(ConsoleScript):
+    def run(self):
+        si = Import(self.portal, self.portal.REQUEST)
+        si()
+
+
 metadata_export = MetadataExportScript()
 newsletter = NewsletterScript()
+sehepunkte_import = SehepunkteImportScript()

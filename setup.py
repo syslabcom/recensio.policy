@@ -72,5 +72,6 @@ setup(name='recensio.policy',
       createSite = recensio.policy:createSite
       metadata-export = recensio.policy.scripts.console_scripts:metadata_export
       newsletter = recensio.policy.scripts.console_scripts:newsletter
+      sehepunkte-import = recensio.policy.scripts.console_scripts:sehepunkte_import
       """,
       )
