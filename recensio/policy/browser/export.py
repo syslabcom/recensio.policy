@@ -154,6 +154,11 @@ class DaraUpdate(BrowserView):
                     message = 'Error: {0}'.format(e)
                 IStatusMessage(self.request).addStatusMessage(
                     message, type='error')
+            except ValueError as e:
+                exc_msg = e.__class__.__name__ + ': ' + str(e)
+                message = 'Error while updating dara record (' + exc_msg + ')'
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='error')
             else:
                 if status == 201:
                     message = 'DOI successfully registered'
