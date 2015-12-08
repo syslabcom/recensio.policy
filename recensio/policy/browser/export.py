@@ -151,12 +151,17 @@ class DaraUpdate(BrowserView):
                 elif e.code == 500:
                     message = ('Dara server error - try again later')
                 else:
-                    message = 'Error: {0}'.format(e)
+                    message = 'Error returned by dara server: {0}'.format(e)
                 IStatusMessage(self.request).addStatusMessage(
                     message, type='error')
             except ValueError as e:
                 exc_msg = e.__class__.__name__ + ': ' + str(e)
                 message = 'Error while updating dara record (' + exc_msg + ')'
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='error')
+            except IOError as e:
+                exc_msg = e.__class__.__name__ + ': ' + str(e)
+                message = 'Error contacting dara server (' + exc_msg + ')'
                 IStatusMessage(self.request).addStatusMessage(
                     message, type='error')
             else:
