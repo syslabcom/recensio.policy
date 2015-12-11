@@ -134,6 +134,9 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             str(self.review_a.getPageEndOfReviewInJournal()),
             xmltree.xpath('/rm/page_last/text()'))
+        self.assertIn(
+            self.review_a.getDoi(),
+            xmltree.xpath('/rm/doi/text()'))
         #TODO: assert full text not contained
 
     def test_chronicon_xml_rj(self):
@@ -148,6 +151,9 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             self.review_a2.UID(),
             xmltree.xpath('/rj/@id'))
+        self.assertIn(
+            self.review_a2.getDoi(),
+            xmltree.xpath('/rj/doi/text()'))
         #TODO: assert full text not contained
 
     @patch('recensio.policy.export.urlopen')
@@ -180,6 +186,8 @@ class TestExporter(unittest.TestCase):
         self.assertEqual(len(exporter.reviews_xml), len(reviews))
         status = exporter.export()
         #TODO: What should actually happen with the exported XML?
+        # This will probably not be used, instead register_doi will be called on
+        # publication
 
     def test_chronicon_exporter_one_issue(self):
         exporter = ChroniconExporter()

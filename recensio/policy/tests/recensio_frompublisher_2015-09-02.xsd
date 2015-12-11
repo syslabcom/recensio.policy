@@ -38,6 +38,7 @@
 			<xs:element ref="year" />
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="doi" type="xs:string" />
 	<xs:element name="editor_1_first_name" type="xs:string" />
 	<xs:element name="editor_1_last_name" type="xs:string" />
 	<xs:element name="editor_2_first_name" type="xs:string" />
@@ -101,6 +102,7 @@
 			<xs:element name="classification_place" type="xs:string" />
 			<xs:element name="classification_subject" type="xs:string" />
 			<xs:element name="classification_time" type="xs:string" />
+            <xs:element name="doi" type="xs:string" minOccurs="0" />
 			<xs:element name="language_review" type="xs:string" />
 			<xs:element name="reviewer" type="reviewerType" maxOccurs="unbounded" />
 			<xs:element ref="subject_headings" minOccurs="0" />
@@ -119,6 +121,7 @@
 			<xs:element name="classification_place" type="xs:string" />
 			<xs:element name="classification_subject" type="xs:string" />
 			<xs:element name="classification_time" type="xs:string" />
+            <xs:element name="doi" type="xs:string" minOccurs="0" />
 			<xs:element ref="subject_headings" minOccurs="0" />
 			<xs:element ref="filename" />
             <xs:element name="originalurl" type="httpURL" minOccurs="0" />

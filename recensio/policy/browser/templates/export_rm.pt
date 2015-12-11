@@ -17,6 +17,7 @@
     <classification_place tal:content="python:context.getDdcPlace() and ', '.join([view.get_voc_title('ddcPlace', x) for x in context.getDdcPlace() if x]) or ''">Slowenien, Polen, Lettland, Deutschland, Tschechien</classification_place>
     <classification_subject tal:content="python:context.getDdcSubject() and ', '.join([view.get_voc_title('ddcSubject', x) for x in context.getDdcSubject() if x]) or ''">Sprachgeschichte, Wirtschaftsgeschichte, Literaturgeschichte, Siedlungs-, Stadt- und Ortsgeschichte, Bildungs-, Wissenschafts-, Schul- und Universitätsgeschichte, Sozial- und Kulturgeschichte</classification_subject>
     <classification_time tal:content="python:context.getDdcTime() and ', '.join([view.get_voc_title('ddcTime', x) for x in context.getDdcTime() if x]) or ''">17. Jahrundert, 19. Jahrhundert, 20. Jahrhundert</classification_time>
+    <doi tal:condition="context/isDoiRegistrationActive" tal:content="context/getDoi">10.15463/rec.xxxxxxx</doi>
     <language_review tal:content="python:', '.join([view.get_lang_name(x) for x in context.getLanguageReview()])">Deutsch</language_review>
     <reviewer tal:repeat="author context/getReviewAuthors">
         <reviewer_last_name tal:content="author/lastname">Blažek</reviewer_last_name>
