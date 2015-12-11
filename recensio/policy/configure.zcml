@@ -122,4 +122,10 @@
     provides="zope.component.interfaces.IFactory"
     name="missing_bvid_exporter"
     />
+
+  <subscriber
+     for="recensio.contenttypes.interfaces.review.IReview
+          Products.DCWorkflow.interfaces.IAfterTransitionEvent"
+     handler=".eventhandlers.review_published_eventhandler"
+     />
 </configure>

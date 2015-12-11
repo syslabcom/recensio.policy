@@ -1,8 +1,10 @@
 import csv
 import tempfile
+from Acquisition import aq_parent
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
 from StringIO import StringIO
+from Testing.makerequest import makerequest
 from base64 import b64encode
 from datetime import datetime
 from datetime import timedelta
@@ -10,6 +12,7 @@ from io import FileIO
 from os import path
 from os import remove
 from os import stat
+from plone import api
 from plone.registry.interfaces import IRegistry
 from urllib2 import Request
 from urllib2 import urlopen
@@ -293,4 +296,19 @@ def register_doi(obj):
         'Content-type': 'application/xml;charset=UTF-8',
         'Authorization': 'Basic ' + auth}
     result = urlopen(Request(url, xml, headers))
-    return result.getcode()
+    return_code = result.getcode()
+    result.close()
+    return return_code
+
+
+def register_doi_requestless(obj, portal_url):
+    portal = api.portal.get()
+    app = aq_parent(portal)
+    app = makerequest(app, environ=dict(SERVER_URL=portal_url))
+    app.REQUEST.other['PARENTS'] = [portal, app]
+    app.REQUEST.other['VirtualRootPhysicalPath'] = ('', portal.id)
+    portal.REQUEST = app.REQUEST
+
+    result = register_doi(obj)
+    delattr(portal, 'REQUEST')
+    return result
