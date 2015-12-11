@@ -134,8 +134,6 @@ class TestSparqlStable(TestSparqlBase):
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Document'",
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",
             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://hub.culturegraph.org/about/BVB-BV013575871'",
-            u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000898335/vol/25'",
-            u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV013568231/vol/2'",
         ])
 
         errors = sorted([x.msg % x.args for x in self.handler.records
@@ -186,7 +184,7 @@ class TestSparqlStable(TestSparqlBase):
 
         expected = {
             'bv': u'BV035356471',
-            'authors': [{'firstname': u'Anthony', 'lastname': u'Mcelligott'}],
+            'authors': [],
             'ddcPlace': [u'43'],
             'ddcSubject': [u'900', u'943.085'],
             'ddcTime': [u'09042'],
@@ -216,9 +214,7 @@ class TestSparqlStable(TestSparqlBase):
             metadata = getMetadata('9783898617277')
 
         expected = {
-            'authors': [{'firstname': u'Barbara', 'lastname': u'Korte'},
-                        {'firstname': u'Sylvia', 'lastname': u'Paletschek'},
-                        {'firstname': u'Wolfgang', 'lastname': u'Hochbruck'}],
+            'authors': [],
             'bv': u'BV023169149',
             'ddcSubject': [u'355.009', u'940.3'],
             'ddcPlace': [u'181'],
@@ -228,10 +224,9 @@ class TestSparqlStable(TestSparqlBase):
                 u'Aufsatzsammlung', u'Geschichte',
                 u'Kollektives Geda\u0308Chtnis',
                 u'Kollektives Ged\xe4chtnis',
-                u'Weltkrieg',
                 u'Weltkrieg <1914-1918>',
             ],
-            'language': u'Undetermined',
+            'language': u'German',
             'location': u'Essen, Germany',
             'pages': u'222',
             'publisher': u'Klartext',
