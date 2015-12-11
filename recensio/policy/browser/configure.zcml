@@ -121,6 +121,21 @@
     permission="zope.Public"
     />
 
+  <!-- XML Representations, LZA versions  -->
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+    name="xml-lza"
+    class=".xml.XMLRepresentationLZA"
+    template="templates/export_rm.pt"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+    name="xml-lza"
+    class=".xml.XMLRepresentationLZA"
+    template="templates/export_rj.pt"
+    permission="zope.Public"
+    />
 
   <!-- Export views and helpers -->
   <browser:page

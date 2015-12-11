@@ -17,6 +17,7 @@ EDITOR_TMPL = """        <editor_%(num)s_first_name>%(firstname)s</editor_%(num)
 
 class XMLRepresentation(BrowserView):
     filename = "recensio_exportx.xml"
+    include_fulltext = False
 
     def get_lang_name(self, code):
         return _languagelist.get(code, {'native': code})['native']
@@ -73,6 +74,10 @@ class XMLRepresentation(BrowserView):
                 lastname=escape(editor['lastname']))
             num += 1
         return out
+
+
+class XMLRepresentationLZA(XMLRepresentation):
+    include_fulltext = True
 
 
 class XMLRepresentationContainer(XMLRepresentation):

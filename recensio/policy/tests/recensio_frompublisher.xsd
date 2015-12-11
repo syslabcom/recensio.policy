@@ -48,6 +48,7 @@
 	<xs:element name="editor_4_first_name" type="xs:string" />
 	<xs:element name="editor_4_last_name" type="xs:string" />
 	<xs:element name="filename" type="httpURL" />
+	<xs:element name="fulltext" type="xs:string" />
 	<xs:element name="streamurl" type="httpURL" />
 	<xs:simpleType name="httpURL">
 	  <xs:restriction base="xs:anyURI">
@@ -107,6 +108,7 @@
 			<xs:element name="reviewer" type="reviewerType" maxOccurs="unbounded" />
 			<xs:element ref="subject_headings" minOccurs="0" />
 			<xs:element ref="filename" />
+			<xs:element ref="fulltext" minOccurs="0" />
             <xs:element name="originalurl" type="httpURL" minOccurs="0" />
             <xs:element name="page_first" type="xs:string" minOccurs="0" />
             <xs:element name="page_last" type="xs:string" minOccurs="0" />
@@ -124,6 +126,7 @@
             <xs:element name="doi" type="xs:string" minOccurs="0" />
 			<xs:element ref="subject_headings" minOccurs="0" />
 			<xs:element ref="filename" />
+			<xs:element ref="fulltext" minOccurs="0" />
             <xs:element name="originalurl" type="httpURL" minOccurs="0" />
             <xs:element name="page_first" type="xs:string" minOccurs="0" />
             <xs:element name="page_last" type="xs:string" minOccurs="0" />
