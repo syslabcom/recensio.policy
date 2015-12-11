@@ -6,7 +6,7 @@ from zope.component import getUtility
 
 
 def review_published_eventhandler(obj, evt):
-    if not evt.transition.getId() == 'publish':
+    if not evt.transition or evt.transition.getId() != 'publish':
         return
     publication = IParentGetter(obj).get_parent_object_of_type('Publication')
     if publication is None or not publication.isDoiRegistrationActive():
