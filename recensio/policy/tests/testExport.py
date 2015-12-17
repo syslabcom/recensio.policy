@@ -156,7 +156,9 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             self.review_a2.getDoi(),
             xmltree.xpath('/rj/doi/text()'))
-        #TODO: assert full text not contained
+        self.assertEqual(
+            xmltree.xpath('/rm/fulltext/text()'),
+            [])
 
     def test_lza_xml_rm(self):
         xml = self.review_a.restrictedTraverse('@@xml-lza')()
@@ -168,6 +170,17 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             pdf_path,
             xmltree.xpath('/rm/fulltext/text()'))
+
+    def test_lza_xml_rj(self):
+        xml = self.review_a2.restrictedTraverse('@@xml-lza')()
+        xmltree = etree.parse(StringIO(xml))
+        self.assertEqual(
+            len(xmltree.xpath('/rj')),
+            1)
+        pdf_path = '/'.join(self.review_a2.getPhysicalPath()[2:]) + '.pdf'
+        self.assertIn(
+            pdf_path,
+            xmltree.xpath('/rj/fulltext/text()'))
 
     @patch('recensio.policy.export.urlopen')
     def test_register_doi(self, urlopen):
@@ -356,7 +369,7 @@ class TestMetadataExport(unittest.TestCase):
         self.assertIn('<page_first>' + str(self.review_1.getPageStartOfReviewInJournal()) + '</page_first>', xml_data)
         self.assertIn('<page_last>' + str(self.review_1.getPageEndOfReviewInJournal()) + '</page_last>', xml_data)
         self.assertIn('<originalurl>' + self.review_1.getCanonical_uri() + '</originalurl>', xml_data)
-        #TODO: assert full text not contained
+        self.assertNotIn('<fulltext', xml_data)
 
         output = self.xml_export()
         self.assertIn('Nothing to do', output)
