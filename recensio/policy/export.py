@@ -289,7 +289,7 @@ def register_doi(obj):
     username = settings.doi_registration_username
     password = settings.doi_registration_password
     auth = b64encode('{0}:{1}'.format(username, password))
-    url = settings.doi_registration_url
+    url = settings.doi_registration_url.encode('utf-8')
 
     xml = obj.restrictedTraverse('@@xml-dara')().encode('utf-8')
     headers = {
