@@ -2,7 +2,24 @@
 from zope.testing.loggingsupport import InstalledHandler
 
 import logging
+import os
+import sparql
 import unittest2 as unittest
+from StringIO import StringIO
+from mock import patch
+
+
+class MockResultFactory(object):
+    def __init__(self, filename):
+        mock_data_file = open(os.path.join(os.path.dirname(__file__), filename), 'r')
+        self.mock_data = mock_data_file.read()
+        mock_data_file.close()
+
+    def __call__(self, dummy):
+        return sparql._ResultsParser(StringIO(self.mock_data))
+
+
+#TODO: Also mock away the request in recensio.policy.sparqlsearch.graph_parse()?
 
 
 class TestSparqlBase(unittest.TestCase):
@@ -94,7 +111,9 @@ class TestSparqlStable(TestSparqlBase):
             'year': u'1960',
         }
 
-        is_ = getMetadata('123')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_no_metadata.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            is_ = getMetadata('123')
         is_.pop('authors')
 
         ignored = sorted([
@@ -128,7 +147,9 @@ class TestSparqlStable(TestSparqlBase):
 
     def testExpectedMetadata01(self):
         from recensio.policy.sparqlsearch import getMetadata
-        result = getMetadata('9783830921929')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_01.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            result = getMetadata('9783830921929')
         # http://lod.b3kat.de/title/BV035724519
 
         expected = {
@@ -159,7 +180,9 @@ class TestSparqlStable(TestSparqlBase):
 
     def testExpectedMetadata02(self):
         from recensio.policy.sparqlsearch import getMetadata
-        metadata = getMetadata('978-0-19-928007-0')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_02.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            metadata = getMetadata('978-0-19-928007-0')
 
         expected = {
             'bv': u'BV035356471',
@@ -188,7 +211,10 @@ class TestSparqlStable(TestSparqlBase):
 
     def testExpectedMetadata03(self):
         from recensio.policy.sparqlsearch import getMetadata
-        metadata = getMetadata('9783898617277')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_03.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            metadata = getMetadata('9783898617277')
+
         expected = {
             'authors': [{'firstname': u'Barbara', 'lastname': u'Korte'},
                         {'firstname': u'Sylvia', 'lastname': u'Paletschek'},

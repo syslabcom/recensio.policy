@@ -1,0 +1,472 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='docid'/>
+		<variable name='p'/>
+		<variable name='o'/>
+	</head>
+	<results>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://id.loc.gov/vocabulary/relators/oth</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/10132393-1</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://id.loc.gov/vocabulary/relators/oth</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/16020725-3</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/contributor</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/10132393-1</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/extent</uri>
+			</binding>
+			<binding name='o'>
+				<literal>162 S. Ill., Noten 24 cm</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/language</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.loc.gov/vocabulary/iso639-2/ger</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/license</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://creativecommons.org/publicdomain/zero/1.0/</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://rvk.uni-regensburg.de/api/xml/node/DP%203000</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://rvk.uni-regensburg.de/api/xml/node/DK%202000</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/4056459-9</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/4030638-0</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://dewey.info/class/372.6049/about</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/oclcnum</uri>
+			</binding>
+			<binding name='o'>
+				<literal>458749769</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/dc/dcmitype/Text</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Document</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Book</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Proceedings</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2002/07/owl#sameAs</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://hub.culturegraph.org/about/DNB-996521429</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/description</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Literaturangaben</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/description</uri>
+			</binding>
+			<binding name='o'>
+				<literal>[Ministerium für Generationen, Familie, Frauen und Integration des Landes Nordrhein-Westfalen, Referat Öffentlichkeitsarbeit]</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/issued</uri>
+			</binding>
+			<binding name='o'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#int'>2009</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/publisher</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Waxmann</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/title</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Kinder bilden Sprache - Sprache bildet Kinder</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Kongress</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Spracherziehung</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Kindertagesstätte</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal datatype='http://purl.org/dc/terms/DDC'>372.6049</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Recklinghausen &lt;2008&gt;</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Kindertagesstätte - Spracherziehung - Kongress - Recklinghausen &lt;2008&gt;</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-11/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-12/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-19/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-20/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-355/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-824/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-B1533/item/BV035724519</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/editor</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/16020725-3</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/isbn</uri>
+			</binding>
+			<binding name='o'>
+				<literal>9783830921929</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://iflastandards.info/ns/isbd/elements/P1053</uri>
+			</binding>
+			<binding name='o'>
+				<literal>162 S. Ill., Noten 24 cm</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://iflastandards.info/ns/isbd/elements/P1006</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Sprachentwicklung und Sprachförderung in Kindertagesstätten ; [anlässlich des Landeskongresses "Kinder Bilden Sprache - Sprache Bildet Kinder" am 4. November 2008 in Recklinghausen]</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/publicationStatement</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Münster ; New York NY ; München ; Berlin : Waxmann 2009</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/placeOfPublication</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Münster ; New York NY ; München ; Berlin</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV035724519</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/otherTitleInformation</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Sprachentwicklung und Sprachförderung in Kindertagesstätten ; [anlässlich des Landeskongresses "Kinder Bilden Sprache - Sprache Bildet Kinder" am 4. November 2008 in Recklinghausen]</literal>
+			</binding>
+		</result>
+	</results>
+</sparql>
