@@ -244,10 +244,16 @@ class TestExporter(unittest.TestCase):
             self.assertIn(
                 '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
                 xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+            self.assertIn(
+                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                [f.filename for f in export_zip.filelist])
         else:
             self.assertNotIn(
                 '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
                 xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+            self.assertNotIn(
+                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                [f.filename for f in export_zip.filelist])
 
 
     def _test_exporter_two_issues(self, exporter, expect_fulltext=False):

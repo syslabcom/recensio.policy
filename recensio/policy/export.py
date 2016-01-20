@@ -260,9 +260,23 @@ class LZAExporter(ChroniconExporter):
     export_filename = 'export_lza_xml.zip'
     xml_view_name = '@@xml-lza'
 
+    def __init__(self):
+        super(LZAExporter, self).__init__()
+        self.reviews_pdf = {}
+
     @property
     def cache_filename(self):
         return path.join(tempfile.gettempdir(), 'lza_cache.zip')
+
+    def add_review(self, review):
+        super(LZAExporter, self).add_review(review)
+        pdf_path = '/'.join(review.getPhysicalPath()[2:]) + '.pdf'
+        self.reviews_pdf[pdf_path] = ''
+
+    def write_zipfile(self, zipfile):
+        super(LZAExporter, self).write_zipfile(zipfile)
+        for filename, pdf in self.reviews_pdf.items():
+            zipfile.writestr(filename, bytes(pdf))
 
 
 class MissingBVIDExporter(BVIDExporter):
