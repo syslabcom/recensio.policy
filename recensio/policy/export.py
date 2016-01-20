@@ -98,6 +98,7 @@ class ChroniconExporter(BaseExporter):
 
     template = 'browser/templates/export_container_contextless.pt'
     export_filename = 'export_metadata_xml.zip'
+    xml_view_name = '@@xml'
 
     def __init__(self):
         self.current_issue = None
@@ -194,7 +195,7 @@ class ChroniconExporter(BaseExporter):
             if self.current_issue:
                 self.finish_issue()
             self.current_issue = review_issue
-        self.reviews_xml.append(review.restrictedTraverse('@@xml')())
+        self.reviews_xml.append(review.restrictedTraverse(self.xml_view_name)())
 
     def export(self):
         if self.current_issue:
@@ -254,6 +255,16 @@ class BVIDExporter(BaseExporter):
         return StatusSuccessFileCreated(self.export_filename)
 
 
+class LZAExporter(ChroniconExporter):
+
+    export_filename = 'export_lza_xml.zip'
+    xml_view_name = '@@xml-lza'
+
+    @property
+    def cache_filename(self):
+        return path.join(tempfile.gettempdir(), 'lza_cache.zip')
+
+
 class MissingBVIDExporter(BVIDExporter):
     implements(IRecensioExporter)
 
@@ -281,6 +292,8 @@ MissingBVIDExporterFactory = Factory(
     MissingBVIDExporter, IFactory, 'exporter')
 ChroniconExporterFactory = Factory(
     ChroniconExporter, IFactory, 'exporter')
+LZAExporterFactory = Factory(
+    LZAExporter, IFactory, 'exporter')
 
 
 def register_doi(obj):

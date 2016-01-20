@@ -30,6 +30,7 @@ from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
 from recensio.policy.export import BVIDExporter
 from recensio.policy.export import ChroniconExporter
 from recensio.policy.export import DaraExporter
+from recensio.policy.export import LZAExporter
 from recensio.policy.export import MissingBVIDExporter
 from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccessFile
@@ -215,8 +216,7 @@ class TestExporter(unittest.TestCase):
         # This will probably not be used, instead register_doi will be called on
         # publication
 
-    def test_chronicon_exporter_one_issue(self):
-        exporter = ChroniconExporter()
+    def _test_exporter_one_issue(self, exporter, expect_fulltext=False):
         exporter.add_review(self.review_a)
         status = exporter.export()
         self.assertTrue(isinstance(status, StatusSuccessFile))
@@ -240,9 +240,17 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             self.review_a.UID(),
             xmltree.xpath('/issue_recensio_package/rm/@id'))
+        if expect_fulltext:
+            self.assertIn(
+                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+        else:
+            self.assertNotIn(
+                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
 
-    def test_chronicon_exporter_two_issues(self):
-        exporter = ChroniconExporter()
+
+    def _test_exporter_two_issues(self, exporter, expect_fulltext=False):
         exporter.add_review(self.review_a)
         exporter.add_review(self.review_b)
         status = exporter.export()
@@ -276,6 +284,32 @@ class TestExporter(unittest.TestCase):
             self.assertIn(
                 contained_review.UID(),
                 xmltree.xpath('/issue_recensio_package/rm/@id'))
+            pdf_path = '/'.join(
+                contained_review.getPhysicalPath()[2:]) + '.pdf'
+            if expect_fulltext:
+                self.assertIn(
+                    pdf_path,
+                    xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+            else:
+                self.assertNotIn(
+                    pdf_path,
+                    xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+
+    def test_chronicon_exporter_one_issue(self):
+        exporter = ChroniconExporter()
+        self._test_exporter_one_issue(exporter)
+
+    def test_chronicon_exporter_two_issues(self):
+        exporter = ChroniconExporter()
+        self._test_exporter_two_issues(exporter)
+
+    def test_lza_exporter_one_issue(self):
+        exporter = LZAExporter()
+        self._test_exporter_one_issue(exporter, expect_fulltext=True)
+
+    def test_lza_exporter_two_issues(self):
+        exporter = LZAExporter()
+        self._test_exporter_two_issues(exporter, expect_fulltext=True)
 
     def test_bvid_exporter(self):
         self.review_b.setBv('12345')

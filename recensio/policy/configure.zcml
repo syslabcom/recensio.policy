@@ -112,6 +112,12 @@
     />
 
   <utility
+    component=".export.LZAExporterFactory"
+    provides="zope.component.interfaces.IFactory"
+    name="lza_exporter"
+    />
+
+  <utility
     component=".export.BVIDExporterFactory"
     provides="zope.component.interfaces.IFactory"
     name="bvid_exporter"
