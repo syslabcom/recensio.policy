@@ -271,7 +271,9 @@ class LZAExporter(ChroniconExporter):
     def add_review(self, review):
         super(LZAExporter, self).add_review(review)
         pdf_path = '/'.join(review.getPhysicalPath()[2:]) + '.pdf'
-        self.reviews_pdf[pdf_path] = ''
+        pdf_blob = review.get_review_pdf()['blob'].open()
+        self.reviews_pdf[pdf_path] = pdf_blob.read()
+        pdf_blob.close()
 
     def write_zipfile(self, zipfile):
         super(LZAExporter, self).write_zipfile(zipfile)

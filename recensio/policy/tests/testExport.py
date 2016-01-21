@@ -240,19 +240,24 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             self.review_a.UID(),
             xmltree.xpath('/issue_recensio_package/rm/@id'))
+        pdf_path = '/'.join(
+            self.review_a.getPhysicalPath()[2:]) + '.pdf'
         if expect_fulltext:
             self.assertIn(
-                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                pdf_path,
                 xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
             self.assertIn(
-                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                pdf_path,
                 [f.filename for f in export_zip.filelist])
+            pdf_data = export_zip.read(pdf_path)
+            expected_pdf = self.review_a.get_review_pdf()['blob'].open().read()
+            self.assertEqual(pdf_data, expected_pdf)
         else:
             self.assertNotIn(
-                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                pdf_path,
                 xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
             self.assertNotIn(
-                '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf',
+                pdf_path,
                 [f.filename for f in export_zip.filelist])
 
 
@@ -296,10 +301,16 @@ class TestExporter(unittest.TestCase):
                 self.assertIn(
                     pdf_path,
                     xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+                self.assertIn(
+                    pdf_path,
+                    [f.filename for f in export_zip.filelist])
             else:
                 self.assertNotIn(
                     pdf_path,
                     xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+                self.assertNotIn(
+                    pdf_path,
+                    [f.filename for f in export_zip.filelist])
 
     def test_chronicon_exporter_one_issue(self):
         exporter = ChroniconExporter()
