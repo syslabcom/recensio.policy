@@ -216,54 +216,9 @@ class TestExporter(unittest.TestCase):
         # This will probably not be used, instead register_doi will be called on
         # publication
 
-    def _test_exporter_one_issue(self, exporter, expect_fulltext=False):
-        exporter.add_review(self.review_a)
-        status = exporter.export()
-        self.assertTrue(isinstance(status, StatusSuccessFile))
-        filename = status.filename
-        export_file = self.portal[filename]
-        fp = export_file.getFile().getBlob().open()
-        export_zip = ZipFile(fp)
-
-        self.assertIn('recensio_newspapera_summer_issue-2.xml',
-                      [f.filename for f in export_zip.filelist])
-        xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
-        xmltree = etree.parse(StringIO(xml_data))
-
-        self.assertValid(xmltree, 'recensio_frompublisher.xsd')
-        self.assertEqual(
-            len(xmltree.xpath('/issue_recensio_package')),
-            1)
-        self.assertIn(
-            self.review_a.Title(),
-            xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
-        self.assertIn(
-            self.review_a.UID(),
-            xmltree.xpath('/issue_recensio_package/rm/@id'))
-        pdf_path = '/'.join(
-            self.review_a.getPhysicalPath()[2:]) + '.pdf'
-        if expect_fulltext:
-            self.assertIn(
-                pdf_path,
-                xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
-            self.assertIn(
-                pdf_path,
-                [f.filename for f in export_zip.filelist])
-            pdf_data = export_zip.read(pdf_path)
-            expected_pdf = self.review_a.get_review_pdf()['blob'].open().read()
-            self.assertEqual(pdf_data, expected_pdf)
-        else:
-            self.assertNotIn(
-                pdf_path,
-                xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
-            self.assertNotIn(
-                pdf_path,
-                [f.filename for f in export_zip.filelist])
-
-
-    def _test_exporter_two_issues(self, exporter, expect_fulltext=False):
-        exporter.add_review(self.review_a)
-        exporter.add_review(self.review_b)
+    def _test_exporter(self, exporter, data, expect_fulltext=False):
+        for _, contained_review, _ in data:
+            exporter.add_review(contained_review)
         status = exporter.export()
         self.assertTrue(isinstance(status, StatusSuccessFile))
         filename = status.filename
@@ -272,14 +227,7 @@ class TestExporter(unittest.TestCase):
         export_zip = ZipFile(fp)
         files_in_zip = [f.filename for f in export_zip.filelist]
 
-        for issue_filename, contained_review, foreign_review in [
-            ('recensio_newspapera_summer_issue-2.xml',
-             self.review_a,
-             self.review_b),
-            ('recensio_newspaperb_summer_issue-2.xml',
-             self.review_b,
-             self.review_a),
-        ]:
+        for issue_filename, contained_review, foreign_review in data:
             self.assertIn(issue_filename, files_in_zip)
 
             xml_data = export_zip.read(issue_filename)
@@ -304,6 +252,10 @@ class TestExporter(unittest.TestCase):
                 self.assertIn(
                     pdf_path,
                     [f.filename for f in export_zip.filelist])
+                pdf_data = export_zip.read(pdf_path)
+                blob = contained_review.get_review_pdf()['blob']
+                expected_pdf = blob.open().read()
+                self.assertEqual(pdf_data, expected_pdf)
             else:
                 self.assertNotIn(
                     pdf_path,
@@ -311,6 +263,25 @@ class TestExporter(unittest.TestCase):
                 self.assertNotIn(
                     pdf_path,
                     [f.filename for f in export_zip.filelist])
+
+    def _test_exporter_one_issue(self, exporter, expect_fulltext=False):
+        data = [
+            ('recensio_newspapera_summer_issue-2.xml',
+             self.review_a,
+             self.review_b),
+        ]
+        self._test_exporter(exporter, data, expect_fulltext=expect_fulltext)
+
+    def _test_exporter_two_issues(self, exporter, expect_fulltext=False):
+        data = [
+            ('recensio_newspapera_summer_issue-2.xml',
+             self.review_a,
+             self.review_b),
+            ('recensio_newspaperb_summer_issue-2.xml',
+             self.review_b,
+             self.review_a),
+        ]
+        self._test_exporter(exporter, data, expect_fulltext=expect_fulltext)
 
     def test_chronicon_exporter_one_issue(self):
         exporter = ChroniconExporter()
