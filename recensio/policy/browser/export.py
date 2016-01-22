@@ -44,8 +44,8 @@ class MetadataExport(BrowserView):
             log.info('export finished, nothing to do')
             return 'Nothing to do, no exporter requested an export run.'
 
-        for issue in self.issues():
-            for review in self.reviews(issue):
+        for issue_or_volume in self.issues_and_volumes():
+            for review in self.reviews(issue_or_volume):
                 for name, exporter in exporters_to_run:
                     try:
                         exporter.add_review(review)
@@ -67,11 +67,11 @@ class MetadataExport(BrowserView):
         return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
 
-    def issues(self):
+    def issues_and_volumes(self):
         pc = self.context.portal_catalog
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
         results = pc(review_state="published",
-                     portal_type=("Issue"),
+                     portal_type=("Issue", "Volume"),
                      path=parent_path)
         for item in results:
             yield item.getObject()
