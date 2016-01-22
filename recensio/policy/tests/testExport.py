@@ -450,19 +450,19 @@ class TestMetadataExport(unittest.TestCase):
             annotations = IAnnotations(self.portal)
             self.assertIn(EXPORT_TIMESTAMP_KEY, annotations)
             return []
-        _issues = MetadataExport.issues
-        MetadataExport.issues = mock_issues
+        _issues_and_volumes = MetadataExport.issues_and_volumes
+        MetadataExport.issues_and_volumes = mock_issues
 
         self._clear_export_files()
         self.xml_export()
 
-        MetadataExport.issues = _issues
+        MetadataExport.issues_and_volumes = _issues_and_volumes
 
     def test_timestamp_prevents_export_run(self):
         from recensio.policy.browser.export import MetadataExport
-        _issues = MetadataExport.issues
+        _issues_and_volumes = MetadataExport.issues_and_volumes
         mock_issues = Mock(return_value=[])
-        MetadataExport.issues = mock_issues
+        MetadataExport.issues_and_volumes = mock_issues
 
         annotations = IAnnotations(self.portal)
         # fake running export
@@ -482,13 +482,13 @@ class TestMetadataExport(unittest.TestCase):
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]
-        MetadataExport.issues = _issues
+        MetadataExport.issues_and_volumes = _issues_and_volumes
 
     def test_timestamp_not_left_behind(self):
         from recensio.policy.browser.export import MetadataExport
-        _issues = MetadataExport.issues
+        _issues_and_volumes = MetadataExport.issues_and_volumes
         mock_issues = Mock(return_value=[])
-        MetadataExport.issues = mock_issues
+        MetadataExport.issues_and_volumes = mock_issues
 
         annotations = IAnnotations(self.portal)
 
@@ -506,7 +506,7 @@ class TestMetadataExport(unittest.TestCase):
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]
-        MetadataExport.issues = _issues
+        MetadataExport.issues_and_volumes = _issues_and_volumes
 
     def test_timestamp_not_left_behind_by_noop_export(self):
         annotations = IAnnotations(self.portal)
@@ -531,9 +531,9 @@ class TestMetadataExport(unittest.TestCase):
 
     def test_stale_timestamp_is_cleared(self):
         from recensio.policy.browser.export import MetadataExport
-        _issues = MetadataExport.issues
+        _issues_and_volumes = MetadataExport.issues_and_volumes
         mock_issues = Mock(return_value=[])
-        MetadataExport.issues = mock_issues
+        MetadataExport.issues_and_volumes = mock_issues
 
         annotations = IAnnotations(self.portal)
         # fake a four day old stale time stamp
@@ -545,4 +545,4 @@ class TestMetadataExport(unittest.TestCase):
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]
-        MetadataExport.issues = _issues
+        MetadataExport.issues_and_volumes = _issues_and_volumes
