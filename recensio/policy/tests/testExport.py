@@ -240,19 +240,19 @@ class TestExporter(unittest.TestCase):
             self.assertValid(xmltree, 'recensio_frompublisher.xsd')
             self.assertIn(
                 contained_review.Title(),
-                xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
+                xmltree.xpath('/recensio_package/rm/book/title/text()'))
             self.assertNotIn(
                 foreign_review.Title(),
-                xmltree.xpath('/issue_recensio_package/rm/book/title/text()'))
+                xmltree.xpath('/recensio_package/rm/book/title/text()'))
             self.assertIn(
                 contained_review.UID(),
-                xmltree.xpath('/issue_recensio_package/rm/@id'))
+                xmltree.xpath('/recensio_package/rm/@id'))
             pdf_path = '/'.join(
                 contained_review.getPhysicalPath()[2:]) + '.pdf'
             if expect_fulltext:
                 self.assertIn(
                     pdf_path,
-                    xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+                    xmltree.xpath('/recensio_package/rm/fulltext/text()'))
                 self.assertIn(
                     pdf_path,
                     [f.filename for f in export_zip.filelist])
@@ -263,7 +263,7 @@ class TestExporter(unittest.TestCase):
             else:
                 self.assertNotIn(
                     pdf_path,
-                    xmltree.xpath('/issue_recensio_package/rm/fulltext/text()'))
+                    xmltree.xpath('/recensio_package/rm/fulltext/text()'))
                 self.assertNotIn(
                     pdf_path,
                     [f.filename for f in export_zip.filelist])
@@ -420,7 +420,7 @@ class TestMetadataExport(unittest.TestCase):
         self.assertIn('recensio_newspapera_summer_issue-2.xml',
                       [f.filename for f in export_zip.filelist])
         xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
-        self.assertIn('<issue_recensio_package', xml_data)
+        self.assertIn('<recensio_package', xml_data)
         self.assertIn('<title>' + self.review_1.Title() + '</title>', xml_data)
         self.assertIn('<rm id="' + self.review_1.UID() + '">', xml_data)
         self.assertIn('<page_first>' + str(self.review_1.getPageStartOfReviewInJournal()) + '</page_first>', xml_data)
