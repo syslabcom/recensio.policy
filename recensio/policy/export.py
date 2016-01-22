@@ -17,6 +17,7 @@ from plone.registry.interfaces import IRegistry
 from urllib2 import Request
 from urllib2 import urlopen
 from zipfile import ZipFile
+from zope.annotation import IAnnotations
 from zope.component import queryUtility
 from zope.component.factory import Factory
 from zope.component.hooks import getSite
@@ -94,6 +95,8 @@ class BaseExporter(object):
 
 
 class ChroniconExporter(BaseExporter):
+    """Export review metadata (but not full text) to a zip file containing one
+    XML file per issue/volume"""
     implements(IRecensioExporter)
 
     template = 'browser/templates/export_container_contextless.pt'
@@ -256,6 +259,9 @@ class BVIDExporter(BaseExporter):
 
 
 class LZAExporter(ChroniconExporter):
+    """Like ChroniconExporter but
+    * also exports full text (PDF)
+    * only exports each review once, then never again"""
 
     export_filename = 'export_lza_xml.zip'
     xml_view_name = '@@xml-lza'
@@ -268,12 +274,21 @@ class LZAExporter(ChroniconExporter):
     def cache_filename(self):
         return path.join(tempfile.gettempdir(), 'lza_cache.zip')
 
+    def _set_exported(self, review):
+        IAnnotations(review)['LZA_EXPORTED'] = True
+
+    def _is_exported(self, review):
+        return IAnnotations(review).get('LZA_EXPORTED')
+
     def add_review(self, review):
+        if self._is_exported(review):
+            return
         super(LZAExporter, self).add_review(review)
         pdf_path = '/'.join(review.getPhysicalPath()[2:]) + '.pdf'
         pdf_blob = review.get_review_pdf()['blob'].open()
         self.reviews_pdf[pdf_path] = pdf_blob.read()
         pdf_blob.close()
+        self._set_exported(review)
 
     def write_zipfile(self, zipfile):
         super(LZAExporter, self).write_zipfile(zipfile)

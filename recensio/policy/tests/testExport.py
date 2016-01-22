@@ -216,7 +216,7 @@ class TestExporter(unittest.TestCase):
         # This will probably not be used, instead register_doi will be called on
         # publication
 
-    def _test_exporter(self, exporter, data, expect_fulltext=False):
+    def _do_export(self, exporter, data):
         for _, contained_review, _ in data:
             exporter.add_review(contained_review)
         status = exporter.export()
@@ -225,6 +225,10 @@ class TestExporter(unittest.TestCase):
         export_file = self.portal[filename]
         fp = export_file.getFile().getBlob().open()
         export_zip = ZipFile(fp)
+        return export_zip
+
+    def _test_exporter(self, exporter, data, expect_fulltext=False):
+        export_zip = self._do_export(exporter, data)
         files_in_zip = [f.filename for f in export_zip.filelist]
 
         for issue_filename, contained_review, foreign_review in data:
@@ -298,6 +302,37 @@ class TestExporter(unittest.TestCase):
     def test_lza_exporter_two_issues(self):
         exporter = LZAExporter()
         self._test_exporter_two_issues(exporter, expect_fulltext=True)
+
+    def test_lza_exporter_skips_review_if_already_exported(self):
+        data = [
+            ('recensio_newspapera_summer_issue-2.xml',
+             self.review_a,
+             self.review_b),
+            ('recensio_newspaperb_summer_issue-2.xml',
+             self.review_b,
+             self.review_a),
+        ]
+        exporter = LZAExporter()
+        exporter._set_exported(self.review_a)
+        export_zip = self._do_export(exporter, data)
+        files_in_zip = [f.filename for f in export_zip.filelist]
+
+        self.assertNotIn(data[0][0], files_in_zip)
+        pdf_path = '/'.join(
+            self.review_a.getPhysicalPath()[2:]) + '.pdf'
+        self.assertNotIn(
+            pdf_path,
+            [f.filename for f in export_zip.filelist])
+
+    def test_lza_exporter_marks_review_as_exported(self):
+        data = [
+            ('recensio_newspapera_summer_issue-2.xml',
+             self.review_a,
+             self.review_b),
+        ]
+        exporter = LZAExporter()
+        self._do_export(exporter, data)
+        self.assertTrue(exporter._is_exported(self.review_a))
 
     def test_bvid_exporter(self):
         self.review_b.setBv('12345')
