@@ -334,6 +334,12 @@ class TestExporter(unittest.TestCase):
         self._do_export(exporter, data)
         self.assertTrue(exporter._is_exported(self.review_a))
 
+    def test_lza_exporter_can_undo_mark_as_exported(self):
+        exporter = LZAExporter()
+        exporter._set_exported(self.review_a)
+        exporter._set_exported(self.review_a, value=False)
+        self.assertFalse(exporter._is_exported(self.review_a))
+
     def test_bvid_exporter(self):
         self.review_b.setBv('12345')
         exporter = BVIDExporter()

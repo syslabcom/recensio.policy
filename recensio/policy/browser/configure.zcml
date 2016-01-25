@@ -162,6 +162,12 @@
      class=".export.DaraUpdate"
      permission="cmf.ModifyPortalContent"
      />
+  <browser:page
+     for="*"
+     name="reset-lza-export-flag"
+     class=".export.ResetLZAExportFlag"
+     permission="cmf.ModifyPortalContent"
+     />
 
 
   <!-- Other helpers -->

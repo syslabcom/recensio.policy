@@ -5,6 +5,8 @@ from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from plone.registry.interfaces import IRegistry
+from recensio.contenttypes.interfaces.review import IReview
+from recensio.policy.export import LZAExporter
 from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
@@ -174,3 +176,21 @@ class DaraUpdate(BrowserView):
                 IStatusMessage(self.request).addStatusMessage(
                     message, type='info')
         self.request.response.redirect(self.context.absolute_url())
+
+
+class ResetLZAExportFlag(BrowserView):
+
+    def _reset_flag(self, context):
+        paths = []
+        if IReview.providedBy(context):
+            self.exporter._set_exported(context, value=False)
+            paths.append('/'.join(context.getPhysicalPath()))
+        for child in getattr(context, 'objectValues', lambda: [])():
+            paths += self._reset_flag(child)
+        return paths
+
+    def __call__(self):
+        self.exporter = LZAExporter()
+        paths = self._reset_flag(self.context)
+        return (u"Reset LZA export flag for the following objects:\n\n" +
+                u'\n'.join(paths))

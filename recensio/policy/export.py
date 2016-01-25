@@ -274,8 +274,8 @@ class LZAExporter(ChroniconExporter):
     def cache_filename(self):
         return path.join(tempfile.gettempdir(), 'lza_cache.zip')
 
-    def _set_exported(self, review):
-        IAnnotations(review)['LZA_EXPORTED'] = True
+    def _set_exported(self, review, value=True):
+        IAnnotations(review)['LZA_EXPORTED'] = value and True or False
 
     def _is_exported(self, review):
         return IAnnotations(review).get('LZA_EXPORTED')
