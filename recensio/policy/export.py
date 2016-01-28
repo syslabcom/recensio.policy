@@ -16,6 +16,7 @@ from plone import api
 from plone.registry.interfaces import IRegistry
 from urllib2 import Request
 from urllib2 import urlopen
+from zExceptions import NotFound
 from zipfile import ZipFile
 from zope.annotation import IAnnotations
 from zope.component import queryUtility
@@ -82,7 +83,7 @@ class BaseExporter(object):
         try:
             export_xml = portal.unrestrictedTraverse(
                 self.export_filename)
-        except (KeyError, ValueError):
+        except (KeyError, ValueError, NotFound):
             export_xml = None
         return export_xml
 
