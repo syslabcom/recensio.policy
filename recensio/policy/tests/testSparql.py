@@ -20,6 +20,8 @@ class MockResultFactory(object):
 
 
 #TODO: Also mock away the request in recensio.policy.sparqlsearch.graph_parse()?
+# def mock_graph_parse(iri, **kw):
+#     return "[a rdfg:Graph;rdflib:storage [a rdflib:Store;rdfs:label 'IOMemory']]"
 
 
 class TestSparqlBase(unittest.TestCase):
