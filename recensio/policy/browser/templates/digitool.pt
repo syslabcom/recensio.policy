@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issue_recensio_package
+<recensio_package
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
     xsi:schemaLocation="http://www.recensio.net/Digitool recensio_frompublisher_2013-07-30.xsd">
@@ -13,4 +13,4 @@
 <author_4_first_name />
 <author_4_last_name />
 
-</issue_recensio_package>
+</recensio_package>

@@ -16,8 +16,8 @@ EDITOR_TMPL = """        <editor_%(num)s_first_name>%(firstname)s</editor_%(num)
 
 
 class XMLRepresentation(BrowserView):
-    template = None
     filename = "recensio_exportx.xml"
+    include_fulltext = False
 
     def get_lang_name(self, code):
         return _languagelist.get(code, {'native': code})['native']
@@ -76,18 +76,8 @@ class XMLRepresentation(BrowserView):
         return out
 
 
-class XMLRepresentationRJ(XMLRepresentation):
-    template = ViewPageTemplateFile('templates/export_rj.pt')
-
-    def __call__(self):
-        return self.template(self)
-
-
-class XMLRepresentationRM(XMLRepresentation):
-    template = ViewPageTemplateFile('templates/export_rm.pt')
-
-    def __call__(self):
-        return self.template(self)
+class XMLRepresentationLZA(XMLRepresentation):
+    include_fulltext = True
 
 
 class XMLRepresentationContainer(XMLRepresentation):

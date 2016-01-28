@@ -20,10 +20,11 @@
 	  <classification_place tal:content="python:context.getDdcPlace() and ', '.join([view.get_voc_title('ddcPlace', x) for x in context.getDdcPlace() if x]) or ''">Slowenien, Polen, Lettland, Deutschland, Tschechien</classification_place>
 	  <classification_subject tal:content="python:context.getDdcSubject() and ', '.join([view.get_voc_title('ddcSubject', x) for x in context.getDdcSubject() if x]) or ''">Sprachgeschichte, Wirtschaftsgeschichte, Literaturgeschichte, Siedlungs-, Stadt- und Ortsgeschichte, Bildungs-, Wissenschafts-, Schul- und Universitätsgeschichte, Sozial- und Kulturgeschichte</classification_subject>
 	  <classification_time tal:content="python:context.getDdcTime() and ', '.join([view.get_voc_title('ddcTime', x) for x in context.getDdcTime() if x]) or ''">17. Jahrundert, 19. Jahrhundert, 20. Jahrhundert</classification_time>
+      <doi tal:condition="context/isDoiRegistrationActive" tal:content="context/getDoi">10.15463/rec.xxxxxxx</doi>
 	  <language_review tal:content="python:', '.join([view.get_lang_name(x) for x in context.getLanguageReview()])">Deutsch</language_review>
 	  <subject_headings tal:content="python:context.Subject() and ', '.join(context.Subject()) or ''">Slowenisch-deutscher Sprachvergleich, Riga / Handel, Tschechisch-deutscher Sprachkontakt, Arnim, Bettina von</subject_headings>
     <filename tal:content="string:http://recensio.net/r/${context/UID}">http://recensio.net/r/8578c6f5e0304309991c1b12abeccc30</filename>
-    <streamurl tal:content="string:${context/absolute_url}/@@generate-pdf-recension" >http://www.recensio.net/rezensionen/zeitschriften/jahrbuch-des-bundesinstituts-fur-kultur-und-geschichte-der-deutschen-im-ostlichen-europa/20-2012/ReviewJournal257151436/@@generate-pdf-recension</streamurl>
+    <fulltext tal:condition="view/include_fulltext" tal:content="python:'/'.join(context.getPhysicalPath()[2:]) + '.pdf'">francia-recensio/2010-4/mittelalter-moyen-age-500-1500/die-inszenierung-der-vergangenheit-im-mittelalter.pdf</fulltext>
     <originalurl tal:condition="context/canonical_uri" tal:content="context/canonical_uri">http://www.recensio.net/rezensionen/zeitschriften/francia-recensio/2010-4/mittelalter-moyen-age-500-1500/die-inszenierung-der-vergangenheit-im-mittelalter</originalurl>
     <page_first tal:condition="context/getPageStartOfReviewInJournal" tal:content="context/getPageStartOfReviewInJournal">2</page_first>
     <page_last tal:condition="context/getPageEndOfReviewInJournal" tal:content="context/getPageEndOfReviewInJournal">3</page_last>

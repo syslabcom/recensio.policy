@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:tal="http://xml.zope.org/namespaces/tal"
+    xsi:schemaLocation="http://www.da-ra.de/fileadmin/media/da-ra.de/Technik/dara_v3.1_de_en_18112014.xsd">
+    <resourceType>2</resourceType>
+    <resourceIdentifier><identifier tal:content="context/UID">ed891fc49fdbbb562278aa88e9ffb40d</identifier></resourceIdentifier>
+    <titles>
+        <title>
+            <language>de</language>
+            <titleName>Rezension über <tal:title replace="context/Title">Titel</tal:title></titleName>
+        </title>
+    </titles>
+    <creators>
+        <creator>
+            <person tal:repeat="author context/getReviewAuthors">
+                <firstName tal:content="author/firstname">Hans</firstName>
+                <lastName tal:content="author/lastname">Testperson</lastName>
+            </person>
+        </creator>
+    </creators>
+    <dataURLs>
+        <dataURL tal:content="context/absolute_url">http://www.recensio.net/</dataURL>
+    </dataURLs>
+    <doiProposal tal:content="context/getDoi">10.15463/rec.1517192636</doiProposal>
+    <publicationDate>
+        <date tal:content="python:context.getEffectiveDate().strftime('%Y-%m-%d')">1970</date>
+    </publicationDate>
+    <availability>
+        <availabilityControlled>1</availabilityControlled>
+    </availability>
+    <rights>
+        <right>
+            <language>de</language>
+            <rightsText>
+                Creative-Commons-Lizenz Namensnennung-Keine kommerzielle Nutzung-Keine Bearbeitung (CC-BY-NC-ND)
+                http://creativecommons.org/licenses/by-nc-nd/2.0/deed.de
+            </rightsText>
+        </right>
+    </rights>
+    <freeKeywords tal:condition="context/Subject">
+        <freeKeyword>
+            <language>de</language>
+            <keywords tal:repeat="subject context/Subject" tal:content="subject">Aufsatzsammlung</keywords>
+        </freeKeyword>
+    </freeKeywords>
+    <publications>
+        <publication>
+            <structuredPublication>
+                <doctype>9</doctype>
+                <authorsEditors>
+                    <authorEditor>
+                        <editor>
+                            <name tal:content="context/getEditor">Herausgeber</name>
+                        </editor>
+                    </authorEditor>
+                </authorsEditors>
+                <title tal:content="context/Title">Titel der Zeitschrift</title>
+                <year tal:content="context/getYearOfPublication">1970</year>
+                <publisher tal:content="context/getPublisher"></publisher>
+                <places tal:content="context/getPlaceOfPublication"></places>
+                <ISSNs><ISSN tal:content="context/getIssn"></ISSN></ISSNs>
+            </structuredPublication>
+        </publication>
+    </publications>
+</resource>
+

@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified">
+	<xs:element name="author_1_first_name" type="xs:string" />
+	<xs:element name="author_1_last_name" type="xs:string" />
+	<xs:element name="author_2_first_name" type="xs:string" />
+	<xs:element name="author_2_last_name" type="xs:string" />
+	<xs:element name="author_3_first_name" type="xs:string" />
+	<xs:element name="author_3_last_name" type="xs:string" />
+	<xs:element name="author_4_first_name" type="xs:string" />
+	<xs:element name="author_4_last_name" type="xs:string" />
+	<xs:complexType name="bookType">
+		<xs:sequence>
+			<xs:element ref="author_1_first_name" minOccurs="0" />
+			<xs:element ref="author_1_last_name" minOccurs="0" />
+			<xs:element ref="author_2_first_name" minOccurs="0" />
+			<xs:element ref="author_2_last_name" minOccurs="0" />
+			<xs:element ref="author_3_first_name" minOccurs="0" />
+			<xs:element ref="author_3_last_name" minOccurs="0" />
+			<xs:element ref="author_4_first_name" minOccurs="0" />
+			<xs:element ref="author_4_last_name" minOccurs="0" />
+			<xs:element ref="editor_1_first_name" minOccurs="0" />
+			<xs:element ref="editor_1_last_name" minOccurs="0" />
+			<xs:element ref="editor_2_first_name" minOccurs="0" />
+			<xs:element ref="editor_2_last_name" minOccurs="0" />
+			<xs:element ref="editor_3_first_name" minOccurs="0" />
+			<xs:element ref="editor_3_last_name" minOccurs="0" />
+			<xs:element ref="editor_4_first_name" minOccurs="0" />
+			<xs:element ref="editor_4_last_name" minOccurs="0" />
+			<xs:element ref="isbn" minOccurs="0" />
+			<xs:element ref="language_reviewed_object" minOccurs="0" />
+			<xs:element ref="pages" minOccurs="0" />
+			<xs:element ref="place_of_publication" minOccurs="0" />
+			<xs:element ref="publishing_company" minOccurs="0" />
+			<xs:element ref="series" minOccurs="0" />
+			<xs:element ref="subtitle" minOccurs="0" />
+			<xs:element ref="title" />
+			<xs:element ref="volume_number" minOccurs="0" />
+			<xs:element ref="year" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="doi" type="xs:string" />
+	<xs:element name="editor_1_first_name" type="xs:string" />
+	<xs:element name="editor_1_last_name" type="xs:string" />
+	<xs:element name="editor_2_first_name" type="xs:string" />
+	<xs:element name="editor_2_last_name" type="xs:string" />
+	<xs:element name="editor_3_first_name" type="xs:string" />
+	<xs:element name="editor_3_last_name" type="xs:string" />
+	<xs:element name="editor_4_first_name" type="xs:string" />
+	<xs:element name="editor_4_last_name" type="xs:string" />
+	<xs:element name="filename" type="httpURL" />
+	<xs:element name="fulltext" type="xs:string" />
+	<xs:element name="streamurl" type="httpURL" />
+	<xs:simpleType name="httpURL">
+	  <xs:restriction base="xs:anyURI">
+	    <xs:pattern value="http://.*" />
+	  </xs:restriction>
+	</xs:simpleType>   
+	<xs:element name="isbn" type="xs:string" />
+    <xs:element name="recensio_package">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="rm" type="reviewTypeBook" minOccurs="0" maxOccurs="unbounded" />
+				<xs:element name="rj" type="reviewTypeJournal" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="package_journal_name" type="xs:string" use="required" />
+			<xs:attribute name="package_journal_volume" type="xs:string" use="required" />
+			<xs:attribute name="package_journal_issue" type="xs:string" />
+			<xs:attribute name="package_journal_pubyear" type="xs:string" />
+			<xs:attribute name="package_originalurl" type="httpURL" />
+		</xs:complexType>
+		<xs:unique name="reviewID">
+			<xs:selector xpath="./review" />
+			<xs:field xpath="@recensio_id" />
+		</xs:unique>
+	</xs:element>
+	<xs:complexType name="journalType">
+		<xs:sequence>
+			<xs:element ref="reviewed_journal_title" />
+			<xs:element ref="reviewed_journal_title_short" minOccurs="0" />
+			<xs:element ref="reviewed_journal_editor" minOccurs="0" />
+			<xs:element ref="reviewed_journal_pubplace" minOccurs="0" />
+			<xs:element ref="reviewed_journal_publisher" minOccurs="0" />
+			<xs:element ref="reviewed_journal_issn" minOccurs="0" />
+			<xs:element ref="reviewed_journal_volume" minOccurs="0" />
+			<xs:element ref="reviewed_journal_issue" minOccurs="0" />
+			<xs:element ref="reviewed_journal_pubyear_real" minOccurs="0" />
+			<xs:element ref="reviewed_journal_pubyear_fictive" minOccurs="0" />
+			<xs:element ref="language_reviewed_object" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="language_reviewed_object" type="xs:string" />
+	<xs:element name="originalurl" type="httpURL" />
+	<xs:element name="page_first" type="xs:string" />
+	<xs:element name="page_last" type="xs:string" />
+	<xs:element name="pages" type="xs:string" />
+	<xs:element name="place_of_publication" type="xs:string" />
+	<xs:element name="publishing_company" type="xs:string" />
+	<xs:element name="reviewer_first_name" type="xs:string" />
+	<xs:element name="reviewer_last_name" type="xs:string" />
+	<xs:complexType name="reviewTypeBook">
+		<xs:sequence>
+			<xs:element name="book" type="bookType" maxOccurs="unbounded" />
+			<xs:element name="classification_place" type="xs:string" />
+			<xs:element name="classification_subject" type="xs:string" />
+			<xs:element name="classification_time" type="xs:string" />
+            <xs:element name="doi" type="xs:string" minOccurs="0" />
+			<xs:element name="language_review" type="xs:string" />
+			<xs:element name="reviewer" type="reviewerType" maxOccurs="unbounded" />
+			<xs:element ref="subject_headings" minOccurs="0" />
+			<xs:element ref="filename" />
+			<xs:element ref="fulltext" minOccurs="0" />
+            <xs:element name="originalurl" type="httpURL" minOccurs="0" />
+            <xs:element name="page_first" type="xs:string" minOccurs="0" />
+            <xs:element name="page_last" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:token" />
+	</xs:complexType>
+	<xs:complexType name="reviewTypeJournal">
+		<xs:sequence>
+			<xs:element name="journal" type="journalType" maxOccurs="unbounded" />
+			<xs:element name="reviewer" type="reviewerType" maxOccurs="unbounded" />
+			<xs:element name="language_review" type="xs:string" />
+			<xs:element name="classification_place" type="xs:string" />
+			<xs:element name="classification_subject" type="xs:string" />
+			<xs:element name="classification_time" type="xs:string" />
+            <xs:element name="doi" type="xs:string" minOccurs="0" />
+			<xs:element ref="subject_headings" minOccurs="0" />
+			<xs:element ref="filename" />
+			<xs:element ref="fulltext" minOccurs="0" />
+            <xs:element name="originalurl" type="httpURL" minOccurs="0" />
+            <xs:element name="page_first" type="xs:string" minOccurs="0" />
+            <xs:element name="page_last" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+		<xs:attribute name="id" type="xs:token" />
+	</xs:complexType>
+	<xs:complexType name="reviewerType">
+		<xs:sequence>
+			<xs:element ref="reviewer_last_name" />
+			<xs:element ref="reviewer_first_name" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="reviewed_journal_editor" type="xs:string" />
+	<xs:element name="reviewed_journal_issn" type="xs:string" />
+	<xs:element name="reviewed_journal_issue" type="xs:string" />
+	<xs:element name="reviewed_journal_publisher" type="xs:string" />
+	<xs:element name="reviewed_journal_pubplace" type="xs:string" />
+	<xs:element name="reviewed_journal_pubyear_real" type="xs:string" />
+	<xs:element name="reviewed_journal_pubyear_fictive" type="xs:string" />
+	<xs:element name="reviewed_journal_title" type="xs:string" />
+	<xs:element name="reviewed_journal_title_short" type="xs:string" />
+	<xs:element name="reviewed_journal_volume" type="xs:string" />
+	<xs:element name="series" type="xs:string" />
+	<xs:element name="subject_headings" type="xs:string" />
+	<xs:element name="subtitle" type="xs:string" />
+	<xs:element name="title" type="xs:string" />
+	<xs:element name="volume_number" type="xs:string" />
+	<xs:element name="year" type="xs:string" />
+</xs:schema>

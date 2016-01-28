@@ -1,11 +1,16 @@
 from Products.Five.browser import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
 from datetime import date
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from plone.registry.interfaces import IRegistry
+from recensio.contenttypes.interfaces.review import IReview
+from recensio.policy.export import LZAExporter
+from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
+from urllib2 import HTTPError
 from time import time
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
@@ -41,8 +46,8 @@ class MetadataExport(BrowserView):
             log.info('export finished, nothing to do')
             return 'Nothing to do, no exporter requested an export run.'
 
-        for issue in self.issues():
-            for review in self.reviews(issue):
+        for issue_or_volume in self.issues_and_volumes():
+            for review in self.reviews(issue_or_volume):
                 for name, exporter in exporters_to_run:
                     try:
                         exporter.add_review(review)
@@ -64,11 +69,11 @@ class MetadataExport(BrowserView):
         return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
 
-    def issues(self):
+    def issues_and_volumes(self):
         pc = self.context.portal_catalog
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
         results = pc(review_state="published",
-                     portal_type=("Issue"),
+                     portal_type=("Issue", "Volume"),
                      path=parent_path)
         for item in results:
             yield item.getObject()
@@ -129,3 +134,63 @@ class ChroniconExport(BrowserView):
                 attribs.st_size, zipstream.get_size())
             log.error(msg)
             return msg
+
+
+class DaraUpdate(BrowserView):
+    """Send metadata to da|ra, in effect registering the object's DOI or
+    updating its metadata if already registered."""
+
+    def __call__(self):
+        if self.request.get('REQUEST_METHOD') == 'POST':
+            try:
+                status = register_doi(self.context)
+            except HTTPError as e:
+                if e.code == 401:
+                    message = ('Dara login failed - check DOI registration '
+                               'user name and password')
+                elif e.code == 400:
+                    message = ('Problem with generating XML')
+                elif e.code == 500:
+                    message = ('Dara server error - try again later')
+                else:
+                    message = 'Error returned by dara server: {0}'.format(e)
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='error')
+            except ValueError as e:
+                exc_msg = e.__class__.__name__ + ': ' + str(e)
+                message = 'Error while updating dara record (' + exc_msg + ')'
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='error')
+            except IOError as e:
+                exc_msg = e.__class__.__name__ + ': ' + str(e)
+                message = 'Error contacting dara server (' + exc_msg + ')'
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='error')
+            else:
+                if status == 201:
+                    message = 'DOI successfully registered'
+                elif status == 200:
+                    message = 'Metadata updated'
+                else:
+                    message = 'Success (status {0})'.format(status)
+                IStatusMessage(self.request).addStatusMessage(
+                    message, type='info')
+        self.request.response.redirect(self.context.absolute_url())
+
+
+class ResetLZAExportFlag(BrowserView):
+
+    def _reset_flag(self, context):
+        paths = []
+        if IReview.providedBy(context):
+            self.exporter._set_exported(context, value=False)
+            paths.append('/'.join(context.getPhysicalPath()))
+        for child in getattr(context, 'objectValues', lambda: [])():
+            paths += self._reset_flag(child)
+        return paths
+
+    def __call__(self):
+        self.exporter = LZAExporter()
+        paths = self._reset_flag(self.context)
+        return (u"Reset LZA export flag for the following objects:\n\n" +
+                u'\n'.join(paths))

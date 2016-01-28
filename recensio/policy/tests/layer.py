@@ -7,8 +7,22 @@ from plone.app.testing import IntegrationTesting
 from plone.testing import z2
 
 from zope.configuration import xmlconfig
+from zope.interface import implements
 
 from Products.CMFCore.utils import getToolByName
+from plone.app.async.interfaces import IAsyncService
+
+_async_layer_db = None
+
+
+class DummyAsync(object):
+    implements(IAsyncService)
+
+    def queueJob(self, *args, **kwargs):
+        pass
+
+    def queueJobWithDelay(self, *args, **kwargs):
+        pass
 
 
 class RecensioPolicyWithoutContent(PloneSandboxLayer):
@@ -18,6 +32,9 @@ class RecensioPolicyWithoutContent(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         import recensio.policy
         xmlconfig.file('configure.zcml', recensio.policy, \
+            context=configurationContext)
+        import plone.app.intid
+        xmlconfig.file('configure.zcml', plone.app.intid, \
             context=configurationContext)
 
         z2.installProduct(app, 'recensio.contenttypes')
@@ -31,6 +48,9 @@ class RecensioPolicyWithoutContent(PloneSandboxLayer):
         applyProfile(portal, 'Products.CMFPlone:plone-content')
         applyProfile(portal, 'recensio.policy:default')
         applyProfile(portal, 'recensio.policy:test')
+
+        sm = portal.getSiteManager()
+        sm.registerUtility(factory=DummyAsync, provided=IAsyncService)
 
 
 class RecensioPolicy(RecensioPolicyWithoutContent):
