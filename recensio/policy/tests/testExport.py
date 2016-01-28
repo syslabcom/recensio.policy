@@ -70,10 +70,12 @@ class TestExporter(unittest.TestCase):
         self.review_a = issue_2_a.objectValues()[0]
         self.review_a.setEffectiveDate(
             DateTime('2011/07/08 17:38:31.502979 GMT+2'))
+        self.review_a.setBv('54321')
         self.review_b = issue_2_b.objectValues()[0]
         self.review_a2 = issue_2_a.objectValues()[1]
         self.review_a2.setEffectiveDate(
             DateTime('2013/03/09 11:42:52.827401 GMT+2'))
+        self.review_a2.setBv('12345')
 
         login(self.portal, TEST_USER_NAME)
 
@@ -136,6 +138,9 @@ class TestExporter(unittest.TestCase):
             str(self.review_a.getPageEndOfReviewInJournal()),
             xmltree.xpath('/rm/page_last/text()'))
         self.assertIn(
+            self.review_a.getBv(),
+            xmltree.xpath('/rm/bvid/text()'))
+        self.assertIn(
             self.review_a.getDoi(),
             xmltree.xpath('/rm/doi/text()'))
         self.assertEqual(
@@ -154,6 +159,9 @@ class TestExporter(unittest.TestCase):
         self.assertIn(
             self.review_a2.UID(),
             xmltree.xpath('/rj/@id'))
+        self.assertIn(
+            self.review_a2.getBv(),
+            xmltree.xpath('/rj/bvid/text()'))
         self.assertIn(
             self.review_a2.getDoi(),
             xmltree.xpath('/rj/doi/text()'))

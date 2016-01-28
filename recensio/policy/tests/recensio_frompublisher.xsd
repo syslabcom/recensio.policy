@@ -38,6 +38,7 @@
 			<xs:element ref="year" />
 		</xs:sequence>
 	</xs:complexType>
+	<xs:element name="bvid" type="xs:string" />
 	<xs:element name="doi" type="xs:string" />
 	<xs:element name="editor_1_first_name" type="xs:string" />
 	<xs:element name="editor_1_last_name" type="xs:string" />
@@ -100,6 +101,7 @@
 	<xs:complexType name="reviewTypeBook">
 		<xs:sequence>
 			<xs:element name="book" type="bookType" maxOccurs="unbounded" />
+			<xs:element name="bvid" type="xs:string" minOccurs="0" />
 			<xs:element name="classification_place" type="xs:string" />
 			<xs:element name="classification_subject" type="xs:string" />
 			<xs:element name="classification_time" type="xs:string" />
@@ -120,6 +122,7 @@
 			<xs:element name="journal" type="journalType" maxOccurs="unbounded" />
 			<xs:element name="reviewer" type="reviewerType" maxOccurs="unbounded" />
 			<xs:element name="language_review" type="xs:string" />
+			<xs:element name="bvid" type="xs:string" minOccurs="0" />
 			<xs:element name="classification_place" type="xs:string" />
 			<xs:element name="classification_subject" type="xs:string" />
 			<xs:element name="classification_time" type="xs:string" />
