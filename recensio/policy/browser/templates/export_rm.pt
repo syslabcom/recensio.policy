@@ -14,6 +14,7 @@
         <volume_number tal:content="context/getSeriesVol">2</volume_number>
         <year tal:content="context/getYearOfPublication">2010</year>
     </book>
+    <bvid tal:condition="context/getBv|nothing" tal:content="context/getBv"></bvid>
     <classification_place tal:content="python:context.getDdcPlace() and ', '.join([view.get_voc_title('ddcPlace', x) for x in context.getDdcPlace() if x]) or ''">Slowenien, Polen, Lettland, Deutschland, Tschechien</classification_place>
     <classification_subject tal:content="python:context.getDdcSubject() and ', '.join([view.get_voc_title('ddcSubject', x) for x in context.getDdcSubject() if x]) or ''">Sprachgeschichte, Wirtschaftsgeschichte, Literaturgeschichte, Siedlungs-, Stadt- und Ortsgeschichte, Bildungs-, Wissenschafts-, Schul- und Universitätsgeschichte, Sozial- und Kulturgeschichte</classification_subject>
     <classification_time tal:content="python:context.getDdcTime() and ', '.join([view.get_voc_title('ddcTime', x) for x in context.getDdcTime() if x]) or ''">17. Jahrundert, 19. Jahrhundert, 20. Jahrhundert</classification_time>
