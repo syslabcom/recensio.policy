@@ -5,7 +5,7 @@ from zope.i18nmessageid import MessageFactory
 import patches
 from zope.component import provideHandler
 from plone.app.async.interfaces import IJobSuccess, IJobFailure
-from zope.app.component.hooks import getSite
+from zope.component.hooks import getSite
 
 recensioMessageFactory = MessageFactory('recensio')
 
