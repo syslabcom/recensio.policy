@@ -41,7 +41,9 @@
     <freeKeywords tal:condition="context/Subject">
         <freeKeyword>
             <language>de</language>
-            <keywords tal:repeat="subject context/Subject" tal:content="subject">Aufsatzsammlung</keywords>
+            <keywords>
+                <keyword tal:repeat="subject context/Subject" tal:content="subject">Aufsatzsammlung</keyword>
+            </keywords>
         </freeKeyword>
     </freeKeywords>
     <publications>
