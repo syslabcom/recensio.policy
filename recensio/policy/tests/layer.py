@@ -30,6 +30,12 @@ class RecensioPolicyWithoutContent(PloneSandboxLayer):
     defaultBases = (PLONE_FIXTURE,)
 
     def setUpZope(self, app, configurationContext):
+        import plone.app.theming
+        xmlconfig.file('configure.zcml', plone.app.theming, \
+            context=configurationContext)
+        import recensio.theme
+        xmlconfig.file('configure.zcml', recensio.theme, \
+            context=configurationContext)
         import recensio.policy
         xmlconfig.file('configure.zcml', recensio.policy, \
             context=configurationContext)
@@ -46,6 +52,7 @@ class RecensioPolicyWithoutContent(PloneSandboxLayer):
         wftool = getToolByName(portal, 'portal_workflow')
         wftool.setDefaultChain('plone_workflow')
         applyProfile(portal, 'Products.CMFPlone:plone-content')
+        applyProfile(portal, 'plone.app.theming:default')
         applyProfile(portal, 'recensio.policy:default')
         applyProfile(portal, 'recensio.policy:test')
 
