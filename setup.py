@@ -56,6 +56,7 @@ setup(name='recensio.policy',
           'setuptools',
           'collective.logbook',
           'collective.solr',
+          'zope.app.pagetemplate',
           'zope.keyreference',
           'five.intid',  # Bugfix for plone.app.async
       ],
