@@ -1,8 +1,10 @@
+# -* coding: utf-8 *-
 import csv
 import tempfile
 from Acquisition import aq_parent
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from StringIO import StringIO
 from Testing.makerequest import makerequest
 from base64 import b64encode
@@ -13,7 +15,9 @@ from os import path
 from os import remove
 from os import stat
 from plone import api
+from plone.app.controlpanel.mail import IMailSchema
 from plone.registry.interfaces import IRegistry
+from urllib2 import HTTPError
 from urllib2 import Request
 from urllib2 import urlopen
 from zExceptions import NotFound
@@ -328,7 +332,7 @@ LZAExporterFactory = Factory(
     LZAExporter, IFactory, 'exporter')
 
 
-def register_doi(obj):
+def register_doi_raw(obj):
     registry = queryUtility(IRegistry)
     settings = registry.forInterface(IRecensioSettings)
     username = settings.doi_registration_username
@@ -346,6 +350,39 @@ def register_doi(obj):
     return return_code
 
 
+def register_doi(obj):
+    try:
+        return_code = register_doi_raw(obj)
+    except HTTPError as e:
+        if e.code == 401:
+            message = ('Dara login failed - check DOI registration '
+                       'user name and password')
+        elif e.code == 400:
+            message = ('Request rejected by dara - check generated XML')
+        elif e.code == 500:
+            message = ('Dara server error - try again later')
+        else:
+            message = 'Error returned by dara server: {0}'.format(e)
+        status = 'error'
+    except ValueError as e:
+        exc_msg = e.__class__.__name__ + ': ' + str(e)
+        message = 'Error while updating dara record (' + exc_msg + ')'
+        status = 'error'
+    except IOError as e:
+        exc_msg = e.__class__.__name__ + ': ' + str(e)
+        message = 'Error contacting dara server (' + exc_msg + ')'
+        status = 'error'
+    else:
+        if return_code == 201:
+            message = 'DOI successfully registered'
+        elif return_code == 200:
+            message = 'Metadata updated'
+        else:
+            message = 'Success (status {0})'.format(return_code)
+        status = 'success'
+    return status, message
+
+
 def register_doi_requestless(obj, portal_url):
     portal = api.portal.get()
     app = aq_parent(portal)
@@ -354,6 +391,37 @@ def register_doi_requestless(obj, portal_url):
     app.REQUEST.other['VirtualRootPhysicalPath'] = ('', portal.id)
     portal.REQUEST = app.REQUEST
 
-    result = register_doi(obj)
+    status, message = register_doi(obj)
+
+    mail_info = IMailSchema(portal)
+    mail_to = mail_from = '%s <%s>' % (mail_info.email_from_name,
+                                       mail_info.email_from_address)
+    mail_body = u"""Liebe Redaktion,
+
+Die DOI-Registrierung der Rezension
+
+  {0}
+  {1}
+
+wurde abgeschlossen mit dem Ergebnis
+
+  {2}: {3}
+
+Viele Grüße,
+recensio.net
+""".format(
+        safe_unicode(obj.Title()),
+        obj.absolute_url(),
+        safe_unicode(status),
+        safe_unicode(message),
+    )
+
+    api.portal.send_email(
+        sender=mail_from,
+        recipient=mail_to,
+        subject=u'DOI registration result',
+        body=mail_body,
+    )
+
     delattr(portal, 'REQUEST')
-    return result
+    return '{0}: {1}'.format(safe_unicode(status), safe_unicode(message))

@@ -11,7 +11,6 @@ from recensio.policy.export import LZAExporter
 from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
-from urllib2 import HTTPError
 from time import time
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
@@ -151,39 +150,9 @@ class DaraUpdate(BrowserView):
 
     def __call__(self):
         if self.request.get('REQUEST_METHOD') == 'POST':
-            try:
-                status = register_doi(self.context)
-            except HTTPError as e:
-                if e.code == 401:
-                    message = ('Dara login failed - check DOI registration '
-                               'user name and password')
-                elif e.code == 400:
-                    message = ('Problem with generating XML')
-                elif e.code == 500:
-                    message = ('Dara server error - try again later')
-                else:
-                    message = 'Error returned by dara server: {0}'.format(e)
-                IStatusMessage(self.request).addStatusMessage(
-                    message, type='error')
-            except ValueError as e:
-                exc_msg = e.__class__.__name__ + ': ' + str(e)
-                message = 'Error while updating dara record (' + exc_msg + ')'
-                IStatusMessage(self.request).addStatusMessage(
-                    message, type='error')
-            except IOError as e:
-                exc_msg = e.__class__.__name__ + ': ' + str(e)
-                message = 'Error contacting dara server (' + exc_msg + ')'
-                IStatusMessage(self.request).addStatusMessage(
-                    message, type='error')
-            else:
-                if status == 201:
-                    message = 'DOI successfully registered'
-                elif status == 200:
-                    message = 'Metadata updated'
-                else:
-                    message = 'Success (status {0})'.format(status)
-                IStatusMessage(self.request).addStatusMessage(
-                    message, type='info')
+            status, message = register_doi(self.context)
+            IStatusMessage(self.request).addStatusMessage(
+                message, type=status)
         self.request.response.redirect(self.context.absolute_url())
 
 
