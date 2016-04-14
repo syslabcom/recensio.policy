@@ -1,5 +1,6 @@
 # -* coding: utf-8 *-
 import csv
+import logging
 import tempfile
 from Acquisition import aq_parent
 from DateTime import DateTime
@@ -17,6 +18,7 @@ from os import stat
 from plone import api
 from plone.app.controlpanel.mail import IMailSchema
 from plone.registry.interfaces import IRegistry
+from tempfile import NamedTemporaryFile
 from urllib2 import HTTPError
 from urllib2 import Request
 from urllib2 import urlopen
@@ -33,6 +35,8 @@ from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 from recensio.contenttypes.interfaces.review import IParentGetter
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
+
+log = logging.getLogger(__name__)
 
 
 class StatusSuccess(object):
@@ -364,6 +368,11 @@ def register_doi(obj):
         else:
             message = 'Error returned by dara server: {0}'.format(e)
         status = 'error'
+        dump_file = NamedTemporaryFile(suffix='.html', delete=False)
+        dump_file.write(e.read())
+        dump_file.close()
+        log.error(message)
+        log.info('HTTPError dumped to ' + dump_file.name)
     except ValueError as e:
         exc_msg = e.__class__.__name__ + ': ' + str(e)
         message = 'Error while updating dara record (' + exc_msg + ')'
