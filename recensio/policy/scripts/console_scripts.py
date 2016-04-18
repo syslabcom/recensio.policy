@@ -41,7 +41,7 @@ class RegisterAllDOIsScript(ConsoleScript):
     def reviews(self, issue):
         pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(issue.getPhysicalPath()),
-                           depth=3)
+                           depth=1)
         results = pc(review_state="published",
                      portal_type=("Review Monograph", "Review Journal"),
                      path=parent_path)
@@ -55,8 +55,12 @@ class RegisterAllDOIsScript(ConsoleScript):
                     continue
                 if api.content.get_state(review) != 'published':
                     continue
-                status, message = register_doi(review)
                 path = '/'.join(review.getPhysicalPath())
+                if not review.getEffectiveDate():
+                    log.error("No effective date, can not generate XML! " +
+                              path)
+                    continue
+                status, message = register_doi(review)
                 print('{0}: {1}, {2}'.format(path, status, message))
 
 
