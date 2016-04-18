@@ -64,7 +64,7 @@ class Import(BrowserView):
         total = (datetime.datetime.now() - before).seconds / 1.0
         log.info("Sehepunkte finished. Imported %i reviews "
             "in %f seconds. %f reviews/s",
-            review_count, total, review_count / total)
+            review_count, total, total and review_count / total or review_count)
         return "Success"
 
     def _getTargetURLs(self):
