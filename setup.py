@@ -75,5 +75,6 @@ setup(name='recensio.policy',
       metadata-export = recensio.policy.scripts.console_scripts:metadata_export
       newsletter = recensio.policy.scripts.console_scripts:newsletter
       sehepunkte-import = recensio.policy.scripts.console_scripts:sehepunkte_import
+      register-all-dois = recensio.policy.scripts.console_scripts:register_all_dois
       """,
       )
