@@ -51,18 +51,20 @@
             <structuredPublication>
                 <doctype>4</doctype>
                 <authorsEditors>
-                    <authorEditor tal:repeat="author context/getAuthors">
-                        <author>
-                            <firstName tal:content="author/firstname">Hans</firstName>
-                            <lastName tal:content="author/lastname">Testautor</lastName>
-                        </author>
-                    </authorEditor>
+                    <tal:comment replace="nothing">
+                        It seems to happen quite often that there is an editor/author entry where both first
+                        name and last name are the empty string. This causes an error on the dara server if
+                        we don't filter it out.
+                    </tal:comment>
+                    <tal:authors tal:repeat="author context/getAuthors">
+                        <authorEditor tal:condition="python:author['lastname'] or author['firstname']">
+                            <author>
+                                <firstName tal:content="python:author['firstname'] or 'N/A'">Hans</firstName>
+                                <lastName tal:content="python:author['lastname'] or 'N/A'">Testautor</lastName>
+                            </author>
+                        </authorEditor>
+                    </tal:authors>
                     <tal:editorial tal:repeat="editor context/getEditorial">
-                        <tal:comment replace="nothing">
-                            It seems to happen quite often that there is an editor entry where both first name and
-                            last name are the empty string. This causes an error on the dara server if we don't
-                            filter it out.
-                        </tal:comment>
                         <authorEditor tal:condition="python:editor['lastname'] or editor['firstname']">
                             <editor>
                                 <name>
