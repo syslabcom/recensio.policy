@@ -78,8 +78,8 @@
                 <year tal:content="context/getYearOfPublication">1970</year>
                 <publisher tal:content="context/getPublisher"></publisher>
                 <places tal:content="context/getPlaceOfPublication"></places>
-                <anthology tal:condition="context/getSeries" tal:content="context/getSeries"></anthology>
                 <volume tal:condition="context/getSeriesVol" tal:content="context/getSeriesVol"></volume>
+                <anthology tal:condition="context/getSeries" tal:content="context/getSeries"></anthology>
                 <pages tal:content="context/getPages"></pages>
                 <isbn tal:content="context/getIsbn"></isbn>
             </structuredPublication>
