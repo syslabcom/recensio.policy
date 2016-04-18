@@ -57,14 +57,22 @@
                             <lastName tal:content="author/lastname">Testautor</lastName>
                         </author>
                     </authorEditor>
-                    <authorEditor tal:repeat="editor context/getEditorial">
-                        <editor>
-                            <name>
-                                <tal:lastName tal:replace="editor/lastname">Testautor</tal:lastName>,
-                                <tal:firstName tal:replace="editor/firstname">Hans</tal:firstName>
-                            </name>
-                        </editor>
-                    </authorEditor>
+                    <tal:editorial tal:repeat="editor context/getEditorial">
+                        <tal:comment replace="nothing">
+                            It seems to happen quite often that there is an editor entry where both first name and
+                            last name are the empty string. This causes an error on the dara server if we don't
+                            filter it out.
+                        </tal:comment>
+                        <authorEditor tal:condition="python:editor['lastname'] or editor['firstname']">
+                            <editor>
+                                <name>
+                                    <tal:lastName tal:replace="editor/lastname">Testautor</tal:lastName>
+                                    <tal:comma condition="python:editor['lastname'] and editor['firstname']">,</tal:comma>
+                                    <tal:firstName tal:replace="editor/firstname">Hans</tal:firstName>
+                                </name>
+                            </editor>
+                        </authorEditor>
+                    </tal:editorial>
                 </authorsEditors>
                 <title tal:content="context/Title">Titel der Monographie</title>
                 <year tal:content="context/getYearOfPublication">1970</year>
