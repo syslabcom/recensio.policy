@@ -1,15 +1,31 @@
+# -* coding: utf-8 *-
 import csv
+import logging
 import tempfile
+from Acquisition import aq_parent
 from DateTime import DateTime
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import safe_unicode
 from StringIO import StringIO
+from Testing.makerequest import makerequest
+from base64 import b64encode
 from datetime import datetime
 from datetime import timedelta
 from io import FileIO
 from os import path
 from os import remove
 from os import stat
+from plone import api
+from plone.app.controlpanel.mail import IMailSchema
+from plone.registry.interfaces import IRegistry
+from tempfile import NamedTemporaryFile
+from urllib2 import HTTPError
+from urllib2 import Request
+from urllib2 import urlopen
+from zExceptions import NotFound
 from zipfile import ZipFile
+from zope.annotation import IAnnotations
+from zope.component import queryUtility
 from zope.component.factory import Factory
 from zope.component.hooks import getSite
 from zope.component.interfaces import IFactory
@@ -18,6 +34,9 @@ from zope.pagetemplate.pagetemplatefile import PageTemplateFile
 
 from recensio.contenttypes.interfaces.review import IParentGetter
 from recensio.policy.interfaces import IRecensioExporter
+from recensio.policy.interfaces import IRecensioSettings
+
+log = logging.getLogger(__name__)
 
 
 class StatusSuccess(object):
@@ -72,7 +91,7 @@ class BaseExporter(object):
         try:
             export_xml = portal.unrestrictedTraverse(
                 self.export_filename)
-        except (KeyError, ValueError):
+        except (KeyError, ValueError, NotFound):
             export_xml = None
         return export_xml
 
@@ -85,10 +104,13 @@ class BaseExporter(object):
 
 
 class ChroniconExporter(BaseExporter):
+    """Export review metadata (but not full text) to a zip file containing one
+    XML file per issue/volume"""
     implements(IRecensioExporter)
 
     template = 'browser/templates/export_container_contextless.pt'
     export_filename = 'export_metadata_xml.zip'
+    xml_view_name = '@@xml'
 
     def __init__(self):
         self.current_issue = None
@@ -185,7 +207,7 @@ class ChroniconExporter(BaseExporter):
             if self.current_issue:
                 self.finish_issue()
             self.current_issue = review_issue
-        self.reviews_xml.append(review.restrictedTraverse('@@xml')())
+        self.reviews_xml.append(review.restrictedTraverse(self.xml_view_name)())
 
     def export(self):
         if self.current_issue:
@@ -245,6 +267,44 @@ class BVIDExporter(BaseExporter):
         return StatusSuccessFileCreated(self.export_filename)
 
 
+class LZAExporter(ChroniconExporter):
+    """Like ChroniconExporter but
+    * also exports full text (PDF)
+    * only exports each review once, then never again"""
+
+    export_filename = 'export_lza_xml.zip'
+    xml_view_name = '@@xml-lza'
+
+    def __init__(self):
+        super(LZAExporter, self).__init__()
+        self.reviews_pdf = {}
+
+    @property
+    def cache_filename(self):
+        return path.join(tempfile.gettempdir(), 'lza_cache.zip')
+
+    def _set_exported(self, review, value=True):
+        IAnnotations(review)['LZA_EXPORTED'] = value and True or False
+
+    def _is_exported(self, review):
+        return IAnnotations(review).get('LZA_EXPORTED')
+
+    def add_review(self, review):
+        if self._is_exported(review):
+            return
+        super(LZAExporter, self).add_review(review)
+        pdf_path = '/'.join(review.getPhysicalPath()[2:]) + '.pdf'
+        pdf_blob = review.get_review_pdf()['blob'].open()
+        self.reviews_pdf[pdf_path] = pdf_blob.read()
+        pdf_blob.close()
+        self._set_exported(review)
+
+    def write_zipfile(self, zipfile):
+        super(LZAExporter, self).write_zipfile(zipfile)
+        for filename, pdf in self.reviews_pdf.items():
+            zipfile.writestr(filename, bytes(pdf))
+
+
 class MissingBVIDExporter(BVIDExporter):
     implements(IRecensioExporter)
 
@@ -255,9 +315,122 @@ class MissingBVIDExporter(BVIDExporter):
             self.items.append((review.Title(), review.absolute_url()))
 
 
+class DaraExporter(BaseExporter):
+
+    def __init__(self):
+        self.reviews_xml = []
+
+    def add_review(self, review):
+        self.reviews_xml.append(review.restrictedTraverse('@@xml-dara')())
+
+    def export(self):
+        pass
+
 BVIDExporterFactory = Factory(
     BVIDExporter, IFactory, 'exporter')
 MissingBVIDExporterFactory = Factory(
     MissingBVIDExporter, IFactory, 'exporter')
 ChroniconExporterFactory = Factory(
     ChroniconExporter, IFactory, 'exporter')
+LZAExporterFactory = Factory(
+    LZAExporter, IFactory, 'exporter')
+
+
+def register_doi_raw(obj):
+    registry = queryUtility(IRegistry)
+    settings = registry.forInterface(IRecensioSettings)
+    username = settings.doi_registration_username
+    password = settings.doi_registration_password
+    auth = b64encode('{0}:{1}'.format(username, password))
+    url = settings.doi_registration_url.encode('utf-8')
+
+    xml = obj.restrictedTraverse('@@xml-dara')().encode('utf-8')
+    headers = {
+        'Content-type': 'application/xml;charset=UTF-8',
+        'Authorization': 'Basic ' + auth}
+    result = urlopen(Request(url, xml, headers))
+    return_code = result.getcode()
+    result.close()
+    return return_code
+
+
+def register_doi(obj):
+    try:
+        return_code = register_doi_raw(obj)
+    except HTTPError as e:
+        if e.code == 401:
+            message = ('Dara login failed - check DOI registration '
+                       'user name and password')
+        elif e.code == 400:
+            message = ('Request rejected by dara - check generated XML')
+        elif e.code == 500:
+            message = ('Dara server error - try again later')
+        else:
+            message = 'Error returned by dara server: {0}'.format(e)
+        status = 'error'
+        dump_file = NamedTemporaryFile(suffix='.html', delete=False)
+        dump_file.write(e.read())
+        dump_file.close()
+        log.error(message)
+        log.info('HTTPError dumped to ' + dump_file.name)
+    except ValueError as e:
+        exc_msg = e.__class__.__name__ + ': ' + str(e)
+        message = 'Error while updating dara record (' + exc_msg + ')'
+        status = 'error'
+    except IOError as e:
+        exc_msg = e.__class__.__name__ + ': ' + str(e)
+        message = 'Error contacting dara server (' + exc_msg + ')'
+        status = 'error'
+    else:
+        if return_code == 201:
+            message = 'DOI successfully registered'
+        elif return_code == 200:
+            message = 'Metadata updated'
+        else:
+            message = 'Success (status {0})'.format(return_code)
+        status = 'success'
+    return status, message
+
+
+def register_doi_requestless(obj, portal_url):
+    portal = api.portal.get()
+    app = aq_parent(portal)
+    app = makerequest(app, environ=dict(SERVER_URL=portal_url))
+    app.REQUEST.other['PARENTS'] = [portal, app]
+    app.REQUEST.other['VirtualRootPhysicalPath'] = ('', portal.id)
+    portal.REQUEST = app.REQUEST
+
+    status, message = register_doi(obj)
+
+    mail_info = IMailSchema(portal)
+    mail_to = mail_from = '%s <%s>' % (mail_info.email_from_name,
+                                       mail_info.email_from_address)
+    mail_body = u"""Liebe Redaktion,
+
+Die DOI-Registrierung der Rezension
+
+  {0}
+  {1}
+
+wurde abgeschlossen mit dem Ergebnis
+
+  {2}: {3}
+
+Viele Grüße,
+recensio.net
+""".format(
+        safe_unicode(obj.Title()),
+        obj.absolute_url(),
+        safe_unicode(status),
+        safe_unicode(message),
+    )
+
+    api.portal.send_email(
+        sender=mail_from,
+        recipient=mail_to,
+        subject=u'DOI registration result',
+        body=mail_body,
+    )
+
+    delattr(portal, 'REQUEST')
+    return '{0}: {1}'.format(safe_unicode(status), safe_unicode(message))

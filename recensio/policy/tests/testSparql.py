@@ -2,7 +2,26 @@
 from zope.testing.loggingsupport import InstalledHandler
 
 import logging
+import os
+import sparql
 import unittest2 as unittest
+from StringIO import StringIO
+from mock import patch
+
+
+class MockResultFactory(object):
+    def __init__(self, filename):
+        mock_data_file = open(os.path.join(os.path.dirname(__file__), filename), 'r')
+        self.mock_data = mock_data_file.read()
+        mock_data_file.close()
+
+    def __call__(self, dummy):
+        return sparql._ResultsParser(StringIO(self.mock_data))
+
+
+#TODO: Also mock away the request in recensio.policy.sparqlsearch.graph_parse()?
+# def mock_graph_parse(iri, **kw):
+#     return "[a rdfg:Graph;rdflib:storage [a rdflib:Store;rdfs:label 'IOMemory']]"
 
 
 class TestSparqlBase(unittest.TestCase):
@@ -94,7 +113,9 @@ class TestSparqlStable(TestSparqlBase):
             'year': u'1960',
         }
 
-        is_ = getMetadata('123')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_no_metadata.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            is_ = getMetadata('123')
         is_.pop('authors')
 
         ignored = sorted([
@@ -115,8 +136,6 @@ class TestSparqlStable(TestSparqlBase):
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Document'",
             u"We ignore the following information: 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type', Content: 'http://purl.org/ontology/bibo/Thesis'",
             u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://hub.culturegraph.org/about/BVB-BV013575871'",
-            u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV000898335/vol/25'",
-            u"We ignore the following information: 'http://www.w3.org/2002/07/owl#sameAs', Content: 'http://lod.b3kat.de/title/BV013568231/vol/2'",
         ])
 
         errors = sorted([x.msg % x.args for x in self.handler.records
@@ -128,7 +147,9 @@ class TestSparqlStable(TestSparqlBase):
 
     def testExpectedMetadata01(self):
         from recensio.policy.sparqlsearch import getMetadata
-        result = getMetadata('9783830921929')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_01.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            result = getMetadata('9783830921929')
         # http://lod.b3kat.de/title/BV035724519
 
         expected = {
@@ -159,11 +180,13 @@ class TestSparqlStable(TestSparqlBase):
 
     def testExpectedMetadata02(self):
         from recensio.policy.sparqlsearch import getMetadata
-        metadata = getMetadata('978-0-19-928007-0')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_02.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            metadata = getMetadata('978-0-19-928007-0')
 
         expected = {
             'bv': u'BV035356471',
-            'authors': [{'firstname': u'Anthony', 'lastname': u'Mcelligott'}],
+            'authors': [],
             'ddcPlace': [u'43'],
             'ddcSubject': [u'900', u'943.085'],
             'ddcTime': [u'09042'],
@@ -188,11 +211,12 @@ class TestSparqlStable(TestSparqlBase):
 
     def testExpectedMetadata03(self):
         from recensio.policy.sparqlsearch import getMetadata
-        metadata = getMetadata('9783898617277')
+        mock_config = {'side_effect': MockResultFactory('sparql_data_03.xml')}
+        with patch('sparql.Service.query', **mock_config):
+            metadata = getMetadata('9783898617277')
+
         expected = {
-            'authors': [{'firstname': u'Barbara', 'lastname': u'Korte'},
-                        {'firstname': u'Sylvia', 'lastname': u'Paletschek'},
-                        {'firstname': u'Wolfgang', 'lastname': u'Hochbruck'}],
+            'authors': [],
             'bv': u'BV023169149',
             'ddcSubject': [u'355.009', u'940.3'],
             'ddcPlace': [u'181'],
@@ -202,10 +226,9 @@ class TestSparqlStable(TestSparqlBase):
                 u'Aufsatzsammlung', u'Geschichte',
                 u'Kollektives Geda\u0308Chtnis',
                 u'Kollektives Ged\xe4chtnis',
-                u'Weltkrieg',
                 u'Weltkrieg <1914-1918>',
             ],
-            'language': u'Undetermined',
+            'language': u'German',
             'location': u'Essen, Germany',
             'pages': u'222',
             'publisher': u'Klartext',

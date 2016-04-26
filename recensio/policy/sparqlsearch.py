@@ -114,7 +114,11 @@ def keywords_and_ddc(obj, returnval):
         return
     raw_data = obj.value
     if raw_data.startswith('http'):
-        g = graph_parse(raw_data, format='application/rdf+xml')
+        try:
+            g = graph_parse(raw_data, format='application/rdf+xml')
+        except Exception as e:
+            log.exception(e)
+            return
         if [x for x in g.predicates(
                 object=URIRef('http://w3.org/2004/02/skos/core#Concept'))]:
 

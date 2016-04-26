@@ -1,10 +1,26 @@
 Changelog
 =========
 
-3.3.3 (unreleased)
+4.0.1 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+4.0.0 (2016-04-25)
+------------------
+
+- Chronicon-Export: new schema; added originalurl, page_first, page_last;
+  added bvid, updated schema, refs #10873 [reinhardt]
+- DOI registration support, refs #10976 #12126 [reinhardt]
+- Fixes for Plone 4.3, refs #11785 [reinhardt]
+- removed dfg reference from footer, refs #11972 [reinhardt]
+- LZA improvements, refs #12383 [reinhardt]
+- Migrated to slc.zopescript, refactored, refs #12795 [reinhardt]
+- added metadata-export, sehepunkte-import and newsletter console script,
+  refs #12795 [reinhardt]
+- catch and log exceptions in graph_parse [reinhardt]
+- test fixes and refactorings [reinhardt]
 
 
 3.3.2 (2015-09-01)

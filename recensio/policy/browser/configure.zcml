@@ -87,21 +87,57 @@
 	for="recensio.contenttypes.interfaces.issue.IIssue"
     name="xml"
     class=".xml.XMLRepresentationIssue"
+    template="templates/export_container.pt"
     permission="zope.Public"
     />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
     name="xml"
-    class=".xml.XMLRepresentationRM"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rm.pt"
     permission="zope.Public"
     />
   <browser:page
 	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
     name="xml"
-    class=".xml.XMLRepresentationRJ"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rj.pt"
     permission="zope.Public"
     />
 
+  <!-- XML Representations, dara versions  -->
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+    name="xml-dara"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rm_dara.pt"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+    name="xml-dara"
+    class=".xml.XMLRepresentation"
+    template="templates/export_rj_dara.pt"
+    permission="zope.Public"
+    />
+
+  <!-- XML Representations, LZA versions  -->
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+    name="xml-lza"
+    class=".xml.XMLRepresentationLZA"
+    template="templates/export_rm.pt"
+    permission="zope.Public"
+    />
+  <browser:page
+	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+    name="xml-lza"
+    class=".xml.XMLRepresentationLZA"
+    template="templates/export_rj.pt"
+    permission="zope.Public"
+    />
+
+  <!-- Export views and helpers -->
   <browser:page
 	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
     name="metadata-export"
@@ -114,15 +150,27 @@
     class=".export.ChroniconExport"
     permission="cmf.ManagePortal"
     />
-
   <browser:page
 	for="*"
     name="digitool-export"
     class=".digitool.DigiToolExport"
     permission="zope.Public"
     />
+  <browser:page
+     for="recensio.contenttypes.interfaces.IReview"
+     name="dara_update"
+     class=".export.DaraUpdate"
+     permission="cmf.ModifyPortalContent"
+     />
+  <browser:page
+     for="*"
+     name="reset-lza-export-flag"
+     class=".export.ResetLZAExportFlag"
+     permission="cmf.ModifyPortalContent"
+     />
 
 
+  <!-- Other helpers -->
   <browser:page
       for="*"
       name="recensio_workflow_helper"
@@ -173,6 +221,7 @@
       class=".perspektivia.Import"
       permission="cmf.ManagePortal"
       />
+
 
   <browser:viewlet
     name="bottom_links"

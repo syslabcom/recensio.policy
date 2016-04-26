@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '3.3.3.dev0'
+version = '4.0.1.dev0'
 
 setup(name='recensio.policy',
       version=version,
@@ -41,6 +41,7 @@ setup(name='recensio.policy',
           'guess-language',
           'lxml',
           'paramiko',
+          'plone.api',
           'plone.app.async',
           'plone.app.caching',
           'plone.app.discussion',
@@ -53,8 +54,10 @@ setup(name='recensio.policy',
           'recensio.imports',
           'recensio.theme',
           'setuptools',
+          'slc.zopescript',
           'collective.logbook',
           'collective.solr',
+          'zope.app.pagetemplate',
           'zope.keyreference',
           'five.intid',  # Bugfix for plone.app.async
       ],
@@ -69,5 +72,9 @@ setup(name='recensio.policy',
       [console_scripts]
       recensio-policy-reset = recensio.policy:reset
       createSite = recensio.policy:createSite
+      metadata-export = recensio.policy.scripts.console_scripts:metadata_export
+      newsletter = recensio.policy.scripts.console_scripts:newsletter
+      sehepunkte-import = recensio.policy.scripts.console_scripts:sehepunkte_import
+      register-all-dois = recensio.policy.scripts.console_scripts:register_all_dois
       """,
       )

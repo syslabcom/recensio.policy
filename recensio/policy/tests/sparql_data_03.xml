@@ -1,0 +1,703 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='docid'/>
+		<variable name='p'/>
+		<variable name='o'/>
+	</head>
+	<results>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://bsb-muenchen.de/ont/b3katOntology#ddcGeo</uri>
+			</binding>
+			<binding name='o'>
+				<literal>181</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://bsb-muenchen.de/ont/b3katOntology#ddcTime</uri>
+			</binding>
+			<binding name='o'>
+				<literal>09041</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://id.loc.gov/vocabulary/relators/oth</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/129683922</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/bibliographicCitation</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Schriften der Bibliothek für Zeitgeschichte : Neue Folge : 22</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/contributor</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/129683922</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/extent</uri>
+			</binding>
+			<binding name='o'>
+				<literal>222 S. Ill.</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/hasPart</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV023169149/vol/2746</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/hasPart</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV023169149/vol/4757</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/hasPart</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV023169149/vol/5971</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/identifier</uri>
+			</binding>
+			<binding name='o'>
+				<literal>9783898617277</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/isPartOf</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV007921367</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/language</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.loc.gov/vocabulary/iso639-2/ger</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/license</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://creativecommons.org/publicdomain/zero/1.0/</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/4079163-4</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.loc.gov/authorities/subjects/sh85148236</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://dewey.info/class/355.009/about</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.loc.gov/authorities/subjects/sh85145182</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://dewey.info/class/940.3/about</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://rvk.uni-regensburg.de/api/xml/node/NP%204440</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://rvk.uni-regensburg.de/api/xml/node/NP%204425</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://rvk.uni-regensburg.de/api/xml/node/LB%2051000</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/subject</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/4200793-8</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/oclcnum</uri>
+			</binding>
+			<binding name='o'>
+				<literal>244057457</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.geonames.org/ontology#countryCode</uri>
+			</binding>
+			<binding name='o'>
+				<literal>DE</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2002/07/owl#sameAsVol</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV007921367/vol/22</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/dc/dcmitype/Text</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://xmlns.com/foaf/0.1/Document</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Document</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Book</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2002/07/owl#sameAs</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://hub.culturegraph.org/about/DNB-987356151</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/description</uri>
+			</binding>
+			<binding name='o'>
+				<literal>hrsg von Barbara Korte</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/issued</uri>
+			</binding>
+			<binding name='o'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#int'>2008</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/publisher</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Klartext</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/title</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Der Erste Weltkrieg in der populären Erinnerungskultur</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Aufsatzsammlung</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Geschichte</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Weltkrieg &lt;1914-1918&gt;</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal datatype='http://purl.org/dc/terms/DDC'>355.009</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal datatype='http://purl.org/dc/terms/DDC'>940.3</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/subject</uri>
+			</binding>
+			<binding name='o'>
+				<literal xml:lang='de'>Kollektives Gedächtnis</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-11/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-12/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-188/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-19/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-20/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-29/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-384/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-473/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-521/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-706/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-739/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-B1550/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-B496/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-M352/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-M472/item/BV023169149</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/isbn</uri>
+			</binding>
+			<binding name='o'>
+				<literal>3898617270</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/isbn</uri>
+			</binding>
+			<binding name='o'>
+				<literal>9783898617277</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/edition</uri>
+			</binding>
+			<binding name='o'>
+				<literal>1. Aufl.</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/lccn</uri>
+			</binding>
+			<binding name='o'>
+				<literal>D522.42</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://iflastandards.info/ns/isbd/elements/P1053</uri>
+			</binding>
+			<binding name='o'>
+				<literal>222 S. Ill.</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/publicationStatement</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Essen : Klartext 2008</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/placeOfPublication</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Essen</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV023169149</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/placeOfPublication</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.loc.gov/vocabulary/countries/gw</uri>
+			</binding>
+		</result>
+	</results>
+</sparql>

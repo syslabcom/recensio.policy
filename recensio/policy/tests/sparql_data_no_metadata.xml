@@ -1,0 +1,329 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<sparql xmlns='http://www.w3.org/2005/sparql-results#'>
+	<head>
+		<variable name='docid'/>
+		<variable name='p'/>
+		<variable name='o'/>
+	</head>
+	<results>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://id.loc.gov/vocabulary/relators/aut</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/116149027</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/bibliographicCitation</uri>
+			</binding>
+			<binding name='o'>
+				<literal>2</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/bibliographicCitation</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Grønlands Geologiske Undersøgelse: Bulletin : 25</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/creator</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://d-nb.info/gnd/116149027</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/extent</uri>
+			</binding>
+			<binding name='o'>
+				<literal>223 S. Ill., Kt. 4 Kt.</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/isPartOf</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV000898335</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/isPartOf</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV013568231</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/language</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://id.loc.gov/vocabulary/iso639-2/eng</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/license</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://creativecommons.org/publicdomain/zero/1.0/</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/oclcnum</uri>
+			</binding>
+			<binding name='o'>
+				<literal>312158810</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2002/07/owl#sameAsVol</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV000898335/vol/25</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2002/07/owl#sameAsVol</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/title/BV013568231/vol/2</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/dc/dcmitype/Text</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Document</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Book</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://purl.org/ontology/bibo/Thesis</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://www.w3.org/2002/07/owl#sameAs</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://hub.culturegraph.org/about/BVB-BV013575871</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/description</uri>
+			</binding>
+			<binding name='o'>
+				<literal>by Asger Berthelsen</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/description</uri>
+			</binding>
+			<binding name='o'>
+				<literal>SA aus: Meddelelser om Gronland ; 123,1</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/terms/issued</uri>
+			</binding>
+			<binding name='o'>
+				<literal datatype='http://www.w3.org/2001/XMLSchema#int'>1960</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/dc/elements/1.1/title</uri>
+			</binding>
+			<binding name='o'>
+				<literal>Structural studies in the Pre-Cambrian of western Greenland</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-11/item/BV013575871</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-188/item/BV013575871</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/vocab/frbr/core#exemplar</uri>
+			</binding>
+			<binding name='o'>
+				<uri>http://lod.b3kat.de/bib/DE-19/item/BV013575871</uri>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://purl.org/ontology/bibo/isbn</uri>
+			</binding>
+			<binding name='o'>
+				<literal>123</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://iflastandards.info/ns/isbd/elements/P1053</uri>
+			</binding>
+			<binding name='o'>
+				<literal>223 S. Ill., Kt. 4 Kt.</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/publicationStatement</uri>
+			</binding>
+			<binding name='o'>
+				<literal>København 1960</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/placeOfPublication</uri>
+			</binding>
+			<binding name='o'>
+				<literal>København</literal>
+			</binding>
+		</result>
+		<result>
+			<binding name='docid'>
+				<uri>http://lod.b3kat.de/title/BV013575871</uri>
+			</binding>
+			<binding name='p'>
+				<uri>http://rdvocab.info/Elements/otherTitleInformation</uri>
+			</binding>
+			<binding name='o'>
+				<literal>2: Geology of Tovqussap Nuná</literal>
+			</binding>
+		</result>
+	</results>
+</sparql>

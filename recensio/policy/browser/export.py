@@ -1,9 +1,14 @@
 from Products.Five.browser import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
 from datetime import date
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
+from plone import api
 from plone.registry.interfaces import IRegistry
+from recensio.contenttypes.interfaces.review import IReview
+from recensio.policy.export import LZAExporter
+from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
 from time import time
@@ -32,17 +37,25 @@ class MetadataExport(BrowserView):
         annotations[EXPORT_TIMESTAMP_KEY] = time()
         transaction.commit()
 
-        exporters = [(name, factory()) for name, factory in
-                     getFactoriesFor(IRecensioExporter)]
-        exporters_to_run = [(name, e) for name, e in exporters
-                            if e.needs_to_run()]
+        try:
+            exporters = [(name, factory()) for name, factory in
+                        getFactoriesFor(IRecensioExporter)]
+            exporters_to_run = [(name, e) for name, e in exporters
+                                if e.needs_to_run()]
+        except Exception as e:
+            log.exception(e)
+            del annotations[EXPORT_TIMESTAMP_KEY]
+            msg = 'Error, aborting export: ' + str(e)
+            log.error(msg)
+            return msg
+
         if not exporters_to_run:
             del annotations[EXPORT_TIMESTAMP_KEY]
             log.info('export finished, nothing to do')
             return 'Nothing to do, no exporter requested an export run.'
 
-        for issue in self.issues():
-            for review in self.reviews(issue):
+        for issue_or_volume in self.issues_and_volumes():
+            for review in self.reviews(issue_or_volume):
                 for name, exporter in exporters_to_run:
                     try:
                         exporter.add_review(review)
@@ -64,17 +77,17 @@ class MetadataExport(BrowserView):
         return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
 
-    def issues(self):
-        pc = self.context.portal_catalog
+    def issues_and_volumes(self):
+        pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
         results = pc(review_state="published",
-                     portal_type=("Issue"),
+                     portal_type=("Issue", "Volume"),
                      path=parent_path)
         for item in results:
             yield item.getObject()
 
     def reviews(self, issue):
-        pc = self.context.portal_catalog
+        pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(issue.getPhysicalPath()),
                            depth=3)
         results = pc(review_state="published",
@@ -129,3 +142,33 @@ class ChroniconExport(BrowserView):
                 attribs.st_size, zipstream.get_size())
             log.error(msg)
             return msg
+
+
+class DaraUpdate(BrowserView):
+    """Send metadata to da|ra, in effect registering the object's DOI or
+    updating its metadata if already registered."""
+
+    def __call__(self):
+        if self.request.get('REQUEST_METHOD') == 'POST':
+            status, message = register_doi(self.context)
+            IStatusMessage(self.request).addStatusMessage(
+                message, type=status)
+        self.request.response.redirect(self.context.absolute_url())
+
+
+class ResetLZAExportFlag(BrowserView):
+
+    def _reset_flag(self, context):
+        paths = []
+        if IReview.providedBy(context):
+            self.exporter._set_exported(context, value=False)
+            paths.append('/'.join(context.getPhysicalPath()))
+        for child in getattr(context, 'objectValues', lambda: [])():
+            paths += self._reset_flag(child)
+        return paths
+
+    def __call__(self):
+        self.exporter = LZAExporter()
+        paths = self._reset_flag(self.context)
+        return (u"Reset LZA export flag for the following objects:\n\n" +
+                u'\n'.join(paths))
