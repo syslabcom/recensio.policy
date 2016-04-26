@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '3.3.3.dev0'
+version = '4.0.1.dev0'
 
 setup(name='recensio.policy',
       version=version,

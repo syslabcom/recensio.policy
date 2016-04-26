@@ -1,7 +1,13 @@
 Changelog
 =========
 
-3.3.3 (unreleased)
+4.0.1 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
+4.0.0 (2016-04-25)
 ------------------
 
 - Chronicon-Export: new schema; added originalurl, page_first, page_last;
