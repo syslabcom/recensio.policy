@@ -13,7 +13,6 @@ from zope.component import queryUtility
 from zope.interface import directlyProvides
 import constants
 import os
-import pkg_resources
 
 log = getLogger('recensio.policy.setuphandlers.py')
 
@@ -35,9 +34,17 @@ def guard(func):
     return wrapper
 
 
-@guard
+def guard_voc(func):
+    def wrapper(self):
+        if self.readDataFile('recensio.policy_marker_voc.txt') is None:
+            return
+        return func(self)
+    return wrapper
+
+
+@guard_voc
 def importVocabularies(self):
-    path_tmpl = '../../vocabularies/ddc_%s'
+    path_tmpl = '../../../../vocabularies/ddc_%s'
     site = self.getSite()
     pvm = getToolByName(site, 'portal_vocabularies')
     for (filenamepart, vocabname) in (('geo.vdex', 'region_values'),
@@ -45,11 +52,11 @@ def importVocabularies(self):
                                       ('sach.vdex', 'topic_values'),
                                       ('zeit.vdex', 'epoch_values')):
         if vocabname not in pvm:
-            pvm.invokeFactory('VdexFileVocabulary', vocabname)
-            pvm[vocabname].importXMLBinding(
-                pkg_resources.resource_string(
-                    __name__, path_tmpl % filenamepart))
-            pvm[vocabname].showLeafsOnly = False
+            file_data = self.readDataFile(path_tmpl % filenamepart)
+            if file_data is not None:
+                pvm.invokeFactory('VdexFileVocabulary', vocabname)
+                pvm[vocabname].importXMLBinding(file_data)
+                pvm[vocabname].showLeafsOnly = False
     for vocab_name, vocabulary in constants.vocabularies.items():
         if not hasattr(pvm, vocab_name):
             createSimpleVocabs(pvm, {vocab_name: vocabulary.items()})
