@@ -89,7 +89,7 @@ class MetadataExport(BrowserView):
     def reviews(self, issue):
         pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(issue.getPhysicalPath()),
-                           depth=3)
+                           depth=1)
         results = pc(review_state="published",
                      portal_type=("Review Monograph", "Review Journal"),
                      path=parent_path)
