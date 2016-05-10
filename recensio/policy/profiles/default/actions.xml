@@ -12,8 +12,7 @@
    <property name="url_expr">string:$object_url/RSS</property>
    <property name="link_target"></property>
    <property name="icon_expr">string:$portal_url/rss.png</property>
-   <property
-      name="available_expr">python:portal.portal_syndication.isSyndicationAllowed(object)</property>
+   <property name="available_expr">object/@@syndication-util/context_enabled</property>
    <property name="permissions">
     <element value="View"/>
    </property>
@@ -200,7 +199,7 @@
    <property name="link_target"></property>
    <property name="icon_expr"></property>
    <property
-      name="available_expr">python:folder is object and portal.portal_syndication.isSiteSyndicationAllowed()</property>
+      name="available_expr">python:folder is object and portal.restrictedTraverse('syndication-util').context_allowed()</property>
    <property name="permissions">
     <element value="Manage properties"/>
    </property>
