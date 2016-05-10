@@ -62,6 +62,8 @@ class MetadataExport(BrowserView):
                     except Exception as e:
                         log.error('Error in {0} - {1}: {2}'.format(
                             review.getId(), e.__class__.__name__, e))
+            # Free memory after every issue and volume
+            transaction.commit()
         statuses = []
         for name, exporter in exporters_to_run:
             try:
