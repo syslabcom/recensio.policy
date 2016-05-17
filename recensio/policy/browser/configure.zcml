@@ -187,6 +187,13 @@
       />
 
   <browser:page
+      name="metadata_query"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      class=".opac.MetadataQuery"
+      permission="zope.Public"
+      />
+
+  <browser:page
       name="fixer1"
       for="*"
       class=".fixer.Fixer"
