@@ -191,3 +191,9 @@ def v12to13(portal_setup):
     portal_setup.runImportStepFromProfile(
         'profile-recensio.policy:default',
         'recensio_policy_vocabularies')
+
+
+def v13to14(portal_setup):
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'plone.app.registry')
