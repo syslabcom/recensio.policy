@@ -11,6 +11,10 @@
 
   <include package=".browser" />
 
+  <subscriber for="zope.processlifetime.IProcessStarting"
+    handler=".dbconfig.dbconfig"
+    />
+
   <genericsetup:registerProfile
     name="default"
     title="Recensio Policy"
