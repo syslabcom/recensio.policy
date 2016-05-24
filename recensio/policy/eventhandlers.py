@@ -1,12 +1,15 @@
 from plone import api
 from plone.app.async.interfaces import IAsyncService
-from recensio.contenttypes.interfaces import IParentGetter
 from recensio.policy.export import register_doi_requestless
 from zope.component import getUtility
+
+REVIEW_TYPES = ['Review Monograph', 'Review Journal']
 
 
 def review_published_eventhandler(obj, evt):
     if not evt.transition or evt.transition.getId() != 'publish':
+        return
+    if obj.portal_type not in REVIEW_TYPES:
         return
     if not obj.isDoiRegistrationActive():
         return
