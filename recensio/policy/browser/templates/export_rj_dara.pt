@@ -71,7 +71,7 @@
                     </authorEditor>
                 </authorsEditors>
                 <title tal:content="context/Title">Titel der Zeitschrift</title>
-                <year tal:content="context/getYearOfPublication">1970</year>
+                <year tal:condition="context/getYearOfPublication" tal:content="context/getYearOfPublication">1970</year>
                 <publisher tal:content="context/getPublisher"></publisher>
                 <places tal:content="context/getPlaceOfPublication"></places>
                 <ISSNs tal:condition="context/getIssn"><ISSN tal:content="context/getIssn"></ISSN></ISSNs>
