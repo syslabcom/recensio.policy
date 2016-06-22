@@ -74,7 +74,7 @@
                 <year tal:content="context/getYearOfPublication">1970</year>
                 <publisher tal:content="context/getPublisher"></publisher>
                 <places tal:content="context/getPlaceOfPublication"></places>
-                <ISSNs><ISSN tal:content="context/getIssn"></ISSN></ISSNs>
+                <ISSNs tal:condition="context/getIssn"><ISSN tal:content="context/getIssn"></ISSN></ISSNs>
             </structuredPublication>
         </publication>
     </publications>
