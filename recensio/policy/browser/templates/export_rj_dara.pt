@@ -19,9 +19,10 @@
         <currentVersion>1</currentVersion>
     </resourceIdentifier>
     <titles>
-        <title>
+        <title tal:define="title context/Title;
+                           title python:title[:240]">
             <language>de</language>
-            <titleName>Rezension über <tal:title replace="context/Title">Titel</tal:title></titleName>
+            <titleName>Rezension über <tal:title replace="title">Titel</tal:title></titleName>
         </title>
     </titles>
     <creators>
