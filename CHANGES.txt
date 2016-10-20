@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.0.4 (unreleased)
+4.0.4 (2016-10-20)
 ------------------
 
 - Added currentVersion, refs #13874 [reinhardt]
