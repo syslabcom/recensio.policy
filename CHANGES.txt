@@ -4,13 +4,13 @@ Changelog
 4.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed resourceType, refs #13874 [reinhardt]
 
 
 4.0.2 (2016-07-11)
 ------------------
 
-- Nothing changed yet.
+- Only run doi registration for review types, refs #13566 [reinhardt]
 
 
 4.0.1 (2016-05-23)
