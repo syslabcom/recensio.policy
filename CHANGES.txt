@@ -4,7 +4,7 @@ Changelog
 4.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added currentVersion, refs #13874 [reinhardt]
 
 
 4.0.3 (2016-10-20)

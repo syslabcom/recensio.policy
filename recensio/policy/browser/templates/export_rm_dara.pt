@@ -14,7 +14,10 @@
             <typeName>Review</typeName>
         </resourceTypeFree>
     </resourceTypesFree>
-    <resourceIdentifier><identifier tal:content="context/UID">ed891fc49fdbbb562278aa88e9ffb40d</identifier></resourceIdentifier>
+    <resourceIdentifier>
+        <identifier tal:content="context/UID">ed891fc49fdbbb562278aa88e9ffb40d</identifier>
+        <currentVersion>1</currentVersion>
+    </resourceIdentifier>
     <titles>
         <title>
             <language>de</language>
