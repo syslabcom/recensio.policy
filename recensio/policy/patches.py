@@ -1,6 +1,7 @@
 from collective.solr import indexer, mangler
 #from collective.solr.indexer import datehandler
 from collective.solr.mangler import *
+from collective.solr.utils import isSimpleTerm
 from Products.CMFPlone.utils import safe_unicode
 
 # This seems to be fixed with Solr 3.3, but keep an eye out for problems!

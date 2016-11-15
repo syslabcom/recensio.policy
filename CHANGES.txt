@@ -4,7 +4,7 @@ Changelog
 4.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Upgraded to collective.solr 4.0, refs #14362 [reinhardt]
 
 
 4.0.4 (2016-10-20)

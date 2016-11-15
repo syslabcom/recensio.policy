@@ -56,7 +56,7 @@ setup(name='recensio.policy',
           'setuptools',
           'slc.zopescript',
           'collective.logbook',
-          'collective.solr',
+          'collective.solr>=4.0',  # we need getDataOrigin, see #14362
           'zope.app.pagetemplate',
           'zope.keyreference',
           'five.intid',  # Bugfix for plone.app.async
