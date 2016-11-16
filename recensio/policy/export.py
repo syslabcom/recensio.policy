@@ -138,16 +138,28 @@ class ChroniconExporter(BaseExporter):
         return self.get_parent("Volume").getYearOfPublication() or None
 
     def get_package_journal_issue(self):
-        return unicode(self.get_parent("Issue").getId(), 'utf-8')
+        issue = self.get_parent("Issue")
+        if issue is None:
+            return None
+        return unicode(issue.getId(), 'utf-8')
 
     def get_package_journal_issue_title(self):
-        return unicode(self.get_parent("Issue").Title(), 'utf-8')
+        issue = self.get_parent("Issue")
+        if issue is None:
+            return None
+        return unicode(issue.Title(), 'utf-8')
 
     def get_issue_filename(self):
-        return "recensio_%s_%s_%s.xml" % (
-            self.get_publication_shortname(),
-            self.get_package_journal_volume(),
-            self.get_package_journal_issue())
+        issue = self.get_package_journal_issue()
+        if issue is not None:
+            return "recensio_%s_%s_%s.xml" % (
+                self.get_publication_shortname(),
+                self.get_package_journal_volume(),
+                issue)
+        else:
+            return "recensio_%s_%s.xml" % (
+                self.get_publication_shortname(),
+                self.get_package_journal_volume())
 
     def finish_issue(self):
         pt = PageTemplateFile(self.template)
@@ -203,6 +215,8 @@ class ChroniconExporter(BaseExporter):
     def add_review(self, review):
         """Expects reviews of the same issue to be added consecutively"""
         review_issue = IParentGetter(review).get_parent_object_of_type('Issue')
+        if review_issue is None:
+            review_issue = IParentGetter(review).get_parent_object_of_type('Volume')
         if self.current_issue != review_issue:
             if self.current_issue:
                 self.finish_issue()

@@ -62,6 +62,18 @@ class TestExporter(unittest.TestCase):
         login(self.layer['app'], SITE_OWNER_NAME)
         add_number_of_each_review_type(
             self.portal, 1, rez_classes=[ReviewMonograph, ReviewJournal])
+        sammelband = api.content.create(
+            container=self.portal['sample-reviews'],
+            title='Sammelband A',
+            id='sammelband-a',
+            type='Publication',
+        )
+        self.vol_1 = api.content.create(
+            container=sammelband,
+            title='Volume 1',
+            id='volume-1',
+            type='Volume',
+        )
 
         summer_a = self.portal['sample-reviews']['newspapera']['summer']
         issue_2_a = summer_a['issue-2']
@@ -76,6 +88,10 @@ class TestExporter(unittest.TestCase):
         self.review_a2.setEffectiveDate(
             DateTime('2013/03/09 11:42:52.827401 GMT+2'))
         self.review_a2.setBv('12345')
+        self.review_c = api.content.copy(
+            source=self.review_a,
+            target=self.vol_1,
+        )
 
         login(self.portal, TEST_USER_NAME)
 
@@ -302,6 +318,19 @@ class TestExporter(unittest.TestCase):
     def test_chronicon_exporter_two_issues(self):
         exporter = ChroniconExporter()
         self._test_exporter_two_issues(exporter)
+
+    def test_chronicon_exporter_add_review_handles_volumes(self):
+        exporter = ChroniconExporter()
+        exporter.add_review(self.review_a)
+        exporter.add_review(self.review_a2)
+        exporter.add_review(self.review_c)
+        self.assertEqual(len(exporter.reviews_xml), 1)
+        self.assertEqual(len(exporter.issues_xml), 1)
+        self.assertEqual(exporter.current_issue, self.vol_1)
+
+        exporter.finish_issue()
+        self.assertEqual(len(exporter.reviews_xml), 0)
+        self.assertEqual(len(exporter.issues_xml), 2)
 
     def test_lza_exporter_one_issue(self):
         exporter = LZAExporter()

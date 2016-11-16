@@ -4,6 +4,8 @@ Changelog
 4.0.5 (unreleased)
 ------------------
 
+- Handle volumes as well as issues in ChroniconExporter, refs #14262
+  [reinhardt]
 - Upgraded to collective.solr 4.0, refs #14362 [reinhardt]
 
 
