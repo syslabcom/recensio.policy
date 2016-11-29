@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.0.5 (unreleased)
+4.0.5 (2016-11-29)
 ------------------
 
 - Handle volumes as well as issues in ChroniconExporter, refs #14262
