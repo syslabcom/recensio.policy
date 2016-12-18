@@ -13,6 +13,8 @@ Changelog
 - Handle volumes as well as issues in ChroniconExporter, refs #14262
   [reinhardt]
 - Upgraded to collective.solr 4.0, refs #14362 [reinhardt]
+- Changed fields of MissingBVIDExporter, refs #14156
+  [reinhardt]
 
 
 4.0.4 (2016-10-20)

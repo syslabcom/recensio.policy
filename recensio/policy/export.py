@@ -326,7 +326,11 @@ class MissingBVIDExporter(BVIDExporter):
 
     def add_review(self, review):
         if not review.getBv():
-            self.items.append((review.Title(), review.absolute_url()))
+            if hasattr(review, 'getIsbn'):
+                isbn_or_issn = review.getIsbn()
+            else:
+                isbn_or_issn = review.getIssn()
+            self.items.append((review.UID(), isbn_or_issn))
 
 
 class DaraExporter(BaseExporter):

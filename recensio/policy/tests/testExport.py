@@ -404,7 +404,8 @@ class TestExporter(unittest.TestCase):
         export_file = self.portal[filename]
         fp = export_file.getFile().getBlob().open()
         csv_data = fp.read()
-        self.assertIn(self.review_b.absolute_url(), csv_data)
+        self.assertIn(self.review_b.UID(), csv_data)
+        self.assertIn(self.review_b.getIsbn(), csv_data)
 
 
 class TestMetadataExport(unittest.TestCase):
