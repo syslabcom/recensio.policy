@@ -2,7 +2,7 @@
 <resource
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
-    xsi:schemaLocation="http://www.da-ra.de/fileadmin/media/da-ra.de/Technik/dara_v3.1_de_en_18112014.xsd">
+    xsi:noNamespaceSchemaLocation="http://www.da-ra.de/fileadmin/media/da-ra.de/Technik/dara_v3.1_de_en_18112014.xsd">
     <resourceType>3</resourceType>
     <resourceTypesFree>
         <resourceTypeFree>
@@ -21,13 +21,14 @@
     <titles>
         <title>
             <language>de</language>
-            <titleName>Rezension über <tal:title replace="context/Title">Titel</tal:title></titleName>
+            <titleName>Rezension: <tal:title replace="context/getDecoratedTitle">Autor: Titel. Untertitel</tal:title></titleName>
         </title>
     </titles>
     <creators>
         <creator>
             <person tal:repeat="author context/getReviewAuthors">
                 <firstName tal:content="author/firstname">Hans</firstName>
+                <middleName></middleName>
                 <lastName tal:content="author/lastname">Testperson</lastName>
             </person>
         </creator>
@@ -59,6 +60,18 @@
             </keywords>
         </freeKeyword>
     </freeKeywords>
+    <relations>
+      <relation>
+        <identifier tal:content="context/getIsbn">978-3-406-68822-5</identifier>
+        <identifierType>ISBN</identifierType>
+        <relationType>23</relationType>
+      </relation>
+      <relation tal:condition="context/canonical_uri|nothing">
+        <identifier tal:content="context/canonical_uri">http://www.sehepunkte.de/2016/06/28546.html</identifier>
+        <identifierType>URL</identifierType>
+        <relationType>17</relationType>
+      </relation>
+    </relations>
     <publications>
         <publication>
             <structuredPublication>
@@ -73,6 +86,7 @@
                         <authorEditor tal:condition="python:author['lastname'] or author['firstname']">
                             <author>
                                 <firstName tal:content="python:author['firstname'] or 'N/A'">Hans</firstName>
+                                <middleName></middleName>
                                 <lastName tal:content="python:author['lastname'] or 'N/A'">Testautor</lastName>
                             </author>
                         </authorEditor>
@@ -89,14 +103,19 @@
                         </authorEditor>
                     </tal:editorial>
                 </authorsEditors>
-                <title tal:content="context/Title">Titel der Monographie</title>
+                <title tal:content="context/punctuated_title_and_subtitle">Titel der Monographie</title>
                 <year tal:content="context/getYearOfPublication">1970</year>
                 <publisher tal:content="context/getPublisher"></publisher>
                 <places tal:content="context/getPlaceOfPublication"></places>
                 <volume tal:condition="context/getSeriesVol" tal:content="context/getSeriesVol"></volume>
                 <anthology tal:condition="context/getSeries" tal:content="context/getSeries"></anthology>
                 <pages tal:content="context/getPages"></pages>
-                <isbn tal:content="context/getIsbn"></isbn>
+                <PIDs>
+                  <PID>
+                    <ID>ISBN <tal:isbn tal:replace="context/getIsbn">978-3-406-68822-5</tal:isbn></ID>
+                    <pidType>ISBN</pidType>
+                  </PID>
+                </PIDs>
             </structuredPublication>
         </publication>
     </publications>
