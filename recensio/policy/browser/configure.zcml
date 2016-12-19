@@ -249,6 +249,14 @@
     permission="zope2.View"
     />
 
+  <browser:page
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    name="bvid-update"
+    class=".bvid-update.BVIDUpdate"
+    template="templates/bvid-update.pt"
+    layer="recensio.theme.interfaces.IRecensioLayer"
+    permission="cmf.ManagePortal"
+    />
 
 
 </configure>

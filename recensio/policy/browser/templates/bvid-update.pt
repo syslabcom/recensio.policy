@@ -1,0 +1,44 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="recensio">
+<body>
+
+<metal:content-core fill-slot="content-core">
+    <div id="bvid-update">
+        <h1 i18n:translate="bvid_update_view">BV-ID-Update</h1>
+        <div tal:condition="view/errors|nothing">
+            Es sind Fehler aufgetreten:
+            <ul>
+                <li tal:repeat="error view/errors" tal:content="error">Fehler</li>
+            </ul>
+        </div>
+
+        <div tal:condition="view/update_successful">
+            BV-ID-Update erfolgreich!
+        </div>
+        <div tal:condition="view/updated">
+            Objekte aktualisiert:
+            <ul>
+                <li tal:repeat="uid view/updated" tal:content="uid">0123456789</li>
+            </ul>
+        </div>
+
+        <div tal:condition="not: view/update_successful">
+            Bitte wählen Sie eine CSV-Datei für das BV-ID-Update. Die Datei muss die Felder recensio-ID, ISBN und BV-ID beinhalten. Für jede Zeile wird die Rezension mit der gegebenen recensio-ID nachgeschlagen und die gegebene BV-ID auf der Rezension gesetzt.
+        </div>
+        <form name="bvid-update" method="POST" enctype="multipart/form-data"
+            tal:condition="not: view/update_successful">
+            <label for="csv_file" i18n:translate="csv_file">CSV-Datei</label>
+            <input type="file" name="csv_file" />
+            <input type="submit" value="Absenden" i18n:attributes="value" />
+        </form>
+    </div>
+
+</metal:content-core>
+
+</body>
+</html>
