@@ -260,7 +260,15 @@ class BVIDExporter(BaseExporter):
 
     def add_review(self, review):
         if review.getBv():
-            self.items.append((review.getBv(), review.absolute_url()))
+            try:
+                use_canonical = review.isUseCanonicalUriForBVID()
+            except AttributeError:
+                use_canonical = False
+            if use_canonical:
+                url = review.getCanonical_uri()
+            else:
+                url = review.absolute_url()
+            self.items.append((review.getBv(), url))
 
     def export(self):
         csvfile = StringIO()

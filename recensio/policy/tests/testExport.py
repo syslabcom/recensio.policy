@@ -77,7 +77,9 @@ class TestExporter(unittest.TestCase):
 
         summer_a = self.portal['sample-reviews']['newspapera']['summer']
         issue_2_a = summer_a['issue-2']
-        summer_b = self.portal['sample-reviews']['newspaperb']['summer']
+        newspaperb = self.portal['sample-reviews']['newspaperb']
+        newspaperb.setUseCanonicalUriForBVID(True)
+        summer_b = newspaperb['summer']
         issue_2_b = summer_b['issue-2']
         self.review_a = issue_2_a.objectValues()[0]
         self.review_a.setEffectiveDate(
@@ -379,6 +381,9 @@ class TestExporter(unittest.TestCase):
 
     def test_bvid_exporter(self):
         self.review_b.setBv('12345')
+        self.review_b.setCanonical_uri(
+            'http://otherhost/site/sample-reviews/newspaperb/summer/issue-2/'
+            'ReviewMonograph110550203')
         exporter = BVIDExporter()
         exporter.add_review(self.review_a)
         exporter.add_review(self.review_b)
@@ -390,8 +395,11 @@ class TestExporter(unittest.TestCase):
         fp = export_file.getFile().getBlob().open()
         csv_data = fp.read()
         self.assertIn(self.review_b.getBv(), csv_data)
+        self.assertIn(self.review_a.absolute_url(), csv_data)
+        self.assertIn(self.review_b.getCanonical_uri(), csv_data)
 
         self.review_b.setBv('')
+        self.review_b.setCanonical_uri('')
 
     def test_missing_bvid_exporter(self):
         exporter = MissingBVIDExporter()
