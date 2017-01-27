@@ -48,23 +48,7 @@
        title="Recensio.net"
        alt="Recensio.net Logo"/>
 
-<object type="application/x-shockwave-flash" 
-        id="page_image"
-        tal:define="swf_path string:${portal_url}/++resource++recensio.theme.images/main_${language}.swf;
-                    alt_img_path string:${portal_url}/++resource++recensio.theme.images/mainimage_${language}.png"
-        tal:attributes="data swf_path" 
-        width="900" height="150">
+  <img id="page_image"
+       tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/mainimage_${language}.png"/> 
 
-    <param name="movie" tal:attributes="value swf_path"/>
-    <param name="wmode" value="opaque" />
-    <embed wmode="opaque"
-           width="900" height="150"
-           tal:attributes="src swf_path">
-    </embed>
- 
-    <img 
-        id="page_image"
-        tal:attributes="src alt_img_path"> 
-
-</object>
 </div>

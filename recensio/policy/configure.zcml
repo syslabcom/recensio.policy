@@ -11,6 +11,10 @@
 
   <include package=".browser" />
 
+  <subscriber for="zope.processlifetime.IProcessStarting"
+    handler=".dbconfig.dbconfig"
+    />
+
   <genericsetup:registerProfile
     name="default"
     title="Recensio Policy"
@@ -85,6 +89,16 @@
    description="Reload vocabularies to create new region_values_bsb"
    profile='recensio.policy:default'
    handler=".upgrades.v12to13"
+   />
+
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="13"
+   destination="14"
+   title="Upgrade to 14"
+   description="Reload plone.app.registry to create external_portal_url record"
+   profile='recensio.policy:default'
+   handler=".upgrades.v13to14"
    />
 
  <genericsetup:registerProfile

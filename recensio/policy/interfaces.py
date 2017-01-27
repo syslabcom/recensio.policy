@@ -169,6 +169,16 @@ class IRecensioSettings(Interface):
         default=u'',
         )
 
+    external_portal_url = schema.TextLine(
+        title=_(u'label_external_portal_url',
+                default=u'External URL of this portal'),
+        description=_(u'description_external_portal_url', default=u'The URL '
+                      'that will be used in the cross-portal search on other '
+                      'portals to link to contents inside this portal.'),
+        required=False,
+        default=u'',
+    )
+
     available_content_languages = schema.Text(
         title=_(u'label_available_content_languages', default=u'Available '
             u'languages for content in the site.'),

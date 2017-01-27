@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.0.6 (unreleased)
+4.1.1 (unreleased)
 ------------------
 
 - Changed fields of MissingBVIDExporter, refs #14156
@@ -44,6 +44,13 @@ Changelog
 - Fixed path depth, refs #13615 [reinhardt]
 - Free memory after every issue and volume, refs #13615 [reinhardt]
 - Syndication fix for Plone 4.3, refs #11785 #13624 [reinhardt]
+
+
+4.1.0 (2017-01-27)
+------------------
+
+- Töchter, refs #10441, #13564, #13565, #13568, #13569
+  [reinhardt]
 
 
 4.0.0 (2016-04-25)
