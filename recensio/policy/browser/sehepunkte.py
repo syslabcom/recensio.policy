@@ -2,6 +2,7 @@ from BeautifulSoup import BeautifulSoup
 from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
+from dateutil.relativedelta import relativedelta
 from guess_language import guessLanguage as originalGuessLanguage
 from itertools import chain
 from zope.event import notify
@@ -70,10 +71,12 @@ class Import(BrowserView):
     def _getTargetURLs(self):
         base = 'http://www.sehepunkte.de/export/sehepunkte_%s.xml'
         now = datetime.datetime.now()
-        big_month = datetime.timedelta(days=31)
-        yield base % (now - big_month).strftime('%Y_%m')
-        yield base % (now).strftime('%Y_%m')
-        yield base % (now + big_month).strftime('%Y_%m')
+        past_months = int(self.request.get('past_months', 1))
+        for idx in reversed(range(past_months + 1)):
+            target_date = now - relativedelta(months=idx)
+            yield base % (target_date).strftime('%Y_%m')
+        target_date = now + relativedelta(months=1)
+        yield base % (target_date).strftime('%Y_%m')
 
     def _addReview(self, review):
         if review['volume'] not in self.mag:
@@ -117,7 +120,8 @@ class Import(BrowserView):
         soup = BeautifulSoup(html)
         dirt = soup.findAll('div', {'class' : 'box'})
         for div in dirt:
-            if div.find('div', {'class' : 'header'}).text != \
+            div_header = div.find('div', {'class' : 'header'})
+            if not div_header or div_header.text != \
                 u'Empfohlene Zitierweise:':
                 continue
             review['canonical_uri'] = div.p.a['href']

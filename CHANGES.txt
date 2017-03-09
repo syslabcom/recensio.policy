@@ -4,7 +4,11 @@ Changelog
 4.1.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Added parameter to extend sehepunkte import further into the past.
+  Refs #14551
+  [reinhardt]
+- Sehepunkte: Skip boxes without header. Refs #14551
+  [reinhardt]
 
 
 4.1.2 (2017-01-27)
