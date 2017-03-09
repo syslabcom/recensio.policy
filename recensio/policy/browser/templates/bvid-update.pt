@@ -17,21 +17,21 @@
             </ul>
         </div>
 
-        <div tal:condition="view/update_successful">
+        <div tal:condition="view/update_successful|nothing">
             BV-ID-Update erfolgreich!
         </div>
-        <div tal:condition="view/updated">
+        <div tal:condition="view/updated|nothing">
             Objekte aktualisiert:
             <ul>
                 <li tal:repeat="uid view/updated" tal:content="uid">0123456789</li>
             </ul>
         </div>
 
-        <div tal:condition="not: view/update_successful">
+        <div tal:condition="not: view/update_successful|nothing">
             Bitte wählen Sie eine CSV-Datei für das BV-ID-Update. Die Datei muss die Felder recensio-ID, ISBN und BV-ID beinhalten. Für jede Zeile wird die Rezension mit der gegebenen recensio-ID nachgeschlagen und die gegebene BV-ID auf der Rezension gesetzt.
         </div>
         <form name="bvid-update" method="POST" enctype="multipart/form-data"
-            tal:condition="not: view/update_successful">
+            tal:condition="not: view/update_successful|nothing">
             <label for="csv_file" i18n:translate="csv_file">CSV-Datei</label>
             <input type="file" name="csv_file" />
             <input type="submit" value="Absenden" i18n:attributes="value" />
