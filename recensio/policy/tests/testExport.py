@@ -432,12 +432,14 @@ class TestMetadataExport(unittest.TestCase):
 
         login(self.layer['app'], SITE_OWNER_NAME)
         summer = self.portal['sample-reviews']['newspapera']['summer']
-        issue_2 = summer['issue-2']
-        api.content.transition(obj=issue_2, to_state='published')
-        self.review_1 = issue_2.objectValues()[0]
+        self.issue_2 = summer['issue-2']
+        api.content.transition(obj=self.issue_2, to_state='published')
+        self.review_1 = self.issue_2.objectValues()[0]
         self.review_1.setBv('12345')
         self.review_1.setCanonical_uri(u'http://example.com/reviews/review1')
         api.content.transition(obj=self.review_1, to_state='published')
+        review_2 = self.issue_2.objectValues()[1]
+        api.content.transition(obj=review_2, to_state='published')
 
         login(self.portal, TEST_USER_NAME)
         self.xml_export = self.portal.restrictedTraverse('@@metadata-export')
@@ -494,6 +496,21 @@ class TestMetadataExport(unittest.TestCase):
         gsm.unregisterUtility(
             factory,
             name='broken')
+
+    def test_catalog_inconsistency(self):
+        self.inconsistency_flag = False
+        def error_once(*args, **kwargs):
+            if not self.inconsistency_flag:
+                self.inconsistency_flag = True
+                raise AttributeError("'NoneType' object has no attribute 'getObject'")
+            else:
+                return 'mock result'
+
+        from Products.ZCatalog.CatalogBrains import AbstractCatalogBrain
+        with patch.object(
+                AbstractCatalogBrain, 'getObject', side_effect=error_once):
+            reviews = [r for r in self.xml_export.reviews(self.issue_2)]
+        self.assertGreater(len(reviews), 0)
 
     def test_export_sets_timestamp(self):
         from recensio.policy.browser.export import MetadataExport

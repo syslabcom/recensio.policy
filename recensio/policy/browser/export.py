@@ -86,7 +86,11 @@ class MetadataExport(BrowserView):
                      portal_type=("Issue", "Volume"),
                      path=parent_path)
         for item in results:
-            yield item.getObject()
+            try:
+                yield item.getObject()
+            except AttributeError:
+                log.warn('Could not getObject: ' + item.getPath())
+                continue
 
     def reviews(self, issue):
         pc = api.portal.get_tool('portal_catalog')
@@ -96,7 +100,11 @@ class MetadataExport(BrowserView):
                      portal_type=("Review Monograph", "Review Journal"),
                      path=parent_path)
         for item in results:
-            yield item.getObject()
+            try:
+                yield item.getObject()
+            except AttributeError:
+                log.warn('Could not getObject: ' + item.getPath())
+                continue
 
 
 class ChroniconExport(BrowserView):

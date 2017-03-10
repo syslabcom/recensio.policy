@@ -6,6 +6,8 @@ Changelog
 
 - bvid-update: More robust conditions. Refs #14156
   [reinhardt]
+- metadata-export: Catch catalog inconsistencies. Refs #14156
+  [reinhardt]
 
 
 4.1.2 (2017-01-27)
