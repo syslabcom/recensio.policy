@@ -29,6 +29,8 @@ class MetadataExport(BrowserView):
     def __call__(self):
         log.info('Starting export')
         annotations = IAnnotations(self.context)
+        if self.request.get('force', False):
+            del annotations[EXPORT_TIMESTAMP_KEY]
         timestamp = annotations.get(EXPORT_TIMESTAMP_KEY, 0)
         if time() - timestamp < 2 * 60 * 60:  # 2 hours
             log.info('export already running, abort')
@@ -74,6 +76,7 @@ class MetadataExport(BrowserView):
                     name, e.__class__.__name__, e))
 
         del annotations[EXPORT_TIMESTAMP_KEY]
+        transaction.commit()
         log.info('export finished')
 
         return '<br />\n'.join(

@@ -8,6 +8,9 @@ Changelog
   [reinhardt]
 - metadata-export: Catch catalog inconsistencies. Refs #14156
   [reinhardt]
+- metadat-export: Added 'force' flag. Also commit after deleting timestamp.
+  Refs #14156
+  [reinhardt]
 
 
 4.1.2 (2017-01-27)
