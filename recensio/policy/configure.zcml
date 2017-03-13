@@ -101,6 +101,16 @@
    handler=".upgrades.v13to14"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="14"
+   destination="15"
+   title="Upgrade to 15"
+   description="Reload solr config to deactivate atomic updates"
+   profile='recensio.policy:default'
+   handler=".upgrades.v14to15"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"

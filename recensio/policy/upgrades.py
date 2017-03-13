@@ -197,3 +197,9 @@ def v13to14(portal_setup):
     portal_setup.runImportStepFromProfile(
         'profile-recensio.policy:default',
         'plone.app.registry')
+
+
+def v14to15(portal_setup):
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'solr')

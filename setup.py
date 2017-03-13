@@ -56,9 +56,9 @@ setup(name='recensio.policy',
           'setuptools',
           'slc.zopescript',
           'collective.logbook',
-          # we need getDataOrigin, see #14362, and the cross-portal patch, see
-          # #13678
-          'collective.solr==4.1.0-dev-rec0',
+          # we need >=5.0 for getDataOrigin, see #14362, and the BlobError fix,
+          # see #15018. We also need the cross-portal patch, see #13678
+          'collective.solr==5.0.4-dev-rec0',
           'zope.app.pagetemplate',
           'zope.keyreference',
           'five.intid',  # Bugfix for plone.app.async

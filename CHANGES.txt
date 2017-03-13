@@ -11,6 +11,8 @@ Changelog
 - metadat-export: Added 'force' flag. Also commit after deleting timestamp.
   Refs #14156
   [reinhardt]
+- Upgrade to c.solr 5 but deactivate atomic updates. Refs #15018
+  [reinhardt]
 
 
 4.1.2 (2017-01-27)

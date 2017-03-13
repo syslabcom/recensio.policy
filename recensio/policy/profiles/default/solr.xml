@@ -30,5 +30,6 @@
   <highlight_formatter_post value=""/>
   <highlight_fragsize value="100"/>
   <field-list/>
+  <atomic_updates value="False"/>
  </settings>
 </object>
