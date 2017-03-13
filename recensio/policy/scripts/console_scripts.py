@@ -24,6 +24,8 @@ class NewsletterScript(ConsoleScript):
 
 class SehepunkteImportScript(ConsoleScript):
     def run(self):
+        past_months = self.portal.REQUEST.environ.get('past_months')
+        self.portal.REQUEST['past_months'] = past_months
         si = Import(self.portal, self.portal.REQUEST)
         si()
 

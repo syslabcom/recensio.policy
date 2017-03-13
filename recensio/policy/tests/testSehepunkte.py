@@ -2,6 +2,7 @@ import unittest2 as unittest
 import pkg_resources
 
 from recensio.policy import importSehepunkte
+from recensio.policy.browser.sehepunkte import Import
 from recensio.policy.importSehepunkte import sehepunkte_parser
 
 testdata_filename = pkg_resources.resource_filename(__name__, \
@@ -940,6 +941,12 @@ class FakeLogger(object):
     def error(self, error):
         self.errors.append(error)
 
+
+class FakeImport(Import):
+    def __init__(self, request={}):
+        self.request = request
+
+
 class TestSehepunkteImport(unittest.TestCase):
     def setUp(self):
         self.fake_logger = FakeLogger()
@@ -968,3 +975,13 @@ class TestSehepunkteImport(unittest.TestCase):
         from recensio.policy.browser.sehepunkte import superclean
         data = 'Hallo &#255; Argl&#203bla'
         self.assertEquals(u'Hallo \xff Argl\xcbbla', superclean(data))
+
+    def testGetTargetURLs(self):
+        urls = FakeImport()._getTargetURLs()
+        self.assertEqual(len(list(urls)), 3)
+        urls = FakeImport(request={'past_months': 1})._getTargetURLs()
+        self.assertEqual(len(list(urls)), 3)
+        urls = FakeImport(request={'past_months': 2})._getTargetURLs()
+        self.assertEqual(len(list(urls)), 4)
+        urls = FakeImport(request={'past_months': 12})._getTargetURLs()
+        self.assertEqual(len(list(urls)), 14)

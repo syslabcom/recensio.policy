@@ -13,6 +13,11 @@ Changelog
   [reinhardt]
 - Upgrade to c.solr 5 but deactivate atomic updates. Refs #15018
   [reinhardt]
+- Added parameter to extend sehepunkte import further into the past.
+  Refs #14551
+  [reinhardt]
+- Sehepunkte: Skip boxes without header. Refs #14551
+  [reinhardt]
 
 
 4.1.2 (2017-01-27)
