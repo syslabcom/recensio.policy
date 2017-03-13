@@ -158,7 +158,6 @@ class TestSparqlStable(TestSparqlBase):
             'ddcSubject': [u'372.6049'],
             'isbn': u'9783830921929',
             'keywords': [
-                u'Kindertagessta\u0308Tte',
                 u'Kindertagesst\xe4tte',
                 u'Kindertagesst\xe4tte - Spracherziehung - Kongress - Recklinghausen <2008>',
                 u'Kongress',
@@ -224,7 +223,6 @@ class TestSparqlStable(TestSparqlBase):
             'isbn': u'9783898617277',
             'keywords': [
                 u'Aufsatzsammlung', u'Geschichte',
-                u'Kollektives Geda\u0308Chtnis',
                 u'Kollektives Ged\xe4chtnis',
                 u'Weltkrieg <1914-1918>',
             ],
