@@ -122,7 +122,7 @@ class TestExporter(unittest.TestCase):
                 obj.getDoi(),
                 xmltree.xpath('/resource/doiProposal/text()'))
             self.assertIn(
-                u'Rezension über ' + obj.Title(),
+                u'Rezension: ' + obj.getDecoratedTitle(),
                 xmltree.xpath('/resource/titles/title/titleName/text()'))
             self.assertIn(
                 obj.getReviewAuthors()[0]['firstname'],
@@ -136,6 +136,21 @@ class TestExporter(unittest.TestCase):
             self.assertIn(
                 'CC-BY',
                 '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
+            if hasattr(obj, 'getIsbn'):
+                id_type = 'ISBN'
+                isbn_or_issn = obj.getIsbn()
+            else:
+                id_type = 'ISSN'
+                isbn_or_issn = obj.getIssn()
+            self.assertIn(
+                isbn_or_issn,
+                xmltree.xpath('/resource/relations/relation[identifierType[text()="{0}"]]/identifier/text()'.format(id_type)))
+            self.assertIn(
+                '{0} {1}'.format(id_type, isbn_or_issn),
+                xmltree.xpath('/resource/publications/publication/structuredPublication/PIDs/PID/ID/text()'))
+            self.assertIn(
+                obj.punctuated_title_and_subtitle,
+                xmltree.xpath('/resource/publications/publication/structuredPublication/title/text()'))
 
     def test_chronicon_xml_rm(self):
         xml = self.review_a.restrictedTraverse('@@xml')()
