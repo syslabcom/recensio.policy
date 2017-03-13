@@ -394,11 +394,15 @@ def register_doi(obj):
         else:
             message = 'Error returned by dara server: {0}'.format(e)
         status = 'error'
-        dump_file = NamedTemporaryFile(suffix='.html', delete=False)
-        dump_file.write(e.read())
-        dump_file.close()
         log.error(message)
-        log.info('HTTPError dumped to ' + dump_file.name)
+        body = e.read()
+        if '\n' in body:
+            dump_file = NamedTemporaryFile(suffix='.html', delete=False)
+            dump_file.write(body)
+            dump_file.close()
+            log.info('HTTPError dumped to ' + dump_file.name)
+        else:
+            log.error(body)
     except ValueError as e:
         exc_msg = e.__class__.__name__ + ': ' + str(e)
         message = 'Error while updating dara record (' + exc_msg + ')'
