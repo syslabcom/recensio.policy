@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.0 (unreleased)
+4.2.1 (2017-06-12)
 ------------------
 
 - Allow running export after 6 days. Time between end of export and start of
