@@ -9,6 +9,8 @@ Changelog
   [reinhardt]
 - More unicode handling in newsletter. Refs #15075
   [reinhardt]
+- Make sure we get all results from solr for the export. Refs  #15191
+  [reinhardt]
 
 
 4.2.0 (2017-03-30)

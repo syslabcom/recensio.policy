@@ -82,12 +82,16 @@ class MetadataExport(BrowserView):
         return '<br />\n'.join(
             [name + ': ' + str(status) for name, status in statuses])
 
-    def issues_and_volumes(self):
+    def items(self, portal_type=()):
         pc = api.portal.get_tool('portal_catalog')
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()))
-        results = pc(review_state="published",
-                     portal_type=("Issue", "Volume"),
+        query = dict(review_state="published",
+                     portal_type=portal_type,
                      path=parent_path)
+        results = pc(**query)
+        if None in results:
+            query['b_size'] = len(results)
+            results = pc(**query)
         for item in results:
             try:
                 yield item.getObject()
@@ -95,19 +99,11 @@ class MetadataExport(BrowserView):
                 log.warn('Could not getObject: ' + item.getPath())
                 continue
 
+    def issues_and_volumes(self):
+        return self.items(("Issue", "Volume"))
+
     def reviews(self, issue):
-        pc = api.portal.get_tool('portal_catalog')
-        parent_path = dict(query='/'.join(issue.getPhysicalPath()),
-                           depth=1)
-        results = pc(review_state="published",
-                     portal_type=("Review Monograph", "Review Journal"),
-                     path=parent_path)
-        for item in results:
-            try:
-                yield item.getObject()
-            except AttributeError:
-                log.warn('Could not getObject: ' + item.getPath())
-                continue
+        return self.items(("Review Monograph", "Review Journal"))
 
 
 class ChroniconExport(BrowserView):
