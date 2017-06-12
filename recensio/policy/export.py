@@ -98,7 +98,7 @@ class BaseExporter(object):
     def is_recent(self, export_xml_obj):
         if export_xml_obj is not None:
             modified = export_xml_obj.modified()
-            if DateTime() - 7 < modified:
+            if DateTime() - 6 < modified:
                 return True
         return False
 
