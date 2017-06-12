@@ -68,10 +68,10 @@ class MailCollection(BrowserView):
             subtitle = []
             issue = mag_results[0].aq_parent
             if issue.portal_type in ('Issue', 'Volume'):
-                subtitle.append(issue.Title())
+                subtitle.append(safe_unicode(issue.Title()))
                 volume = issue.aq_parent
                 if volume.portal_type == 'Volume':
-                    subtitle.append(volume.Title())
+                    subtitle.append(safe_unicode(volume.Title()))
             subtitle.reverse()
             if subtitle:
                 retval += u'<h4>%s</h4>\n' % (', '.join(subtitle))

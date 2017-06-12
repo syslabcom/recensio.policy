@@ -7,6 +7,8 @@ Changelog
 - Allow running export after 6 days. Time between end of export and start of
   next export is always less than 7 days. Refs #15191
   [reinhardt]
+- More unicode handling in newsletter. Refs #15075
+  [reinhardt]
 
 
 4.2.0 (2017-03-30)
