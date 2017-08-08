@@ -4,7 +4,8 @@ Changelog
 4.3.0 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Dynamic portal title in comments viewlet. Refs #15699
+  [reinhardt]
 
 
 4.2.1 (2017-06-12)

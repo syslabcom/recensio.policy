@@ -27,3 +27,7 @@ class CommentsViewlet(BaseCommentsViewlet):
     @property
     def escaped_title(self):
         return quote_plus(self.title)
+
+    @property
+    def portal_title(self):
+        return getToolByName(self.context, 'portal_url').getPortalObject().Title()
