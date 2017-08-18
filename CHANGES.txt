@@ -4,6 +4,8 @@ Changelog
 4.3.0 (unreleased)
 ------------------
 
+- Export: Fixed MemoryError. Refs #15689
+  [reinhardt]
 - Dynamic portal title in comments viewlet. Refs #15699
   [reinhardt]
 

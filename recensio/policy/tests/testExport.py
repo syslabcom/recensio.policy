@@ -13,6 +13,7 @@ from plone.app.testing.interfaces import SITE_OWNER_NAME
 from plone.app.testing.interfaces import TEST_USER_NAME
 from plone.registry.interfaces import IRegistry
 from zipfile import ZipFile
+from recensio.policy.export import StatusSuccess
 from recensio.policy.interfaces import IRecensioExporter
 from time import time
 from zope.annotation.interfaces import IAnnotations
@@ -21,6 +22,7 @@ from zope.component import getGlobalSiteManager
 from zope.component import queryUtility
 from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
+from zope.interface import alsoProvides
 from zope.interface import implements
 
 from recensio.contenttypes.setuphandlers import add_number_of_each_review_type
@@ -449,6 +451,8 @@ class TestMetadataExport(unittest.TestCase):
         summer = self.portal['sample-reviews']['newspapera']['summer']
         self.issue_2 = summer['issue-2']
         api.content.transition(obj=self.issue_2, to_state='published')
+        api.content.transition(obj=self.portal['sample-reviews']['newspaperb']['summer']['issue-2'], to_state='published')
+
         self.review_1 = self.issue_2.objectValues()[0]
         self.review_1.setBv('12345')
         self.review_1.setCanonical_uri(u'http://example.com/reviews/review1')
@@ -526,6 +530,37 @@ class TestMetadataExport(unittest.TestCase):
                 AbstractCatalogBrain, 'getObject', side_effect=error_once):
             reviews = [r for r in self.xml_export.reviews(self.issue_2)]
         self.assertGreater(len(reviews), 0)
+
+    def test_no_duplication(self):
+        self._clear_export_files()
+        reviews = []
+        class MockExporter(object):
+            implements(IRecensioExporter)
+
+            needs_to_run = Mock(return_value=True)
+            export = Mock(return_value=StatusSuccess())
+
+            def add_review(self, review):
+                reviews.append(review)
+
+        mock_exporter_factory = Factory(
+            MockExporter, IFactory, 'mock_exporter')
+        gsm = getGlobalSiteManager()
+        gsm.registerUtility(
+            mock_exporter_factory,
+            name='mock_exporter')
+
+        output = self.xml_export()
+        self.assertIn('Success', output)
+
+        self.assertEqual(
+            len(reviews),
+            len(set(reviews)),
+        )
+
+        gsm.unregisterUtility(
+            mock_exporter_factory,
+            name='mock_exporter')
 
     def test_export_sets_timestamp(self):
         from recensio.policy.browser.export import MetadataExport
