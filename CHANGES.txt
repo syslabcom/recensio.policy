@@ -4,6 +4,8 @@ Changelog
 4.3.0 (unreleased)
 ------------------
 
+- Dara-XML: Don't include empty ISBN element. Refs #15178
+  [reinhardt]
 - Export: Fixed MemoryError. Refs #15689
   [reinhardt]
 - Dynamic portal title in comments viewlet. Refs #15699

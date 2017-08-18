@@ -62,7 +62,7 @@
         </freeKeyword>
     </freeKeywords>
     <relations>
-      <relation>
+      <relation tal:condition="context/getIsbn">
         <identifier tal:content="context/getIsbn">978-3-406-68822-5</identifier>
         <identifierType>ISBN</identifierType>
         <relationType>23</relationType>
