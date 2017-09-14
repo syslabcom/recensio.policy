@@ -20,6 +20,9 @@
   <adapter factory=".indexer.authorsFulltext" name="authorsFulltext" />
   <adapter factory=".indexer.titleOrShortname" name="titleOrShortname" />
   <adapter factory=".indexer.isbn" name="isbn" />
+  <adapter factory=".indexer.year" name="year" />
+  <adapter factory=".indexer.place" name="place" />
+  <adapter factory=".indexer.publisher" name="publisher" />
   <adapter factory=".iteration.CustomCheckingCheckoutPolicyAdapter" />
 
   <browser:page

@@ -85,4 +85,28 @@ def isbn(obj):
     isbn = getattr(obj, 'getIsbn', lambda:'')() or getattr(obj, 'getIssn', lambda:'')()
     isbn = ''.join(isbn.split('-'))
     isbn = ''.join(isbn.split(' '))
-    return isbn
+    isbn_online = getattr(obj, 'getIsbn_online', lambda: '')() or getattr(obj, 'getIssn_online', lambda: '')()
+    isbn_online = ''.join(isbn_online.split('-'))
+    isbn_online = ''.join(isbn_online.split(' '))
+    return [val for val in [isbn, isbn_online] if val]
+
+
+def get_field_and_ebook_variant(obj, accessor):
+    val_regular = getattr(obj, accessor, lambda: '')()
+    val_online = getattr(obj, accessor + 'Online', lambda: '')()
+    return [val for val in [val_regular, val_online] if val]
+
+
+@indexer(IReview)
+def year(obj):
+    return get_field_and_ebook_variant(obj, 'getYearOfPublication')
+
+
+@indexer(IReview)
+def place(obj):
+    return get_field_and_ebook_variant(obj, 'getPlaceOfPublication')
+
+
+@indexer(IReview)
+def publisher(obj):
+    return get_field_and_ebook_variant(obj, 'getPublisher')

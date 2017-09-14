@@ -4,6 +4,8 @@ Changelog
 4.3.0 (unreleased)
 ------------------
 
+- Also index e-book fields. Refs #15676
+  [reinhardt]
 - Dara-XML: Don't include empty ISBN element. Refs #15178
   [reinhardt]
 - Export: Fixed MemoryError. Refs #15689
