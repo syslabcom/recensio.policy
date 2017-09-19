@@ -6,7 +6,7 @@ Changelog
 
 - Also index e-book fields. Refs #15676
   [reinhardt]
-- Dara-XML: Don't include empty ISBN element. Refs #15178
+- Dara-XML: Don't include empty ISBN or relations elements. Refs #15178
   [reinhardt]
 - Export: Fixed MemoryError. Refs #15689
   [reinhardt]

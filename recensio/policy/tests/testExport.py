@@ -154,6 +154,21 @@ class TestExporter(unittest.TestCase):
                 obj.punctuated_title_and_subtitle,
                 xmltree.xpath('/resource/publications/publication/structuredPublication/title/text()'))
 
+    def test_dara_xml_no_isbn_no_canonical_uri(self):
+        isbn = self.review_a.getIsbn()
+        self.review_a.setIsbn('')
+        canonical_uri = self.review_a.getCanonical_uri()
+        self.review_a.setCanonical_uri('')
+
+        xml = self.review_a.restrictedTraverse('@@xml-dara')()
+        xmltree = etree.parse(StringIO(xml.encode('utf8')))
+        self.assertEqual(
+            xmltree.xpath('/resource/relations'),
+            [])
+
+        self.review_a.setIsbn(isbn)
+        self.review_a.setCanonical_uri(canonical_uri)
+
     def test_chronicon_xml_rm(self):
         xml = self.review_a.restrictedTraverse('@@xml')()
         xmltree = etree.parse(StringIO(xml))

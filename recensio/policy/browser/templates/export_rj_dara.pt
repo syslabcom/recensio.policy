@@ -61,14 +61,14 @@
             </keywords>
         </freeKeyword>
     </freeKeywords>
-    <relations>
-      <relation>
-        <identifier tal:content="context/getIssn">978-3-406-68822-5</identifier>
+    <relations tal:define="issn context/getIssn|nothing; canonical_uri context/canonical_uri|nothing;" tal:condition="python: issn or canonical_uri">
+      <relation tal:condition="issn">
+        <identifier tal:content="issn">978-3-406-68822-5</identifier>
         <identifierType>ISSN</identifierType>
         <relationType>23</relationType>
       </relation>
-      <relation tal:condition="context/canonical_uri|nothing">
-        <identifier tal:content="context/canonical_uri">http://www.sehepunkte.de/2016/06/28546.html</identifier>
+      <relation tal:condition="canonical_uri">
+        <identifier tal:content="canonical_uri">http://www.sehepunkte.de/2016/06/28546.html</identifier>
         <identifierType>URL</identifierType>
         <relationType>17</relationType>
       </relation>
