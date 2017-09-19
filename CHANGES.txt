@@ -4,6 +4,8 @@ Changelog
 4.3.0 (unreleased)
 ------------------
 
+- Added custom logo link that points to navigation root. Refs #15816
+  [reinhardt]
 - Also index e-book fields. Refs #15676
   [reinhardt]
 - Dara-XML: Don't include empty ISBN or relations elements. Refs #15178

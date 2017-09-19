@@ -42,11 +42,15 @@
     </div>
   </div>
 
-  <img id="recensio_logo"
-       src="++resource++recensio.theme.images/de/logo_recensio.png"
-       tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/${language}/logo_recensio.png"
-       title="Recensio.net"
-       alt="Recensio.net Logo"/>
+  <a id="recensio_logo_anchor"
+     href="/"
+     tal:attributes="href context/@@plone_portal_state/navigation_root_url">
+    <img id="recensio_logo"
+         src="++resource++recensio.theme.images/de/logo_recensio.png"
+         tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/${language}/logo_recensio.png"
+         title="Recensio.net"
+         alt="Recensio.net Logo"/>
+  </a>
 
   <img id="page_image"
        tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/mainimage_${language}.png"/> 
