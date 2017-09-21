@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.0 (unreleased)
+4.3.0 (2017-09-21)
 ------------------
 
 - Added custom logo link that points to navigation root. Refs #15816
@@ -104,7 +104,7 @@ Changelog
 4.1.0 (2017-01-27)
 ------------------
 
-- Töchter, refs #10441, #13564, #13565, #13568, #13569
+- TÃ¶chter, refs #10441, #13564, #13565, #13568, #13569
   [reinhardt]
 
 
