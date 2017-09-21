@@ -1,5 +1,7 @@
 include *.txt
 recursive-include recensio *
+global-exclude *pyc
 include vocabularies/*.vdex
 recursive-include docs *
 recursive-include recensio/policy/scripts *
+prune hooks
