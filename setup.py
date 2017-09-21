@@ -9,7 +9,7 @@ setup(name='recensio.policy',
       open("CHANGES.txt").read(),
       classifiers=[
           "Framework :: Plone",
-          "Programming Language :: Python",
+          "Programming Language :: Python :: 2.7",
       ],
       keywords='plone zope recensio policy',
       author='Syslab.com GmbH',
@@ -29,9 +29,9 @@ setup(name='recensio.policy',
           'sparql-client',
           'BeautifulSoup',
           'Products.ATVocabularyManager>=1.6',
-              # Only here Plone 4 compatibility started
+          # Only here Plone 4 compatibility started
           'Products.CMFDiffTool>=2.0',
-              # This fixed important issues related to Plone 4
+          # This fixed important issues related to Plone 4
           'Products.CMFPlacefulWorkflow',
           'Products.DataGridField',
           'Products.LinguaPlone',
