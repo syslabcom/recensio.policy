@@ -190,6 +190,13 @@ class IRecensioSettings(Interface):
         default=u'',
         )
 
+    show_thematic_search = schema.Bool(
+        title=_(u'label_show_thematic_search',
+                default=u'Show "Thematic search" section in the advanced '
+                'search'),
+        default=True,
+    )
+
     xml_export_server = schema.TextLine(
         title=_(u'label_xml_export_server',
                 default=u'Server name for Chronicon export'),

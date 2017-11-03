@@ -111,6 +111,16 @@
    handler=".upgrades.v14to15"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="15"
+   destination="16"
+   title="Upgrade to 16"
+   description="Reload plone.app.registry to create show_thematic_search record"
+   profile='recensio.policy:default'
+   handler=".upgrades.v15to16"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
