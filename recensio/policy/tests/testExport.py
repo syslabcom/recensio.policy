@@ -353,6 +353,18 @@ class TestExporter(unittest.TestCase):
         exporter = ChroniconExporter()
         self._test_exporter_two_issues(exporter)
 
+    def test_chronicon_exporter_filename_prefix(self):
+        registry = queryUtility(IRegistry)
+        recensio_settings = registry.forInterface(IRecensioSettings)
+        recensio_settings.xml_export_filename_prefix = u"recensio2"
+        chronicon_view = api.content.get_view(
+            context=self.portal,
+            request=self.layer['request'],
+            name='chronicon-export',
+        )
+        self.assertTrue(chronicon_view.filename.startswith(u"recensio2_"),
+                        'Prefix "recensio2" not found')
+
     def test_chronicon_exporter_add_review_handles_volumes(self):
         exporter = ChroniconExporter()
         exporter.add_review(self.review_a)

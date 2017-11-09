@@ -227,6 +227,17 @@ class IRecensioSettings(Interface):
         default=u'',
     )
 
+    xml_export_filename_prefix = schema.TextLine(
+        title=_(u'label_xml_export_filename_prefix',
+                default=u'File name prefix for Chronicon export'),
+        description=_(u'description_xml_export_filename_prefix',
+                      default=u'Enter a prefix for the name of the file that '
+                      'is uploaded to the Chronicon server. The final name '
+                      'will follow the schema "[prefix]_[date]_all.zip".'),
+        required=False,
+        default=u'recensio',
+    )
+
     doi_prefix = schema.TextLine(
         title=_(u'label_doi_prefix',
                 default=u'DOI Prefix'),

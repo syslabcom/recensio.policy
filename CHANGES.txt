@@ -6,6 +6,8 @@ Changelog
 
 - Added setting for disabling thematic search section. Refs #16044
   [reinhardt]
+- Added setting for Chronicon file name prefix. Refs #16093
+  [reinhardt]
 
 
 4.3.0 (2017-09-21)

@@ -113,7 +113,11 @@ class ChroniconExport(BrowserView):
 
     @property
     def filename(self):
-        return "recensio_%s_all.zip" % (
+        registry = getUtility(IRegistry)
+        recensio_settings = registry.forInterface(IRecensioSettings)
+        prefix = recensio_settings.xml_export_filename_prefix
+        return "%s_%s_all.zip" % (
+            prefix,
             date.today().strftime("%d%m%y"),
         )
 

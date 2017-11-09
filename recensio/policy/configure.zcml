@@ -116,7 +116,7 @@
    source="15"
    destination="16"
    title="Upgrade to 16"
-   description="Reload plone.app.registry to create show_thematic_search record"
+   description="Reload plone.app.registry to create show_thematic_search and xml_export_filename_prefix records"
    profile='recensio.policy:default'
    handler=".upgrades.v15to16"
    />
