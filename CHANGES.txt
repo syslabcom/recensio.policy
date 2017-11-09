@@ -8,6 +8,8 @@ Changelog
   [reinhardt]
 - Added setting for Chronicon file name prefix. Refs #16093
   [reinhardt]
+- Patched pyPdf to fix infinite loop. Refs #16076
+  [reinhardt]
 
 
 4.3.0 (2017-09-21)

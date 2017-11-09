@@ -167,3 +167,20 @@ try:
 
 except ImportError:
     pass
+
+
+def readFromStream(stream):
+    name = stream.read(1)
+    if name != "/":
+        raise utils.PdfReadError, "name read error"
+    while True:
+        tok = stream.read(1)
+        if tok.isspace() or tok in NameObject.delimiterCharacters or tok == '':
+            stream.seek(-1, 1)
+            break
+        name += tok
+    return NameObject(name)
+
+from pyPdf.generic import NameObject
+
+NameObject.readFromStream = staticmethod(readFromStream)
