@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.1 (unreleased)
+4.3.1 (2017-11-16)
 ------------------
 
 - Added setting for disabling thematic search section. Refs #16044
