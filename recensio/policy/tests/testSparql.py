@@ -209,6 +209,12 @@ class TestSparqlStable(TestSparqlBase):
         }
         self.assertEquals(expected, metadata)
 
+
+class TestSparqlUnstable(TestSparqlBase):
+    """ These tests break repeatedly, but may serve some use as
+    documentation. They can be run run with `./bin/test -all `"""
+    level = 100
+
     def testExpectedMetadata03(self):
         from recensio.policy.sparqlsearch import getMetadata
         mock_config = {'side_effect': MockResultFactory('sparql_data_03.xml')}
@@ -240,12 +246,6 @@ class TestSparqlStable(TestSparqlBase):
             'year': u'2008',
         }
         self.assertEquals(expected, metadata)
-
-
-class TestSparqlUnstable(TestSparqlBase):
-    """ These tests break repeatedly, but may serve some use as
-    documentation. They can be run run with `./bin/test -all `"""
-    level = 100
 
     def testGetMetadata04(self):
         expected = {
