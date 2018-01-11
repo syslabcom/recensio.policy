@@ -113,31 +113,34 @@ class TestExporter(unittest.TestCase):
             xml = obj.restrictedTraverse('@@xml-dara')()
             xmltree = etree.parse(StringIO(xml.encode('utf8')))
 
-            self.assertValid(xmltree, 'dara_v3.1_de_en_18112014.xsd')
+            self.assertValid(xmltree, 'dara_v4.0_de_en_01122017.xsd')
+
+            ns_map = {'dara': 'http://da-ra.de/schema/kernel-4'}
+            xpath_eval = etree.XPathEvaluator(xmltree, namespaces=ns_map)
             self.assertIn(
                 obj.UID(),
-                xmltree.xpath('/resource/resourceIdentifier/identifier/text()'))
+                xpath_eval('/dara:resource/dara:resourceIdentifier/dara:identifier/text()'))
             self.assertEqual(
-                len(xmltree.xpath('/resource/titles/title')),
+                len(xpath_eval('/dara:resource/dara:titles/dara:title')),
                 1)
             self.assertIn(
                 obj.getDoi(),
-                xmltree.xpath('/resource/doiProposal/text()'))
+                xpath_eval('/dara:resource/dara:doiProposal/text()'))
             self.assertIn(
                 u'Rezension: ' + obj.getDecoratedTitle(),
-                xmltree.xpath('/resource/titles/title/titleName/text()'))
+                xpath_eval('/dara:resource/dara:titles/dara:title/dara:titleName/text()'))
             self.assertIn(
                 obj.getReviewAuthors()[0]['firstname'],
-                xmltree.xpath('/resource/creators/creator/person/firstName/text()'))
+                xpath_eval('/dara:resource/dara:creators/dara:creator/dara:person/dara:firstName/text()'))
             self.assertIn(
                 obj.getReviewAuthors()[0]['lastname'],
-                xmltree.xpath('/resource/creators/creator/person/lastName/text()'))
+                xpath_eval('/dara:resource/dara:creators/dara:creator/dara:person/dara:lastName/text()'))
             self.assertIn(
                 obj.absolute_url(),
-                xmltree.xpath('/resource/dataURLs/dataURL/text()'))
+                xpath_eval('/dara:resource/dara:dataURLs/dara:dataURL/text()'))
             self.assertIn(
                 'CC-BY',
-                '\n'.join(xmltree.xpath('/resource/rights/right/rightsText/text()')))
+                '\n'.join(xpath_eval('/dara:resource/dara:rights/dara:right/dara:freetext/text()')))
             if hasattr(obj, 'getIsbn'):
                 id_type = 'ISBN'
                 isbn_or_issn = obj.getIsbn()
@@ -146,13 +149,13 @@ class TestExporter(unittest.TestCase):
                 isbn_or_issn = obj.getIssn()
             self.assertIn(
                 isbn_or_issn,
-                xmltree.xpath('/resource/relations/relation[identifierType[text()="{0}"]]/identifier/text()'.format(id_type)))
+                xpath_eval('/dara:resource/dara:relations/dara:relation[dara:identifierType[text()="{0}"]]/dara:identifier/text()'.format(id_type)))
             self.assertIn(
                 '{0} {1}'.format(id_type, isbn_or_issn),
-                xmltree.xpath('/resource/publications/publication/structuredPublication/PIDs/PID/ID/text()'))
+                xpath_eval('/dara:resource/dara:publications/dara:publication/dara:structuredPublication/dara:PIDs/dara:PID/dara:ID/text()'))
             self.assertIn(
                 obj.punctuated_title_and_subtitle,
-                xmltree.xpath('/resource/publications/publication/structuredPublication/title/text()'))
+                xpath_eval('/dara:resource/dara:publications/dara:publication/dara:structuredPublication/dara:title/text()'))
 
     def test_dara_xml_no_isbn_no_canonical_uri(self):
         isbn = self.review_a.getIsbn()

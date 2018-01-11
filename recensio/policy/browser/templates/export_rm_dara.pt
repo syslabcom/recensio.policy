@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resource
+    xmlns="http://da-ra.de/schema/kernel-4"
+    xmlns:dara="http://da-ra.de/schema/kernel-4"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:tal="http://xml.zope.org/namespaces/tal"
-    xsi:noNamespaceSchemaLocation="http://www.da-ra.de/fileadmin/media/da-ra.de/Technik/dara_v3.1_de_en_18112014.xsd">
-    <resourceType>3</resourceType>
+    xsi:schemaLocation="http://da-ra.de/schema/kernel-4 http://www.da-ra.de/fileadmin/media/da-ra.de/Technik/4.0/dara.xsd">
+    <resourceType>Text</resourceType>
     <resourceTypesFree>
         <resourceTypeFree>
             <language>de</language>
@@ -42,15 +44,15 @@
         <date tal:content="python:context.getEffectiveDate().strftime('%Y-%m-%d')">1970</date>
     </publicationDate>
     <availability>
-        <availabilityControlled>1</availabilityControlled>
+        <availabilityType>Download</availabilityType>
     </availability>
     <rights>
         <right>
             <language>de</language>
-            <rightsText>
+            <freetext>
                 Creative-Commons-Lizenz Namensnennung-Keine kommerzielle Nutzung-Keine Bearbeitung (CC-BY-NC-ND)
                 http://creativecommons.org/licenses/by-nc-nd/2.0/deed.de
-            </rightsText>
+            </freetext>
         </right>
     </rights>
     <freeKeywords tal:condition="context/Subject">
@@ -65,18 +67,18 @@
       <relation tal:condition="isbn">
         <identifier tal:content="isbn">978-3-406-68822-5</identifier>
         <identifierType>ISBN</identifierType>
-        <relationType>23</relationType>
+        <relationType>Reviews</relationType>
       </relation>
       <relation tal:condition="canonical_uri">
         <identifier tal:content="canonical_uri">http://www.sehepunkte.de/2016/06/28546.html</identifier>
         <identifierType>URL</identifierType>
-        <relationType>17</relationType>
+        <relationType>IsVariantFormOf</relationType>
       </relation>
     </relations>
     <publications>
         <publication>
             <structuredPublication>
-                <doctype>4</doctype>
+                <documentType>BookOrMonograph</documentType>
                 <authorsEditors>
                     <tal:comment replace="nothing">
                         It seems to happen quite often that there is an editor/author entry where both first
