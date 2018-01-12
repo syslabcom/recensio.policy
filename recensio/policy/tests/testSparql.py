@@ -119,6 +119,7 @@ class TestSparqlStable(TestSparqlBase):
         is_.pop('authors')
 
         ignored = sorted([
+            u"Don't know how to handle http://www.w3.org/2002/07/owl#sameAsVol. Contents: http://lod.b3kat.de/title/BV000898335/vol/25",
             u"We ignore the following information: 'http://id.loc.gov/vocabulary/relators/aut', Content: 'http://d-nb.info/gnd/116149027'",
             u"We ignore the following information: 'http://iflastandards.info/ns/isbd/elements/P1053', Content: '223 S. Ill., Kt. 4 Kt.'",
             u"We ignore the following information: 'http://purl.org/dc/terms/description', Content: 'SA aus: Meddelelser om Gronland ; 123,1'",
