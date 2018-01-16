@@ -55,4 +55,19 @@
   <img id="page_image"
        tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/mainimage_${language}.png"/> 
 
+  <div id="social-media-header">
+      <img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/social-media-icons.png"
+           src="++resource++recensio.theme.images/social-media-icons.png" alt="Social Media Buttons" id="social-media-buttons-header" usemap="#socialmap-header" />
+      <map name="socialmap-header">
+          <area tal:attributes="href string:https://www.facebook.com/sharer/sharer.php?u=${portal_url}"
+                shape="rect" coords="0,0,30,30" alt="fb" href="https://www.facebook.com/sharer/sharer.php?u=http://www.recensio.net">
+          <area tal:attributes="href string:http://twitter.com/home?status=${portal_url}"
+                shape="rect" coords="30,0,60,30" alt="twitter" href="http://twitter.com/home?status=http://www.recensio.net">
+          <area tal:attributes="href string:https://www.linkedin.com/shareArticle?mini=true&amp;url=${portal_url}"
+                shape="rect" coords="60,0,90,30" alt="twitter" href="https://www.linkedin.com/shareArticle?mini=true&amp;url=http://www.recensio.net">
+          <area tal:attributes="href string:https://plus.google.com/share?url=${portal_url}"
+                shape="rect" coords="90,0,120,30" alt="twitter" href="https://plus.google.com/share?url=http://www.recensio.net">
+      </map>
+  </div>
+
 </div>

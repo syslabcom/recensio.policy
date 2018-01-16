@@ -6,6 +6,8 @@ Changelog
 
 - Upgraded to dara schema 4.0. Refs #16169
   [reinhardt]
+- Added social media buttons. Refs #16159
+  [reinhardt]
 
 
 4.3.1 (2017-11-16)
