@@ -4,7 +4,8 @@ Changelog
 4.3.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Also hide captcha etc. from user-information. Refs #16160
+  [reinhardt]
 
 
 4.3.2 (2018-01-18)
