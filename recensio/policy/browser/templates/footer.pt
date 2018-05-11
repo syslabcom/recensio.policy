@@ -33,10 +33,13 @@
              alt="Logo des Institus für europäische Geschichte" /></a>
       </div>
 
-      <div id="notes">
+      <div id="notes"
+           tal:define="lang_suffix python:language != 'de' and '-'+language or ''">
         <a href="#"
-           tal:define="lang_suffix python:language != 'de' and '-'+language or ''"
            tal:attributes="href string:${portal_url}/impressum${lang_suffix}">Impressum</a>
+        <a href="#"
+           tal:attributes="href string:${portal_url}/datenschutz${lang_suffix}"
+           i18n:translate="label_secondary_nav_datenschutz">Datenschutz</a>
       </div>
 
     </div>

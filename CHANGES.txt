@@ -4,7 +4,7 @@ Changelog
 4.3.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Moved "Datenschutz" link to footer. Refs #17066
 
 
 4.3.3 (2018-03-05)
