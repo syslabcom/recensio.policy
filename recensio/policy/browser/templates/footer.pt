@@ -39,7 +39,7 @@
            tal:attributes="href string:${portal_url}/impressum${lang_suffix}">Impressum</a>
         <a href="#"
            tal:attributes="href string:${portal_url}/datenschutz${lang_suffix}"
-           i18n:translate="label_secondary_nav_datenschutz">Datenschutz</a>
+           i18n:translate="label_footer_datenschutz">Datenschutzerklärung</a>
       </div>
 
     </div>
