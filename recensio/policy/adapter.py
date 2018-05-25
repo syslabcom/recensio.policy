@@ -42,6 +42,13 @@ class RecensioUserDataPanelAdapter(UserDataPanelAdapter):
             return self.context.setMemberProperties({"declaration_of_identity": value})
     declaration_of_identity = property(get_declaration_of_identity, set_declaration_of_identity)
 
+    def get_data_protection_policy_accepted(self):
+        return self._getProperty("data_protection_policy_accepted")
+    def set_data_protection_policy_accepted(self, value):
+        if value is not None:
+            return self.context.setMemberProperties({"data_protection_policy_accepted": value})
+    data_protection_policy_accepted = property(get_data_protection_policy_accepted, set_data_protection_policy_accepted)
+
     captcha = None
 
     def absolute_url(self):

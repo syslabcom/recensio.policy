@@ -11,6 +11,7 @@
       <element value="email" />
       <element value="preferred_language" />
       <element value="declaration_of_identity" />
+      <element value="data_protection_policy_accepted" />
       <element value="captcha" />
       <element value="mail_me" />
     </property>

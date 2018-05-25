@@ -29,6 +29,13 @@ def validateAccept(value):
         raise ConversionError(_(u'text_declaration_not_confirmed', default=u"You must confirm the declaration of identity"))
     return True
 
+def validateAcceptDP(value):
+    if not value == True:
+        raise ConversionError(
+            _(u'text_data_protection_policy_not_accepted',
+            default=u"You must accept the data protection policy"))
+    return True
+
 
 class IRecensioUserDataSchema(IUserDataSchema):
     """ Use all the fields from the default user data schema, and add various
@@ -68,6 +75,17 @@ class IRecensioUserDataSchema(IUserDataSchema):
                       "identified by the entries above. "),
         required=True,
         constraint=validateAccept,
+        )
+
+    data_protection_policy_accepted = schema.Bool(
+        title=_(u'label_data_protection_policy_accepted',
+                default=u'Data protection policy'),
+        description=_(u'help_data_protection_policy_accepted',
+                      default=u'I declare that I have read and understood the '
+                      '<a href="${context/portal_url}/datenschutz">data protection '
+                      'policy</a> and that I accept it.'),
+        required=True,
+        constraint=validateAcceptDP,
         )
 
     captcha = Captcha(
