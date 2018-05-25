@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.4 (unreleased)
+4.3.4 (2018-05-25)
 ------------------
 
 - Moved "Datenschutz" link to footer. Refs #17066
