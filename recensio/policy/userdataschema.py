@@ -65,7 +65,9 @@ class IRecensioUserDataSchema(IUserDataSchema):
         title=_(u'label_declaration_of_identity', default=u'Declaration of identity'),
         description=_(u'help_declaration_of_identity',
                       default=u"I declare that I am indeed the person "
-                      "identified by the entries above. "),
+                      "identified by the entries above.<br />Please find"
+                      "more information in our <a href=\"#\">data protection"
+                      "statement</a>."),
         required=True,
         constraint=validateAccept,
         )
