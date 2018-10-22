@@ -188,6 +188,14 @@
         <langstring language="fr">Europe de l&apos;Est</langstring>
       </caption>
       <term>
+        <termIdentifier>947.08</termIdentifier>
+        <caption>
+          <langstring language="de">UdSSR und GUS</langstring>
+          <langstring language="en">USSR and CIS</langstring>
+          <langstring language="fr">URSS et CEI</langstring>
+        </caption>
+      </term>
+      <term>
         <termIdentifier>43.1</termIdentifier>
         <caption>
           <langstring language="de">Russland</langstring>
@@ -212,36 +220,44 @@
         </caption>
       </term>
       <term>
-        <termIdentifier>43.4</termIdentifier>
+        <termIdentifier>437</termIdentifier>
         <caption>
-          <langstring language="de">Polen</langstring>
-          <langstring language="en">Poland</langstring>
-          <langstring language="fr">Pologne</langstring>
+          <langstring language="de">Ostmitteleuropa**</langstring>
+          <langstring language="en">East-Central Europe</langstring>
+          <langstring language="fr">Europe médiane</langstring>
         </caption>
-      </term>
-      <term>
-        <termIdentifier>43.5</termIdentifier>
-        <caption>
-          <langstring language="de">Tschechien</langstring>
-          <langstring language="en">Czech Republic</langstring>
-          <langstring language="fr">République Tchèque</langstring>
-        </caption>
-      </term>
-      <term>
-        <termIdentifier>43.6</termIdentifier>
-        <caption>
-          <langstring language="de">Slowakei</langstring>
-          <langstring language="en">Slovakia</langstring>
-          <langstring language="fr">Slovaquie</langstring>
-        </caption>
-      </term>
-      <term>
-        <termIdentifier>43.7</termIdentifier>
-        <caption>
-          <langstring language="de">Ungarn</langstring>
-          <langstring language="en">Hungary</langstring>
-          <langstring language="fr">Hongrie</langstring>
-        </caption>
+        <term>
+          <termIdentifier>43.4</termIdentifier>
+          <caption>
+            <langstring language="de">Polen</langstring>
+            <langstring language="en">Poland</langstring>
+            <langstring language="fr">Pologne</langstring>
+          </caption>
+        </term>
+        <term>
+          <termIdentifier>43.5</termIdentifier>
+          <caption>
+            <langstring language="de">Tschechien</langstring>
+            <langstring language="en">Czech Republic</langstring>
+            <langstring language="fr">République Tchèque</langstring>
+          </caption>
+        </term>
+        <term>
+          <termIdentifier>43.6</termIdentifier>
+          <caption>
+            <langstring language="de">Slowakei</langstring>
+            <langstring language="en">Slovakia</langstring>
+            <langstring language="fr">Slovaquie</langstring>
+          </caption>
+        </term>
+        <term>
+          <termIdentifier>43.7</termIdentifier>
+          <caption>
+            <langstring language="de">Ungarn</langstring>
+            <langstring language="en">Hungary</langstring>
+            <langstring language="fr">Hongrie</langstring>
+          </caption>
+        </term>
       </term>
       <term>
         <termIdentifier>43.8</termIdentifier>
@@ -260,28 +276,36 @@
         </caption>
       </term>
       <term>
-        <termIdentifier>43.10</termIdentifier>
+        <termIdentifier>475</termIdentifier>
         <caption>
-          <langstring language="de">Armenien</langstring>
-          <langstring language="en">Armenia</langstring>
-          <langstring language="fr">Arménie</langstring>
-        </caption>
-      </term>
-      <term>
-        <termIdentifier>43.11</termIdentifier>
-        <caption>
-          <langstring language="de">Aserbaidschan</langstring>
-          <langstring language="en">Azerbaijan</langstring>
-          <langstring language="fr">Azerbaïdjan</langstring>
-        </caption>
-      </term>
-      <term>
-        <termIdentifier>43.12</termIdentifier>
-        <caption>
-          <langstring language="de">Georgien</langstring>
-          <langstring language="en">Georgia</langstring>
-          <langstring language="fr">Géorgie</langstring>
-        </caption>
+          <langstring language="de">Kaukasus</langstring>
+          <langstring language="en">Caucasus</langstring>
+          <langstring language="fr">Caucase</langstring>
+          </caption>
+        <term>
+          <termIdentifier>43.10</termIdentifier>
+          <caption>
+            <langstring language="de">Armenien</langstring>
+            <langstring language="en">Armenia</langstring>
+            <langstring language="fr">Arménie</langstring>
+          </caption>
+        </term>
+        <term>
+          <termIdentifier>43.11</termIdentifier>
+          <caption>
+            <langstring language="de">Aserbaidschan</langstring>
+            <langstring language="en">Azerbaijan</langstring>
+            <langstring language="fr">Azerbaïdjan</langstring>
+          </caption>
+        </term>
+        <term>
+          <termIdentifier>43.12</termIdentifier>
+          <caption>
+            <langstring language="de">Georgien</langstring>
+            <langstring language="en">Georgia</langstring>
+            <langstring language="fr">Géorgie</langstring>
+          </caption>
+        </term>
       </term>
     </term>
     <term>
@@ -410,14 +434,14 @@
             <langstring language="fr">Slovénie</langstring>
           </caption>
         </term>
-        <term>
-          <termIdentifier>44.70</termIdentifier>
-          <caption>
-            <langstring language="de">Türkei</langstring>
-            <langstring language="en">Turkey</langstring>
-            <langstring language="fr">Turquie</langstring>
-          </caption>
-        </term>
+		<term>
+		  <termIdentifier>561</termIdentifier>
+		  <caption>
+			<langstring language="de">Türkei, Osmanisches Reich</langstring>
+			<langstring language="en">Turkey, Ottoman Empire</langstring>
+			<langstring language="fr">Turquie, Empire ottoman</langstring>
+		  </caption>
+		</term>
         <term>
           <termIdentifier>44.71</termIdentifier>
           <caption>
@@ -427,6 +451,14 @@
           </caption>
         </term>
       </term>
+    </term>
+    <term>
+      <termIdentifier>1822</termIdentifier>
+      <caption>
+        <langstring language="de">Mittelmeerraum</langstring>
+        <langstring language="en">Mediterranean region</langstring>
+        <langstring language="fr">Region Méditerranée</langstring>
+      </caption>
     </term>
   </term>
   <term>
@@ -458,6 +490,22 @@
         <langstring language="de">Südasien u. Indien</langstring>
         <langstring language="en">Southern Asia and India</langstring>
         <langstring language="fr">Asie du Sud et Inde</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>55</termIdentifier>
+      <caption>
+        <langstring language="de">Iran</langstring>
+        <langstring language="en">Iran</langstring>
+        <langstring language="fr">Iran</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>567</termIdentifier>
+      <caption>
+        <langstring language="de">Irak</langstring>
+        <langstring language="en">Iraq</langstring>
+        <langstring language="fr">Irak</langstring>
       </caption>
     </term>
     <term>
@@ -631,6 +679,14 @@ benachbarte Gebiete</langstring>
     </term>
   </term>
   <term>
+    <termIdentifier>11</termIdentifier>
+    <caption>
+      <langstring language="de">Kalte Klimazonen</langstring>
+      <langstring language="en">Cold climates</langstring>
+      <langstring language="fr">Climats froids</langstring>
+    </caption>
+  </term>
+  <term>
     <termIdentifier>9</termIdentifier>
     <caption>
       <langstring language="de">Andere Teile der Welt</langstring>
@@ -639,11 +695,11 @@ benachbarte Gebiete</langstring>
     </caption>
   </term>
   <term>
-    <termIdentifier>09</termIdentifier>
+    <termIdentifier>181</termIdentifier>
     <caption>
-      <langstring language="de">Weltgeschichte</langstring>
-      <langstring language="en">Global History</langstring>
-      <langstring language="fr">Histoire globale</langstring>
+      <langstring language="de">Welt</langstring>
+      <langstring language="en">World</langstring>
+      <langstring language="fr">Monde</langstring>
     </caption>
   </term>
   <term>
@@ -661,14 +717,14 @@ benachbarte Gebiete</langstring>
         <langstring language="fr">Égypte / Ancien Monde</langstring>
       </caption>
     </term>
-    <term>
-      <termIdentifier>34</termIdentifier>
-      <caption>
-        <langstring language="de">Südosteuropa / Alte Welt</langstring>
-        <langstring language="en">South Eastern Europe / ancient</langstring>
-        <langstring language="fr">Europe du Sud-Est / Ancien Monde</langstring>
-      </caption>
-    </term>
+	<term>
+	  <termIdentifier>398</termIdentifier>
+	  <caption>
+		<langstring language="de">Südosteuropa, Byzanz / Alte Welt</langstring>
+		<langstring language="en">South Eastern Europe, Byzantine Empire / ancient</langstring>
+		<langstring language="fr">Europe du Sud-Est, Empire </langstring>
+	  </caption>
+	</term>
     <term>
       <termIdentifier>31</termIdentifier>
       <caption>
@@ -694,6 +750,14 @@ benachbarte Gebiete</langstring>
       </caption>
     </term>
     <term>
+      <termIdentifier>394</termIdentifier>
+      <caption>
+        <langstring language="de">Naher Osten / Alte Welt</langstring>
+        <langstring language="en">Near East / ancient</langstring>
+        <langstring language="fr">Proche-Orient / Ancient Monde</langstring>
+      </caption>
+    </term>
+    <term>
       <termIdentifier>33</termIdentifier>
       <caption>
         <langstring language="de">Palästina, Israel / Alte Welt</langstring>
@@ -707,6 +771,14 @@ benachbarte Gebiete</langstring>
         <langstring language="de">Römisches Reich</langstring>
         <langstring language="en">Roman Empire</langstring>
         <langstring language="fr">Empire romain</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>39</termIdentifier>
+      <caption>
+        <langstring language="de">Andere Teile der alten Welt</langstring>
+        <langstring language="en">Other parts of the world</langstring>
+        <langstring language="fr">Autres parties du monde</langstring>
       </caption>
     </term>
   </term>

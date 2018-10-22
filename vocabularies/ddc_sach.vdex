@@ -115,7 +115,7 @@
   <term>
     <termIdentifier>907.2</termIdentifier>
     <caption>
-      <langstring language="de">Historische Hilfswissenschaften </langstring>
+      <langstring language="de">Historische Hilfswissenschaften</langstring>
       <langstring language="en">Auxiliary sciences of history</langstring>
       <langstring language="fr">Sciences auxiliaires de l'Histoire</langstring>
     </caption>
@@ -289,6 +289,69 @@
       <langstring language="de">Wirtschaftsgeschichte</langstring>
       <langstring language="en">Economic History</langstring>
       <langstring language="fr">Histoire économique</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>930.1</termIdentifier>
+    <caption>
+      <langstring language="de">Archäologie</langstring>
+      <langstring language="en">Archaeology</langstring>
+      <langstring language="fr">Archéologie</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>333709</termIdentifier>
+    <caption>
+      <langstring language="de">Umweltgeschichte</langstring>
+      <langstring language="en">Environmental History</langstring>
+      <langstring language="fr">Histoire environnementale</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>907.1</termIdentifier>
+    <caption>
+      <langstring language="de">Geschichtsdidaktik</langstring>
+      <langstring language="en">History Didactics</langstring>
+      <langstring language="fr">Didactique de l'histoire</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>909.0491497</termIdentifier>
+    <caption>
+      <langstring language="de">Geschichte der Sinti und Roma</langstring>
+      <langstring language="en">History of Sinti and Romanies</langstring>
+      <langstring language="fr">Histoire des Sinti et des Roms</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>020</termIdentifier>
+    <caption>
+      <langstring language="de">Archiv, Bibliothek, Museum</langstring>
+      <langstring language="en">Archive, Library, Museum</langstring>
+      <langstring language="fr">Archives, Bibliothèque, Musée</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>870</termIdentifier>
+    <caption>
+      <langstring language="de">Lateinische Literatur</langstring>
+      <langstring language="en">Latin Literature</langstring>
+      <langstring language="fr">Littérature latine</langstring>
+    </caption>
+  </term>
+
+  <term>
+    <termIdentifier>880</termIdentifier>
+    <caption>
+      <langstring language="de">Griechische Literatur</langstring>
+      <langstring language="en">Greek Literature</langstring>
+      <langstring language="fr">Littérature grecque</langstring>
     </caption>
   </term>
 

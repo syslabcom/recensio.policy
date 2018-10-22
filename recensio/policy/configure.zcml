@@ -121,6 +121,16 @@
    handler=".upgrades.v15to16"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="16"
+   destination="17"
+   title="Update DDC vocabularies"
+   description="Reload vocabularies to update DDCs and migrate existing content"
+   profile='recensio.policy:default'
+   handler=".upgrades.v16to17"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"

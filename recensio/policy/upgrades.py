@@ -1,3 +1,4 @@
+from plone import api
 from plone.app.controlpanel.skins import ISkinsSchema
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.eventhandlers import review_pdf_updated_eventhandler
@@ -209,3 +210,33 @@ def v15to16(portal_setup):
     portal_setup.runImportStepFromProfile(
         'profile-recensio.policy:default',
         'plone.app.registry')
+
+
+def v16to17(portal_setup):
+    pvm = getToolByName(portal_setup, 'portal_vocabularies')
+    api.content.delete(pvm['region_values'])
+    api.content.delete(pvm['topic_values'])
+
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'recensio_policy_vocabularies')
+
+    catalog = getToolByName(portal_setup, 'portal_catalog')
+    updates = {
+        '44.70': '561',
+        '09': '181',
+        '34': '398',
+    }
+    results = catalog(ddcPlace=list(updates.keys()))
+    for brain in results:
+        obj = brain.getObject()
+        if not (set(updates.keys()) & set(obj.getDdcPlace())):
+            log.warn('ddcPlace not indexed properly for {0}'.format(
+                brain.getPath()))
+            continue
+        obj.setDdcPlace(
+            tuple((updates.get(val, val) for val in obj.getDdcPlace()))
+        )
+        obj.reindexObject()
+        log.info('Migrated DdcPlace of {0}'.format(
+            brain.getPath()))

@@ -6,6 +6,7 @@ Changelog
 
 - Include subtitle in titleOrShortname index. Refs #REC-981
 - Registration: Added reference to data protection statement. #REC-991
+- Updated DDCs. #REC-983
 
 
 4.3.4 (2018-05-25)
