@@ -227,16 +227,25 @@ def v16to17(portal_setup):
         '09': '181',
         '34': '398',
     }
-    results = catalog(ddcPlace=list(updates.keys()))
-    for brain in results:
-        obj = brain.getObject()
-        if not (set(updates.keys()) & set(obj.getDdcPlace())):
-            log.warn('ddcPlace not indexed properly for {0}'.format(
-                brain.getPath()))
-            continue
-        obj.setDdcPlace(
-            tuple((updates.get(val, val) for val in obj.getDdcPlace()))
+    b_start = 0
+    b_size = 1000
+    results = []
+    while b_start <= len(results):
+        results = catalog(
+            ddcPlace=list(updates.keys()),
+            b_size=b_size,
+            b_start=b_start,
         )
-        obj.reindexObject()
-        log.info('Migrated DdcPlace of {0}'.format(
-            brain.getPath()))
+        for brain in results[b_start:b_start+b_size]:
+            obj = brain.getObject()
+            if not (set(updates.keys()) & set(obj.getDdcPlace())):
+                log.warn('ddcPlace not indexed properly for {0}'.format(
+                    brain.getPath()))
+                continue
+            obj.setDdcPlace(
+                tuple((updates.get(val, val) for val in obj.getDdcPlace()))
+            )
+            obj.reindexObject()
+            log.info('Migrated DdcPlace of {0}'.format(
+                brain.getPath()))
+        b_start += b_size
