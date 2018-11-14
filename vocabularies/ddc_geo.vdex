@@ -316,6 +316,14 @@
         <langstring language="fr">Europe du Sud</langstring>
       </caption>
       <term>
+        <termIdentifier>1822</termIdentifier>
+        <caption>
+          <langstring language="de">Mittelmeerraum</langstring>
+          <langstring language="en">Mediterranean region</langstring>
+          <langstring language="fr">Region Méditerranée</langstring>
+        </caption>
+      </term>
+      <term>
         <termIdentifier>44.1</termIdentifier>
         <caption>
           <langstring language="de">Spanien</langstring>
@@ -452,14 +460,6 @@
         </term>
       </term>
     </term>
-    <term>
-      <termIdentifier>1822</termIdentifier>
-      <caption>
-        <langstring language="de">Mittelmeerraum</langstring>
-        <langstring language="en">Mediterranean region</langstring>
-        <langstring language="fr">Region Méditerranée</langstring>
-      </caption>
-    </term>
   </term>
   <term>
     <termIdentifier>5</termIdentifier>
@@ -469,35 +469,19 @@
       <langstring language="fr">Asie</langstring>
     </caption>
     <term>
+      <termIdentifier>59.2</termIdentifier>
+      <caption>
+        <langstring language="de">Arabische Halbinsel und benachbarte Gebiete</langstring>
+        <langstring language="en">Arabian Peninsula and neighbouring territories</langstring>
+        <langstring language="fr">Arabie et territoires voisins</langstring>
+      </caption>
+    </term>
+    <term>
       <termIdentifier>51</termIdentifier>
       <caption>
         <langstring language="de">China und benachbarte Gebiete</langstring>
         <langstring language="en">China and neighbouring territories</langstring>
         <langstring language="fr">Chine et territoires voisins</langstring>
-      </caption>
-    </term>
-    <term>
-      <termIdentifier>52</termIdentifier>
-      <caption>
-        <langstring language="de">Japan</langstring>
-        <langstring language="en">Japan</langstring>
-        <langstring language="fr">Japon</langstring>
-      </caption>
-    </term>
-    <term>
-      <termIdentifier>54</termIdentifier>
-      <caption>
-        <langstring language="de">Südasien u. Indien</langstring>
-        <langstring language="en">Southern Asia and India</langstring>
-        <langstring language="fr">Asie du Sud et Inde</langstring>
-      </caption>
-    </term>
-    <term>
-      <termIdentifier>55</termIdentifier>
-      <caption>
-        <langstring language="de">Iran</langstring>
-        <langstring language="en">Iran</langstring>
-        <langstring language="fr">Iran</langstring>
       </caption>
     </term>
     <term>
@@ -509,6 +493,22 @@
       </caption>
     </term>
     <term>
+      <termIdentifier>55</termIdentifier>
+      <caption>
+        <langstring language="de">Iran</langstring>
+        <langstring language="en">Iran</langstring>
+        <langstring language="fr">Iran</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>52</termIdentifier>
+      <caption>
+        <langstring language="de">Japan</langstring>
+        <langstring language="en">Japan</langstring>
+        <langstring language="fr">Japon</langstring>
+      </caption>
+    </term>
+    <term>
       <termIdentifier>56</termIdentifier>
       <caption>
         <langstring language="de">Naher Osten</langstring>
@@ -517,20 +517,11 @@
       </caption>
     </term>
     <term>
-      <termIdentifier>59.2</termIdentifier>
-      <caption>
-        <langstring language="de">Arabische Halbinsel und
-benachbarte Gebiete</langstring>
-        <langstring language="en">Arabian Peninsula and neighbouring territories</langstring>
-        <langstring language="fr">Arabie et territoires voisins</langstring>
-      </caption>
-    </term>
-    <term>
       <termIdentifier>59.1</termIdentifier>
       <caption>
-        <langstring language="de">Israel, Palästina</langstring>
-        <langstring language="en">Israel, Palestine</langstring>
-        <langstring language="fr">Israël, Palestine</langstring>
+        <langstring language="de">Palästina, Israel</langstring>
+        <langstring language="en">Palestine, Israel</langstring>
+        <langstring language="fr">Palestine, Israël</langstring>
       </caption>
     </term>
     <term>
@@ -542,11 +533,11 @@ benachbarte Gebiete</langstring>
       </caption>
     </term>
     <term>
-      <termIdentifier>58</termIdentifier>
+      <termIdentifier>54</termIdentifier>
       <caption>
-        <langstring language="de">Zentralasien</langstring>
-        <langstring language="en">Central Asia</langstring>
-        <langstring language="fr">Asie centrale</langstring>
+        <langstring language="de">Südasien u. Indien</langstring>
+        <langstring language="en">Southern Asia and India</langstring>
+        <langstring language="fr">Asie du Sud et Inde</langstring>
       </caption>
     </term>
     <term>
@@ -555,6 +546,14 @@ benachbarte Gebiete</langstring>
         <langstring language="de">Südostasien</langstring>
         <langstring language="en">South-Eastern Asia</langstring>
         <langstring language="fr">Asie du Sud-Est</langstring>
+      </caption>
+    </term>
+    <term>
+      <termIdentifier>58</termIdentifier>
+      <caption>
+        <langstring language="de">Zentralasien</langstring>
+        <langstring language="en">Central Asia</langstring>
+        <langstring language="fr">Asie centrale</langstring>
       </caption>
     </term>
   </term>
