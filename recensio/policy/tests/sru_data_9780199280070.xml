@@ -1,0 +1,326 @@
+<?xml version="1.0"?>
+<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/"><zs:version>1.1</zs:version><zs:numberOfRecords>2</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>info:srw/schema/1/marcxml-v1.1</zs:recordSchema><zs:recordPacking>xml</zs:recordPacking><zs:recordData><record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>01548nam a2200517 c 4500</leader>
+  <controlfield tag="001">BV036604193</controlfield>
+  <controlfield tag="003">DE-604</controlfield>
+  <controlfield tag="005">20110420        </controlfield>
+  <controlfield tag="007">t</controlfield>
+  <controlfield tag="008">100806s2010    xxk      |||| 00||| eng d</controlfield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9780199280063</subfield>
+    <subfield code="c">hardback</subfield>
+    <subfield code="9">978-0-19-928006-3</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9780199280070</subfield>
+    <subfield code="c">pbk.</subfield>
+    <subfield code="9">978-0-19-928007-0</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DE-604</subfield>
+    <subfield code="b">ger</subfield>
+    <subfield code="e">aacr</subfield>
+  </datafield>
+  <datafield tag="050" ind1=" " ind2="0">
+    <subfield code="a">DD237</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Weimar Germany</subfield>
+    <subfield code="c">ed. by Anthony McElligott</subfield>
+  </datafield>
+  <datafield tag="250" ind1=" " ind2=" ">
+    <subfield code="a">Repr.</subfield>
+  </datafield>
+  <datafield tag="264" ind1=" " ind2="1">
+    <subfield code="a">Oxford [u.a.]</subfield>
+    <subfield code="b">Oxford Univ. Press</subfield>
+    <subfield code="c">2010</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">XVIII, 324 S.</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="4">
+    <subfield code="a">Deutschland</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="4">
+    <subfield code="a">Germany</subfield>
+    <subfield code="x">History</subfield>
+    <subfield code="y">1918-1933</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="7">
+    <subfield code="a">Deutschland</subfield>
+    <subfield code="0">(DE-588)4011882-4</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="700" ind1="1" ind2=" ">
+    <subfield code="a">McElligott, Anthony</subfield>
+    <subfield code="d">1955-</subfield>
+    <subfield code="e">Sonstige</subfield>
+    <subfield code="0">(DE-588)122021983</subfield>
+    <subfield code="4">oth</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)694875648</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(DE-599)BVBBV036604193</subfield>
+  </datafield>
+  <datafield tag="041" ind1="0" ind2=" ">
+    <subfield code="a">eng</subfield>
+  </datafield>
+  <datafield tag="044" ind1=" " ind2=" ">
+    <subfield code="a">xxk</subfield>
+    <subfield code="c">GB</subfield>
+  </datafield>
+  <datafield tag="049" ind1=" " ind2=" ">
+    <subfield code="a">DE-11</subfield>
+    <subfield code="a">DE-739</subfield>
+    <subfield code="a">DE-706</subfield>
+  </datafield>
+  <datafield tag="082" ind1="0" ind2=" ">
+    <subfield code="a">943.085</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">8,1</subfield>
+    <subfield code="2">ssgn</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">f 40</subfield>
+    <subfield code="2">ifzs</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">NK 1800</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">NQ 1069</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">NQ 1080</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="b">txt</subfield>
+    <subfield code="2">rdacontent</subfield>
+  </datafield>
+  <datafield tag="337" ind1=" " ind2=" ">
+    <subfield code="b">n</subfield>
+    <subfield code="2">rdamedia</subfield>
+  </datafield>
+  <datafield tag="338" ind1=" " ind2=" ">
+    <subfield code="b">nc</subfield>
+    <subfield code="2">rdacarrier</subfield>
+  </datafield>
+  <datafield tag="490" ind1="0" ind2=" ">
+    <subfield code="a">&#x98;The&#x9C; short Oxford history of Germany</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">Includes bibliographical references and index</subfield>
+  </datafield>
+  <datafield tag="648" ind1=" " ind2="7">
+    <subfield code="a">Geschichte 1918-1933</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="4">
+    <subfield code="a">Geschichte</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Weimarer Republik</subfield>
+    <subfield code="0">(DE-588)4065109-5</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="0">
+    <subfield code="a">Deutschland</subfield>
+    <subfield code="0">(DE-588)4011882-4</subfield>
+    <subfield code="D">g</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="1">
+    <subfield code="a">Geschichte 1918-1933</subfield>
+    <subfield code="A">z</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+  <datafield tag="689" ind1="1" ind2="0">
+    <subfield code="a">Weimarer Republik</subfield>
+    <subfield code="0">(DE-588)4065109-5</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="1" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+</record></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record><zs:record><zs:recordSchema>info:srw/schema/1/marcxml-v1.1</zs:recordSchema><zs:recordPacking>xml</zs:recordPacking><zs:recordData><record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>01995nam a2200577zc 4500</leader>
+  <controlfield tag="001">BV035356471</controlfield>
+  <controlfield tag="003">DE-604</controlfield>
+  <controlfield tag="005">20151204        </controlfield>
+  <controlfield tag="007">t</controlfield>
+  <controlfield tag="008">090310s2009    xxk      |||| 00||| eng d</controlfield>
+  <datafield tag="010" ind1=" " ind2=" ">
+    <subfield code="a">2008053083</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9780199280063</subfield>
+    <subfield code="c">hardback</subfield>
+    <subfield code="9">978-0-19-928006-3</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9780199280070</subfield>
+    <subfield code="c">pbk.</subfield>
+    <subfield code="9">978-0-19-928007-0</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DE-604</subfield>
+    <subfield code="b">ger</subfield>
+    <subfield code="e">aacr</subfield>
+  </datafield>
+  <datafield tag="050" ind1=" " ind2="0">
+    <subfield code="a">DD237</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Weimar Germany</subfield>
+    <subfield code="c">ed. by Anthony McElligott</subfield>
+  </datafield>
+  <datafield tag="250" ind1=" " ind2=" ">
+    <subfield code="a">1. publ.</subfield>
+  </datafield>
+  <datafield tag="264" ind1=" " ind2="1">
+    <subfield code="a">Oxford [u.a.]</subfield>
+    <subfield code="b">Oxford Univ. Press</subfield>
+    <subfield code="c">2009</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">XVIII, 324 S.</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="4">
+    <subfield code="a">Deutschland</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="4">
+    <subfield code="a">Germany</subfield>
+    <subfield code="x">History</subfield>
+    <subfield code="y">1918-1933</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="7">
+    <subfield code="a">Deutschland</subfield>
+    <subfield code="0">(DE-588)4011882-4</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="700" ind1="1" ind2=" ">
+    <subfield code="a">McElligott, Anthony</subfield>
+    <subfield code="d">1955-</subfield>
+    <subfield code="e">Sonstige</subfield>
+    <subfield code="0">(DE-588)122021983</subfield>
+    <subfield code="4">oth</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="n">DHB</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="q">DHB_BSB_DDC</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="q">DHB_JDG_ISBN_1</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)276335888</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(DE-599)BVBBV035356471</subfield>
+  </datafield>
+  <datafield tag="041" ind1="0" ind2=" ">
+    <subfield code="a">eng</subfield>
+  </datafield>
+  <datafield tag="044" ind1=" " ind2=" ">
+    <subfield code="a">xxk</subfield>
+    <subfield code="c">GB</subfield>
+  </datafield>
+  <datafield tag="049" ind1=" " ind2=" ">
+    <subfield code="a">DE-12</subfield>
+    <subfield code="a">DE-M352</subfield>
+    <subfield code="a">DE-355</subfield>
+    <subfield code="a">DE-384</subfield>
+    <subfield code="a">DE-824</subfield>
+    <subfield code="a">DE-19</subfield>
+    <subfield code="a">DE-188</subfield>
+    <subfield code="a">DE-B496</subfield>
+  </datafield>
+  <datafield tag="082" ind1="0" ind2=" ">
+    <subfield code="a">943.085</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">8,1</subfield>
+    <subfield code="2">ssgn</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">f 40</subfield>
+    <subfield code="2">ifzs</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">NK 1800</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">NQ 1080</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="b">txt</subfield>
+    <subfield code="2">rdacontent</subfield>
+  </datafield>
+  <datafield tag="337" ind1=" " ind2=" ">
+    <subfield code="b">n</subfield>
+    <subfield code="2">rdamedia</subfield>
+  </datafield>
+  <datafield tag="338" ind1=" " ind2=" ">
+    <subfield code="b">nc</subfield>
+    <subfield code="2">rdacarrier</subfield>
+  </datafield>
+  <datafield tag="490" ind1="0" ind2=" ">
+    <subfield code="a">&#x98;The&#x9C; short Oxford history of Germany</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">Hier auch sp&#xE4;ter erschienene, unver&#xE4;nderte Nachdrucke</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">Includes bibliographical references and index</subfield>
+  </datafield>
+  <datafield tag="648" ind1=" " ind2="7">
+    <subfield code="a">Geschichte 1918-1933</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="4">
+    <subfield code="a">Geschichte</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Weimarer Republik</subfield>
+    <subfield code="0">(DE-588)4065109-5</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="0">
+    <subfield code="a">Deutschland</subfield>
+    <subfield code="0">(DE-588)4011882-4</subfield>
+    <subfield code="D">g</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="1">
+    <subfield code="a">Geschichte 1918-1933</subfield>
+    <subfield code="A">z</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+  <datafield tag="689" ind1="1" ind2="0">
+    <subfield code="a">Weimarer Republik</subfield>
+    <subfield code="0">(DE-588)4065109-5</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="1" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2="2">
+    <subfield code="m">Digitalisierung BSBMuenchen</subfield>
+    <subfield code="q">application/pdf</subfield>
+    <subfield code="u">http://bvbr.bib-bvb.de:8991/F?func=service&amp;doc_library=BVB01&amp;local_base=BVB01&amp;doc_number=017160536&amp;sequence=000002&amp;line_number=0001&amp;func_code=DB_RECORDS&amp;service_type=MEDIA</subfield>
+    <subfield code="3">Inhaltsverzeichnis</subfield>
+  </datafield>
+</record></zs:recordData><zs:recordPosition>2</zs:recordPosition></zs:record></zs:records></zs:searchRetrieveResponse>
