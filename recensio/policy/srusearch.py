@@ -28,6 +28,18 @@ class MetadataConverter(object):
     def get_field_as_list(self, fieldspec):
         return [self.clean_text(a) for a in self.record[fieldspec]]
 
+    def get_authors(self):
+        authors = []
+        for author in self.record['100a']:  # XXX + self.record['700a']:
+            lastname, firstname = author.split(', ')
+            authors.append(
+                {
+                    'lastname': lastname,
+                    'firstname': firstname,
+                }
+            )
+        return authors
+
     def convertLanguage(self, lang):
         try:
             pylang = pycountry.languages.lookup(lang)
@@ -36,9 +48,7 @@ class MetadataConverter(object):
         return pylang.name
 
     def get_series(self):
-        series = self.record['490a']
         series_num = self.record.get_part_name()
-        series_title = series[0] if series else ''
         series_title = self.get_field_as_text('490a')
         parts = [part for part in [series_num, series_title] if part]
         if parts:
@@ -71,7 +81,7 @@ class MetadataConverter(object):
         converted = {
             'title': self.get_field_as_text('245a'),
             'subtitle': self.get_field_as_text('245b'),
-            'authors': self.get_field_as_list('100a'),
+            'authors': self.get_authors(),
             # XXX editors?
             'language': self.convertLanguage(self.record['008'][35:38]),
             'isbn': self.clean_text(self.get_isbn()),

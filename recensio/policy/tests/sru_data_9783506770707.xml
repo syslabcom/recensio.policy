@@ -1,0 +1,127 @@
+<?xml version="1.0"?>
+<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/"><zs:version>1.1</zs:version><zs:numberOfRecords>1</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>info:srw/schema/1/marcxml-v1.1</zs:recordSchema><zs:recordPacking>xml</zs:recordPacking><zs:recordData><record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>01334nam a2200373 cc4500</leader>
+  <controlfield tag="001">BV039685251</controlfield>
+  <controlfield tag="003">DE-604</controlfield>
+  <controlfield tag="005">00000000000000.0</controlfield>
+  <controlfield tag="007">t</controlfield>
+  <controlfield tag="008">111107s2012    gw a|||  |||| 00||| ger d</controlfield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9783506770707</subfield>
+    <subfield code="9">978-3-506-77070-7</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DE-604</subfield>
+    <subfield code="b">ger</subfield>
+  </datafield>
+  <datafield tag="100" ind1="1" ind2=" ">
+    <subfield code="a">Bismarck, Otto von</subfield>
+    <subfield code="d">1815-1898</subfield>
+    <subfield code="e">Verfasser</subfield>
+    <subfield code="0">(DE-588)11851136X</subfield>
+    <subfield code="4">aut</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Gesammelte Werke</subfield>
+    <subfield code="n">4</subfield>
+    <subfield code="p">&#x98;Abt. IV&#x9C;, Gedanken und Erinnerungen</subfield>
+    <subfield code="c">Otto von Bismarck. Hrsg. von Konrad Canis ...</subfield>
+  </datafield>
+  <datafield tag="264" ind1=" " ind2="1">
+    <subfield code="a">Paderborn ; M&#xFC;nchen [u.a.]</subfield>
+    <subfield code="b">Sch&#xF6;ningh</subfield>
+    <subfield code="c">2012</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">XXXI, 616 S.</subfield>
+    <subfield code="b">Ill.</subfield>
+  </datafield>
+  <datafield tag="651" ind1=" " ind2="7">
+    <subfield code="a">Deutschland</subfield>
+    <subfield code="0">(DE-588)4011882-4</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="655" ind1=" " ind2="7">
+    <subfield code="0">(DE-588)4135952-5</subfield>
+    <subfield code="a">Quelle</subfield>
+    <subfield code="2">gnd-content</subfield>
+  </datafield>
+  <datafield tag="700" ind1="1" ind2=" ">
+    <subfield code="a">Epkenhans, Michael</subfield>
+    <subfield code="d">1955-</subfield>
+    <subfield code="e">Sonstige</subfield>
+    <subfield code="0">(DE-588)122558316</subfield>
+    <subfield code="4">oth</subfield>
+  </datafield>
+  <datafield tag="700" ind1="1" ind2=" ">
+    <subfield code="a">Canis, Konrad</subfield>
+    <subfield code="d">1938-</subfield>
+    <subfield code="e">Sonstige</subfield>
+    <subfield code="0">(DE-588)135947308</subfield>
+    <subfield code="4">oth</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)767764071</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(DE-599)BSZ352472782</subfield>
+  </datafield>
+  <datafield tag="041" ind1="0" ind2=" ">
+    <subfield code="a">ger</subfield>
+  </datafield>
+  <datafield tag="044" ind1=" " ind2=" ">
+    <subfield code="a">gw</subfield>
+    <subfield code="c">DE</subfield>
+  </datafield>
+  <datafield tag="049" ind1=" " ind2=" ">
+    <subfield code="a">DE-20</subfield>
+    <subfield code="a">DE-12</subfield>
+    <subfield code="a">DE-384</subfield>
+    <subfield code="a">DE-70</subfield>
+    <subfield code="a">DE-188</subfield>
+    <subfield code="a">DE-824</subfield>
+    <subfield code="a">DE-19</subfield>
+    <subfield code="a">DE-473</subfield>
+    <subfield code="a">DE-11</subfield>
+    <subfield code="a">DE-355</subfield>
+    <subfield code="a">DE-525</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">NP 2800</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="b">txt</subfield>
+    <subfield code="2">rdacontent</subfield>
+  </datafield>
+  <datafield tag="337" ind1=" " ind2=" ">
+    <subfield code="b">n</subfield>
+    <subfield code="2">rdamedia</subfield>
+  </datafield>
+  <datafield tag="338" ind1=" " ind2=" ">
+    <subfield code="b">nc</subfield>
+    <subfield code="2">rdacarrier</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Politik</subfield>
+    <subfield code="0">(DE-588)4046514-7</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="0">
+    <subfield code="a">Deutschland</subfield>
+    <subfield code="0">(DE-588)4011882-4</subfield>
+    <subfield code="D">g</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="1">
+    <subfield code="a">Politik</subfield>
+    <subfield code="0">(DE-588)4046514-7</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+  <datafield tag="773" ind1="0" ind2="8">
+    <subfield code="w">(DE-604)BV017995925</subfield>
+    <subfield code="g">4</subfield>
+  </datafield>
+</record></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record></zs:records></zs:searchRetrieveResponse>

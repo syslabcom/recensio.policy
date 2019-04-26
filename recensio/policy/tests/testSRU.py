@@ -22,7 +22,7 @@ class TestSRU(unittest.TestCase):
     def test_sru_isbn_123(self):
         expected = {
             'bv': u'BV013575871',
-            'authors': [u'Berthelsen, Asger'],
+            'authors': [{'lastname': u'Berthelsen', 'firstname': 'Asger'}, ],
             'ddcPlace': [],
             'ddcSubject': [],
             'ddcTime': [],
@@ -119,7 +119,7 @@ class TestSRU(unittest.TestCase):
         self.maxDiff = None
         expected = {
             'bv': u'BV041201260',
-            'authors': [u'Kraus, Eva', ],
+            'authors': [{'lastname': u'Kraus', 'firstname': 'Eva', }],
             'ddcPlace': [],  # XXX [u'43'],
             'ddcSubject': [],  # XXX [u'306.09'],
             'ddcTime': [],  # XXX [u'09041', u'09042', ],
@@ -194,4 +194,77 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('978-3-8353-1657-7')
+        self.assertEquals(expected, md)
+
+    def test_sru_isbn_9783898617277(self):
+        self.maxDiff = None
+        expected = {
+            'authors': [],
+            'bv': u'BV023169149',
+            'ddcSubject': [u'940.3', ],
+            'ddcPlace': [],  # XXX [u'181', ],
+            'ddcTime': [],  # XXX [u'09041', ],
+            'isbn': u'9783898617277',
+            'keywords': [
+                u'World War, 1914-1918',
+                u'Weltkrieg',
+                u'War in literature',
+                u'Weltkrieg (1914-1918)',
+                u'Kollektives Ged\xe4chtnis',
+                u'Geschichte',
+                u'Aufsatzsammlung',
+            ],
+            'language': u'German',
+            'location': u'Essen',
+            'pages': u'222 S.',
+            'publisher': u'Klartext',
+            'series': u'Schriften der Bibliothek für Zeitgeschichte '
+                      ': Neue Folge',
+            'seriesVol': u'22',
+            'subtitle': None,
+            'title': u'\x98Der\x9c Erste Weltkrieg in der popul\xe4ren Erinnerungskultur',
+            'year': u'2008',
+        }
+        filename = 'sru_data_9783898617277.xml'
+        with patch(
+            'recensio.policy.srusearch.fetchMetadata',
+            side_effect=MockResultFactory(filename),
+        ):
+            md = getMetadata('9783898617277')
+        self.assertEquals(expected, md)
+
+    def test_sru_isbn_9783506770707(self):
+        self.maxDiff = None
+        expected = {
+            'bv': u'BV039685251',
+            'authors': [
+                # XXX {'firstname': u'Konrad', 'lastname': u'Canis'},
+                # XXX {'firstname': u'Michael', 'lastname': u'Epkenhans'},
+                {'firstname': u'Otto von', 'lastname': u'Bismarck'},
+            ],
+            'ddcPlace': [],
+            'ddcSubject': [],
+            'ddcTime': [],
+            'isbn': u'9783506770707',
+            'keywords': [
+                u'Politik',
+                u'Deutschland',
+                u'Quelle',
+            ],
+            'language': u'German',
+            'location': u'Paderborn ; M\xfcnchen [u.a.]',
+            'pages': u'XXXI, 616 S.',
+            'publisher': u'Sch\xf6ningh',
+            'series': u'4',
+            'seriesVol': None,
+            'subtitle': None,
+            'title': u'Gesammelte Werke',
+            'year': u'2012',
+        }
+        filename = 'sru_data_9783506770707.xml'
+        with patch(
+            'recensio.policy.srusearch.fetchMetadata',
+            side_effect=MockResultFactory(filename),
+        ):
+            md = getMetadata('9783506770707')
         self.assertEquals(expected, md)
