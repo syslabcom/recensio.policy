@@ -6,7 +6,7 @@ from zope.component import getUtility
 from zope.i18n.locales import locales
 from zope.schema.interfaces import IVocabularyFactory
 
-from recensio.policy.sparqlsearch import getMetadata
+from recensio.policy.srusearch import getMetadata
 import logging
 
 log = logging.getLogger(__name__)
