@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/"><zs:version>1.1</zs:version><zs:numberOfRecords>1</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>info:srw/schema/1/marcxml-v1.1</zs:recordSchema><zs:recordPacking>xml</zs:recordPacking><zs:recordData><record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>02202nam a2200553 cb4500</leader>
+  <controlfield tag="001">BV042641974</controlfield>
+  <controlfield tag="003">DE-604</controlfield>
+  <controlfield tag="005">20150727        </controlfield>
+  <controlfield tag="007">t</controlfield>
+  <controlfield tag="008">150625s2015    gw abd|  |||| 00||| ger d</controlfield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9783835316577</subfield>
+    <subfield code="9">978-3-8353-1657-7</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DE-604</subfield>
+    <subfield code="b">ger</subfield>
+    <subfield code="e">rakddb</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Freilegungen</subfield>
+    <subfield code="b">Spiegelungen der NS-Verfolgung und ihrer Konsequenzen</subfield>
+    <subfield code="c">hrsg. von Rebecca Boehling ...</subfield>
+  </datafield>
+  <datafield tag="264" ind1=" " ind2="1">
+    <subfield code="a">G&#xF6;ttingen</subfield>
+    <subfield code="b">Wallstein</subfield>
+    <subfield code="c">2015</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">279 S.</subfield>
+    <subfield code="b">Ill., graph. Darst., Kt.</subfield>
+  </datafield>
+  <datafield tag="546" ind1=" " ind2=" ">
+    <subfield code="a">Beitr. teilw. dt., teilw. engl.</subfield>
+  </datafield>
+  <datafield tag="655" ind1=" " ind2="7">
+    <subfield code="0">(DE-588)4143413-4</subfield>
+    <subfield code="a">Aufsatzsammlung</subfield>
+    <subfield code="2">gnd-content</subfield>
+  </datafield>
+  <datafield tag="700" ind1="1" ind2=" ">
+    <subfield code="a">Boehling, Rebecca L.</subfield>
+    <subfield code="d">1955-</subfield>
+    <subfield code="0">(DE-588)12442676X</subfield>
+    <subfield code="4">edt</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="n">DHB</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="q">DHB_BSB_DDC</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="q">DHB_IFZ_BIBLIO_2015</subfield>
+  </datafield>
+  <datafield tag="940" ind1="1" ind2=" ">
+    <subfield code="q">DHB_JDG_ISBN_1</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)913786724</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(DE-599)BVBBV042641974</subfield>
+  </datafield>
+  <datafield tag="041" ind1="0" ind2=" ">
+    <subfield code="a">ger</subfield>
+    <subfield code="a">eng</subfield>
+  </datafield>
+  <datafield tag="044" ind1=" " ind2=" ">
+    <subfield code="a">gw</subfield>
+    <subfield code="c">XA-DE-NI</subfield>
+  </datafield>
+  <datafield tag="049" ind1=" " ind2=" ">
+    <subfield code="a">DE-M352</subfield>
+    <subfield code="a">DE-12</subfield>
+    <subfield code="a">DE-B496</subfield>
+    <subfield code="a">DE-188</subfield>
+    <subfield code="a">DE-B1595</subfield>
+    <subfield code="a">DE-83</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">8,1</subfield>
+    <subfield code="2">ssgn</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">8</subfield>
+    <subfield code="2">ssgn</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">k 9</subfield>
+    <subfield code="2">ifzs</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">k 77</subfield>
+    <subfield code="2">ifzs</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="b">txt</subfield>
+    <subfield code="2">rdacontent</subfield>
+  </datafield>
+  <datafield tag="337" ind1=" " ind2=" ">
+    <subfield code="b">n</subfield>
+    <subfield code="2">rdamedia</subfield>
+  </datafield>
+  <datafield tag="338" ind1=" " ind2=" ">
+    <subfield code="b">nc</subfield>
+    <subfield code="2">rdacarrier</subfield>
+  </datafield>
+  <datafield tag="490" ind1="1" ind2=" ">
+    <subfield code="a">Jahrbuch des International Tracing Service</subfield>
+    <subfield code="v">4</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">Literaturangaben</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Verfolgung</subfield>
+    <subfield code="0">(DE-588)4127664-4</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Displaced Person</subfield>
+    <subfield code="0">(DE-588)4140484-1</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Nationalsozialistisches Verbrechen</subfield>
+    <subfield code="0">(DE-588)4075228-8</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Zwangsarbeit</subfield>
+    <subfield code="0">(DE-588)4139439-2</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Judenvernichtung</subfield>
+    <subfield code="0">(DE-588)4073091-8</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="0">
+    <subfield code="a">Judenvernichtung</subfield>
+    <subfield code="0">(DE-588)4073091-8</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="1">
+    <subfield code="a">Nationalsozialistisches Verbrechen</subfield>
+    <subfield code="0">(DE-588)4075228-8</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="2">
+    <subfield code="a">Verfolgung</subfield>
+    <subfield code="0">(DE-588)4127664-4</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="3">
+    <subfield code="a">Zwangsarbeit</subfield>
+    <subfield code="0">(DE-588)4139439-2</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="4">
+    <subfield code="a">Displaced Person</subfield>
+    <subfield code="0">(DE-588)4140484-1</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+  <datafield tag="830" ind1=" " ind2="0">
+    <subfield code="a">Jahrbuch des International Tracing Service</subfield>
+    <subfield code="v">4</subfield>
+    <subfield code="w">(DE-604)BV040290429</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2="2">
+    <subfield code="m">Digitalisierung BSB Muenchen 21 - ADAM Catalogue Enrichment</subfield>
+    <subfield code="q">application/pdf</subfield>
+    <subfield code="u">http://bvbr.bib-bvb.de:8991/F?func=service&amp;doc_library=BVB01&amp;local_base=BVB01&amp;doc_number=028074335&amp;sequence=000002&amp;line_number=0001&amp;func_code=DB_RECORDS&amp;service_type=MEDIA</subfield>
+    <subfield code="3">Inhaltsverzeichnis</subfield>
+  </datafield>
+</record></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record></zs:records></zs:searchRetrieveResponse>

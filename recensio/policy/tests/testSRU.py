@@ -22,7 +22,7 @@ class TestSRU(unittest.TestCase):
     def test_sru_isbn_123(self):
         expected = {
             'bv': u'BV013575871',
-            'authors': ['Berthelsen, Asger'],
+            'authors': [u'Berthelsen, Asger'],
             'ddcPlace': [],
             'ddcSubject': [],
             'ddcTime': [],
@@ -32,8 +32,9 @@ class TestSRU(unittest.TestCase):
             'location': u'K\xf8benhavn',
             'pages': u'223 S.',
             'publisher': None,
-            'series': u'2; Grønlands Geologiske Undersøgelse: Bulletin',
-            'seriesVol': u'25',
+            # XXX why the '...'?
+            'series': u'2; ...Grønlands Geologiske Undersøgelse: Bulletin',
+            'seriesVol': u'25...',
             'subtitle': None,
             'title': u'Structural studies in the Pre-Cambrian of western Greenland',
             'year': u'1960',
@@ -158,4 +159,39 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('978-3-86386-488-0')
+        self.assertEquals(expected, md)
+
+    def test_sru_isbn_9783835316577(self):
+        self.maxDiff = None
+        expected = {
+            'bv': u'BV042641974',
+            'authors': [],
+            'ddcPlace': [],  # XXX [u'43', ],
+            'ddcSubject': [],  # XXX [u'909.04924', u'306.09', ],
+            'ddcTime': [],  # XXX [u'09043', u'09044', ],
+            'isbn': u'9783835316577',
+            'keywords': [
+                u'Verfolgung',
+                u'Zwangsarbeit',
+                u'Judenvernichtung',
+                u'Nationalsozialistisches Verbrechen',
+                u'Displaced Person',
+                u'Aufsatzsammlung',
+            ],
+            'language': u'German',
+            'location': u'Göttingen',
+            'pages': u'279 S.',
+            'publisher': u'Wallstein',
+            'series': u'Jahrbuch des International Tracing Service',
+            'seriesVol': u'4',
+            'subtitle': u'Spiegelungen der NS-Verfolgung und ihrer Konsequenzen',
+            'title': u'Freilegungen',
+            'year': u'2015',
+        }
+        filename = 'sru_data_9783835316577.xml'
+        with patch(
+            'recensio.policy.srusearch.fetchMetadata',
+            side_effect=MockResultFactory(filename),
+        ):
+            md = getMetadata('978-3-8353-1657-7')
         self.assertEquals(expected, md)

@@ -2,6 +2,7 @@ from marcxml_parser import MARCXMLRecord
 from Products.CMFPlone.utils import safe_unicode
 from HTMLParser import HTMLParser
 import pycountry
+import requests
 
 
 class MetadataConverter(object):
@@ -9,6 +10,7 @@ class MetadataConverter(object):
     keyword_fields = [600, 610, 611, 630, 648, 650, 651, 655]
 
     def __init__(self, raw, isbn):
+        # XXX catch ValueError or iterate over records
         self.record = MARCXMLRecord(raw)
         self.isbn = isbn
         self.html_parser = HTMLParser()
@@ -34,9 +36,10 @@ class MetadataConverter(object):
         return pylang.name
 
     def get_series(self):
-        series = self.record['490a0 ']
+        series = self.record['490a']
         series_num = self.record.get_part_name()
         series_title = series[0] if series else ''
+        series_title = self.get_field_as_text('490a')
         parts = [part for part in [series_num, series_title] if part]
         if parts:
             return self.clean_text('; '.join(parts))
@@ -69,6 +72,7 @@ class MetadataConverter(object):
             'title': self.get_field_as_text('245a'),
             'subtitle': self.get_field_as_text('245b'),
             'authors': self.get_field_as_list('100a'),
+            # XXX editors?
             'language': self.convertLanguage(self.record['008'][35:38]),
             'isbn': self.clean_text(self.get_isbn()),
             'ddcPlace': self.get_field_as_list('082g'),
@@ -81,7 +85,7 @@ class MetadataConverter(object):
             'publisher': self.clean_text(self.record.get_publisher(None)),
             'pages': self.get_field_as_text('300a'),
             'series': self.get_series(),
-            'seriesVol': self.get_field_as_text('490v1 '),
+            'seriesVol': self.get_field_as_text('490v'),
             'year': self.clean_text(self.record.get_pub_date(None)),
             'bv': self.clean_text(self.record['001']),
         }
@@ -89,7 +93,16 @@ class MetadataConverter(object):
 
 
 def fetchMetadata(isbn):
-    pass
+    base_url = 'http://bvbr.bib-bvb.de:5661/bvb01sru'
+    params = {
+        'version': '1.1',
+        'recordSchema': 'marcxml',
+        'operation': 'searchRetrieve',
+        'query': 'marcxml.isbn={isbn}'.format(isbn=isbn),
+        'maximumRecords': '6',
+    }
+    response = requests.get(base_url, params=params)
+    return response.text
 
 
 def getMetadata(isbn):
