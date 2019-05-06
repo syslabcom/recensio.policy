@@ -16,9 +16,10 @@ class OPAC(BrowserView):
 
     def __call__(self, identifier):
         metadata = getMetadata(identifier)
-        metadata['language'] = \
-            self._convertLanguageToLangCode(metadata['language'])
-        return json.dumps([metadata])
+        for entry in metadata:
+            entry['language'] = \
+                self._convertLanguageToLangCode(entry['language'])
+        return json.dumps(metadata)
 
     def _convertLanguageToLangCode(self, language):
         if not language:
@@ -74,12 +75,12 @@ class MetadataQuery(OPAC):
                            'url': res.absolute_url()},
             })
 
-        opac_data = getMetadata(identifier)
-        opac_data['language'] = self._convertLanguageToLangCode(
-            opac_data['language'])
-        opac_data['source'] = {
-            'title': 'OPAC',
-            'url': 'http://lod.b3kat.de/page/isbn/' + identifier}
-        metadata.append(opac_data)
+        for opac_data in getMetadata(identifier):
+            opac_data['language'] = self._convertLanguageToLangCode(
+                opac_data['language'])
+            opac_data['source'] = {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/' + identifier}
+            metadata.append(opac_data)
 
         return json.dumps(metadata)

@@ -45,7 +45,7 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('123')
-        self.assertEquals(expected, md)
+        self.assertEquals([expected], md)
 
     def test_sru_isbn_9783830921929(self):
         self.maxDiff = None
@@ -79,34 +79,60 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('9783830921929')
-        self.assertEquals(expected, md)
+        self.assertEquals([expected], md)
 
     def test_sru_isbn_9780199280070(self):
         self.maxDiff = None
-        expected = {
-            'bv': u'BV036604193',  # XXX second entry: u'BV035356471',
-            'authors': [],
-            'ddcPlace': [],
-            'ddcSubject': [u'943.085'],
-            'ddcTime': [],
-            'isbn': u'9780199280070',
-            'keywords': [
-                u'Germany',
-                u'Geschichte 1918-1933',
-                u'Weimarer Republik',
-                u'Deutschland',
-                u'Geschichte',
-            ],
-            'language': u'English',
-            'location': u'Oxford [u.a.]',
-            'pages': u'XVIII, 324 S.',
-            'publisher': u'Oxford Univ. Press',
-            'series': u'\x98The\x9c short Oxford history of Germany',
-            'seriesVol': None,
-            'subtitle': None,
-            'title': u'Weimar Germany',
-            'year': u'2010',
-        }
+        expected = [
+            {
+                'bv': u'BV036604193',
+                'authors': [],
+                'ddcPlace': [],
+                'ddcSubject': [u'943.085'],
+                'ddcTime': [],
+                'isbn': u'9780199280070',
+                'keywords': [
+                    u'Germany',
+                    u'Geschichte 1918-1933',
+                    u'Weimarer Republik',
+                    u'Deutschland',
+                    u'Geschichte',
+                ],
+                'language': u'English',
+                'location': u'Oxford [u.a.]',
+                'pages': u'XVIII, 324 S.',
+                'publisher': u'Oxford Univ. Press',
+                'series': u'\x98The\x9c short Oxford history of Germany',
+                'seriesVol': None,
+                'subtitle': None,
+                'title': u'Weimar Germany',
+                'year': u'2010',
+            },
+            {
+                'bv': u'BV035356471',
+                'authors': [],
+                'ddcPlace': [],
+                'ddcSubject': [u'943.085'],
+                'ddcTime': [],
+                'isbn': u'9780199280070',
+                'keywords': [
+                    u'Germany',
+                    u'Geschichte 1918-1933',
+                    u'Weimarer Republik',
+                    u'Deutschland',
+                    u'Geschichte',
+                ],
+                'language': u'English',
+                'location': u'Oxford [u.a.]',
+                'pages': u'XVIII, 324 S.',
+                'publisher': u'Oxford Univ. Press',
+                'series': u'\x98The\x9c short Oxford history of Germany',
+                'seriesVol': None,
+                'subtitle': None,
+                'title': u'Weimar Germany',
+                'year': u'2009',
+            },
+        ]
         filename = 'sru_data_9780199280070.xml'
         with patch(
             'recensio.policy.srusearch.fetchMetadata',
@@ -159,7 +185,7 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('978-3-86386-488-0')
-        self.assertEquals(expected, md)
+        self.assertEquals([expected], md)
 
     def test_sru_isbn_9783835316577(self):
         self.maxDiff = None
@@ -194,7 +220,7 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('978-3-8353-1657-7')
-        self.assertEquals(expected, md)
+        self.assertEquals([expected], md)
 
     def test_sru_isbn_9783898617277(self):
         self.maxDiff = None
@@ -231,7 +257,7 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('9783898617277')
-        self.assertEquals(expected, md)
+        self.assertEquals([expected], md)
 
     def test_sru_isbn_9783506770707(self):
         self.maxDiff = None
@@ -267,4 +293,4 @@ class TestSRU(unittest.TestCase):
             side_effect=MockResultFactory(filename),
         ):
             md = getMetadata('9783506770707')
-        self.assertEquals(expected, md)
+        self.assertEquals([expected], md)
