@@ -26,16 +26,17 @@ class TestSRU(unittest.TestCase):
             'ddcPlace': [],
             'ddcSubject': [],
             'ddcTime': [],
+            'editors': [],
             'isbn': u'123',
             'keywords': [],
             'language': u'English',
             'location': u'K\xf8benhavn',
             'pages': u'223 S.',
-            'publisher': None,
+            'publisher': u'',
             # XXX why the '...'?
             'series': u'2; ...Grønlands Geologiske Undersøgelse: Bulletin',
             'seriesVol': u'25...',
-            'subtitle': None,
+            'subtitle': u'',
             'title': u'Structural studies in the Pre-Cambrian of western Greenland',
             'year': u'1960',
         }
@@ -55,6 +56,7 @@ class TestSRU(unittest.TestCase):
             'ddcPlace': [],
             'ddcSubject': [u'372.6049'],
             'ddcTime': [],
+            'editors': [],
             'isbn': u'9783830921929',
             'keywords': [
                 u'Spracherziehung',
@@ -66,8 +68,8 @@ class TestSRU(unittest.TestCase):
             'location': u'M\xfcnster ; New York, NY ; M\xfcnchen ; Berlin',
             'pages': u'162 S.',
             'publisher': u'Waxmann',
-            'series': None,
-            'seriesVol': None,
+            'series': u'',
+            'seriesVol': u'',
             'subtitle': u'Sprachentwicklung und Sprachf\xf6rderung in Kindertagesst\xe4tten ; [anl\xe4sslich des Landeskongresses \"Kinder Bilden Sprache - Sprache Bildet Kinder\" am 4. November 2008 in Recklinghausen]',
             'title': u'Kinder bilden Sprache - Sprache bildet Kinder',
 
@@ -90,6 +92,9 @@ class TestSRU(unittest.TestCase):
                 'ddcPlace': [],
                 'ddcSubject': [u'943.085'],
                 'ddcTime': [],
+                'editors': [
+                    {'firstname': 'Anthony', 'lastname': 'McElligott'},
+                ],
                 'isbn': u'9780199280070',
                 'keywords': [
                     u'Germany',
@@ -103,8 +108,8 @@ class TestSRU(unittest.TestCase):
                 'pages': u'XVIII, 324 S.',
                 'publisher': u'Oxford Univ. Press',
                 'series': u'\x98The\x9c short Oxford history of Germany',
-                'seriesVol': None,
-                'subtitle': None,
+                'seriesVol': u'',
+                'subtitle': u'',
                 'title': u'Weimar Germany',
                 'year': u'2010',
             },
@@ -114,6 +119,9 @@ class TestSRU(unittest.TestCase):
                 'ddcPlace': [],
                 'ddcSubject': [u'943.085'],
                 'ddcTime': [],
+                'editors': [
+                    {'firstname': 'Anthony', 'lastname': 'McElligott'},
+                ],
                 'isbn': u'9780199280070',
                 'keywords': [
                     u'Germany',
@@ -127,8 +135,8 @@ class TestSRU(unittest.TestCase):
                 'pages': u'XVIII, 324 S.',
                 'publisher': u'Oxford Univ. Press',
                 'series': u'\x98The\x9c short Oxford history of Germany',
-                'seriesVol': None,
-                'subtitle': None,
+                'seriesVol': u'',
+                'subtitle': u'',
                 'title': u'Weimar Germany',
                 'year': u'2009',
             },
@@ -149,6 +157,7 @@ class TestSRU(unittest.TestCase):
             'ddcPlace': [],  # XXX [u'43'],
             'ddcSubject': [],  # XXX [u'306.09'],
             'ddcTime': [],  # XXX [u'09041', u'09042', ],
+            'editors': [],
             'isbn': u'9783863864880',
             'keywords': [
                 u'Deutsches Jugendherbergswerk',
@@ -173,8 +182,8 @@ class TestSRU(unittest.TestCase):
             'location': u'Berlin',
             'pages': u'450 S.',
             'publisher': u'Pro Business',
-            'series': None,
-            'seriesVol': None,
+            'series': u'',
+            'seriesVol': u'',
             'subtitle': u'1909 - 1933 ; Programm - Personen - Gleichschaltung',
             'title': u'\x98Das\x9c Deutsche Jugendherbergswerk',
             'year': u'2013',
@@ -195,6 +204,9 @@ class TestSRU(unittest.TestCase):
             'ddcPlace': [],  # XXX [u'43', ],
             'ddcSubject': [],  # XXX [u'909.04924', u'306.09', ],
             'ddcTime': [],  # XXX [u'09043', u'09044', ],
+            'editors': [
+                {'firstname': 'Rebecca L.', 'lastname': 'Boehling'},
+            ],
             'isbn': u'9783835316577',
             'keywords': [
                 u'Verfolgung',
@@ -230,6 +242,9 @@ class TestSRU(unittest.TestCase):
             'ddcSubject': [u'940.3', ],
             'ddcPlace': [],  # XXX [u'181', ],
             'ddcTime': [],  # XXX [u'09041', ],
+            'editors': [
+                {'firstname': u'Barbara', 'lastname': u'Korte'},
+            ],
             'isbn': u'9783898617277',
             'keywords': [
                 u'World War, 1914-1918',
@@ -247,7 +262,7 @@ class TestSRU(unittest.TestCase):
             'series': u'Schriften der Bibliothek für Zeitgeschichte '
                       ': Neue Folge',
             'seriesVol': u'22',
-            'subtitle': None,
+            'subtitle': u'',
             'title': u'\x98Der\x9c Erste Weltkrieg in der popul\xe4ren Erinnerungskultur',
             'year': u'2008',
         }
@@ -264,13 +279,15 @@ class TestSRU(unittest.TestCase):
         expected = {
             'bv': u'BV039685251',
             'authors': [
-                # XXX {'firstname': u'Konrad', 'lastname': u'Canis'},
-                # XXX {'firstname': u'Michael', 'lastname': u'Epkenhans'},
                 {'firstname': u'Otto von', 'lastname': u'Bismarck'},
             ],
             'ddcPlace': [],
             'ddcSubject': [],
             'ddcTime': [],
+            'editors': [
+                {'firstname': u'Michael', 'lastname': u'Epkenhans'},
+                {'firstname': u'Konrad', 'lastname': u'Canis'},
+            ],
             'isbn': u'9783506770707',
             'keywords': [
                 u'Politik',
@@ -282,8 +299,8 @@ class TestSRU(unittest.TestCase):
             'pages': u'XXXI, 616 S.',
             'publisher': u'Sch\xf6ningh',
             'series': u'4',
-            'seriesVol': None,
-            'subtitle': None,
+            'seriesVol': u'',
+            'subtitle': u'',
             'title': u'Gesammelte Werke',
             'year': u'2012',
         }

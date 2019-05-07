@@ -27,17 +27,23 @@ class MetadataConverter(object):
     def get_field_as_list(self, fieldspec):
         return [self.clean_text(a) for a in self.current[fieldspec]]
 
-    def get_authors(self):
-        authors = []
-        for author in self.current['100a']:  # XXX + self.current['700a']:
-            lastname, firstname = author.split(', ')
-            authors.append(
+    def get_names(self, fieldspec):
+        names = []
+        for fullname in self.current[fieldspec]:
+            lastname, firstname = fullname.split(', ')
+            names.append(
                 {
                     'lastname': lastname,
                     'firstname': firstname,
                 }
             )
-        return authors
+        return names
+
+    def get_authors(self):
+        return self.get_names('100a')
+
+    def get_editors(self):
+        return self.get_names('700a')
 
     def convertLanguage(self, lang):
         try:
@@ -81,7 +87,7 @@ class MetadataConverter(object):
             'title': self.get_field_as_text('245a'),
             'subtitle': self.get_field_as_text('245b'),
             'authors': self.get_authors(),
-            # XXX editors?
+            'editors': self.get_editors(),
             'language': self.convertLanguage(self.current['008'][35:38]),
             'isbn': self.clean_text(self.get_isbn()),
             'ddcPlace': self.get_field_as_list('082g'),
