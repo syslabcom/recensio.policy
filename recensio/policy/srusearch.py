@@ -22,7 +22,7 @@ class MetadataConverter(object):
     def get_field_as_text(self, fieldspec):
         return self.clean_text(
             u''.join(self.current[fieldspec])
-        ) or None
+        )
 
     def get_field_as_list(self, fieldspec):
         return [self.clean_text(a) for a in self.current[fieldspec]]
@@ -52,7 +52,7 @@ class MetadataConverter(object):
         parts = [part for part in [series_num, series_title] if part]
         if parts:
             return self.clean_text('; '.join(parts))
-        return None
+        return ''
 
     def get_keywords(self):
         keywords = set()
@@ -91,11 +91,11 @@ class MetadataConverter(object):
                 [place for place in self.current['260a  '] + self.current['264a']]
             ))),
             'keywords': self.get_keywords(),
-            'publisher': self.clean_text(self.current.get_publisher(None)),
+            'publisher': self.clean_text(self.current.get_publisher('')),
             'pages': self.get_field_as_text('300a'),
             'series': self.get_series(),
             'seriesVol': self.get_field_as_text('490v'),
-            'year': self.clean_text(self.current.get_pub_date(None)),
+            'year': self.clean_text(self.current.get_pub_date('')),
             'bv': self.clean_text(self.current['001']),
         }
         return converted
