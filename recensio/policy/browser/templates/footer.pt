@@ -17,20 +17,21 @@
     <div class="column_footer">
 
       <div>
-        <span>
-          <span i18n:translate="message_supported_by">
-            recensio.net ist ein Gemeinschaftsprojekt folgender Institutionen
-          </span>
-          </span><br />
           <a href="http://www.bsb-muenchen.de/"
              ><img tal:attributes="src string:${portal_url}/imgs/logos/bsb_logo.gif" src="imgs/logos/bsb_logo.gif"
              alt="Logo der Bayerischen Staatsbibliothek" /></a>
-          <a href="http://www.uni-koeln.de/"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/unikoeln-logo.png" src="imgs/logos/unikoeln-logo.png"
-             alt="Logo der Universität Köln" /></a>
-          <a href="http://www.ieg-mainz.de/likecms/index.php"
-             ><img tal:attributes="src string:${portal_url}/imgs/logos/ieg_logo.png" src="imgs/logos/ieg_logo.jpg"
-             alt="Logo des Institus für europäische Geschichte" /></a>
+          <a href="https://www.historicum.net/"
+             ><img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/historicum_logo.png" src="++resource++recensio.theme.images/historicum_logo.png"
+             alt="Logo historicum.net" /></a>
+          <a href="https://www.recensio-regio.net/"
+             ><img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/logo_regio.png" src="++resource++recensio.theme.images/logo_regio.png"
+             alt="Logo regio" /></a>
+          <a href="https://propylaeum.de/recensio-antiquitatis/"
+             ><img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/logo_propylaeum_recensio_280px_transp.png" src="++resource++recensio.theme.images/logo_propylaeum_recensio_280px_transp.png"
+             alt="Logo antiquitatis" /></a>
+          <a href="https://www.arthistoricum.net/recensio-artium/front-page"
+             ><img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/logo_arthistoricum_recensio_mittel_transp.png" src="++resource++recensio.theme.images/logo_arthistoricum_recensio_mittel_transp.png"
+             alt="Logo artium" /></a>
       </div>
 
       <div id="notes"
