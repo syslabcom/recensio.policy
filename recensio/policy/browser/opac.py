@@ -57,6 +57,7 @@ class MetadataQuery(OPAC):
                 'title': res.Title(),
                 'subtitle': res.getSubtitle(),
                 'authors': res.getAuthors(),
+                'editors': res.getEditorial(),
                 'language': res.getLanguageReviewedText(),
                 'isbn': res.getIsbn(),
                 # DDC values can vary, not handling now, see #13569-5
