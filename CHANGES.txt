@@ -5,6 +5,8 @@ Changelog
 ------------------
 
 - Updated Footer. #FLOW-434
+- RSS: Limit search results to maximum number of items we're returning.
+  #FLOW-198
 
 
 4.3.5 (2018-12-12)

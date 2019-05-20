@@ -63,5 +63,9 @@ class SearchFeed(SearchFeedBase):
         request.set('sort_order', 'reverse')
         request.set('sort_on', request.get('sort_on', 'effective'))
         return self.context.queryCatalog(
-            show_all=1, use_types_blacklist=True,
-            use_navigation_root=True)[start:end]
+            show_all=1,
+            use_types_blacklist=True,
+            use_navigation_root=True,
+            b_start=start,
+            b_size=max_items,
+        )[start:end]
