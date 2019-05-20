@@ -25,6 +25,10 @@
   <adapter factory=".indexer.publisher" name="publisher" />
   <adapter factory=".iteration.CustomCheckingCheckoutPolicyAdapter" />
 
+  <adapter factory=".adapter.SearchFeed"
+    for="plone.app.layout.navigation.interfaces.INavigationRoot"
+    provides="Products.CMFPlone.interfaces.syndication.ISearchFeed" />
+
   <browser:page
     name="register"
     for="plone.app.layout.navigation.interfaces.INavigationRoot"

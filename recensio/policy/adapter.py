@@ -1,4 +1,8 @@
 from plone.app.users.browser.personalpreferences import UserDataPanelAdapter
+from Products.CMFPlone.browser.syndication.adapters import SearchFeed as SearchFeedBase
+from Products.CMFPlone.interfaces.syndication import ISearchFeed
+from zope.interface import implements
+
 
 class RecensioUserDataPanelAdapter(UserDataPanelAdapter):
     """
@@ -46,3 +50,18 @@ class RecensioUserDataPanelAdapter(UserDataPanelAdapter):
 
     def absolute_url(self):
         return "recensio"
+
+
+class SearchFeed(SearchFeedBase):
+    implements(ISearchFeed)
+
+    def _brains(self):
+        max_items = self.limit
+        request = self.context.REQUEST
+        start = int(request.get('b_start', 0))
+        end = int(request.get('b_end', start + max_items))
+        request.set('sort_order', 'reverse')
+        request.set('sort_on', request.get('sort_on', 'effective'))
+        return self.context.queryCatalog(
+            show_all=1, use_types_blacklist=True,
+            use_navigation_root=True)[start:end]
