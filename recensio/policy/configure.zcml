@@ -131,6 +131,15 @@
    handler=".upgrades.v16to17"
    />
 
+ <genericsetup:upgradeStep
+   sortkey="1"
+   source="17"
+   destination="18"
+   title="Add punctuated_title_and_subtitle to catalog metadata"
+   profile='recensio.policy:default'
+   handler=".upgrades.v17to18"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
