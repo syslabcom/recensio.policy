@@ -239,6 +239,13 @@
     />
 
   <browser:viewlet
+    name="social_media"
+    manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+    template="templates/social_media.pt"
+    permission="zope2.View"
+    />
+
+  <browser:viewlet
     name="plone.comments2"
     for="Products.CMFCore.interfaces.IContentish"
     layer="recensio.theme.interfaces.IRecensioLayer"

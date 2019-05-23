@@ -1,0 +1,22 @@
+<div id="socialmedia-fuss"
+    tal:define="
+        portal_url context/portal_url;
+        portal_title here/plone_portal_state/portal_title;
+    ">
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.recensio.net" title="'recensio.net' auf Facebook teilen" target="_blank"
+       tal:attributes="href string:https://www.facebook.com/sharer/sharer.php?u=${portal_url}; title string:'${portal_title}' auf Facebook teilen">
+        <img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/socialmedia_fuss/fb_fuss.jpg"
+             alt="facebook" src="++resource++recensio.theme.images/socialmedia_fuss/fb_fuss.jpg" width="42px" height="36px" /></a>
+    <a href="http://twitter.com/home?status=https://www.recensio.net" title="'recensio.net' auf Twitter teilen" target="_blank"
+       tal:attributes="href string:http://twitter.com/home?status=${portal_url}; title string:'${portal_title}' auf Twitter teilen">
+        <img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/socialmedia_fuss/twitter_fuss.jpg"
+             alt="Twitter" src="++resource++recensio.theme.images/socialmedia_fuss/twitter_fuss.jpg" width="55px" height="36px" /></a>
+    <a href="https://www.linkedin.com/shareArticle?mini=true&url=https://www.recensio.net" title="'recensio.net' auf linkedin teilen" target="_blank"
+       tal:attributes="href string:https://www.linkedin.com/shareArticle?mini=true&url=${portal_url}; title string:'${portal_title}' auf linkedin teilen">
+        <img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/socialmedia_fuss/linkedin_fuss.jpg"
+             alt="linkedin" src="++resource++recensio.theme.images/socialmedia_fuss/linkedin_fuss.jpg"  width="53px" height="36px" /></a>
+    <a href="https://plus.google.com/share?url=https://www.recensio.net" title="'recensio.net' auf Google+ teilen" target="_blank"
+       tal:attributes="href string:https://plus.google.com/share?url=${portal_url}; title string:'${portal_title}' auf Google+ teilen">
+        <img tal:attributes="src string:${portal_url}/++resource++recensio.theme.images/socialmedia_fuss/google_fuss.jpg"
+             alt="google plus" src="++resource++recensio.theme.images/socialmedia_fuss/google_fuss.jpg" width="54px" height="36px" /></a>
+</div>
