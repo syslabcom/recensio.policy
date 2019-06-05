@@ -345,4 +345,4 @@ def getMetadata(isbn):
                     uniques.append(value)
             returnval[key] = uniques
 
-    return returnval
+    return [returnval]

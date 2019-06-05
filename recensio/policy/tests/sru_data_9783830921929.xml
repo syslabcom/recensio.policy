@@ -1,0 +1,141 @@
+<?xml version="1.0"?>
+<zs:searchRetrieveResponse xmlns:zs="http://www.loc.gov/zing/srw/"><zs:version>1.1</zs:version><zs:numberOfRecords>1</zs:numberOfRecords><zs:records><zs:record><zs:recordSchema>info:srw/schema/1/marcxml-v1.1</zs:recordSchema><zs:recordPacking>xml</zs:recordPacking><zs:recordData><record xmlns="http://www.loc.gov/MARC21/slim">
+  <leader>02123nam a2200421 c 4500</leader>
+  <controlfield tag="001">BV035724519</controlfield>
+  <controlfield tag="003">DE-604</controlfield>
+  <controlfield tag="005">20091125        </controlfield>
+  <controlfield tag="007">t</controlfield>
+  <controlfield tag="008">090915s2009       ag||  |||| 10||| ger d</controlfield>
+  <datafield tag="016" ind1="7" ind2=" ">
+    <subfield code="a">996521429</subfield>
+    <subfield code="2">DE-101</subfield>
+  </datafield>
+  <datafield tag="020" ind1=" " ind2=" ">
+    <subfield code="a">9783830921929</subfield>
+    <subfield code="c">Pp.</subfield>
+    <subfield code="9">978-3-8309-2192-9</subfield>
+  </datafield>
+  <datafield tag="040" ind1=" " ind2=" ">
+    <subfield code="a">DE-604</subfield>
+    <subfield code="b">ger</subfield>
+    <subfield code="e">rakddb</subfield>
+  </datafield>
+  <datafield tag="245" ind1="1" ind2="0">
+    <subfield code="a">Kinder bilden Sprache - Sprache bildet Kinder</subfield>
+    <subfield code="b">Sprachentwicklung und Sprachf&#xF6;rderung in Kindertagesst&#xE4;tten ; [anl&#xE4;sslich des Landeskongresses "Kinder Bilden Sprache - Sprache Bildet Kinder" am 4. November 2008 in Recklinghausen]</subfield>
+    <subfield code="c">[Ministerium f&#xFC;r Generationen, Familie, Frauen und Integration des Landes Nordrhein-Westfalen, Referat &#xD6;ffentlichkeitsarbeit]</subfield>
+  </datafield>
+  <datafield tag="264" ind1=" " ind2="1">
+    <subfield code="a">M&#xFC;nster ; New York, NY ; M&#xFC;nchen ; Berlin</subfield>
+    <subfield code="b">Waxmann</subfield>
+    <subfield code="c">2009</subfield>
+  </datafield>
+  <datafield tag="300" ind1=" " ind2=" ">
+    <subfield code="a">162 S.</subfield>
+    <subfield code="b">Ill., Noten</subfield>
+    <subfield code="c">24 cm</subfield>
+  </datafield>
+  <datafield tag="655" ind1=" " ind2="7">
+    <subfield code="0">(DE-588)1071861417</subfield>
+    <subfield code="a">Konferenzschrift</subfield>
+    <subfield code="y">2008</subfield>
+    <subfield code="z">Recklinghausen</subfield>
+    <subfield code="2">gnd-content</subfield>
+  </datafield>
+  <datafield tag="710" ind1="2" ind2=" ">
+    <subfield code="a">Nordrhein-Westfalen</subfield>
+    <subfield code="b">Ministerium f&#xFC;r Generationen, Familie, Frauen und Integration</subfield>
+    <subfield code="e">Sonstige</subfield>
+    <subfield code="0">(DE-588)10132393-1</subfield>
+    <subfield code="4">oth</subfield>
+  </datafield>
+  <datafield tag="711" ind1="2" ind2=" ">
+    <subfield code="a">Landeskongress Kinder Bilden Sprache - Sprache Bildet Kinder</subfield>
+    <subfield code="d">2008</subfield>
+    <subfield code="c">Recklinghausen</subfield>
+    <subfield code="j">Sonstige</subfield>
+    <subfield code="0">(DE-588)16020725-3</subfield>
+    <subfield code="4">oth</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(OCoLC)458749769</subfield>
+  </datafield>
+  <datafield tag="035" ind1=" " ind2=" ">
+    <subfield code="a">(DE-599)DNB996521429</subfield>
+  </datafield>
+  <datafield tag="041" ind1="0" ind2=" ">
+    <subfield code="a">ger</subfield>
+  </datafield>
+  <datafield tag="049" ind1=" " ind2=" ">
+    <subfield code="a">DE-12</subfield>
+    <subfield code="a">DE-19</subfield>
+    <subfield code="a">DE-355</subfield>
+    <subfield code="a">DE-824</subfield>
+    <subfield code="a">DE-11</subfield>
+    <subfield code="a">DE-20</subfield>
+    <subfield code="a">DE-B1533</subfield>
+  </datafield>
+  <datafield tag="082" ind1="0" ind2=" ">
+    <subfield code="a">372.6049</subfield>
+    <subfield code="2">22/ger</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">DK 2000</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">370</subfield>
+    <subfield code="2">sdnb</subfield>
+  </datafield>
+  <datafield tag="084" ind1=" " ind2=" ">
+    <subfield code="a">DP 3000</subfield>
+    <subfield code="2">rvk</subfield>
+  </datafield>
+  <datafield tag="336" ind1=" " ind2=" ">
+    <subfield code="b">txt</subfield>
+    <subfield code="2">rdacontent</subfield>
+  </datafield>
+  <datafield tag="337" ind1=" " ind2=" ">
+    <subfield code="b">n</subfield>
+    <subfield code="2">rdamedia</subfield>
+  </datafield>
+  <datafield tag="338" ind1=" " ind2=" ">
+    <subfield code="b">nc</subfield>
+    <subfield code="2">rdacarrier</subfield>
+  </datafield>
+  <datafield tag="500" ind1=" " ind2=" ">
+    <subfield code="a">Literaturangaben</subfield>
+  </datafield>
+  <datafield tag="650" ind1=" " ind2="4">
+    <subfield code="a">Kindertagesst&#xE4;tte - Spracherziehung - Kongress - Recklinghausen &lt;2008&gt;</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Kindertagesst&#xE4;tte</subfield>
+    <subfield code="0">(DE-588)4030638-0</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="650" ind1="0" ind2="7">
+    <subfield code="a">Spracherziehung</subfield>
+    <subfield code="0">(DE-588)4056459-9</subfield>
+    <subfield code="2">gnd</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="0">
+    <subfield code="a">Kindertagesst&#xE4;tte</subfield>
+    <subfield code="0">(DE-588)4030638-0</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2="1">
+    <subfield code="a">Spracherziehung</subfield>
+    <subfield code="0">(DE-588)4056459-9</subfield>
+    <subfield code="D">s</subfield>
+  </datafield>
+  <datafield tag="689" ind1="0" ind2=" ">
+    <subfield code="5">DE-604</subfield>
+  </datafield>
+  <datafield tag="856" ind1="4" ind2="2">
+    <subfield code="m">HBZ Datenaustausch</subfield>
+    <subfield code="q">application/pdf</subfield>
+    <subfield code="u">http://bvbr.bib-bvb.de:8991/F?func=service&amp;doc_library=BVB01&amp;local_base=BVB01&amp;doc_number=018001234&amp;sequence=000004&amp;line_number=0001&amp;func_code=DB_RECORDS&amp;service_type=MEDIA</subfield>
+    <subfield code="3">Inhaltsverzeichnis</subfield>
+  </datafield>
+</record></zs:recordData><zs:recordPosition>1</zs:recordPosition></zs:record></zs:records></zs:searchRetrieveResponse>

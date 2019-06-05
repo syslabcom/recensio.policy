@@ -44,7 +44,10 @@ class OpacSearch(object):
         br.open(self.url)
         return map(createResult, results)
 
-opac = OpacSearch()
+# The default URL for OpacSearch times out. Instantiating at module level
+# blocks everything that refers to this module.
+#opac = OpacSearch()
+opac = None
 
 def createResult(result):
     raw_stuff = {}
