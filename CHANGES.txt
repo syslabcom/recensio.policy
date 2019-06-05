@@ -4,7 +4,7 @@ Changelog
 4.3.6 (unreleased)
 ------------------
 
-- Updated Footer. #FLOW-434
+- Footer: Only show BSB logo. #FLOW-434
 - RSS: Limit search results to maximum number of items we're returning.
   #FLOW-198
 - Social Media Buttons: Moved to their own viewlet and updated markup. #FLOW-439
