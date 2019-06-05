@@ -237,7 +237,12 @@ def v16to17(portal_setup):
             b_start=b_start,
         )
         for brain in results[b_start:b_start+b_size]:
-            obj = brain.getObject()
+            try:
+                obj = brain.getObject()
+            except Exception as e:
+                log.warn('Could not get object {0}: {1}: {2}'.format(
+                    brain.getPath(), e.__class__.__name__, e))
+                continue
             if not (set(updates.keys()) & set(obj.getDdcPlace())):
                 log.warn('ddcPlace not indexed properly for {0}'.format(
                     brain.getPath()))
@@ -249,3 +254,11 @@ def v16to17(portal_setup):
             log.info('Migrated DdcPlace of {0}'.format(
                 brain.getPath()))
         b_start += b_size
+
+
+def v17to18(portal_setup):
+    catalog = getToolByName(portal_setup, 'portal_catalog')
+    name = 'punctuated_title_and_subtitle'
+    if name not in catalog.schema():
+        log.debug('adding metadata %s' % name)
+        catalog.addColumn(name)

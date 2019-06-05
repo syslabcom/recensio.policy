@@ -272,6 +272,7 @@ def addCatalogIndexes(context):
     addColumn('getReviewAuthorLastname')
     addColumn('getYearOfPublication')
     addColumn('getOfficialYearOfPublication')
+    addColumn('punctuated_title_and_subtitle')
 
 
 @guard

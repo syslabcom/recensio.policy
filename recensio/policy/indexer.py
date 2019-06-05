@@ -77,6 +77,10 @@ def titleOrShortname(obj):
     subtitle = obj.getSubtitle()
     values.append(subtitle)
 
+    for additional in obj.getAdditionalTitles():
+        values.append(additional['title'])
+        values.append(additional['subtitle'])
+
     shortname = obj.getField('shortnameJournal')
     if shortname:
         values.append(str(shortname.getAccessor(obj)()))
