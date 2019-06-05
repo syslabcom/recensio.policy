@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.3.6 (unreleased)
+4.4.0 (2019-06-05)
 ------------------
 
 - Footer: Only show BSB logo. #FLOW-434
