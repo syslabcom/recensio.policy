@@ -262,3 +262,23 @@ def v17to18(portal_setup):
     if name not in catalog.schema():
         log.debug('adding metadata %s' % name)
         catalog.addColumn(name)
+
+
+def v18to19(portal_setup):
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'plone-difftool',
+    )
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.policy:default',
+        'repositorytool',
+    )
+
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.contenttypes:default',
+        'typeinfo',
+    )
+    portal_setup.runImportStepFromProfile(
+        'profile-recensio.contenttypes:default',
+        'factorytool',
+    )
