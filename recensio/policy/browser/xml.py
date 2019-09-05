@@ -3,6 +3,7 @@ from Products.Five.browser import BrowserView
 from cgi import escape
 from io import BytesIO
 from plone.i18n.locales.languages import _languagelist
+from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.contenttypes.interfaces.review import IParentGetter
 from zipfile import ZipFile
 from zope.app.pagetemplate import ViewPageTemplateFile
@@ -171,7 +172,7 @@ class XMLRepresentationIssue(XMLRepresentation):
         parent_path = dict(query='/'.join(self.context.getPhysicalPath()),
                            depth=3)
         results = pc(review_state="published",
-                     portal_type=("Review Monograph", "Review Journal"),
+                     portal_type=REVIEW_TYPES,
                      path=parent_path)
         for item in results:
             yield item.getObject()

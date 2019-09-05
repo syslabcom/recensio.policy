@@ -1,18 +1,13 @@
 # -*- coding: utf-8 -*-
+from recensio.contenttypes.config import PRESENTATION_TYPES
+from recensio.contenttypes.config import REVIEW_TYPES
 
 EXPORT_MAX_ITEMS = 10
 
 EXPORT_OUTPUT_PATH = '/tmp/recensio'  
 
-EXPORTABLE_CONTENT_TYPES = (
-    'Presentation Online Resource',
-    'Presentation Article Review',
-    'Presentation Collection',
-    'Review Journal',
-    'Presentation Monograph',
-    'Review Monograph'
-    )
-    
+EXPORTABLE_CONTENT_TYPES = PRESENTATION_TYPES + REVIEW_TYPES
+
 vocabularies = {
     'honorifics':{
         'frau':'Frau',

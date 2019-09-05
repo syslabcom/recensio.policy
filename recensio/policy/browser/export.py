@@ -6,6 +6,7 @@ from paramiko import Transport
 from paramiko.ssh_exception import SSHException
 from plone import api
 from plone.registry.interfaces import IRegistry
+from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.contenttypes.interfaces.review import IReview
 from recensio.policy.export import LZAExporter
 from recensio.policy.export import register_doi
@@ -105,7 +106,7 @@ class MetadataExport(BrowserView):
         return self.items(portal_type=("Issue", "Volume"))
 
     def reviews(self, issue):
-        return self.items(portal_type=("Review Monograph", "Review Journal"),
+        return self.items(portal_type=REVIEW_TYPES,
                           context=issue)
 
 
