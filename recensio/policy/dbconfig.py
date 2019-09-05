@@ -1,5 +1,6 @@
 from App.config import getConfiguration
 from Products.CMFPlone.utils import safe_unicode
+from collective.solr.interfaces import ISolrConnectionConfig
 from logging import getLogger
 from plone.registry.interfaces import IRegistry
 from recensio.policy.interfaces import IRecensioSettings
@@ -17,6 +18,28 @@ else:
     conf = configuration.product_config.get('recensio.policy')
 
 log = getLogger('recensio.policy')
+
+
+def configure_solr(plone):
+    try:
+        solr_conf = getUtility(ISolrConnectionConfig)
+    except Exception as msg:
+        log.error(msg)
+        return
+    try:
+        if not solr_conf.active:
+            solr_conf.active = True
+        base = u"/solr/core1"
+        if solr_conf.base != base:
+            solr_conf.base = base
+        if conf.get('solr_host') and conf.get('solr_host') != solr_conf.host:
+            solr_conf.host = unicode(conf.get('solr_host'))
+        if conf.get('solr_port') and conf.get('solr_port') != solr_conf.port:
+            solr_conf.port = int(conf.get('solr_port'))
+        log.info('{}: Solr configured'.format(plone.getId()))
+    except AttributeError as msg:
+        log.error(msg)
+
 
 def dbconfig(event):
     if conf is None:
@@ -44,5 +67,7 @@ def dbconfig(event):
             continue
         if recensio_settings.external_portal_url != safe_unicode(url):
             recensio_settings.external_portal_url = safe_unicode(url)
+
+        configure_solr(portal)
 
     transaction.commit()
