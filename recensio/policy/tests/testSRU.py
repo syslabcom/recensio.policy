@@ -13,8 +13,10 @@ class MockResultFactory(object):
         ) as mock_data_file:
             self.mock_data = mock_data_file.read()
 
-    def __call__(self, dummy):
-        return self.mock_data
+    def __call__(self, isbn, base_url, params):
+        if 'bib-bvb.de' in base_url:
+            return self.mock_data
+        return ''
 
 
 class TestSRU(unittest.TestCase):
@@ -22,7 +24,7 @@ class TestSRU(unittest.TestCase):
     def test_sru_isbn_123(self):
         expected = {
             'bv': u'BV013575871',
-            'authors': [{'lastname': u'Berthelsen', 'firstname': 'Asger'}, ],
+            'authors': [{'lastname': u'Berthelsen', 'firstname': u'Asger'}, ],
             'ddcPlace': [],
             'ddcSubject': [],
             'ddcTime': [],
@@ -36,6 +38,10 @@ class TestSRU(unittest.TestCase):
             # XXX why the '...'?
             'series': u'2; ...Grønlands Geologiske Undersøgelse: Bulletin',
             'seriesVol': u'25...',
+            'source': {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/123',
+            },
             'subtitle': u'',
             'title': u'Structural studies in the Pre-Cambrian of western Greenland',
             'year': u'1960',
@@ -70,6 +76,10 @@ class TestSRU(unittest.TestCase):
             'publisher': u'Waxmann',
             'series': u'',
             'seriesVol': u'',
+            'source': {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/9783830921929',
+            },
             'subtitle': u'Sprachentwicklung und Sprachf\xf6rderung in Kindertagesst\xe4tten ; [anl\xe4sslich des Landeskongresses \"Kinder Bilden Sprache - Sprache Bildet Kinder\" am 4. November 2008 in Recklinghausen]',
             'title': u'Kinder bilden Sprache - Sprache bildet Kinder',
 
@@ -93,7 +103,7 @@ class TestSRU(unittest.TestCase):
                 'ddcSubject': [u'943.085'],
                 'ddcTime': [],
                 'editors': [
-                    {'firstname': 'Anthony', 'lastname': 'McElligott'},
+                    {'firstname': u'Anthony', 'lastname': u'McElligott'},
                 ],
                 'isbn': u'9780199280070',
                 'keywords': [
@@ -109,6 +119,10 @@ class TestSRU(unittest.TestCase):
                 'publisher': u'Oxford Univ. Press',
                 'series': u'\x98The\x9c short Oxford history of Germany',
                 'seriesVol': u'',
+                'source': {
+                    'title': 'OPAC',
+                    'url': 'http://lod.b3kat.de/page/isbn/978-0-19-928007-0',
+                },
                 'subtitle': u'',
                 'title': u'Weimar Germany',
                 'year': u'2010',
@@ -120,7 +134,7 @@ class TestSRU(unittest.TestCase):
                 'ddcSubject': [u'943.085'],
                 'ddcTime': [],
                 'editors': [
-                    {'firstname': 'Anthony', 'lastname': 'McElligott'},
+                    {'firstname': u'Anthony', 'lastname': u'McElligott'},
                 ],
                 'isbn': u'9780199280070',
                 'keywords': [
@@ -136,6 +150,10 @@ class TestSRU(unittest.TestCase):
                 'publisher': u'Oxford Univ. Press',
                 'series': u'\x98The\x9c short Oxford history of Germany',
                 'seriesVol': u'',
+                'source': {
+                    'title': 'OPAC',
+                    'url': 'http://lod.b3kat.de/page/isbn/978-0-19-928007-0',
+                },
                 'subtitle': u'',
                 'title': u'Weimar Germany',
                 'year': u'2009',
@@ -153,7 +171,7 @@ class TestSRU(unittest.TestCase):
         self.maxDiff = None
         expected = {
             'bv': u'BV041201260',
-            'authors': [{'lastname': u'Kraus', 'firstname': 'Eva', }],
+            'authors': [{'lastname': u'Kraus', 'firstname': u'Eva', }],
             'ddcPlace': [],  # XXX [u'43'],
             'ddcSubject': [],  # XXX [u'306.09'],
             'ddcTime': [],  # XXX [u'09041', u'09042', ],
@@ -184,6 +202,10 @@ class TestSRU(unittest.TestCase):
             'publisher': u'Pro Business',
             'series': u'',
             'seriesVol': u'',
+            'source': {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/978-3-86386-488-0',
+            },
             'subtitle': u'1909 - 1933 ; Programm - Personen - Gleichschaltung',
             'title': u'\x98Das\x9c Deutsche Jugendherbergswerk',
             'year': u'2013',
@@ -205,7 +227,7 @@ class TestSRU(unittest.TestCase):
             'ddcSubject': [],  # XXX [u'909.04924', u'306.09', ],
             'ddcTime': [],  # XXX [u'09043', u'09044', ],
             'editors': [
-                {'firstname': 'Rebecca L.', 'lastname': 'Boehling'},
+                {'firstname': u'Rebecca L.', 'lastname': u'Boehling'},
             ],
             'isbn': u'9783835316577',
             'keywords': [
@@ -222,6 +244,10 @@ class TestSRU(unittest.TestCase):
             'publisher': u'Wallstein',
             'series': u'Jahrbuch des International Tracing Service',
             'seriesVol': u'4',
+            'source': {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/978-3-8353-1657-7',
+            },
             'subtitle': u'Spiegelungen der NS-Verfolgung und ihrer Konsequenzen',
             'title': u'Freilegungen',
             'year': u'2015',
@@ -262,6 +288,10 @@ class TestSRU(unittest.TestCase):
             'series': u'Schriften der Bibliothek für Zeitgeschichte '
                       ': Neue Folge',
             'seriesVol': u'22',
+            'source': {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/9783898617277',
+            },
             'subtitle': u'',
             'title': u'\x98Der\x9c Erste Weltkrieg in der popul\xe4ren Erinnerungskultur',
             'year': u'2008',
@@ -300,6 +330,10 @@ class TestSRU(unittest.TestCase):
             'publisher': u'Sch\xf6ningh',
             'series': u'4',
             'seriesVol': u'',
+            'source': {
+                'title': 'OPAC',
+                'url': 'http://lod.b3kat.de/page/isbn/9783506770707',
+            },
             'subtitle': u'',
             'title': u'Gesammelte Werke',
             'year': u'2012',

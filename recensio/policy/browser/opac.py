@@ -79,9 +79,6 @@ class MetadataQuery(OPAC):
         for opac_data in getMetadata(identifier):
             opac_data['language'] = self._convertLanguageToLangCode(
                 opac_data['language'])
-            opac_data['source'] = {
-                'title': 'OPAC',
-                'url': 'http://lod.b3kat.de/page/isbn/' + identifier}
             metadata.append(opac_data)
 
         return json.dumps(metadata)

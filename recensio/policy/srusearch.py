@@ -20,9 +20,9 @@ class MetadataConverter(object):
         return safe_unicode(self.html_parser.unescape(value))
 
     def get_field_as_text(self, fieldspec):
-        return self.clean_text(
-            u''.join(self.current[fieldspec])
-        )
+        return safe_unicode(self.clean_text(
+            ''.join(self.current[fieldspec])
+        ))
 
     def get_field_as_list(self, fieldspec):
         return [self.clean_text(a) for a in self.current[fieldspec]]
@@ -33,8 +33,8 @@ class MetadataConverter(object):
             lastname, firstname = fullname.split(', ')
             names.append(
                 {
-                    'lastname': lastname,
-                    'firstname': firstname,
+                    'lastname': lastname.decode('utf-8'),
+                    'firstname': firstname.decode('utf-8'),
                 }
             )
         return names
@@ -93,7 +93,7 @@ class MetadataConverter(object):
             'ddcPlace': self.get_field_as_list('082g'),
             'ddcSubject': self.get_field_as_list('082a'),
             'ddcTime': self.get_field_as_list('082f'),
-            'location': self.clean_text(u', '.join(set(
+            'location': self.clean_text(', '.join(set(
                 [place for place in self.current['260a  '] + self.current['264a']]
             ))),
             'keywords': self.get_keywords(),
@@ -114,19 +114,43 @@ class MetadataConverter(object):
         return out
 
 
-def fetchMetadata(isbn):
-    base_url = 'http://bvbr.bib-bvb.de:5661/bvb01sru'
-    params = {
-        'version': '1.1',
-        'recordSchema': 'marcxml',
-        'operation': 'searchRetrieve',
-        'query': 'marcxml.isbn={isbn}'.format(isbn=isbn),
-        'maximumRecords': '6',
-    }
+def fetchMetadata(isbn, base_url, params):
     response = requests.get(base_url, params=params)
-    return response.text
+    return response.content
 
 
 def getMetadata(isbn):
-    raw = fetchMetadata(isbn)
-    return MetadataConverter(raw, isbn).convert()
+    sources = [
+        {
+            'title': 'OPAC',
+            'base_url': 'http://bvbr.bib-bvb.de:5661/bvb01sru',
+            'query': 'marcxml.isbn={isbn}'.format(isbn=isbn),
+            'frontend_url': 'http://lod.b3kat.de/page/isbn/',
+        },
+        {
+            'title': 'SWB',
+            'base_url': 'http://swbtest.bsz-bw.de/sru/DB=2.1/username=/password=/',
+            'query': 'pica.isb={isbn}'.format(isbn=isbn),
+            'frontend_url': 'http://swb.bsz-bw.de/DB=2.1/SET=2/TTL=1/CMD?ACT=SRCHA&IKT=1007&SRT=RLV&MATCFILTER=N&MATCSET=N&NOABS=Y&TRM=',
+        },
+    ]
+    base_params = {
+        'version': '1.1',
+        'recordSchema': 'marcxml',
+        'operation': 'searchRetrieve',
+        'maximumRecords': '6',
+    }
+
+    results = []
+    for source in sources:
+        params = base_params.copy()
+        params['query'] = source['query']
+        raw = fetchMetadata(isbn, source['base_url'], params)
+        source_results = MetadataConverter(raw, isbn).convert()
+        for result in source_results:
+            result['source'] = {
+                'title': source['title'],
+                'url': source['frontend_url'] + isbn,
+            }
+        results.extend(source_results)
+    return results
