@@ -17,7 +17,7 @@ class MetadataConverter(object):
     def clean_text(self, value):
         if not value:
             return value
-        return safe_unicode(self.html_parser.unescape(value))
+        return self.html_parser.unescape(safe_unicode(value))
 
     def get_field_as_text(self, fieldspec):
         return safe_unicode(self.clean_text(
@@ -78,8 +78,11 @@ class MetadataConverter(object):
         isbns = [i.replace('-', '') for i in self.current.get_ISBNs()]
         if isbn in isbns:
             return isbn
-        # If the given isbn is not in the record then it shouldn't be a match.
-        # This should not really happen.
+        # The given isbn is not in the record but we have a match anyway.
+        # This apparently happens when a review of a work with the given ISBN
+        # is returned as a result.
+        if not isbns:
+            return ''
         return isbns[0]
 
     def convert_current(self):
