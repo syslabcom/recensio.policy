@@ -1,6 +1,9 @@
+#-* coding: utf-8 *-
 import unittest
 from recensio.policy.indexer import get_field_and_ebook_variant
 from recensio.policy.indexer import isbn
+from recensio.policy.indexer import place
+from recensio.policy.indexer import titleOrShortname
 
 
 class ReviewStubIsbn(object):
@@ -40,6 +43,44 @@ class ReviewStubYear(object):
 
     def getYearOfPublicationOnline(self):
         return self.year_online
+
+
+class ReviewStubPlace(object):
+
+    def __init__(self, place='', place_online=''):
+        self.place = place
+        self.place_online = place_online
+
+    def getPlaceOfPublication(self):
+        return self.place
+
+    def getPlaceOfPublicationOnline(self):
+        return self.place_online
+
+
+class ReviewStubDates(object):
+
+    def __init__(self, dates=''):
+        self.dates = dates
+
+    def getDates(self):
+        return self.dates
+
+
+class ReviewStubTitles(object):
+
+    def __init__(self, title='', subtitle=''):
+        self.title = title
+        self.subtitle = subtitle
+
+    def Title(self):
+        return self.title
+
+    def getSubtitle(self):
+        return self.subtitle
+
+    def getField(self, field):
+        return None
 
 
 class TestIndexer(unittest.TestCase):
@@ -99,3 +140,15 @@ class TestIndexer(unittest.TestCase):
             ReviewStubYear(),
             'getYearOfPublication')
         self.assertEqual(result, [])
+
+    def test_place_of_publication(self):
+        result = place(ReviewStubPlace(place='Düsseldorf'))()
+        self.assertEqual(result, ['Düsseldorf'])
+
+    def test_dates(self):
+        result = place(ReviewStubDates(dates=[{'place': 'Düsseldorf'}]))()
+        self.assertEqual(result, ['Düsseldorf'])
+
+    def test_titleOrShorname(self):
+        result = titleOrShortname(ReviewStubTitles(title='Führungsstil'))()
+        self.assertEqual(result, ['Führungsstil', ''])
