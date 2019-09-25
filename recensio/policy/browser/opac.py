@@ -72,6 +72,7 @@ class MetadataQuery(OPAC):
                 'seriesVol': res.getSeriesVol(),
                 'year': res.getYearOfPublication(),
                 'bv': res.getBv(),
+                'ppn': res.getPpn(),
                 'source': {'title': self.context.Title(),
                            'url': res.absolute_url()},
             })

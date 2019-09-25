@@ -85,6 +85,14 @@ class MetadataConverter(object):
             return ''
         return isbns[0]
 
+    def get_ppn(self):
+        values = self.current['035a']
+        for value in values:
+            value = self.clean_text(value)
+            if value.startswith('(DE-627)'):
+                return value.replace('(DE-627)', '')
+        return ''
+
     def convert_current(self):
         converted = {
             'title': self.get_field_as_text('245a'),
@@ -106,6 +114,7 @@ class MetadataConverter(object):
             'seriesVol': self.get_field_as_text('490v'),
             'year': self.clean_text(self.current.get_pub_date('')),
             'bv': self.clean_text(self.current['001']),
+            'ppn': self.get_ppn(),
         }
         return converted
 
@@ -125,16 +134,18 @@ def fetchMetadata(isbn, base_url, params):
 def getMetadata(isbn):
     sources = [
         {
-            'title': 'OPAC',
+            'title': 'B3Kat',
             'base_url': 'http://bvbr.bib-bvb.de:5661/bvb01sru',
             'query': 'marcxml.isbn={isbn}'.format(isbn=isbn),
             'frontend_url': 'http://lod.b3kat.de/page/isbn/',
+            'skip': [],
         },
         {
             'title': 'SWB',
             'base_url': 'http://swbtest.bsz-bw.de/sru/DB=2.1/username=/password=/',
             'query': 'pica.isb={isbn}'.format(isbn=isbn),
             'frontend_url': 'http://swb.bsz-bw.de/DB=2.1/SET=2/TTL=1/CMD?ACT=SRCHA&IKT=1007&SRT=RLV&MATCFILTER=N&MATCSET=N&NOABS=Y&TRM=',
+            'skip': ['bv', ],
         },
     ]
     base_params = {
@@ -155,5 +166,7 @@ def getMetadata(isbn):
                 'title': source['title'],
                 'url': source['frontend_url'] + isbn,
             }
+            for field in source['skip']:
+                del result[field]
         results.extend(source_results)
     return results
