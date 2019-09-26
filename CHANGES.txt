@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.4.1 (unreleased)
+4.5.0 (2019-09-26)
 ------------------
 
 - OPAC search: Also query SWB. #FLOW-650
