@@ -77,7 +77,7 @@ def titleOrShortname(obj):
     subtitle = obj.getSubtitle()
     values.append(subtitle)
 
-    for additional in obj.getAdditionalTitles():
+    for additional in getattr(obj, 'getAdditionalTitles', lambda: [])():
         values.append(additional['title'])
         values.append(additional['subtitle'])
 
@@ -111,7 +111,10 @@ def year(obj):
 
 @indexer(IReview)
 def place(obj):
-    return get_field_and_ebook_variant(obj, 'getPlaceOfPublication')
+    places = get_field_and_ebook_variant(obj, 'getPlaceOfPublication') + [
+        date['place'] for date in getattr(obj, 'getDates', lambda: [])()
+    ]
+    return places
 
 
 @indexer(IReview)

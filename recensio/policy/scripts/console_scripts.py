@@ -1,4 +1,5 @@
 from plone import api
+from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.policy.browser.export import MetadataExport
 from recensio.policy.browser.email import MailCollection
 from recensio.policy.browser.sehepunkte import Import
@@ -45,7 +46,7 @@ class RegisterAllDOIsScript(ConsoleScript):
         parent_path = dict(query='/'.join(issue.getPhysicalPath()),
                            depth=1)
         results = pc(review_state="published",
-                     portal_type=("Review Monograph", "Review Journal"),
+                     portal_type=REVIEW_TYPES,
                      path=parent_path)
         for item in results:
             yield item.getObject()

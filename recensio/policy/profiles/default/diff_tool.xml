@@ -7,6 +7,15 @@
     <type portal_type="Review Monograph">
       <field name="any" difftype="Compound Diff for AT types"/>
     </type>
+    <type portal_type="Review Article Journal">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Review Article Collection">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
+    <type portal_type="Review Exhibition">
+      <field name="any" difftype="Compound Diff for AT types"/>
+    </type>
     <type portal_type="Presentation Article Review">
       <field name="any" difftype="Compound Diff for AT types"/>
     </type>

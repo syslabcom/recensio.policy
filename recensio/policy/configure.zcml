@@ -140,6 +140,14 @@
    handler=".upgrades.v17to18"
    />
 
+ <genericsetup:upgradeStep
+   source="18"
+   destination="19"
+   title="Add new content types (raj, rac, re)"
+   profile='recensio.policy:default'
+   handler=".upgrades.v18to19"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"

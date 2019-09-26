@@ -14,6 +14,7 @@ from smtplib import SMTPServerDisconnected
 from zope.component import getUtility
 import logging
 
+from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.contenttypes.content.review import get_formatted_names
 from recensio.contenttypes.interfaces import IParentGetter
 from recensio.policy import recensioMessageFactory
@@ -22,8 +23,6 @@ from recensio.policy.interfaces import INewsletterSettings
 logger = logging.getLogger('recensio.policy.browser.email')
 
 _ = recensioMessageFactory
-
-REVIEW_TYPES = ['Review Monograph', 'Review Journal']
 
 # NOTIFICATION_LOG_ADDR = 'notification.archive@lists.recensio.net'
 

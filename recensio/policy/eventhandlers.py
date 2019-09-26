@@ -1,9 +1,8 @@
 from plone import api
 from plone.app.async.interfaces import IAsyncService
+from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.policy.export import register_doi_requestless
 from zope.component import getUtility
-
-REVIEW_TYPES = ['Review Monograph', 'Review Journal']
 
 
 def review_published_eventhandler(obj, evt):
