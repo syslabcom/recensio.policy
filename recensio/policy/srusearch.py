@@ -3,6 +3,9 @@ from Products.CMFPlone.utils import safe_unicode
 from HTMLParser import HTMLParser
 import pycountry
 import requests
+import logging
+
+log = logging.getLogger(__name__)
 
 
 class MetadataConverter(object):
@@ -127,7 +130,12 @@ class MetadataConverter(object):
 
 
 def fetchMetadata(isbn, base_url, params):
-    response = requests.get(base_url, params=params)
+    try:
+        response = requests.get(base_url, params=params)
+    except requests.exceptions.RequestException as e:
+        log.exception(e)
+        log.warn("Could not get metadata from {}".format(base_url))
+        return None
     return response.content
 
 
@@ -142,7 +150,7 @@ def getMetadata(isbn):
         },
         {
             'title': 'SWB',
-            'base_url': 'http://swbtest.bsz-bw.de/sru/DB=2.1/username=/password=/',
+            'base_url': 'http://swb.bsz-bw.de/sru/DB=2.1/username=/password=/',
             'query': 'pica.isb={isbn}'.format(isbn=isbn),
             'frontend_url': 'http://swb.bsz-bw.de/DB=2.1/SET=2/TTL=1/CMD?ACT=SRCHA&IKT=1007&SRT=RLV&MATCFILTER=N&MATCSET=N&NOABS=Y&TRM=',
             'skip': ['bv', ],
@@ -160,6 +168,8 @@ def getMetadata(isbn):
         params = base_params.copy()
         params['query'] = source['query']
         raw = fetchMetadata(isbn, source['base_url'], params)
+        if not raw:
+            continue
         source_results = MetadataConverter(raw, isbn).convert()
         for result in source_results:
             result['source'] = {

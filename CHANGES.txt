@@ -4,7 +4,8 @@ Changelog
 4.5.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- OPAC search: Use production SWB URL, not test. #HELP-1932
+- OPAC search: Continue with other sources if one fails. #HELP-1932
 
 
 4.5.0 (2019-09-26)
