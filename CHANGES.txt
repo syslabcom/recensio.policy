@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.5.1 (unreleased)
+4.5.1 (2020-04-23)
 ------------------
 
 - OPAC search: Use production SWB URL, not test. #HELP-1932
