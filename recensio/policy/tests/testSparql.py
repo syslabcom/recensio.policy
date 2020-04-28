@@ -24,6 +24,7 @@ class MockResultFactory(object):
 #     return "[a rdfg:Graph;rdflib:storage [a rdflib:Store;rdfs:label 'IOMemory']]"
 
 
+@unittest.skip("This tests the old deprecated opac search")
 class TestSparqlBase(unittest.TestCase):
     def setUp(self):
         self.handler = InstalledHandler("recensio", level=logging.DEBUG)
@@ -33,6 +34,7 @@ class TestSparqlBase(unittest.TestCase):
         self.handler.uninstall()
 
 
+@unittest.skip("This tests the old deprecated opac search")
 class TestSparqlStable(TestSparqlBase):
     def testGetLabels(self):
         from rdflib.graph import Graph
@@ -49,10 +51,7 @@ class TestSparqlStable(TestSparqlBase):
         self.assertEquals(expected, getLabels(test_url, graph))
 
     def testSeriesVolumeStore(self):
-        returnval = {
-            "series": None,
-            "seriesVol": None,
-        }
+        returnval = {"series": None, "seriesVol": None}
 
         class mockCitation(object):
             value = "Oldenbourg-Grundriss der Geschichte : 23"
@@ -66,10 +65,7 @@ class TestSparqlStable(TestSparqlBase):
         self.assertEquals(returnval["seriesVol"], "23")
 
     def testSeriesVolumeStoreMultipleEntries(self):
-        returnval = {
-            "series": None,
-            "seriesVol": None,
-        }
+        returnval = {"series": None, "seriesVol": None}
 
         class mockCitation(object):
             value = ""
@@ -222,6 +218,7 @@ class TestSparqlStable(TestSparqlBase):
         self.assertEquals(expected, metadata)
 
 
+@unittest.skip("This tests the old deprecated opac search")
 class TestSparqlUnstable(TestSparqlBase):
     """ These tests break repeatedly, but may serve some use as
     documentation. They can be run run with `./bin/test -all `"""

@@ -58,6 +58,7 @@ sampleblob = """<tr>
         </tr>"""
 
 
+@unittest.skip("This tests the old deprecated opac search")
 class TestOpacSearch(unittest.TestCase):
     def xtestSuccessfulSearch(self):
         opac = OpacSearch()
