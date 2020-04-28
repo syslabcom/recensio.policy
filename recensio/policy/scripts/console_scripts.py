@@ -18,36 +18,35 @@ class MetadataExportScript(ConsoleScript):
 
 class NewsletterScript(ConsoleScript):
     def run(self):
-        rss_feeds = self.portal.unrestrictedTraverse('/recensio/RSS-feeds')
+        rss_feeds = self.portal.unrestrictedTraverse("/recensio/RSS-feeds")
         mc = MailCollection(rss_feeds, rss_feeds.REQUEST)
         mc()
 
 
 class SehepunkteImportScript(ConsoleScript):
     def run(self):
-        past_months = self.portal.REQUEST.environ.get('past_months')
-        self.portal.REQUEST['past_months'] = past_months
+        past_months = self.portal.REQUEST.environ.get("past_months")
+        self.portal.REQUEST["past_months"] = past_months
         si = Import(self.portal, self.portal.REQUEST)
         si()
 
 
 class RegisterAllDOIsScript(ConsoleScript):
     def issues_and_volumes(self):
-        pc = api.portal.get_tool('portal_catalog')
-        parent_path = dict(query='/'.join(self.portal.getPhysicalPath()))
-        results = pc(review_state="published",
-                     portal_type=("Issue", "Volume"),
-                     path=parent_path)
+        pc = api.portal.get_tool("portal_catalog")
+        parent_path = dict(query="/".join(self.portal.getPhysicalPath()))
+        results = pc(
+            review_state="published", portal_type=("Issue", "Volume"), path=parent_path
+        )
         for item in results:
             yield item.getObject()
 
     def reviews(self, issue):
-        pc = api.portal.get_tool('portal_catalog')
-        parent_path = dict(query='/'.join(issue.getPhysicalPath()),
-                           depth=1)
-        results = pc(review_state="published",
-                     portal_type=REVIEW_TYPES,
-                     path=parent_path)
+        pc = api.portal.get_tool("portal_catalog")
+        parent_path = dict(query="/".join(issue.getPhysicalPath()), depth=1)
+        results = pc(
+            review_state="published", portal_type=REVIEW_TYPES, path=parent_path
+        )
         for item in results:
             yield item.getObject()
 
@@ -56,15 +55,14 @@ class RegisterAllDOIsScript(ConsoleScript):
             for review in self.reviews(issue_or_volume):
                 if not review.isDoiRegistrationActive():
                     continue
-                if api.content.get_state(review) != 'published':
+                if api.content.get_state(review) != "published":
                     continue
-                path = '/'.join(review.getPhysicalPath())
+                path = "/".join(review.getPhysicalPath())
                 if not review.getEffectiveDate():
-                    log.error("No effective date, can not generate XML! " +
-                              path)
+                    log.error("No effective date, can not generate XML! " + path)
                     continue
                 status, message = register_doi(review)
-                print('{0}: {1}, {2}'.format(path, status, message))
+                print("{0}: {1}, {2}".format(path, status, message))
 
 
 metadata_export = MetadataExportScript()

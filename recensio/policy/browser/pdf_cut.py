@@ -10,14 +10,17 @@ from Products.Five.browser import BrowserView
 
 from recensio.imports.pdf_cut import cutPDF
 
-class PDFCutter(BrowserView):
-    def __call__(self, sure = None):
-        if sure:
-            self.context.blob = cutPDF(self.context.pdf.blob.open(), \
-                self.start_page, self.end_page)
 
-            IStatusMessage(self.request).addStatusMessage(\
-                'PDF File has been cut', type='info')
+class PDFCutter(BrowserView):
+    def __call__(self, sure=None):
+        if sure:
+            self.context.blob = cutPDF(
+                self.context.pdf.blob.open(), self.start_page, self.end_page
+            )
+
+            IStatusMessage(self.request).addStatusMessage(
+                "PDF File has been cut", type="info"
+            )
             notify(ObjectModifiedEvent(self.context))
             return self.request.response.redirect(self.context.absolute_url())
 

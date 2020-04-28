@@ -1,4 +1,4 @@
-#-* coding: utf-8 *-
+# -* coding: utf-8 *-
 import unittest
 from recensio.policy.indexer import get_field_and_ebook_variant
 from recensio.policy.indexer import isbn
@@ -7,8 +7,7 @@ from recensio.policy.indexer import titleOrShortname
 
 
 class ReviewStubIsbn(object):
-
-    def __init__(self, isbn='', isbn_online=''):
+    def __init__(self, isbn="", isbn_online=""):
         self.isbn = isbn
         self.isbn_online = isbn_online
 
@@ -20,8 +19,7 @@ class ReviewStubIsbn(object):
 
 
 class ReviewStubIssn(object):
-
-    def __init__(self, issn='', issn_online=''):
+    def __init__(self, issn="", issn_online=""):
         self.issn = issn
         self.issn_online = issn_online
 
@@ -33,8 +31,7 @@ class ReviewStubIssn(object):
 
 
 class ReviewStubYear(object):
-
-    def __init__(self, year='', year_online=''):
+    def __init__(self, year="", year_online=""):
         self.year = year
         self.year_online = year_online
 
@@ -46,8 +43,7 @@ class ReviewStubYear(object):
 
 
 class ReviewStubPlace(object):
-
-    def __init__(self, place='', place_online=''):
+    def __init__(self, place="", place_online=""):
         self.place = place
         self.place_online = place_online
 
@@ -59,8 +55,7 @@ class ReviewStubPlace(object):
 
 
 class ReviewStubDates(object):
-
-    def __init__(self, dates=''):
+    def __init__(self, dates=""):
         self.dates = dates
 
     def getDates(self):
@@ -68,8 +63,7 @@ class ReviewStubDates(object):
 
 
 class ReviewStubTitles(object):
-
-    def __init__(self, title='', subtitle=''):
+    def __init__(self, title="", subtitle=""):
         self.title = title
         self.subtitle = subtitle
 
@@ -84,34 +78,33 @@ class ReviewStubTitles(object):
 
 
 class TestIndexer(unittest.TestCase):
-
     def test_isbn_and_isbn_online(self):
-        result = isbn(ReviewStubIsbn(isbn='12-34', isbn_online='5-678'))()
-        self.assertEqual(result, ['1234', '5678'])
+        result = isbn(ReviewStubIsbn(isbn="12-34", isbn_online="5-678"))()
+        self.assertEqual(result, ["1234", "5678"])
 
     def test_isbn_only(self):
-        result = isbn(ReviewStubIsbn(isbn='12-34'))()
-        self.assertEqual(result, ['1234'])
+        result = isbn(ReviewStubIsbn(isbn="12-34"))()
+        self.assertEqual(result, ["1234"])
 
     def test_isbn_online_only(self):
-        result = isbn(ReviewStubIsbn(isbn_online='834 5562 88'))()
-        self.assertEqual(result, ['834556288'])
+        result = isbn(ReviewStubIsbn(isbn_online="834 5562 88"))()
+        self.assertEqual(result, ["834556288"])
 
     def test_no_isbn_whatsoever(self):
         result = isbn(ReviewStubIsbn())()
         self.assertEqual(result, [])
 
     def test_issn_and_issn_online(self):
-        result = isbn(ReviewStubIssn(issn='12-34', issn_online='5-678'))()
-        self.assertEqual(result, ['1234', '5678'])
+        result = isbn(ReviewStubIssn(issn="12-34", issn_online="5-678"))()
+        self.assertEqual(result, ["1234", "5678"])
 
     def test_issn_only(self):
-        result = isbn(ReviewStubIssn(issn='12-34'))()
-        self.assertEqual(result, ['1234'])
+        result = isbn(ReviewStubIssn(issn="12-34"))()
+        self.assertEqual(result, ["1234"])
 
     def test_issn_online_only(self):
-        result = isbn(ReviewStubIssn(issn_online='834 5562 88'))()
-        self.assertEqual(result, ['834556288'])
+        result = isbn(ReviewStubIssn(issn_online="834 5562 88"))()
+        self.assertEqual(result, ["834556288"])
 
     def test_no_issn_whatsoever(self):
         result = isbn(ReviewStubIssn())()
@@ -119,36 +112,34 @@ class TestIndexer(unittest.TestCase):
 
     def test_year_and_year_online(self):
         result = get_field_and_ebook_variant(
-            ReviewStubYear(year='2017', year_online='2018'),
-            'getYearOfPublication')
-        self.assertEqual(result, ['2017', '2018'])
+            ReviewStubYear(year="2017", year_online="2018"), "getYearOfPublication"
+        )
+        self.assertEqual(result, ["2017", "2018"])
 
     def test_year_only(self):
         result = get_field_and_ebook_variant(
-            ReviewStubYear(year='2017'),
-            'getYearOfPublication')
-        self.assertEqual(result, ['2017'])
+            ReviewStubYear(year="2017"), "getYearOfPublication"
+        )
+        self.assertEqual(result, ["2017"])
 
     def test_year_online_only(self):
         result = get_field_and_ebook_variant(
-            ReviewStubYear(year_online='2017/2018'),
-            'getYearOfPublication')
-        self.assertEqual(result, ['2017/2018'])
+            ReviewStubYear(year_online="2017/2018"), "getYearOfPublication"
+        )
+        self.assertEqual(result, ["2017/2018"])
 
     def test_no_year_whatsoever(self):
-        result = get_field_and_ebook_variant(
-            ReviewStubYear(),
-            'getYearOfPublication')
+        result = get_field_and_ebook_variant(ReviewStubYear(), "getYearOfPublication")
         self.assertEqual(result, [])
 
     def test_place_of_publication(self):
-        result = place(ReviewStubPlace(place='Düsseldorf'))()
-        self.assertEqual(result, ['Düsseldorf'])
+        result = place(ReviewStubPlace(place="Düsseldorf"))()
+        self.assertEqual(result, ["Düsseldorf"])
 
     def test_dates(self):
-        result = place(ReviewStubDates(dates=[{'place': 'Düsseldorf'}]))()
-        self.assertEqual(result, ['Düsseldorf'])
+        result = place(ReviewStubDates(dates=[{"place": "Düsseldorf"}]))()
+        self.assertEqual(result, ["Düsseldorf"])
 
     def test_titleOrShorname(self):
-        result = titleOrShortname(ReviewStubTitles(title='Führungsstil'))()
-        self.assertEqual(result, ['Führungsstil', ''])
+        result = titleOrShortname(ReviewStubTitles(title="Führungsstil"))()
+        self.assertEqual(result, ["Führungsstil", ""])

@@ -12,13 +12,12 @@ log = getLogger(__name__)
 
 
 def v7to8(portal_setup):
-    catalog = getToolByName(portal_setup, 'portal_catalog')
-    for count, brain in enumerate(catalog(
-            object_provides=IReview.__identifier__)):
+    catalog = getToolByName(portal_setup, "portal_catalog")
+    for count, brain in enumerate(catalog(object_provides=IReview.__identifier__)):
         try:
             obj = brain.getObject()
             try:
-                if hasattr(obj, 'pagePictures') and len(obj.pagePictures):
+                if hasattr(obj, "pagePictures") and len(obj.pagePictures):
                     len(obj.pagePictures[0])
                     continue
                 else:
@@ -34,42 +33,51 @@ def v7to8(portal_setup):
 
 def v8to9(portal_setup):
     # activate popup forms
-    portal = getToolByName(portal_setup, 'portal_url').getPortalObject()
+    portal = getToolByName(portal_setup, "portal_url").getPortalObject()
     skins = ISkinsSchema(portal)
     skins.set_use_popups(True)
 
     # show folder_contents tab on translations
-    portal_actions = getToolByName(portal, 'portal_actions')
-    folderContents = portal_actions['object']['folderContents']
+    portal_actions = getToolByName(portal, "portal_actions")
+    folderContents = portal_actions["object"]["folderContents"]
     folderContents.manage_changeProperties(
         available_expr="python: object.displayContentsTab() "
-                       "or True in [tr[0].restrictedTraverse('@@plone').isDefaultPageInFolder() "
-                       "for tr in object.getTranslations().values()]")
+        "or True in [tr[0].restrictedTraverse('@@plone').isDefaultPageInFolder() "
+        "for tr in object.getTranslations().values()]"
+    )
 
 
 def v9to10(portal_setup):
     """
     Please be careful, conversions have to be done in a specific order.
     """
-    portal = getToolByName(portal_setup, 'portal_url').getPortalObject()
-    cat = getToolByName(portal, 'portal_catalog')
+    portal = getToolByName(portal_setup, "portal_url").getPortalObject()
+    cat = getToolByName(portal, "portal_catalog")
 
-    pvm = getToolByName(portal, 'portal_vocabularies')
-    path_tmpl = '../../vocabularies/ddc_%s'
-    for (filenamepart, vocabname) in (('geo.vdex', 'region_values'),
-                                      ('sach.vdex', 'topic_values'),
-                                      ('zeit.vdex', 'epoch_values')):
-        pvm[vocabname].importXMLBinding(pkg_resources.resource_string(
-            __name__, path_tmpl % filenamepart))
+    pvm = getToolByName(portal, "portal_vocabularies")
+    path_tmpl = "../../vocabularies/ddc_%s"
+    for (filenamepart, vocabname) in (
+        ("geo.vdex", "region_values"),
+        ("sach.vdex", "topic_values"),
+        ("zeit.vdex", "epoch_values"),
+    ):
+        pvm[vocabname].importXMLBinding(
+            pkg_resources.resource_string(__name__, path_tmpl % filenamepart)
+        )
 
-    all_docs = [x.getObject() for x in
-                cat(object_provides="recensio.contenttypes.interfaces.review.IReview",
-                    b_size=100000) if x]
+    all_docs = [
+        x.getObject()
+        for x in cat(
+            object_provides="recensio.contenttypes.interfaces.review.IReview",
+            b_size=100000,
+        )
+        if x
+    ]
     changed_docs = []
 
-    documents_containing_909 = [x for x in all_docs if '909' in x.ddcSubject]
+    documents_containing_909 = [x for x in all_docs if "909" in x.ddcSubject]
     for doc in documents_containing_909:
-        doc.ddcSubject = tuple([x for x in doc.ddcSubject if x != '909'])
+        doc.ddcSubject = tuple([x for x in doc.ddcSubject if x != "909"])
         changed_docs.append(doc)
 
     sache_mappings = {
@@ -83,7 +91,7 @@ def v9to10(portal_setup):
         "300.9": "306.09",  # Sozial un Gesellschaftsgeschichte
         "400": "417.7",
         "390": None,
-        "902": "907.2"
+        "902": "907.2",
     }
 
     zeit_mappings = {
@@ -167,10 +175,9 @@ def v9to10(portal_setup):
                 changed_docs.append(doc)
 
     for doc in documents_containing_909:
-        doc.ddcPlace = tuple(set(doc.ddcPlace + tuple('909')))
+        doc.ddcPlace = tuple(set(doc.ddcPlace + tuple("909")))
 
-    log.warning("To 10 Migration migrated %i documents",
-                len(set(changed_docs)))
+    log.warning("To 10 Migration migrated %i documents", len(set(changed_docs)))
 
     for doc in list(set(changed_docs)):
         doc.reindexObject()
@@ -178,107 +185,100 @@ def v9to10(portal_setup):
 
 def v10to11(portal_setup):
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'propertiestool')
+        "profile-recensio.policy:default", "propertiestool"
+    )
 
 
 def v11to12(portal_setup):
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'plone.app.registry')
+        "profile-recensio.policy:default", "plone.app.registry"
+    )
 
 
 def v12to13(portal_setup):
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'recensio_policy_vocabularies')
+        "profile-recensio.policy:default", "recensio_policy_vocabularies"
+    )
 
 
 def v13to14(portal_setup):
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'plone.app.registry')
+        "profile-recensio.policy:default", "plone.app.registry"
+    )
 
 
 def v14to15(portal_setup):
-    portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'solr')
+    portal_setup.runImportStepFromProfile("profile-recensio.policy:default", "solr")
 
 
 def v15to16(portal_setup):
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'plone.app.registry')
+        "profile-recensio.policy:default", "plone.app.registry"
+    )
 
 
 def v16to17(portal_setup):
-    pvm = getToolByName(portal_setup, 'portal_vocabularies')
-    api.content.delete(pvm['region_values'])
-    api.content.delete(pvm['topic_values'])
+    pvm = getToolByName(portal_setup, "portal_vocabularies")
+    api.content.delete(pvm["region_values"])
+    api.content.delete(pvm["topic_values"])
 
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'recensio_policy_vocabularies')
+        "profile-recensio.policy:default", "recensio_policy_vocabularies"
+    )
 
-    catalog = getToolByName(portal_setup, 'portal_catalog')
+    catalog = getToolByName(portal_setup, "portal_catalog")
     updates = {
-        '44.70': '561',
-        '09': '181',
-        '34': '398',
+        "44.70": "561",
+        "09": "181",
+        "34": "398",
     }
     b_start = 0
     b_size = 1000
     results = []
     while b_start <= len(results):
         results = catalog(
-            ddcPlace=list(updates.keys()),
-            b_size=b_size,
-            b_start=b_start,
+            ddcPlace=list(updates.keys()), b_size=b_size, b_start=b_start,
         )
-        for brain in results[b_start:b_start+b_size]:
+        for brain in results[b_start : b_start + b_size]:
             try:
                 obj = brain.getObject()
             except Exception as e:
-                log.warn('Could not get object {0}: {1}: {2}'.format(
-                    brain.getPath(), e.__class__.__name__, e))
+                log.warn(
+                    "Could not get object {0}: {1}: {2}".format(
+                        brain.getPath(), e.__class__.__name__, e
+                    )
+                )
                 continue
             if not (set(updates.keys()) & set(obj.getDdcPlace())):
-                log.warn('ddcPlace not indexed properly for {0}'.format(
-                    brain.getPath()))
+                log.warn(
+                    "ddcPlace not indexed properly for {0}".format(brain.getPath())
+                )
                 continue
-            obj.setDdcPlace(
-                tuple((updates.get(val, val) for val in obj.getDdcPlace()))
-            )
+            obj.setDdcPlace(tuple((updates.get(val, val) for val in obj.getDdcPlace())))
             obj.reindexObject()
-            log.info('Migrated DdcPlace of {0}'.format(
-                brain.getPath()))
+            log.info("Migrated DdcPlace of {0}".format(brain.getPath()))
         b_start += b_size
 
 
 def v17to18(portal_setup):
-    catalog = getToolByName(portal_setup, 'portal_catalog')
-    name = 'punctuated_title_and_subtitle'
+    catalog = getToolByName(portal_setup, "portal_catalog")
+    name = "punctuated_title_and_subtitle"
     if name not in catalog.schema():
-        log.debug('adding metadata %s' % name)
+        log.debug("adding metadata %s" % name)
         catalog.addColumn(name)
 
 
 def v18to19(portal_setup):
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'plone-difftool',
+        "profile-recensio.policy:default", "plone-difftool",
     )
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.policy:default',
-        'repositorytool',
+        "profile-recensio.policy:default", "repositorytool",
     )
 
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.contenttypes:default',
-        'typeinfo',
+        "profile-recensio.contenttypes:default", "typeinfo",
     )
     portal_setup.runImportStepFromProfile(
-        'profile-recensio.contenttypes:default',
-        'factorytool',
+        "profile-recensio.contenttypes:default", "factorytool",
     )

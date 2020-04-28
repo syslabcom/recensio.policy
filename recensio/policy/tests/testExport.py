@@ -49,7 +49,7 @@ class BrokenExporter(object):
         return True
 
     def add_review(self, review):
-        raise Exception('some error')
+        raise Exception("some error")
 
     def export(self):
         return StatusFailure()
@@ -59,50 +59,41 @@ class TestExporter(unittest.TestCase):
     layer = RECENSIO_BARE_INTEGRATION_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
+        self.portal = self.layer["portal"]
 
-        login(self.layer['app'], SITE_OWNER_NAME)
+        login(self.layer["app"], SITE_OWNER_NAME)
         add_number_of_each_review_type(
-            self.portal, 1, rez_classes=[ReviewMonograph, ReviewJournal])
+            self.portal, 1, rez_classes=[ReviewMonograph, ReviewJournal]
+        )
         sammelband = api.content.create(
-            container=self.portal['sample-reviews'],
-            title='Sammelband A',
-            id='sammelband-a',
-            type='Publication',
+            container=self.portal["sample-reviews"],
+            title="Sammelband A",
+            id="sammelband-a",
+            type="Publication",
         )
         self.vol_1 = api.content.create(
-            container=sammelband,
-            title='Volume 1',
-            id='volume-1',
-            type='Volume',
+            container=sammelband, title="Volume 1", id="volume-1", type="Volume",
         )
 
-        summer_a = self.portal['sample-reviews']['newspapera']['summer']
-        issue_2_a = summer_a['issue-2']
-        newspaperb = self.portal['sample-reviews']['newspaperb']
+        summer_a = self.portal["sample-reviews"]["newspapera"]["summer"]
+        issue_2_a = summer_a["issue-2"]
+        newspaperb = self.portal["sample-reviews"]["newspaperb"]
         newspaperb.setUseCanonicalUriForBVID(True)
-        summer_b = newspaperb['summer']
-        issue_2_b = summer_b['issue-2']
+        summer_b = newspaperb["summer"]
+        issue_2_b = summer_b["issue-2"]
         self.review_a = issue_2_a.objectValues()[0]
-        self.review_a.setEffectiveDate(
-            DateTime('2011/07/08 17:38:31.502979 GMT+2'))
-        self.review_a.setBv('54321')
+        self.review_a.setEffectiveDate(DateTime("2011/07/08 17:38:31.502979 GMT+2"))
+        self.review_a.setBv("54321")
         self.review_b = issue_2_b.objectValues()[0]
         self.review_a2 = issue_2_a.objectValues()[1]
-        self.review_a2.setEffectiveDate(
-            DateTime('2013/03/09 11:42:52.827401 GMT+2'))
-        self.review_a2.setBv('12345')
-        self.review_c = api.content.copy(
-            source=self.review_a,
-            target=self.vol_1,
-        )
+        self.review_a2.setEffectiveDate(DateTime("2013/03/09 11:42:52.827401 GMT+2"))
+        self.review_a2.setBv("12345")
+        self.review_c = api.content.copy(source=self.review_a, target=self.vol_1,)
 
         login(self.portal, TEST_USER_NAME)
 
     def assertValid(self, xml, schema_name):
-        schemafile = open(os.path.join(
-            os.path.dirname(__file__),
-            schema_name))
+        schemafile = open(os.path.join(os.path.dirname(__file__), schema_name))
         xmlschema = etree.XMLSchema(etree.parse(schemafile))
         schemafile.close()
         xmlschema.assertValid(xml)
@@ -110,146 +101,146 @@ class TestExporter(unittest.TestCase):
     def test_dara_xml(self):
         reviews = [self.review_a, self.review_a2]
         for obj in reviews:
-            xml = obj.restrictedTraverse('@@xml-dara')()
-            xmltree = etree.parse(StringIO(xml.encode('utf8')))
+            xml = obj.restrictedTraverse("@@xml-dara")()
+            xmltree = etree.parse(StringIO(xml.encode("utf8")))
 
-            self.assertValid(xmltree, 'dara_v4.0_de_en_01122017.xsd')
+            self.assertValid(xmltree, "dara_v4.0_de_en_01122017.xsd")
 
-            ns_map = {'dara': 'http://da-ra.de/schema/kernel-4'}
+            ns_map = {"dara": "http://da-ra.de/schema/kernel-4"}
             xpath_eval = etree.XPathEvaluator(xmltree, namespaces=ns_map)
             self.assertIn(
                 obj.UID(),
-                xpath_eval('/dara:resource/dara:resourceIdentifier/dara:identifier/text()'))
+                xpath_eval(
+                    "/dara:resource/dara:resourceIdentifier/dara:identifier/text()"
+                ),
+            )
             self.assertEqual(
-                len(xpath_eval('/dara:resource/dara:titles/dara:title')),
-                1)
+                len(xpath_eval("/dara:resource/dara:titles/dara:title")), 1
+            )
             self.assertIn(
-                obj.getDoi(),
-                xpath_eval('/dara:resource/dara:doiProposal/text()'))
+                obj.getDoi(), xpath_eval("/dara:resource/dara:doiProposal/text()")
+            )
             self.assertIn(
-                u'Rezension: ' + obj.getDecoratedTitle(),
-                xpath_eval('/dara:resource/dara:titles/dara:title/dara:titleName/text()'))
+                u"Rezension: " + obj.getDecoratedTitle(),
+                xpath_eval(
+                    "/dara:resource/dara:titles/dara:title/dara:titleName/text()"
+                ),
+            )
             self.assertIn(
-                obj.getReviewAuthors()[0]['firstname'],
-                xpath_eval('/dara:resource/dara:creators/dara:creator/dara:person/dara:firstName/text()'))
+                obj.getReviewAuthors()[0]["firstname"],
+                xpath_eval(
+                    "/dara:resource/dara:creators/dara:creator/dara:person/dara:firstName/text()"
+                ),
+            )
             self.assertIn(
-                obj.getReviewAuthors()[0]['lastname'],
-                xpath_eval('/dara:resource/dara:creators/dara:creator/dara:person/dara:lastName/text()'))
+                obj.getReviewAuthors()[0]["lastname"],
+                xpath_eval(
+                    "/dara:resource/dara:creators/dara:creator/dara:person/dara:lastName/text()"
+                ),
+            )
             self.assertIn(
                 obj.absolute_url(),
-                xpath_eval('/dara:resource/dara:dataURLs/dara:dataURL/text()'))
+                xpath_eval("/dara:resource/dara:dataURLs/dara:dataURL/text()"),
+            )
             self.assertIn(
-                'CC-BY',
-                '\n'.join(xpath_eval('/dara:resource/dara:rights/dara:right/dara:freetext/text()')))
-            if hasattr(obj, 'getIsbn'):
-                id_type = 'ISBN'
+                "CC-BY",
+                "\n".join(
+                    xpath_eval(
+                        "/dara:resource/dara:rights/dara:right/dara:freetext/text()"
+                    )
+                ),
+            )
+            if hasattr(obj, "getIsbn"):
+                id_type = "ISBN"
                 isbn_or_issn = obj.getIsbn()
             else:
-                id_type = 'ISSN'
+                id_type = "ISSN"
                 isbn_or_issn = obj.getIssn()
             self.assertIn(
                 isbn_or_issn,
-                xpath_eval('/dara:resource/dara:relations/dara:relation[dara:identifierType[text()="{0}"]]/dara:identifier/text()'.format(id_type)))
+                xpath_eval(
+                    '/dara:resource/dara:relations/dara:relation[dara:identifierType[text()="{0}"]]/dara:identifier/text()'.format(
+                        id_type
+                    )
+                ),
+            )
             self.assertIn(
-                '{0} {1}'.format(id_type, isbn_or_issn),
-                xpath_eval('/dara:resource/dara:publications/dara:publication/dara:structuredPublication/dara:PIDs/dara:PID/dara:ID/text()'))
+                "{0} {1}".format(id_type, isbn_or_issn),
+                xpath_eval(
+                    "/dara:resource/dara:publications/dara:publication/dara:structuredPublication/dara:PIDs/dara:PID/dara:ID/text()"
+                ),
+            )
             self.assertIn(
                 obj.punctuated_title_and_subtitle,
-                xpath_eval('/dara:resource/dara:publications/dara:publication/dara:structuredPublication/dara:title/text()'))
+                xpath_eval(
+                    "/dara:resource/dara:publications/dara:publication/dara:structuredPublication/dara:title/text()"
+                ),
+            )
 
     def test_dara_xml_no_isbn_no_canonical_uri(self):
         isbn = self.review_a.getIsbn()
-        self.review_a.setIsbn('')
+        self.review_a.setIsbn("")
         canonical_uri = self.review_a.getCanonical_uri()
-        self.review_a.setCanonical_uri('')
+        self.review_a.setCanonical_uri("")
 
-        xml = self.review_a.restrictedTraverse('@@xml-dara')()
-        xmltree = etree.parse(StringIO(xml.encode('utf8')))
-        self.assertEqual(
-            xmltree.xpath('/resource/relations'),
-            [])
+        xml = self.review_a.restrictedTraverse("@@xml-dara")()
+        xmltree = etree.parse(StringIO(xml.encode("utf8")))
+        self.assertEqual(xmltree.xpath("/resource/relations"), [])
 
         self.review_a.setIsbn(isbn)
         self.review_a.setCanonical_uri(canonical_uri)
 
     def test_chronicon_xml_rm(self):
-        xml = self.review_a.restrictedTraverse('@@xml')()
+        xml = self.review_a.restrictedTraverse("@@xml")()
         xmltree = etree.parse(StringIO(xml))
-        self.assertEqual(
-            len(xmltree.xpath('/rm')),
-            1)
-        self.assertIn(
-            self.review_a.Title(),
-            xmltree.xpath('/rm/book/title/text()'))
-        self.assertIn(
-            self.review_a.UID(),
-            xmltree.xpath('/rm/@id'))
+        self.assertEqual(len(xmltree.xpath("/rm")), 1)
+        self.assertIn(self.review_a.Title(), xmltree.xpath("/rm/book/title/text()"))
+        self.assertIn(self.review_a.UID(), xmltree.xpath("/rm/@id"))
         self.assertIn(
             str(self.review_a.getPageStartOfReviewInJournal()),
-            xmltree.xpath('/rm/page_first/text()'))
+            xmltree.xpath("/rm/page_first/text()"),
+        )
         self.assertIn(
             str(self.review_a.getPageEndOfReviewInJournal()),
-            xmltree.xpath('/rm/page_last/text()'))
-        self.assertIn(
-            self.review_a.getBv(),
-            xmltree.xpath('/rm/bvid/text()'))
-        self.assertIn(
-            self.review_a.getDoi(),
-            xmltree.xpath('/rm/doi/text()'))
-        self.assertEqual(
-            xmltree.xpath('/rm/fulltext/text()'),
-            [])
+            xmltree.xpath("/rm/page_last/text()"),
+        )
+        self.assertIn(self.review_a.getBv(), xmltree.xpath("/rm/bvid/text()"))
+        self.assertIn(self.review_a.getDoi(), xmltree.xpath("/rm/doi/text()"))
+        self.assertEqual(xmltree.xpath("/rm/fulltext/text()"), [])
 
     def test_chronicon_xml_rj(self):
-        xml = self.review_a2.restrictedTraverse('@@xml')()
+        xml = self.review_a2.restrictedTraverse("@@xml")()
         xmltree = etree.parse(StringIO(xml))
-        self.assertEqual(
-            len(xmltree.xpath('/rj')),
-            1)
+        self.assertEqual(len(xmltree.xpath("/rj")), 1)
         self.assertIn(
             self.review_a2.Title(),
-            xmltree.xpath('/rj/journal/reviewed_journal_title/text()'))
-        self.assertIn(
-            self.review_a2.UID(),
-            xmltree.xpath('/rj/@id'))
-        self.assertIn(
-            self.review_a2.getBv(),
-            xmltree.xpath('/rj/bvid/text()'))
-        self.assertIn(
-            self.review_a2.getDoi(),
-            xmltree.xpath('/rj/doi/text()'))
-        self.assertEqual(
-            xmltree.xpath('/rm/fulltext/text()'),
-            [])
+            xmltree.xpath("/rj/journal/reviewed_journal_title/text()"),
+        )
+        self.assertIn(self.review_a2.UID(), xmltree.xpath("/rj/@id"))
+        self.assertIn(self.review_a2.getBv(), xmltree.xpath("/rj/bvid/text()"))
+        self.assertIn(self.review_a2.getDoi(), xmltree.xpath("/rj/doi/text()"))
+        self.assertEqual(xmltree.xpath("/rm/fulltext/text()"), [])
 
     def test_lza_xml_rm(self):
-        xml = self.review_a.restrictedTraverse('@@xml-lza')()
+        xml = self.review_a.restrictedTraverse("@@xml-lza")()
         xmltree = etree.parse(StringIO(xml))
-        self.assertEqual(
-            len(xmltree.xpath('/rm')),
-            1)
-        pdf_path = '/'.join(self.review_a.getPhysicalPath()[2:]) + '.pdf'
-        self.assertIn(
-            pdf_path,
-            xmltree.xpath('/rm/fulltext/text()'))
+        self.assertEqual(len(xmltree.xpath("/rm")), 1)
+        pdf_path = "/".join(self.review_a.getPhysicalPath()[2:]) + ".pdf"
+        self.assertIn(pdf_path, xmltree.xpath("/rm/fulltext/text()"))
 
     def test_lza_xml_rj(self):
-        xml = self.review_a2.restrictedTraverse('@@xml-lza')()
+        xml = self.review_a2.restrictedTraverse("@@xml-lza")()
         xmltree = etree.parse(StringIO(xml))
-        self.assertEqual(
-            len(xmltree.xpath('/rj')),
-            1)
-        pdf_path = '/'.join(self.review_a2.getPhysicalPath()[2:]) + '.pdf'
-        self.assertIn(
-            pdf_path,
-            xmltree.xpath('/rj/fulltext/text()'))
+        self.assertEqual(len(xmltree.xpath("/rj")), 1)
+        pdf_path = "/".join(self.review_a2.getPhysicalPath()[2:]) + ".pdf"
+        self.assertIn(pdf_path, xmltree.xpath("/rj/fulltext/text()"))
 
-    @patch('recensio.policy.export.urlopen')
+    @patch("recensio.policy.export.urlopen")
     def test_register_doi(self, urlopen):
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRecensioSettings)
-        settings.doi_registration_username = u'user'
-        settings.doi_registration_password = u'secret'
+        settings.doi_registration_username = u"user"
+        settings.doi_registration_password = u"secret"
 
         register_doi(self.review_a)
 
@@ -257,14 +248,19 @@ class TestExporter(unittest.TestCase):
         request = urlopen.call_args[0][0]
         self.assertEqual(
             request.get_full_url(),
-            u'http://www.da-ra.de/dara/study/importXML?registration=true')
+            u"http://www.da-ra.de/dara/study/importXML?registration=true",
+        )
         self.assertEqual(
             request.get_data(),
-            self.review_a.restrictedTraverse('@@xml-dara')().encode('utf-8'))
+            self.review_a.restrictedTraverse("@@xml-dara")().encode("utf-8"),
+        )
         self.assertEqual(
             request.headers,
-            {'Content-type': 'application/xml;charset=UTF-8',
-             'Authorization': 'Basic dXNlcjpzZWNyZXQ='})
+            {
+                "Content-type": "application/xml;charset=UTF-8",
+                "Authorization": "Basic dXNlcjpzZWNyZXQ=",
+            },
+        )
 
     def test_dara_exporter(self):
         reviews = [self.review_a, self.review_a2]
@@ -273,7 +269,7 @@ class TestExporter(unittest.TestCase):
             exporter.add_review(review)
         self.assertEqual(len(exporter.reviews_xml), len(reviews))
         status = exporter.export()
-        #TODO: What should actually happen with the exported XML?
+        # TODO: What should actually happen with the exported XML?
         # This will probably not be used, instead register_doi will be called on
         # publication
 
@@ -298,53 +294,44 @@ class TestExporter(unittest.TestCase):
             xml_data = export_zip.read(issue_filename)
             xmltree = etree.parse(StringIO(xml_data))
 
-            self.assertValid(xmltree, 'recensio_frompublisher.xsd')
+            self.assertValid(xmltree, "recensio_frompublisher.xsd")
             self.assertIn(
                 contained_review.Title(),
-                xmltree.xpath('/recensio_package/rm/book/title/text()'))
+                xmltree.xpath("/recensio_package/rm/book/title/text()"),
+            )
             self.assertNotIn(
                 foreign_review.Title(),
-                xmltree.xpath('/recensio_package/rm/book/title/text()'))
+                xmltree.xpath("/recensio_package/rm/book/title/text()"),
+            )
             self.assertIn(
-                contained_review.UID(),
-                xmltree.xpath('/recensio_package/rm/@id'))
-            pdf_path = '/'.join(
-                contained_review.getPhysicalPath()[2:]) + '.pdf'
+                contained_review.UID(), xmltree.xpath("/recensio_package/rm/@id")
+            )
+            pdf_path = "/".join(contained_review.getPhysicalPath()[2:]) + ".pdf"
             if expect_fulltext:
                 self.assertIn(
-                    pdf_path,
-                    xmltree.xpath('/recensio_package/rm/fulltext/text()'))
-                self.assertIn(
-                    pdf_path,
-                    [f.filename for f in export_zip.filelist])
+                    pdf_path, xmltree.xpath("/recensio_package/rm/fulltext/text()")
+                )
+                self.assertIn(pdf_path, [f.filename for f in export_zip.filelist])
                 pdf_data = export_zip.read(pdf_path)
-                blob = contained_review.get_review_pdf()['blob']
+                blob = contained_review.get_review_pdf()["blob"]
                 expected_pdf = blob.open().read()
                 self.assertEqual(pdf_data, expected_pdf)
             else:
                 self.assertNotIn(
-                    pdf_path,
-                    xmltree.xpath('/recensio_package/rm/fulltext/text()'))
-                self.assertNotIn(
-                    pdf_path,
-                    [f.filename for f in export_zip.filelist])
+                    pdf_path, xmltree.xpath("/recensio_package/rm/fulltext/text()")
+                )
+                self.assertNotIn(pdf_path, [f.filename for f in export_zip.filelist])
 
     def _test_exporter_one_issue(self, exporter, expect_fulltext=False):
         data = [
-            ('recensio_newspapera_summer_issue-2.xml',
-             self.review_a,
-             self.review_b),
+            ("recensio_newspapera_summer_issue-2.xml", self.review_a, self.review_b),
         ]
         self._test_exporter(exporter, data, expect_fulltext=expect_fulltext)
 
     def _test_exporter_two_issues(self, exporter, expect_fulltext=False):
         data = [
-            ('recensio_newspapera_summer_issue-2.xml',
-             self.review_a,
-             self.review_b),
-            ('recensio_newspaperb_summer_issue-2.xml',
-             self.review_b,
-             self.review_a),
+            ("recensio_newspapera_summer_issue-2.xml", self.review_a, self.review_b),
+            ("recensio_newspaperb_summer_issue-2.xml", self.review_b, self.review_a),
         ]
         self._test_exporter(exporter, data, expect_fulltext=expect_fulltext)
 
@@ -361,12 +348,12 @@ class TestExporter(unittest.TestCase):
         recensio_settings = registry.forInterface(IRecensioSettings)
         recensio_settings.xml_export_filename_prefix = u"recensio2"
         chronicon_view = api.content.get_view(
-            context=self.portal,
-            request=self.layer['request'],
-            name='chronicon-export',
+            context=self.portal, request=self.layer["request"], name="chronicon-export",
         )
-        self.assertTrue(chronicon_view.filename.startswith(u"recensio2_"),
-                        'Prefix "recensio2" not found')
+        self.assertTrue(
+            chronicon_view.filename.startswith(u"recensio2_"),
+            'Prefix "recensio2" not found',
+        )
 
     def test_chronicon_exporter_add_review_handles_volumes(self):
         exporter = ChroniconExporter()
@@ -391,12 +378,8 @@ class TestExporter(unittest.TestCase):
 
     def test_lza_exporter_skips_review_if_already_exported(self):
         data = [
-            ('recensio_newspapera_summer_issue-2.xml',
-             self.review_a,
-             self.review_b),
-            ('recensio_newspaperb_summer_issue-2.xml',
-             self.review_b,
-             self.review_a),
+            ("recensio_newspapera_summer_issue-2.xml", self.review_a, self.review_b),
+            ("recensio_newspaperb_summer_issue-2.xml", self.review_b, self.review_a),
         ]
         exporter = LZAExporter()
         exporter._set_exported(self.review_a)
@@ -404,17 +387,12 @@ class TestExporter(unittest.TestCase):
         files_in_zip = [f.filename for f in export_zip.filelist]
 
         self.assertNotIn(data[0][0], files_in_zip)
-        pdf_path = '/'.join(
-            self.review_a.getPhysicalPath()[2:]) + '.pdf'
-        self.assertNotIn(
-            pdf_path,
-            [f.filename for f in export_zip.filelist])
+        pdf_path = "/".join(self.review_a.getPhysicalPath()[2:]) + ".pdf"
+        self.assertNotIn(pdf_path, [f.filename for f in export_zip.filelist])
 
     def test_lza_exporter_marks_review_as_exported(self):
         data = [
-            ('recensio_newspapera_summer_issue-2.xml',
-             self.review_a,
-             self.review_b),
+            ("recensio_newspapera_summer_issue-2.xml", self.review_a, self.review_b),
         ]
         exporter = LZAExporter()
         self._do_export(exporter, data)
@@ -427,10 +405,11 @@ class TestExporter(unittest.TestCase):
         self.assertFalse(exporter._is_exported(self.review_a))
 
     def test_bvid_exporter(self):
-        self.review_b.setBv('12345')
+        self.review_b.setBv("12345")
         self.review_b.setCanonical_uri(
-            'http://otherhost/site/sample-reviews/newspaperb/summer/issue-2/'
-            'ReviewMonograph110550203')
+            "http://otherhost/site/sample-reviews/newspaperb/summer/issue-2/"
+            "ReviewMonograph110550203"
+        )
         exporter = BVIDExporter()
         exporter.add_review(self.review_a)
         exporter.add_review(self.review_b)
@@ -445,8 +424,8 @@ class TestExporter(unittest.TestCase):
         self.assertIn(self.review_a.absolute_url(), csv_data)
         self.assertIn(self.review_b.getCanonical_uri(), csv_data)
 
-        self.review_b.setBv('')
-        self.review_b.setCanonical_uri('')
+        self.review_b.setBv("")
+        self.review_b.setCanonical_uri("")
 
     def test_missing_bvid_exporter(self):
         exporter = MissingBVIDExporter()
@@ -467,7 +446,7 @@ class TestMetadataExport(unittest.TestCase):
     layer = RECENSIO_FUNCTIONAL_TESTING
 
     def setUp(self):
-        self.portal = self.layer['portal']
+        self.portal = self.layer["portal"]
         sm = self.portal.getSiteManager()
         self.solrcfg = None
         solrcfgs = sm.getAllUtilitiesRegisteredFor(ISolrConnectionConfig)
@@ -477,32 +456,34 @@ class TestMetadataExport(unittest.TestCase):
             # Workaround. The publish operation below is not reflected in Solr
             self.solrcfg.active = False
 
-        login(self.layer['app'], SITE_OWNER_NAME)
-        summer = self.portal['sample-reviews']['newspapera']['summer']
-        self.issue_2 = summer['issue-2']
-        api.content.transition(obj=self.issue_2, to_state='published')
-        api.content.transition(obj=self.portal['sample-reviews']['newspaperb']['summer']['issue-2'], to_state='published')
+        login(self.layer["app"], SITE_OWNER_NAME)
+        summer = self.portal["sample-reviews"]["newspapera"]["summer"]
+        self.issue_2 = summer["issue-2"]
+        api.content.transition(obj=self.issue_2, to_state="published")
+        api.content.transition(
+            obj=self.portal["sample-reviews"]["newspaperb"]["summer"]["issue-2"],
+            to_state="published",
+        )
 
         self.review_1 = self.issue_2.objectValues()[0]
-        self.review_1.setBv('12345')
-        self.review_1.setCanonical_uri(u'http://example.com/reviews/review1')
-        api.content.transition(obj=self.review_1, to_state='published')
+        self.review_1.setBv("12345")
+        self.review_1.setCanonical_uri(u"http://example.com/reviews/review1")
+        api.content.transition(obj=self.review_1, to_state="published")
         review_2 = self.issue_2.objectValues()[1]
-        api.content.transition(obj=review_2, to_state='published')
+        api.content.transition(obj=review_2, to_state="published")
 
         login(self.portal, TEST_USER_NAME)
-        self.xml_export = self.portal.restrictedTraverse('@@metadata-export')
+        self.xml_export = self.portal.restrictedTraverse("@@metadata-export")
 
     def tearDown(self):
-        self.review_1.setBv('')
-        self.review_1.setCanonical_uri(u'')
+        self.review_1.setBv("")
+        self.review_1.setCanonical_uri(u"")
         if self.solrcfg:
             self.solrcfg.active = self.old_solrcfg_active
 
     def _clear_export_files(self):
-        login(self.layer['app'], SITE_OWNER_NAME)
-        exporters = [factory() for name, factory in
-                     getFactoriesFor(IRecensioExporter)]
+        login(self.layer["app"], SITE_OWNER_NAME)
+        exporters = [factory() for name, factory in getFactoriesFor(IRecensioExporter)]
         for exporter in exporters:
             old_export_file = self.portal.get(exporter.export_filename)
             if old_export_file:
@@ -512,58 +493,71 @@ class TestMetadataExport(unittest.TestCase):
     def test_export(self):
         self._clear_export_files()
         output = self.xml_export()
-        self.assertIn('created', output)
+        self.assertIn("created", output)
 
-        for line in output.split('\n'):
-            if 'chronicon' in line:
-                filename = line.split(' ')[1]
+        for line in output.split("\n"):
+            if "chronicon" in line:
+                filename = line.split(" ")[1]
         export_file = self.portal[filename]
         fp = export_file.getFile().getBlob().open()
         export_zip = ZipFile(fp)
-        self.assertIn('recensio_newspapera_summer_issue-2.xml',
-                      [f.filename for f in export_zip.filelist])
-        xml_data = export_zip.read('recensio_newspapera_summer_issue-2.xml')
-        self.assertIn('<recensio_package', xml_data)
-        self.assertIn('<title>' + self.review_1.Title() + '</title>', xml_data)
+        self.assertIn(
+            "recensio_newspapera_summer_issue-2.xml",
+            [f.filename for f in export_zip.filelist],
+        )
+        xml_data = export_zip.read("recensio_newspapera_summer_issue-2.xml")
+        self.assertIn("<recensio_package", xml_data)
+        self.assertIn("<title>" + self.review_1.Title() + "</title>", xml_data)
         self.assertIn('<rm id="' + self.review_1.UID() + '">', xml_data)
-        self.assertIn('<page_first>' + str(self.review_1.getPageStartOfReviewInJournal()) + '</page_first>', xml_data)
-        self.assertIn('<page_last>' + str(self.review_1.getPageEndOfReviewInJournal()) + '</page_last>', xml_data)
-        self.assertIn('<originalurl>' + self.review_1.getCanonical_uri() + '</originalurl>', xml_data)
-        self.assertNotIn('<fulltext', xml_data)
+        self.assertIn(
+            "<page_first>"
+            + str(self.review_1.getPageStartOfReviewInJournal())
+            + "</page_first>",
+            xml_data,
+        )
+        self.assertIn(
+            "<page_last>"
+            + str(self.review_1.getPageEndOfReviewInJournal())
+            + "</page_last>",
+            xml_data,
+        )
+        self.assertIn(
+            "<originalurl>" + self.review_1.getCanonical_uri() + "</originalurl>",
+            xml_data,
+        )
+        self.assertNotIn("<fulltext", xml_data)
 
         output = self.xml_export()
-        self.assertIn('Nothing to do', output)
+        self.assertIn("Nothing to do", output)
 
     def test_broken_exporter_not_fatal(self):
         gsm = getGlobalSiteManager()
-        factory = Factory(BrokenExporter, IFactory, 'broken_exporter')
-        gsm.registerUtility(
-            factory,
-            name='broken')
+        factory = Factory(BrokenExporter, IFactory, "broken_exporter")
+        gsm.registerUtility(factory, name="broken")
         output = self.xml_export()
-        self.assertIn('broken', output)
-        gsm.unregisterUtility(
-            factory,
-            name='broken')
+        self.assertIn("broken", output)
+        gsm.unregisterUtility(factory, name="broken")
 
     def test_catalog_inconsistency(self):
         self.inconsistency_flag = False
+
         def error_once(*args, **kwargs):
             if not self.inconsistency_flag:
                 self.inconsistency_flag = True
                 raise AttributeError("'NoneType' object has no attribute 'getObject'")
             else:
-                return 'mock result'
+                return "mock result"
 
         from Products.ZCatalog.CatalogBrains import AbstractCatalogBrain
-        with patch.object(
-                AbstractCatalogBrain, 'getObject', side_effect=error_once):
+
+        with patch.object(AbstractCatalogBrain, "getObject", side_effect=error_once):
             reviews = [r for r in self.xml_export.reviews(self.issue_2)]
         self.assertGreater(len(reviews), 0)
 
     def test_no_duplication(self):
         self._clear_export_files()
         reviews = []
+
         class MockExporter(object):
             implements(IRecensioExporter)
 
@@ -573,24 +567,18 @@ class TestMetadataExport(unittest.TestCase):
             def add_review(self, review):
                 reviews.append(review)
 
-        mock_exporter_factory = Factory(
-            MockExporter, IFactory, 'mock_exporter')
+        mock_exporter_factory = Factory(MockExporter, IFactory, "mock_exporter")
         gsm = getGlobalSiteManager()
-        gsm.registerUtility(
-            mock_exporter_factory,
-            name='mock_exporter')
+        gsm.registerUtility(mock_exporter_factory, name="mock_exporter")
 
         output = self.xml_export()
-        self.assertIn('Success', output)
+        self.assertIn("Success", output)
 
         self.assertEqual(
-            len(reviews),
-            len(set(reviews)),
+            len(reviews), len(set(reviews)),
         )
 
-        gsm.unregisterUtility(
-            mock_exporter_factory,
-            name='mock_exporter')
+        gsm.unregisterUtility(mock_exporter_factory, name="mock_exporter")
 
     def test_export_sets_timestamp(self):
         from recensio.policy.browser.export import MetadataExport
@@ -599,6 +587,7 @@ class TestMetadataExport(unittest.TestCase):
             annotations = IAnnotations(self.portal)
             self.assertIn(EXPORT_TIMESTAMP_KEY, annotations)
             return []
+
         _issues_and_volumes = MetadataExport.issues_and_volumes
         MetadataExport.issues_and_volumes = mock_issues
 
@@ -609,6 +598,7 @@ class TestMetadataExport(unittest.TestCase):
 
     def test_timestamp_prevents_export_run(self):
         from recensio.policy.browser.export import MetadataExport
+
         _issues_and_volumes = MetadataExport.issues_and_volumes
         mock_issues = Mock(return_value=[])
         MetadataExport.issues_and_volumes = mock_issues
@@ -619,7 +609,7 @@ class TestMetadataExport(unittest.TestCase):
         self._clear_export_files()
         output = self.xml_export()
         self.assertFalse(mock_issues.called)
-        self.assertIn('abort', output)
+        self.assertIn("abort", output)
 
         mock_issues.reset_mock()
         # fake running export has finished
@@ -627,7 +617,7 @@ class TestMetadataExport(unittest.TestCase):
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
-        self.assertNotIn('abort', output)
+        self.assertNotIn("abort", output)
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]
@@ -635,6 +625,7 @@ class TestMetadataExport(unittest.TestCase):
 
     def test_timestamp_not_left_behind(self):
         from recensio.policy.browser.export import MetadataExport
+
         _issues_and_volumes = MetadataExport.issues_and_volumes
         mock_issues = Mock(return_value=[])
         MetadataExport.issues_and_volumes = mock_issues
@@ -644,14 +635,14 @@ class TestMetadataExport(unittest.TestCase):
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
-        self.assertNotIn('abort', output)
+        self.assertNotIn("abort", output)
 
         mock_issues.reset_mock()
         # recent run should not have left behind a time stamp
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
-        self.assertNotIn('abort', output)
+        self.assertNotIn("abort", output)
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]
@@ -673,13 +664,14 @@ class TestMetadataExport(unittest.TestCase):
 
         # the most recent export should not have left behind a time stamp
         output = self.xml_export()
-        self.assertNotIn('abort', output)
+        self.assertNotIn("abort", output)
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]
 
     def test_stale_timestamp_is_cleared(self):
         from recensio.policy.browser.export import MetadataExport
+
         _issues_and_volumes = MetadataExport.issues_and_volumes
         mock_issues = Mock(return_value=[])
         MetadataExport.issues_and_volumes = mock_issues
@@ -690,7 +682,7 @@ class TestMetadataExport(unittest.TestCase):
         self._clear_export_files()
         output = self.xml_export()
         self.assertTrue(mock_issues.called)
-        self.assertNotIn('abort', output)
+        self.assertNotIn("abort", output)
 
         if EXPORT_TIMESTAMP_KEY in annotations:
             del annotations[EXPORT_TIMESTAMP_KEY]

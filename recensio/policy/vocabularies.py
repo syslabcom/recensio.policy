@@ -12,6 +12,7 @@ from zope.component import getGlobalSiteManager
 from recensio.policy.interfaces import IRecensioSettings
 from recensio.policy import recensioMessageFactory as _
 
+
 class AvailableUserLanguages(object):
     """ Vocabulary that shows all languages that a user might
         chose during registration
@@ -20,13 +21,13 @@ class AvailableUserLanguages(object):
     implements(IVocabularyFactory)
 
     def __call__(self, context):
-        context = getattr(self, 'context', getSite())
-        language_tool = getToolByName(context, 'portal_languages')
+        context = getattr(self, "context", getSite())
+        language_tool = getToolByName(context, "portal_languages")
 
         info = language_tool.getAvailableLanguageInformation()
-        terms = [SimpleTerm(lang, lang, info.get(lang).get('native'))
-                 for lang in info]
+        terms = [SimpleTerm(lang, lang, info.get(lang).get("native")) for lang in info]
         return SimpleVocabulary(terms)
+
 
 AvailableUserLanguagesFactory = AvailableUserLanguages()
 
@@ -42,8 +43,7 @@ class AvailableContentLanguages(object):
         # get user-defined languages
         registry = queryUtility(IRegistry)
         settings = registry.forInterface(IRecensioSettings)
-        allowed_langs = getattr(
-            settings, 'available_content_languages', '').split('\n')
+        allowed_langs = getattr(settings, "available_content_languages", "").split("\n")
         # get names for language codes
         gsm = getGlobalSiteManager()
         util = gsm.queryUtility(ILanguageAvailability)
@@ -52,9 +52,11 @@ class AvailableContentLanguages(object):
         for lang in allowed_langs:
             lang = lang.strip()
             if available_languages.get(lang):
-                terms.append(SimpleTerm(lang, lang,
-                    _(available_languages[lang]['name'])))
+                terms.append(
+                    SimpleTerm(lang, lang, _(available_languages[lang]["name"]))
+                )
 
         return SimpleVocabulary(terms)
+
 
 AvailableContentLanguagesFactory = AvailableContentLanguages()

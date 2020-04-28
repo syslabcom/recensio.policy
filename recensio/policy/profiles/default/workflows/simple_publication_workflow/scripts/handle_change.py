@@ -7,5 +7,5 @@
 ##parameters=info
 ##title=
 ##
-rwh = context.restrictedTraverse('@@recensio_workflow_helper')
+rwh = context.restrictedTraverse("@@recensio_workflow_helper")
 rwh.handleTransition(info)

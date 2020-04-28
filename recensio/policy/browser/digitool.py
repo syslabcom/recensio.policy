@@ -5,31 +5,33 @@ from plone.uuid.interfaces import IUUID
 from os import path
 import logging
 
-from recensio.policy.constants import \
-    EXPORTABLE_CONTENT_TYPES, EXPORT_OUTPUT_PATH, EXPORT_MAX_ITEMS
+from recensio.policy.constants import (
+    EXPORTABLE_CONTENT_TYPES,
+    EXPORT_OUTPUT_PATH,
+    EXPORT_MAX_ITEMS,
+)
 
 log = logging.getLogger(__name__)
 
 
 class Book(object):
-
     def __init__(self, obj):
-        issn = getattr(obj, 'getIssn', lambda: None)
-        self.isbn = getattr(obj, 'getIsbn', issn)()
+        issn = getattr(obj, "getIssn", lambda: None)
+        self.isbn = getattr(obj, "getIsbn", issn)()
         self.subtitle = obj.title
         self.title = obj.getSubtitle()
         self.year = obj.getYearOfPublication()
-        self.author_1 = {'first_name': '', 'last_name': obj.getReviewAuthor()}
-        self.author_2 = {'first_name': '', 'last_name': ''}
-        self.author_3 = {'first_name': '', 'last_name': ''}
+        self.author_1 = {"first_name": "", "last_name": obj.getReviewAuthor()}
+        self.author_2 = {"first_name": "", "last_name": ""}
+        self.author_3 = {"first_name": "", "last_name": ""}
 
     @property
     def author(self):
         retval = None
         for i in range(1):  # We don't support multiple authors
             try:
-                retval[i]['first_name'] = ''
-                retval[i]['last_name'] = self.obj.getAuthors()
+                retval[i]["first_name"] = ""
+                retval[i]["last_name"] = self.obj.getAuthors()
             except IndexError:
                 pass
         return retval
@@ -44,13 +46,12 @@ class Review(object):
     @property
     def reviewers(self):
         for i in [range(1)]:  # No multiple authors support in our system
-            yield {'last_name': self.obj.getAuthors(),
-                   'first_name': ''}
+            yield {"last_name": self.obj.getAuthors(), "first_name": ""}
 
     @property
     def books(self):
         return [Book(self.obj) for x in [range(1)]]  # No multiple books
-                                                     # support in our system
+        # support in our system
 
 
 class DigiToolRepresentation(BrowserView):
@@ -58,7 +59,7 @@ class DigiToolRepresentation(BrowserView):
     content type as xml to harddisk and marks it as exported with a little
     flag. If the flag is set, it is not exported again. """
 
-    template = ViewPageTemplateFile('templates/digitool.pt')
+    template = ViewPageTemplateFile("templates/digitool.pt")
 
     def __call__(self):
         return self.template(self)
@@ -77,9 +78,11 @@ class DigiToolExport(BrowserView):
         count = 0
         for key, value in portal.ZopeFind(portal, search_sub=1):
             ob = value.aq_explicit
-            if (hasattr(ob, '__digitool_exported__') or
-                    not hasattr(ob, 'portal_type') or
-                    ob.portal_type not in EXPORTABLE_CONTENT_TYPES):
+            if (
+                hasattr(ob, "__digitool_exported__")
+                or not hasattr(ob, "portal_type")
+                or ob.portal_type not in EXPORTABLE_CONTENT_TYPES
+            ):
                 continue
 
             try:
@@ -88,7 +91,7 @@ class DigiToolExport(BrowserView):
                 print ke
                 continue
 
-            #setattr(value, '__digitool_exported__', True)
+            # setattr(value, '__digitool_exported__', True)
             count += 1
             if count > EXPORT_MAX_ITEMS:
                 break
@@ -100,11 +103,11 @@ class DigiToolExport(BrowserView):
     def dump_xml(self, item):
         """ create an xml representation of the object and dump it to disk """
 
-        data = item.unrestrictedTraverse('@@digitool-xml')
+        data = item.unrestrictedTraverse("@@digitool-xml")
         filename = "%s/%s.xml" % (EXPORT_OUTPUT_PATH, IUUID(item))
         if path.exists(filename):
             print "File exists, overwriting"
-            #raise KeyError, "File exists, but must not"
+            # raise KeyError, "File exists, but must not"
 
         fh = open(filename, "w")
         fh.write(data())

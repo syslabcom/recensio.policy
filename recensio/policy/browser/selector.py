@@ -30,11 +30,13 @@ class RecensioLanguageSelector(TranslatableLanguageSelector):
         first_pass = True
         _checkPermission = getSecurityManager().checkPermission
         for item in chain:
-            if ISiteRoot.providedBy(item) \
-                or not ITranslatable.providedBy(item) \
-                or not item.Language():
+            if (
+                ISiteRoot.providedBy(item)
+                or not ITranslatable.providedBy(item)
+                or not item.Language()
+            ):
                 # We have a site root, which works as a fallback
-                has_view_permission = bool(_checkPermission('View', item))
+                has_view_permission = bool(_checkPermission("View", item))
                 for c in missing:
                     translations[c] = (item, first_pass, has_view_permission)
                 break
@@ -49,22 +51,20 @@ class RecensioLanguageSelector(TranslatableLanguageSelector):
                 if code not in translations:
                     # make a link to a translation only if the user
                     # has view permission
-                    has_view_permission = bool(_checkPermission('View', trans))
-                    if (not INavigationRoot.providedBy(item)
-                            and not has_view_permission):
+                    has_view_permission = bool(_checkPermission("View", trans))
+                    if not INavigationRoot.providedBy(item) and not has_view_permission:
                         continue
                     # If we don't yet have a translation for this language
                     # add it and mark it as found
-                    translations[code] = (trans, first_pass,
-                                          has_view_permission)
-                    missing = missing - set((code, ))
+                    translations[code] = (trans, first_pass, has_view_permission)
+                    missing = missing - set((code,))
 
             if len(missing) <= 0:
                 # We have translations for all
                 break
             if INavigationRoot.providedBy(item):
                 # Don't break out of the navigation root jail
-                has_view_permission = bool(_checkPermission('View', item))
+                has_view_permission = bool(_checkPermission("View", item))
                 for c in missing:
                     translations[c] = (item, False, has_view_permission)
                 break

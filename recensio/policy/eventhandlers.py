@@ -6,7 +6,7 @@ from zope.component import getUtility
 
 
 def review_published_eventhandler(obj, evt):
-    if not evt.transition or evt.transition.getId() != 'publish':
+    if not evt.transition or evt.transition.getId() != "publish":
         return
     if obj.portal_type not in REVIEW_TYPES:
         return

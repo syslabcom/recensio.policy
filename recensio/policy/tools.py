@@ -1,6 +1,6 @@
 def convertToString(obj):
     if isinstance(obj, unicode):
-        return obj.encode('utf-8')
+        return obj.encode("utf-8")
     elif isinstance(obj, str):
         return obj
     elif isinstance(obj, list):
@@ -12,4 +12,3 @@ def convertToString(obj):
         return retval
     else:
         return obj
-

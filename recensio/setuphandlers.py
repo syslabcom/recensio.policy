@@ -7,5 +7,4 @@ from Products.CMFCore.utils import getToolByName
 from plone.registry.interfaces import IRegistry
 
 
-log = logging.getLogger('recensio.profile/setuphandlers.py')
-
+log = logging.getLogger("recensio.profile/setuphandlers.py")

@@ -2,12 +2,12 @@ from DateTime import DateTime
 import transaction
 
 portal = app.recensio
-broken = portal.portal_catalog.search({
-        "review_state":"published",
-        'effective': {
-            "query":DateTime('1000/01/02 1:00:00 GMT+0'),
-            "range":"max"
-            }})
+broken = portal.portal_catalog.search(
+    {
+        "review_state": "published",
+        "effective": {"query": DateTime("1000/01/02 1:00:00 GMT+0"), "range": "max"},
+    }
+)
 
 for i, brain in enumerate(broken):
     obj = brain.getObject()
@@ -21,10 +21,9 @@ for i, brain in enumerate(broken):
         # Just to be extra sure we don't clobber existing dates
         obj.setEffectiveDate(effective_date)
         obj.reindexObject()
-        print("Fixed effective_date for %s" %obj.absolute_url())
+        print("Fixed effective_date for %s" % obj.absolute_url())
 
     if i % 20:
         transaction.commit()
 
 transaction.commit()
-

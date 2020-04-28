@@ -6,6 +6,7 @@ from plone.app.iterate import event
 from Products.CMFCore import permissions
 from zope.event import notify
 
+
 class CustomCheckingCheckoutPolicyAdapter(CheckinCheckoutPolicyAdapter):
     def cancelCheckout(self):
         baseline = self._getBaseline()

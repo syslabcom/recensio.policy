@@ -8,7 +8,6 @@ from userdataschema import UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES
 
 
 class RecensioUserDataPanel(UserDataPanel):
-
     def __init__(self, context, request):
         """ Load the UserDataSchema at view time. 
         (Because doing getUtility for IUserDataSchemaProvider fails at startup
@@ -25,6 +24,6 @@ class RecensioUserDataPanel(UserDataPanel):
 
 
 class RecensioUserDataConfiglet(UserDataConfiglet, RecensioUserDataPanel):
-        """ We override Plone's default, in order to filter out the unwanted fields
+    """ We override Plone's default, in order to filter out the unwanted fields
             for the personal preferences form.
         """

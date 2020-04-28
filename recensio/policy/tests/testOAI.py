@@ -4,12 +4,14 @@ import datetime
 import unittest2 as unittest
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 
+
 class TestOAI(unittest.TestCase):
     layer = RECENSIO_INTEGRATION_TESTING
 
     def testReader(self):
         from recensio.policy.utility import Reader
         from lxml import etree
+
         raw_xml = """<?xml version="1.0" encoding="UTF-8" ?>
 <?xml-stylesheet type="text/xsl" href="common/xsl/oaicat.xsl"?>
 <OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/ http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
@@ -32,26 +34,27 @@ class TestOAI(unittest.TestCase):
 </OAI-PMH>"""
         root = etree.fromstring(raw_xml)
         expected = {
- 'dc_contributor': [],
- 'dc_coverage': [],
- 'dc_creator': ['Joshua Barnes', 'Lars Hernquist', u'Fran\xe7ois Schweizer'],
- 'dc_date': [datetime.datetime(1991, 8, 1, 0, 0)],
- 'dc_description': [],
- 'dc_format': [],
- 'dc_identifier': ['doi:10.1038/scientificamerican0891-40'],
- 'dc_language': ['en'],
- 'dc_publisher': ['Nature Publishing Group'],
- 'dc_relation': [],
- 'dc_rights': [u'\xa9 1991 Scientific American, Inc.'],
- 'dc_source': [],
- 'dc_subject': [],
- 'dc_title': ['Colliding Galaxies'],
- 'dc_type': ['Feature'],
- 'oai_deleted': False,
- 'oai_identifier': 'oai:nature.com:10.1038/scientificamerican0891-40',
- 'oai_timestamp': datetime.datetime(1991, 8, 1, 0, 0),
- 'oai_retrieved': datetime.datetime(2010, 8, 17, 15, 25, 1),
- 'oai_sets': []}
+            "dc_contributor": [],
+            "dc_coverage": [],
+            "dc_creator": ["Joshua Barnes", "Lars Hernquist", u"Fran\xe7ois Schweizer"],
+            "dc_date": [datetime.datetime(1991, 8, 1, 0, 0)],
+            "dc_description": [],
+            "dc_format": [],
+            "dc_identifier": ["doi:10.1038/scientificamerican0891-40"],
+            "dc_language": ["en"],
+            "dc_publisher": ["Nature Publishing Group"],
+            "dc_relation": [],
+            "dc_rights": [u"\xa9 1991 Scientific American, Inc."],
+            "dc_source": [],
+            "dc_subject": [],
+            "dc_title": ["Colliding Galaxies"],
+            "dc_type": ["Feature"],
+            "oai_deleted": False,
+            "oai_identifier": "oai:nature.com:10.1038/scientificamerican0891-40",
+            "oai_timestamp": datetime.datetime(1991, 8, 1, 0, 0),
+            "oai_retrieved": datetime.datetime(2010, 8, 17, 15, 25, 1),
+            "oai_sets": [],
+        }
 
         got = Reader()(root)
         self.assertEqual(expected, got)
