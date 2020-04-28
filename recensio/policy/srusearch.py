@@ -1,9 +1,10 @@
-from marcxml_parser.record import record_iterator
-from Products.CMFPlone.utils import safe_unicode
+import logging
 from HTMLParser import HTMLParser
+
 import pycountry
 import requests
-import logging
+from marcxml_parser.record import record_iterator
+from Products.CMFPlone.utils import safe_unicode
 
 log = logging.getLogger(__name__)
 

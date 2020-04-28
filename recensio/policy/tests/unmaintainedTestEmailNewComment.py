@@ -1,29 +1,34 @@
 # -*- coding: utf-8 -*-
+from doctest import ELLIPSIS
+from doctest import OutputChecker
+
 import unittest2 as unittest
-from doctest import OutputChecker, ELLIPSIS
+from Acquisition import aq_inner
+from plone.app.controlpanel.mail import IMailSchema
+from plone.app.discussion.comment import Comment
+from plone.app.discussion.interfaces import IConversation
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import login
+from plone.app.testing import setRoles
+from Products.CMFCore.utils import getToolByName
+from recensio.policy.browser.email import MailNewComment
+from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
+from recensio.theme.interfaces import IRecensioLayer
+from zope.component import createObject
+from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
+from zope.interface import directlyProvides
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
 
-from zope.component import getMultiAdapter
-from zope.interface import directlyProvides, alsoProvides
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-from zope.component import createObject
 
-from plone.app.testing import TEST_USER_NAME, TEST_USER_ID
-from plone.app.testing import setRoles, login
 
-from plone.app.controlpanel.mail import IMailSchema
-from Products.CMFCore.utils import getToolByName
 
-from plone.app.discussion.interfaces import IConversation
-from plone.app.discussion.comment import Comment
 
-from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
-from recensio.theme.interfaces import IRecensioLayer
 
-from recensio.policy.browser.email import MailNewComment
 
-from Acquisition import aq_inner
 
 
 class TestEmailFormat(unittest.TestCase):

@@ -1,8 +1,8 @@
-from zope.interface import Interface
 from plone.indexer.decorator import indexer
-from Products.CMFCore.utils import getToolByName
 from plone.memoize import ram
+from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.interfaces.review import IReview
+from zope.interface import Interface
 
 
 def _getParentsMap_cachekey(method, obj, vocab):

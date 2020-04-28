@@ -1,7 +1,9 @@
 # coding=utf8
 import unittest2 as unittest
 from BeautifulSoup import BeautifulSoup
-from recensio.policy.opacsearch import OpacSearch, getString, createResult
+from recensio.policy.opacsearch import OpacSearch
+from recensio.policy.opacsearch import createResult
+from recensio.policy.opacsearch import getString
 
 sampleblob = """<tr>
             <td>

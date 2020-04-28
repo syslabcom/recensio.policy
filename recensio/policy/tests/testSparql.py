@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
-from zope.testing.loggingsupport import InstalledHandler
-
 import logging
 import os
+from StringIO import StringIO
+
 import sparql
 import unittest2 as unittest
-from StringIO import StringIO
 from mock import patch
+from zope.testing.loggingsupport import InstalledHandler
 
 
 class MockResultFactory(object):

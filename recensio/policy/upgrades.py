@@ -1,12 +1,13 @@
+from logging import getLogger
+
+import pkg_resources
+
 from plone import api
 from plone.app.controlpanel.skins import ISkinsSchema
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.eventhandlers import review_pdf_updated_eventhandler
 from recensio.contenttypes.interfaces.review import IReview
 from transaction import commit
-import pkg_resources
-from logging import getLogger
-
 
 log = getLogger(__name__)
 

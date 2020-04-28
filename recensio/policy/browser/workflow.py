@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
 
+import logging
+
+from DateTime import DateTime
+from plone.app.controlpanel.mail import IMailSchema
+from plone.registry.interfaces import IRegistry
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from zope.interface import implements
-from plone.registry.interfaces import IRegistry
-from plone.app.controlpanel.mail import IMailSchema
+from recensio.policy import recensioMessageFactory as _
+from recensio.policy.interfaces import IRecensioSettings
+from recensio.policy.interfaces import IWorkflowHelper
 from zope.component import queryUtility
 from zope.i18n import translate
-import logging
-from DateTime import DateTime
-
-from recensio.policy.interfaces import IWorkflowHelper, IRecensioSettings
-from recensio.policy import recensioMessageFactory as _
+from zope.interface import implements
 
 log = logging.getLogger("Recensio Workflow Helper:")
 

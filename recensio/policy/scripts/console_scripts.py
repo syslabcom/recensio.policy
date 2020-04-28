@@ -1,11 +1,12 @@
+import logging
+
 from plone import api
 from recensio.contenttypes.config import REVIEW_TYPES
-from recensio.policy.browser.export import MetadataExport
 from recensio.policy.browser.email import MailCollection
+from recensio.policy.browser.export import MetadataExport
 from recensio.policy.browser.sehepunkte import Import
 from recensio.policy.export import register_doi
 from slc.zopescript.script import ConsoleScript
-import logging
 
 log = logging.getLogger()
 

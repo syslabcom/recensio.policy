@@ -1,5 +1,5 @@
-from DateTime import DateTime
 import transaction
+from DateTime import DateTime
 
 portal = app.recensio
 broken = portal.portal_catalog.search(

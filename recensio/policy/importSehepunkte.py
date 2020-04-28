@@ -1,6 +1,6 @@
-from lxml import etree
-
 import urllib
+
+from lxml import etree
 
 
 class NoReview(Exception):

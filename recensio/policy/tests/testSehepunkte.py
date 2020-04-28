@@ -1,6 +1,6 @@
-import unittest2 as unittest
 import pkg_resources
 
+import unittest2 as unittest
 from recensio.policy import importSehepunkte
 from recensio.policy.browser.sehepunkte import Import
 from recensio.policy.importSehepunkte import sehepunkte_parser

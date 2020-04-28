@@ -1,5 +1,6 @@
-from lxml import etree
 from datetime import datetime
+
+from lxml import etree
 
 ns = {
     "oai": "http://www.openarchives.org/OAI/2.0/",

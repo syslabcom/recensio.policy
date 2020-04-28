@@ -1,20 +1,16 @@
-from lxml import etree
+from copy import deepcopy
 from datetime import datetime
 
-from zope.interface import implements
-
+from AccessControl import ClassSecurityInfo
+from lxml import etree
 from oaipmh.client import Client
 from oaipmh.metadata import MetadataRegistry
-
-from recensio.policy.interfaces import IOAIUtility
-
-from copy import deepcopy
-from ZTUtils import make_query
-from recensio.contenttypes.config import PORTAL_TYPES
-
-from zope.site.hooks import getSite
 from Products.CMFCore.utils import getToolByName
-from AccessControl import ClassSecurityInfo
+from recensio.contenttypes.config import PORTAL_TYPES
+from recensio.policy.interfaces import IOAIUtility
+from zope.interface import implements
+from zope.site.hooks import getSite
+from ZTUtils import make_query
 
 browsing_facets = ["ddcPlace", "ddcTime", "ddcSubject"]
 filter_facets = ["languageReview"]

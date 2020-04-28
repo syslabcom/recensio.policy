@@ -1,24 +1,29 @@
 # -*- coding: utf-8 -*-
 
+from doctest import ELLIPSIS
+from doctest import OutputChecker
+
 import unittest2 as unittest
-from doctest import OutputChecker, ELLIPSIS
-
-compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
-
 from DateTime import DateTime
-from zope.component import getMultiAdapter
-from zope.interface import directlyProvides, alsoProvides
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
-
-from plone.app.testing import TEST_USER_NAME, TEST_USER_ID
-from plone.app.testing import setRoles, login
-
 from plone.app.controlpanel.mail import IMailSchema
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import login
+from plone.app.testing import setRoles
 from Products.CMFCore.utils import getToolByName
-
 from recensio.policy.interfaces import INewsletterSource
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
+from zope.component import getMultiAdapter
+from zope.interface import alsoProvides
+from zope.interface import directlyProvides
+from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+
+compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
+
+
+
+
 
 
 class TestEmailFormat(unittest.TestCase):

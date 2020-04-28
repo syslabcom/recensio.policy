@@ -1,20 +1,20 @@
+import datetime
+import htmlentitydefs
+import logging
+import re
+import urllib
+from itertools import chain
+
 from BeautifulSoup import BeautifulSoup
+from dateutil.relativedelta import relativedelta
+from guess_language import guessLanguage as originalGuessLanguage
 from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
-from dateutil.relativedelta import relativedelta
-from guess_language import guessLanguage as originalGuessLanguage
-from itertools import chain
-from zope.event import notify
-import datetime
-import htmlentitydefs
-import re
-import urllib
-import logging
-from transaction import commit
-
 from recensio.policy.importSehepunkte import sehepunkte_parser
 from recensio.policy.tools import convertToString
+from transaction import commit
+from zope.event import notify
 
 log = logging.getLogger(__name__)
 

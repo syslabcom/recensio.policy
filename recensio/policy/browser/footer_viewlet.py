@@ -1,13 +1,10 @@
 import random
 
+from plone.app.layout.viewlets import ViewletBase
+from Products.CMFCore.utils import getToolByName
+from recensio.policy.utility import getSelectedQuery
 from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
-
-from Products.CMFCore.utils import getToolByName
-
-from recensio.policy.utility import getSelectedQuery
-
-from plone.app.layout.viewlets import ViewletBase
 
 
 class Footer(ViewletBase):

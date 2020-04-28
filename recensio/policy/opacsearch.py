@@ -1,7 +1,9 @@
-from zope.testbrowser.browser import Browser
-from mechanize._mechanize import LinkNotFoundError
-from BeautifulSoup import BeautifulSoup, Comment
 import re
+
+from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import Comment
+from mechanize._mechanize import LinkNotFoundError
+from zope.testbrowser.browser import Browser
 
 
 def viewPage(br):

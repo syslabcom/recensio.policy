@@ -1,12 +1,9 @@
-from Products.Five.browser import BrowserView
-
-from zope.component import queryUtility
-from plone.registry.interfaces import IRegistry
-
 from plone.app.registry.browser import controlpanel
-
-from recensio.policy.interfaces import IRecensioSettings
+from plone.registry.interfaces import IRegistry
+from Products.Five.browser import BrowserView
 from recensio.policy import recensioMessageFactory as _
+from recensio.policy.interfaces import IRecensioSettings
+from zope.component import queryUtility
 
 
 class RecensioSettingsEditForm(controlpanel.RegistryEditForm):

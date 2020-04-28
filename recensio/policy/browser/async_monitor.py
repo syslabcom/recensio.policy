@@ -1,15 +1,16 @@
 # taken from wildcard.pdfpal, thanks a lot!
 
-from Products.Five import BrowserView
-from zope.component import getUtility
-from Products.CMFPlone.utils import base_hasattr
-from Products.Archetypes.utils import contentDispositionHeader
 from os import fstat
-from webdav.common import rfc1123_date
-from zope.formlib import form
-from Products.CMFCore.utils import getToolByName
+
 from DateTime import DateTime
+from Products.Archetypes.utils import contentDispositionHeader
 from Products.ATContentTypes.interface.file import IFileContent
+from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import base_hasattr
+from Products.Five import BrowserView
+from webdav.common import rfc1123_date
+from zope.component import getUtility
+from zope.formlib import form
 
 
 def time_since(dt):

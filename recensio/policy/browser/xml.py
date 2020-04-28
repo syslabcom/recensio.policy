@@ -1,11 +1,12 @@
-from Products.CMFCore.utils import getToolByName
-from Products.Five.browser import BrowserView
 from cgi import escape
 from io import BytesIO
+from zipfile import ZipFile
+
 from plone.i18n.locales.languages import _languagelist
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser import BrowserView
 from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.contenttypes.interfaces.review import IParentGetter
-from zipfile import ZipFile
 from zope.app.pagetemplate import ViewPageTemplateFile
 
 AUTHOR_TMPL = """        <author_%(num)s_first_name>%(firstname)s</author_%(num)s_first_name>

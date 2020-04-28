@@ -1,8 +1,9 @@
 from AccessControl import getSecurityManager
-from Acquisition import aq_parent, aq_inner
+from Acquisition import aq_inner
+from Acquisition import aq_parent
 from OFS.Folder import Folder
-from plone.app.iterate.policy import CheckinCheckoutPolicyAdapter
 from plone.app.iterate import event
+from plone.app.iterate.policy import CheckinCheckoutPolicyAdapter
 from Products.CMFCore import permissions
 from zope.event import notify
 

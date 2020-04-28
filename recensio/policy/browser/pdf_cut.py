@@ -1,14 +1,11 @@
 from StringIO import StringIO
 
 import pyPdf
-
+from Products.Five.browser import BrowserView
+from Products.statusmessages.interfaces import IStatusMessage
+from recensio.imports.pdf_cut import cutPDF
 from zope.event import notify
 from zope.lifecycleevent import ObjectModifiedEvent
-
-from Products.statusmessages.interfaces import IStatusMessage
-from Products.Five.browser import BrowserView
-
-from recensio.imports.pdf_cut import cutPDF
 
 
 class PDFCutter(BrowserView):

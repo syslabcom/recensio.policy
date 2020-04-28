@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
+import unittest
+
 from mock import Mock
 from zope.interface import alsoProvides
-import unittest
 
 
 class TestNewsletter(unittest.TestCase):

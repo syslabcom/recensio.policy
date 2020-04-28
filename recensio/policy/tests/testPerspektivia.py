@@ -1,7 +1,8 @@
-import unittest2 as unittest
-import pkg_resources
 import datetime
 
+import pkg_resources
+
+import unittest2 as unittest
 from recensio.policy import importOAI
 from recensio.policy.importOAI import perspektivia_parser
 

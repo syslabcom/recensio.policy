@@ -1,11 +1,10 @@
 from urllib import quote_plus
 
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from Products.CMFCore.utils import getToolByName
-
 from plone.app.controlpanel.mail import IMailSchema
-
-from plone.app.discussion.browser.comments import CommentsViewlet as BaseCommentsViewlet
+from plone.app.discussion.browser.comments import (
+    CommentsViewlet as BaseCommentsViewlet)
+from Products.CMFCore.utils import getToolByName
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class CommentsViewlet(BaseCommentsViewlet):

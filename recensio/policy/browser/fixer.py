@@ -1,5 +1,6 @@
-from Products.Five.browser import BrowserView
 import urllib
+
+from Products.Five.browser import BrowserView
 
 
 class Fixer(BrowserView):

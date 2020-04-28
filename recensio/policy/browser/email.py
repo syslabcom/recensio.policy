@@ -1,6 +1,9 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import logging
+from smtplib import SMTPServerDisconnected
+
 from Acquisition import aq_parent
 from DateTime import DateTime
 from plone.app.controlpanel.mail import IMailSchema
@@ -10,15 +13,12 @@ from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import safe_unicode
 from Products.Five.browser import BrowserView
 from Products.statusmessages.interfaces import IStatusMessage
-from smtplib import SMTPServerDisconnected
-from zope.component import getUtility
-import logging
-
 from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.contenttypes.content.review import get_formatted_names
 from recensio.contenttypes.interfaces import IParentGetter
 from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings
+from zope.component import getUtility
 
 logger = logging.getLogger("recensio.policy.browser.email")
 

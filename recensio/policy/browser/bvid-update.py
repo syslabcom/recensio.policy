@@ -1,6 +1,7 @@
 import csv
-from Products.Five.browser import BrowserView
+
 from plone import api
+from Products.Five.browser import BrowserView
 
 
 class BVIDUpdate(BrowserView):

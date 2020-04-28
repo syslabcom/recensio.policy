@@ -1,10 +1,10 @@
-from zope.component import getUtility
-from zope.formlib import form
-from plone.app.users.browser.personalpreferences import UserDataPanel
 from plone.app.users.browser.personalpreferences import UserDataConfiglet
+from plone.app.users.browser.personalpreferences import UserDataPanel
 from plone.app.users.userdataschema import IUserDataSchemaProvider
 from Products.CMFDefault.formlib.widgets import FileUploadWidget
 from userdataschema import UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES
+from zope.component import getUtility
+from zope.formlib import form
 
 
 class RecensioUserDataPanel(UserDataPanel):

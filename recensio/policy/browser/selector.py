@@ -1,12 +1,10 @@
-from plone.app.layout.navigation.interfaces import INavigationRoot
-
+from AccessControl.SecurityManagement import getSecurityManager
 from Acquisition import aq_chain
 from Acquisition import aq_inner
+from plone.app.layout.navigation.interfaces import INavigationRoot
 from Products.CMFCore.interfaces import ISiteRoot
-
-from Products.LinguaPlone.interfaces import ITranslatable
-from AccessControl.SecurityManagement import getSecurityManager
 from Products.LinguaPlone.browser.selector import TranslatableLanguageSelector
+from Products.LinguaPlone.interfaces import ITranslatable
 
 
 class RecensioLanguageSelector(TranslatableLanguageSelector):

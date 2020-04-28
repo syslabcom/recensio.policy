@@ -4,11 +4,14 @@ Mainly testing recensio browser views, that no error is thrown when
 the view is accessed.
 """
 from urlparse import urljoin
+
 import unittest2 as unittest
-
-from plone.app.testing import TEST_USER_ID, TEST_USER_NAME, TEST_USER_PASSWORD, setRoles
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import TEST_USER_PASSWORD
+from plone.app.testing import setRoles
 from plone.testing.z2 import Browser
-
+from Products.SiteErrorLog.SiteErrorLog import SiteErrorLog
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
 
 
@@ -19,7 +22,6 @@ def raising(self, info):
     print info[1]
 
 
-from Products.SiteErrorLog.SiteErrorLog import SiteErrorLog
 
 SiteErrorLog.raising = raising
 

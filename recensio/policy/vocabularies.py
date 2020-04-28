@@ -1,16 +1,16 @@
-from zope.schema.interfaces import IVocabularyFactory
-from Products.CMFCore.utils import getToolByName
-from zope.interface import implements
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from zope.component.hooks import getSite
 from constants import interface_languages
-
-from plone.registry.interfaces import IRegistry
-from zope.component import queryUtility
 from plone.i18n.locales.interfaces import ILanguageAvailability
-from zope.component import getGlobalSiteManager
-from recensio.policy.interfaces import IRecensioSettings
+from plone.registry.interfaces import IRegistry
+from Products.CMFCore.utils import getToolByName
 from recensio.policy import recensioMessageFactory as _
+from recensio.policy.interfaces import IRecensioSettings
+from zope.component import getGlobalSiteManager
+from zope.component import queryUtility
+from zope.component.hooks import getSite
+from zope.interface import implements
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleTerm
+from zope.schema.vocabulary import SimpleVocabulary
 
 
 class AvailableUserLanguages(object):

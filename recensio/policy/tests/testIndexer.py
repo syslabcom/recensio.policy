@@ -1,5 +1,6 @@
 # -* coding: utf-8 *-
 import unittest
+
 from recensio.policy.indexer import get_field_and_ebook_variant
 from recensio.policy.indexer import isbn
 from recensio.policy.indexer import place

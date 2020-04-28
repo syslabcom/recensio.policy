@@ -1,18 +1,19 @@
 # -*- coding: utf-8 -*-
-from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
+import os
+from logging import getLogger
+
+import constants
+from collective.solr.interfaces import ISolrConnectionConfig
+from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from Products.Archetypes.interfaces.base import IBaseFolder
+from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
 from Products.CMFCore.utils import getToolByName
 from Products.LinguaPlone.utils import linkTranslations
-from collective.solr.interfaces import ISolrConnectionConfig
-from logging import getLogger
-from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from recensio.policy.interfaces import IDiscussionCollections
 from recensio.policy.interfaces import INewsletterSource
 from zExceptions import BadRequest
 from zope.component import queryUtility
 from zope.interface import directlyProvides
-import constants
-import os
 
 log = getLogger("recensio.policy.setuphandlers.py")
 

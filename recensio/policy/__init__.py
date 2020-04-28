@@ -1,11 +1,13 @@
 import base64
 import sys
-from zc.testbrowser.browser import Browser
-from zope.i18nmessageid import MessageFactory
+
 import patches
+from plone.app.async.interfaces import IJobFailure
+from plone.app.async.interfaces import IJobSuccess
+from zc.testbrowser.browser import Browser
 from zope.component import provideHandler
-from plone.app.async.interfaces import IJobSuccess, IJobFailure
 from zope.component.hooks import getSite
+from zope.i18nmessageid import MessageFactory
 
 recensioMessageFactory = MessageFactory("recensio")
 

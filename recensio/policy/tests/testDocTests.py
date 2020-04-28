@@ -1,5 +1,6 @@
-import unittest2 as unittest
 import doctest
+
+import unittest2 as unittest
 from recensio import policy
 
 

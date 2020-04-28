@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 import os
-import unittest2 as unittest
-from DateTime import DateTime
 from StringIO import StringIO
+from time import time
+from zipfile import ZipFile
+
+import unittest2 as unittest
 from collective.solr.interfaces import ISolrConnectionConfig
+from DateTime import DateTime
 from lxml import etree
 from mock import Mock
 from mock import patch
@@ -12,10 +15,23 @@ from plone.app.testing.helpers import login
 from plone.app.testing.interfaces import SITE_OWNER_NAME
 from plone.app.testing.interfaces import TEST_USER_NAME
 from plone.registry.interfaces import IRegistry
-from zipfile import ZipFile
+from recensio.contenttypes.content.reviewjournal import ReviewJournal
+from recensio.contenttypes.content.reviewmonograph import ReviewMonograph
+from recensio.contenttypes.setuphandlers import add_number_of_each_review_type
+from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
+from recensio.policy.export import BVIDExporter
+from recensio.policy.export import ChroniconExporter
+from recensio.policy.export import DaraExporter
+from recensio.policy.export import LZAExporter
+from recensio.policy.export import MissingBVIDExporter
+from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccess
+from recensio.policy.export import StatusSuccessFile
+from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
-from time import time
+from recensio.policy.interfaces import IRecensioSettings
+from recensio.policy.tests.layer import RECENSIO_BARE_INTEGRATION_TESTING
+from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
 from zope.component import getGlobalSiteManager
@@ -24,22 +40,6 @@ from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import alsoProvides
 from zope.interface import implements
-
-from recensio.contenttypes.setuphandlers import add_number_of_each_review_type
-from recensio.contenttypes.content.reviewjournal import ReviewJournal
-from recensio.contenttypes.content.reviewmonograph import ReviewMonograph
-from recensio.policy.browser.export import EXPORT_TIMESTAMP_KEY
-from recensio.policy.export import BVIDExporter
-from recensio.policy.export import ChroniconExporter
-from recensio.policy.export import DaraExporter
-from recensio.policy.export import LZAExporter
-from recensio.policy.export import MissingBVIDExporter
-from recensio.policy.export import StatusFailure
-from recensio.policy.export import StatusSuccessFile
-from recensio.policy.export import register_doi
-from recensio.policy.interfaces import IRecensioSettings
-from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
-from recensio.policy.tests.layer import RECENSIO_BARE_INTEGRATION_TESTING
 
 
 class BrokenExporter(object):

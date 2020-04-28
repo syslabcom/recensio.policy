@@ -1,15 +1,15 @@
-from App.config import getConfiguration
-from Products.CMFPlone.utils import safe_unicode
-from collective.solr.interfaces import ISolrConnectionConfig
 from logging import getLogger
+
+import transaction
+import Zope2
+from App.config import getConfiguration
+from collective.solr.interfaces import ISolrConnectionConfig
 from plone.registry.interfaces import IRegistry
+from Products.CMFPlone.utils import safe_unicode
 from recensio.policy.interfaces import IRecensioSettings
 from zope.app.publication.zopepublication import ZopePublication
 from zope.component import getUtility
 from zope.component.hooks import setSite
-import Zope2
-import transaction
-
 
 configuration = getConfiguration()
 if not hasattr(configuration, "product_config"):

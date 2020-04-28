@@ -2,10 +2,9 @@
 
 from OFS.interfaces import IFolder
 from Products.ATContentTypes.interfaces import IATTopic
-from zope.interface import Interface
-from zope import schema
-
 from recensio.policy import recensioMessageFactory as _
+from zope import schema
+from zope.interface import Interface
 
 
 class IOAIUtility(Interface):

@@ -1,10 +1,11 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
+import json
+
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.browser.navtree import getNavigationRoot
 from Products.Five.browser import BrowserView
-import json
 
 
 class SubjectList(BrowserView):

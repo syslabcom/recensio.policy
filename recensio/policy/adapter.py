@@ -1,5 +1,6 @@
 from plone.app.users.browser.personalpreferences import UserDataPanelAdapter
-from Products.CMFPlone.browser.syndication.adapters import SearchFeed as SearchFeedBase
+from Products.CMFPlone.browser.syndication.adapters import (
+    SearchFeed as SearchFeedBase)
 from Products.CMFPlone.interfaces.syndication import ISearchFeed
 from zope.interface import implements
 

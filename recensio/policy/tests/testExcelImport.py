@@ -1,23 +1,27 @@
 # -*- coding: utf-8 -*-
 
-import unittest2 as unittest
-from doctest import OutputChecker, ELLIPSIS
-from mock import Mock
+from doctest import ELLIPSIS
+from doctest import OutputChecker
+
 from pkg_resources import resource_filename
 
-compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
-
+import unittest2 as unittest
+from mock import Mock
+from plone.app.controlpanel.mail import IMailSchema
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
+from plone.app.testing import setRoles
+from Products.CMFCore.utils import getToolByName
+from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
+from recensio.theme.interfaces import IRecensioLayer
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 
-from plone.app.testing import TEST_USER_ID, TEST_USER_NAME
-from plone.app.testing import setRoles
+compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
 
-from plone.app.controlpanel.mail import IMailSchema
-from Products.CMFCore.utils import getToolByName
 
-from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
-from recensio.theme.interfaces import IRecensioLayer
+
+
 
 
 class FakeFile(file):

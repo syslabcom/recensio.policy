@@ -1,12 +1,13 @@
 # -*- coding: utf-8 -*-
 
 
-from zope.interface import implements
+from collective.captcha.form import Captcha
+from plone.app.users.userdataschema import IUserDataSchema
+from plone.app.users.userdataschema import IUserDataSchemaProvider
 from zope import schema
 from zope.app.form.interfaces import ConversionError
-from plone.app.users.userdataschema import IUserDataSchemaProvider, IUserDataSchema
-from collective.captcha.form import Captcha
 from zope.i18nmessageid import MessageFactory
+from zope.interface import implements
 
 _ = MessageFactory("recensio")
 
