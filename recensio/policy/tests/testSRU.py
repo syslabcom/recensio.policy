@@ -9,7 +9,7 @@ from recensio.policy.srusearch import getMetadata
 class MockResultFactory(object):
     def __init__(self, filename):
         with open(
-            os.path.join(os.path.dirname(__file__), filename), "r",
+            os.path.join(os.path.dirname(__file__), filename), "r"
         ) as mock_data_file:
             self.mock_data = mock_data_file.read()
 
@@ -23,7 +23,7 @@ class TestSRU(unittest.TestCase):
     def test_sru_isbn_123(self):
         expected = {
             "bv": u"BV013575871",
-            "authors": [{"lastname": u"Berthelsen", "firstname": u"Asger"},],
+            "authors": [{"lastname": u"Berthelsen", "firstname": u"Asger"}],
             "ddcPlace": [],
             "ddcSubject": [],
             "ddcTime": [],
@@ -33,11 +33,12 @@ class TestSRU(unittest.TestCase):
             "language": u"English",
             "location": u"K\xf8benhavn",
             "pages": u"223 S.",
+            "ppn": "",
             "publisher": u"",
             # XXX why the '...'?
             "series": u"2; ...Grønlands Geologiske Undersøgelse: Bulletin",
             "seriesVol": u"25...",
-            "source": {"title": "OPAC", "url": "http://lod.b3kat.de/page/isbn/123",},
+            "source": {"title": "B3Kat", "url": "http://lod.b3kat.de/page/isbn/123"},
             "subtitle": u"",
             "title": u"Structural studies in the Pre-Cambrian of western Greenland",
             "year": u"1960",
@@ -69,11 +70,12 @@ class TestSRU(unittest.TestCase):
             "language": u"German",
             "location": u"M\xfcnster ; New York, NY ; M\xfcnchen ; Berlin",
             "pages": u"162 S.",
+            "ppn": "",
             "publisher": u"Waxmann",
             "series": u"",
             "seriesVol": u"",
             "source": {
-                "title": "OPAC",
+                "title": "B3Kat",
                 "url": "http://lod.b3kat.de/page/isbn/9783830921929",
             },
             "subtitle": u'Sprachentwicklung und Sprachf\xf6rderung in Kindertagesst\xe4tten ; [anl\xe4sslich des Landeskongresses "Kinder Bilden Sprache - Sprache Bildet Kinder" am 4. November 2008 in Recklinghausen]',
@@ -97,7 +99,7 @@ class TestSRU(unittest.TestCase):
                 "ddcPlace": [],
                 "ddcSubject": [u"943.085"],
                 "ddcTime": [],
-                "editors": [{"firstname": u"Anthony", "lastname": u"McElligott"},],
+                "editors": [{"firstname": u"Anthony", "lastname": u"McElligott"}],
                 "isbn": u"9780199280070",
                 "keywords": [
                     u"Germany",
@@ -109,11 +111,12 @@ class TestSRU(unittest.TestCase):
                 "language": u"English",
                 "location": u"Oxford [u.a.]",
                 "pages": u"XVIII, 324 S.",
+                "ppn": "",
                 "publisher": u"Oxford Univ. Press",
                 "series": u"\x98The\x9c short Oxford history of Germany",
                 "seriesVol": u"",
                 "source": {
-                    "title": "OPAC",
+                    "title": "B3Kat",
                     "url": "http://lod.b3kat.de/page/isbn/978-0-19-928007-0",
                 },
                 "subtitle": u"",
@@ -126,7 +129,7 @@ class TestSRU(unittest.TestCase):
                 "ddcPlace": [],
                 "ddcSubject": [u"943.085"],
                 "ddcTime": [],
-                "editors": [{"firstname": u"Anthony", "lastname": u"McElligott"},],
+                "editors": [{"firstname": u"Anthony", "lastname": u"McElligott"}],
                 "isbn": u"9780199280070",
                 "keywords": [
                     u"Germany",
@@ -138,11 +141,12 @@ class TestSRU(unittest.TestCase):
                 "language": u"English",
                 "location": u"Oxford [u.a.]",
                 "pages": u"XVIII, 324 S.",
+                "ppn": "",
                 "publisher": u"Oxford Univ. Press",
                 "series": u"\x98The\x9c short Oxford history of Germany",
                 "seriesVol": u"",
                 "source": {
-                    "title": "OPAC",
+                    "title": "B3Kat",
                     "url": "http://lod.b3kat.de/page/isbn/978-0-19-928007-0",
                 },
                 "subtitle": u"",
@@ -162,7 +166,7 @@ class TestSRU(unittest.TestCase):
         self.maxDiff = None
         expected = {
             "bv": u"BV041201260",
-            "authors": [{"lastname": u"Kraus", "firstname": u"Eva",}],
+            "authors": [{"lastname": u"Kraus", "firstname": u"Eva"}],
             "ddcPlace": [],  # XXX [u'43'],
             "ddcSubject": [],  # XXX [u'306.09'],
             "ddcTime": [],  # XXX [u'09041', u'09042', ],
@@ -190,11 +194,12 @@ class TestSRU(unittest.TestCase):
             "language": u"German",
             "location": u"Berlin",
             "pages": u"450 S.",
+            "ppn": "",
             "publisher": u"Pro Business",
             "series": u"",
             "seriesVol": u"",
             "source": {
-                "title": "OPAC",
+                "title": "B3Kat",
                 "url": "http://lod.b3kat.de/page/isbn/978-3-86386-488-0",
             },
             "subtitle": u"1909 - 1933 ; Programm - Personen - Gleichschaltung",
@@ -217,7 +222,7 @@ class TestSRU(unittest.TestCase):
             "ddcPlace": [],  # XXX [u'43', ],
             "ddcSubject": [],  # XXX [u'909.04924', u'306.09', ],
             "ddcTime": [],  # XXX [u'09043', u'09044', ],
-            "editors": [{"firstname": u"Rebecca L.", "lastname": u"Boehling"},],
+            "editors": [{"firstname": u"Rebecca L.", "lastname": u"Boehling"}],
             "isbn": u"9783835316577",
             "keywords": [
                 u"Verfolgung",
@@ -230,11 +235,12 @@ class TestSRU(unittest.TestCase):
             "language": u"German",
             "location": u"Göttingen",
             "pages": u"279 S.",
+            "ppn": "",
             "publisher": u"Wallstein",
             "series": u"Jahrbuch des International Tracing Service",
             "seriesVol": u"4",
             "source": {
-                "title": "OPAC",
+                "title": "B3Kat",
                 "url": "http://lod.b3kat.de/page/isbn/978-3-8353-1657-7",
             },
             "subtitle": u"Spiegelungen der NS-Verfolgung und ihrer Konsequenzen",
@@ -254,10 +260,10 @@ class TestSRU(unittest.TestCase):
         expected = {
             "authors": [],
             "bv": u"BV023169149",
-            "ddcSubject": [u"940.3",],
+            "ddcSubject": [u"940.3"],
             "ddcPlace": [],  # XXX [u'181', ],
             "ddcTime": [],  # XXX [u'09041', ],
-            "editors": [{"firstname": u"Barbara", "lastname": u"Korte"},],
+            "editors": [{"firstname": u"Barbara", "lastname": u"Korte"}],
             "isbn": u"9783898617277",
             "keywords": [
                 u"World War, 1914-1918",
@@ -271,11 +277,12 @@ class TestSRU(unittest.TestCase):
             "language": u"German",
             "location": u"Essen",
             "pages": u"222 S.",
+            "ppn": "",
             "publisher": u"Klartext",
             "series": u"Schriften der Bibliothek für Zeitgeschichte " ": Neue Folge",
             "seriesVol": u"22",
             "source": {
-                "title": "OPAC",
+                "title": "B3Kat",
                 "url": "http://lod.b3kat.de/page/isbn/9783898617277",
             },
             "subtitle": u"",
@@ -294,7 +301,7 @@ class TestSRU(unittest.TestCase):
         self.maxDiff = None
         expected = {
             "bv": u"BV039685251",
-            "authors": [{"firstname": u"Otto von", "lastname": u"Bismarck"},],
+            "authors": [{"firstname": u"Otto von", "lastname": u"Bismarck"}],
             "ddcPlace": [],
             "ddcSubject": [],
             "ddcTime": [],
@@ -303,15 +310,16 @@ class TestSRU(unittest.TestCase):
                 {"firstname": u"Konrad", "lastname": u"Canis"},
             ],
             "isbn": u"9783506770707",
-            "keywords": [u"Politik", u"Deutschland", u"Quelle",],
+            "keywords": [u"Politik", u"Deutschland", u"Quelle"],
             "language": u"German",
             "location": u"Paderborn ; M\xfcnchen [u.a.]",
             "pages": u"XXXI, 616 S.",
+            "ppn": "",
             "publisher": u"Sch\xf6ningh",
             "series": u"4",
             "seriesVol": u"",
             "source": {
-                "title": "OPAC",
+                "title": "B3Kat",
                 "url": "http://lod.b3kat.de/page/isbn/9783506770707",
             },
             "subtitle": u"",
