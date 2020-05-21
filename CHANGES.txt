@@ -4,7 +4,9 @@ Changelog
 4.5.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Review Exhibition: Support for permanent exhibitons.
+  Migration to new schema; indexer for "years" field.
+  #SCR-340
 
 
 4.5.1 (2020-04-23)

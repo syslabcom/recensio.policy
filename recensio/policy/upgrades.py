@@ -4,6 +4,7 @@ import pkg_resources
 
 from plone import api
 from plone.app.controlpanel.skins import ISkinsSchema
+from Products.Archetypes.Storage.annotation import AnnotationStorage
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.eventhandlers import review_pdf_updated_eventhandler
 from recensio.contenttypes.interfaces.review import IReview
@@ -283,3 +284,34 @@ def v18to19(portal_setup):
     portal_setup.runImportStepFromProfile(
         "profile-recensio.contenttypes:default", "factorytool",
     )
+
+
+def v19to20(portal_setup):
+    storage = AnnotationStorage()
+    catalog = api.portal.get_tool("portal_catalog")
+    for brain in catalog(portal_type=["Review Exhibition"]):
+        try:
+            obj = brain.getObject()
+        except Exception as e:
+            log.exception(e)
+            continue
+        if not obj:
+            log.warn("Could not get object {}".format(brain.getPath()))
+            continue
+        try:
+            exhibitor = storage.get("exhibitor", obj)
+            exhibitor_gnd = storage.get("exhibitor_gnd", obj)
+        except AttributeError:
+            # obj doesn't have the old attributes, ignore
+            continue
+        if exhibitor or exhibitor_gnd:
+            # Clean up default {'name': '', 'gnd': ''} entries
+            obj.exhibiting_institution = [
+                institution
+                for institution in obj.exhibiting_institution
+                if institution["name"] or institution["gnd"]
+            ] + [{"name": exhibitor, "gnd": exhibitor_gnd}]
+
+            storage.unset("exhibitor", obj)
+            storage.unset("exhibitor_gnd", obj)
+            log.info("Migrated {}".format(brain.getPath()))

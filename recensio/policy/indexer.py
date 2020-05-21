@@ -119,7 +119,9 @@ def get_field_and_ebook_variant(obj, accessor):
 
 @indexer(IReview)
 def year(obj):
-    return get_field_and_ebook_variant(obj, "getYearOfPublication")
+    return get_field_and_ebook_variant(obj, "getYearOfPublication") + [
+        year["year"] for year in getattr(obj, "years", [])
+    ]
 
 
 @indexer(IReview)
