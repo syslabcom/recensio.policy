@@ -148,6 +148,14 @@
    handler=".upgrades.v18to19"
    />
 
+ <genericsetup:upgradeStep
+   source="19"
+   destination="20"
+   title="Migrate content type Review Exhibiton to new schema"
+   profile='recensio.policy:default'
+   handler=".upgrades.v19to20"
+   />
+
  <genericsetup:registerProfile
     name="demo"
     title="Recensio Demo Policy"
