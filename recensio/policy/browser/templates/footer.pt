@@ -29,7 +29,9 @@
         <a href="#"
            tal:attributes="href string:${portal_url}/datenschutz${lang_suffix}"
            i18n:translate="label_footer_datenschutz">Datenschutzerklärung</a>
-      </div>
+        <a href="#"
+           tal:attributes="href string:${portal_url}/accessibility${lang_suffix}"
+           i18n:translate="label_footer_accessibility">Barrierefreiheit</a>      </div>
 
     </div>
   </div>
