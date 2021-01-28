@@ -11,17 +11,6 @@
                    errors options/state/getErrors|nothing;
                    wtool context/@@plone_tools/workflow;">
 
-    <div class="reply"
-         tal:condition="python:isAnon and not isAnonymousDiscussionAllowed">
-        <form tal:attributes="action view/login_action">
-            <input class="standalone"
-                   type="submit"
-                   value="Log in to add comments"
-                   i18n:attributes="value label_login_to_add_comments;"
-                   />
-        </form>
-    </div>
-
     <div class="discussion"
          tal:attributes="class python: showCommenterImage and 'discussion showCommenterImage' or 'discussion';"
          tal:condition="has_replies">
@@ -102,55 +91,10 @@
 
 
                 </div>
-                <button class="context reply-to-comment-button hide allowMultiSubmit"
-                        tal:condition="python:isDiscussionAllowed and (isAnon and isAnonymousDiscussionAllowed or userHasReplyPermission)"
-                        i18n:translate="label_reply">
-                    Reply
-                </button>
             </div>
 
         </tal:getreplies>
     </div>
-
-    <div class="reply"
-         tal:condition="python:has_replies and (isAnon and not isAnonymousDiscussionAllowed)">
-        <form tal:attributes="action view/login_action">
-            <input class="standalone"
-                   type="submit"
-                   value="Log in to add comments"
-                   i18n:attributes="value label_login_to_add_comments;"
-                   />
-        </form>
-    </div>
-
-    <div id="commenting" class="reply" tal:condition="python:isDiscussionAllowed and (isAnon and isAnonymousDiscussionAllowed or userHasReplyPermission)">
-
-        <div class="message notice">
-          <h2 i18n:translate="heading_commenting_explanation">Kommentieren</h2>
-<p i18n:translate="commenting_explanation">Sie haben hier die Gelegenheit, die Rezension/Präsentation zu kommentieren. Dafür ist eine kurze, kostenlose Registrierung mit Namen und E-Mail-Adresse notwendig, die lediglich dazu dient, Missbrauch der Kommentarfunktion zu verhindern und den wissenschaftlichen Anspruch der Plattform zu wahren.
-<br />
-Bitte beachten Sie, dass eingehende Kommentare vor der Veröffentlichung auf die Einhaltung der <a tal:attributes="href string:${context/portal_url}/ueber-uns/benutzerrichtlinien" class="internal-link" i18n:name="benutzerrichtlinien" i18n:translate="benutzerrichtlinien">Benutzerrichtlinien</a> geprüft werden. Aus diesem Grund können 1 bis 3 Werktage vergehen, bis Ihr Kommentar auf <span tal:replace="view/portal_title" i18n:name="portal_title">recensio.net</span> sichtbar wird. Darüber hinaus gibt es die Möglichkeit, der Redaktion als problematisch empfundene Äußerungen über einen neben Kommentaren befindlichen Button zu melden.
-<br />
-Für Rückfragen steht Ihnen die <span tal:replace="view/portal_title" i18n:name="portal_title">recensio.net</span>-Redaktion jederzeit zur Verfügung:<br />
-<span tal:content="view/getMailTarget" i18n:name="contact_addr">[Redaktionsadresse]</span>.</p>
-        </div>
-        <fieldset>
-
-            <legend i18n:translate="label_add_comment">Add comment</legend>
-            <p i18n:translate="description_add_comment">
-                You can add a comment by filling out the form below. Plain text
-                formatting.
-            </p>
-
-            <div tal:replace="structure view/form/render" />
-            <p i18n:translate="help_comment_licence"> All comments are
-published under the creative-commons-licence
-Attribution-NonCommercial-NoDerivs (CC-BY-NC-ND)</p>
-        </fieldset>
-
-    </div>
-
-    <a name="commenting" />
 
 </tal:block>
 </tal:block>
