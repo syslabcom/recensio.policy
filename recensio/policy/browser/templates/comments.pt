@@ -80,13 +80,6 @@
                                    i18n:attributes="value"
                                    />
                         </form>
-                        <a class="problematic_comment" href="mailto:"
-                           title="NOTIFICATION: possible problematic comment"
-                           tal:attributes="href string:mailto:${view/getMailTarget}?subject=${view/escaped_title}${reply/getId};
-                                           title string: ${view/title}${reply/getId}"
-                           i18n:translate="notify_portal_owner">
-                            Notify portal owner about this comment
-                        </a>
                      </div>
 
 
