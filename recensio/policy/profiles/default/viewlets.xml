@@ -1,7 +1,7 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <object>
-    <hidden manager="plone.belowcontent" skinname="Sunburst Theme">
-        <viewlet name="plone.comments"/>
-        <viewlet name="plone.nextprevious"/>
-    </hidden>
+  <hidden manager="plone.belowcontent" skinname="Sunburst Theme">
+    <viewlet name="plone.comments" />
+    <viewlet name="plone.nextprevious" />
+  </hidden>
 </object>

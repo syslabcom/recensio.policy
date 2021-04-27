@@ -1,7 +1,17 @@
-<?xml version="1.0"?>
-<object name="portal_memberdata" meta_type="Plone Memberdata Tool">
-  <property name="academic_title" type="string"></property>
-  <property name="firstname" type="string"></property>
-  <property name="lastname" type="string"></property>
-  <property name="preferred_language" type="string"></property>
+<?xml version="1.0" ?>
+<object
+    name="portal_memberdata"
+    meta_type="Plone Memberdata Tool">
+  <property
+      name="academic_title"
+      type="string"></property>
+  <property
+      name="firstname"
+      type="string"></property>
+  <property
+      name="lastname"
+      type="string"></property>
+  <property
+      name="preferred_language"
+      type="string"></property>
 </object>

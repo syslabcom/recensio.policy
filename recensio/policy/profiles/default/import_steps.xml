@@ -1,55 +1,78 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <import-steps>
-    <import-step id="recensio_policy_vocabularies" version="20100616-01"
-            handler="recensio.policy.setuphandlers.importVocabularies"
-            description="Vocabularies for Recensio"
-            title="recensio_vocabularies" />
-    <import-step id="recensio_policy_security_settings" version="20100701-01"
-            handler="recensio.policy.setuphandlers.configureSecurity"
-            description="Security configuration for Recensio"
-            title="recensio_security1" />
-    <import-step id="recensio_policy_permission_settings" version="20100701-01"
-            handler="recensio.policy.setuphandlers.setPermissions"
-            description="Permission configuration for Recensio"
-            title="recensio_security2" />
-    <import-step id="recensio_workflow_settings_comment" version="20100928-01"
-            handler="recensio.policy.setuphandlers.addWorkflowScriptsForComments"
-            description="Workflow configuration for Recensio comments"
-            title="recensio_workflow_comments" />
-    <import-step id="recensio_policy_catalog_indexes" version="20100623-01"
-            handler="recensio.policy.setuphandlers.addCatalogIndexes"
-            description="Catalog Indexes for Recensio"
-            title="recensio_indexes" />
-    <import-step id="recensio_policy_activate_solr" version="20100714-01"
-            handler="recensio.policy.setuphandlers.activateSolr"
-            description="Solr, Engage!"
-            title="Solr, Engage!" />
-    <import-step id="recensio_policy_hide_navigation" version="20100824-01"
-            handler="recensio.policy.setuphandlers.hideAllFolders"
-            description="Hide all default Folders"
-            title="Hide all default Folders" />
-    <import-step id="recensio_policy_setup_homepage" version="20100824-01"
-            handler="recensio.policy.setuphandlers.setupHomepage"
-            description="Set up the home page"
-            title="Set up the home page" />
-    <import-step id="recensio_policy_set_content_languages" version="20100824-01"
-            handler="recensio.policy.setuphandlers.setImportedContentLanguages"
-            description="Set languages of imported content"
-            title="Set imported content languages" />
-    <import-step id="recensio_policy_publish_imported_content" version="20100824-01"
-            handler="recensio.policy.setuphandlers.publishImportedContent"
-            description="Publish imported content"
-            title="Publish imported content" />
-    <import-step id="recensio_policy_set_default_views"
-     version="20100826-01"
-     handler="recensio.policy.setuphandlers.setViewsOnFolders"
-     title="Set layout property for some content folders">
-         <dependency step="content" />
-         setViewsOnFolders
-    </import-step>
-    <import-step id="recensio_portal_tabs" version="20101001-01"
-            handler="recensio.policy.setuphandlers.fixPortalTabs"
-            description="Remove index_html from the default portal_actions/portal_tabs"
-            title="Fix Portal Tabs" />
+  <import-step
+      id="recensio_policy_vocabularies"
+      version="20100616-01"
+      handler="recensio.policy.setuphandlers.importVocabularies"
+      description="Vocabularies for Recensio"
+      title="recensio_vocabularies" />
+  <import-step
+      id="recensio_policy_security_settings"
+      version="20100701-01"
+      handler="recensio.policy.setuphandlers.configureSecurity"
+      description="Security configuration for Recensio"
+      title="recensio_security1" />
+  <import-step
+      id="recensio_policy_permission_settings"
+      version="20100701-01"
+      handler="recensio.policy.setuphandlers.setPermissions"
+      description="Permission configuration for Recensio"
+      title="recensio_security2" />
+  <import-step
+      id="recensio_workflow_settings_comment"
+      version="20100928-01"
+      handler="recensio.policy.setuphandlers.addWorkflowScriptsForComments"
+      description="Workflow configuration for Recensio comments"
+      title="recensio_workflow_comments" />
+  <import-step
+      id="recensio_policy_catalog_indexes"
+      version="20100623-01"
+      handler="recensio.policy.setuphandlers.addCatalogIndexes"
+      description="Catalog Indexes for Recensio"
+      title="recensio_indexes" />
+  <import-step
+      id="recensio_policy_activate_solr"
+      version="20100714-01"
+      handler="recensio.policy.setuphandlers.activateSolr"
+      description="Solr, Engage!"
+      title="Solr, Engage!" />
+  <import-step
+      id="recensio_policy_hide_navigation"
+      version="20100824-01"
+      handler="recensio.policy.setuphandlers.hideAllFolders"
+      description="Hide all default Folders"
+      title="Hide all default Folders" />
+  <import-step
+      id="recensio_policy_setup_homepage"
+      version="20100824-01"
+      handler="recensio.policy.setuphandlers.setupHomepage"
+      description="Set up the home page"
+      title="Set up the home page" />
+  <import-step
+      id="recensio_policy_set_content_languages"
+      version="20100824-01"
+      handler="recensio.policy.setuphandlers.setImportedContentLanguages"
+      description="Set languages of imported content"
+      title="Set imported content languages" />
+  <import-step
+      id="recensio_policy_publish_imported_content"
+      version="20100824-01"
+      handler="recensio.policy.setuphandlers.publishImportedContent"
+      description="Publish imported content"
+      title="Publish imported content" />
+  <import-step
+      id="recensio_policy_set_default_views"
+      version="20100826-01"
+      handler="recensio.policy.setuphandlers.setViewsOnFolders"
+      title="Set layout property for some content folders">
+    <dependency step="content" />
+    setViewsOnFolders
+  </import-step>
+  <import-step
+      id="recensio_portal_tabs"
+      version="20101001-01"
+      handler="recensio.policy.setuphandlers.fixPortalTabs"
+      description="Remove index_html from the default portal_actions/portal_tabs"
+      title="Fix Portal Tabs" />
 
 </import-steps>

@@ -1,19 +1,18 @@
 <metadata>
-    <description>Recensio policy product</description>
-    <version>20</version>
-    <dependencies>
-        <dependency>profile-Products.ATVocabularyManager:default</dependency>
-        <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
-        <dependency>profile-Products.DataGridField:default</dependency>
-        <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
-        <dependency>profile-collective.solr:default</dependency>
-        <dependency>profile-collective.solr:search</dependency>
-        <dependency>profile-plone.app.discussion:default</dependency>
-        <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
-        <dependency>profile-recensio.contenttypes:default</dependency>
-        <dependency>profile-recensio.imports:default</dependency>
-        <dependency>profile-recensio.theme:default</dependency>
-        <dependency>profile-collective.logbook:default</dependency>
-    </dependencies>
+  <description>Recensio policy product</description>
+  <version>20</version>
+  <dependencies>
+    <dependency>profile-Products.ATVocabularyManager:default</dependency>
+    <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
+    <dependency>profile-Products.DataGridField:default</dependency>
+    <dependency>profile-Products.LinguaPlone:LinguaPlone</dependency>
+    <dependency>profile-collective.solr:default</dependency>
+    <dependency>profile-collective.solr:search</dependency>
+    <dependency>profile-plone.app.discussion:default</dependency>
+    <dependency>profile-plone.app.iterate:plone.app.iterate</dependency>
+    <dependency>profile-recensio.contenttypes:default</dependency>
+    <dependency>profile-recensio.imports:default</dependency>
+    <dependency>profile-recensio.theme:default</dependency>
+    <dependency>profile-collective.logbook:default</dependency>
+  </dependencies>
 </metadata>
-

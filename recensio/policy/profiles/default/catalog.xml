@@ -1,7 +1,6 @@
-<?xml version="1.0"?>
+<?xml version="1.0" ?>
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
- <index name="last_comment_date" meta_type="DateIndex">
-   <property name="index_naive_time_as_local">True</property>
- </index>
+   <index name="last_comment_date" meta_type="DateIndex">
+      <property name="index_naive_time_as_local">True</property>
+   </index>
 </object>
-
