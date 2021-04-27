@@ -1,7 +1,4 @@
 from logging import getLogger
-
-import pkg_resources
-
 from plone import api
 from plone.app.controlpanel.skins import ISkinsSchema
 from Products.Archetypes.Storage.annotation import AnnotationStorage
@@ -9,6 +6,9 @@ from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.eventhandlers import review_pdf_updated_eventhandler
 from recensio.contenttypes.interfaces.review import IReview
 from transaction import commit
+
+import pkg_resources
+
 
 log = getLogger(__name__)
 
@@ -239,7 +239,9 @@ def v16to17(portal_setup):
     results = []
     while b_start <= len(results):
         results = catalog(
-            ddcPlace=list(updates.keys()), b_size=b_size, b_start=b_start,
+            ddcPlace=list(updates.keys()),
+            b_size=b_size,
+            b_start=b_start,
         )
         for brain in results[b_start : b_start + b_size]:
             try:
@@ -252,9 +254,7 @@ def v16to17(portal_setup):
                 )
                 continue
             if not (set(updates.keys()) & set(obj.getDdcPlace())):
-                log.warn(
-                    "ddcPlace not indexed properly for {0}".format(brain.getPath())
-                )
+                log.warn("ddcPlace not indexed properly for {0}".format(brain.getPath()))
                 continue
             obj.setDdcPlace(tuple((updates.get(val, val) for val in obj.getDdcPlace())))
             obj.reindexObject()
@@ -272,17 +272,21 @@ def v17to18(portal_setup):
 
 def v18to19(portal_setup):
     portal_setup.runImportStepFromProfile(
-        "profile-recensio.policy:default", "plone-difftool",
+        "profile-recensio.policy:default",
+        "plone-difftool",
     )
     portal_setup.runImportStepFromProfile(
-        "profile-recensio.policy:default", "repositorytool",
+        "profile-recensio.policy:default",
+        "repositorytool",
     )
 
     portal_setup.runImportStepFromProfile(
-        "profile-recensio.contenttypes:default", "typeinfo",
+        "profile-recensio.contenttypes:default",
+        "typeinfo",
     )
     portal_setup.runImportStepFromProfile(
-        "profile-recensio.contenttypes:default", "factorytool",
+        "profile-recensio.contenttypes:default",
+        "factorytool",
     )
 
 

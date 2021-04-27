@@ -14,8 +14,8 @@ from zope.schema.vocabulary import SimpleVocabulary
 
 
 class AvailableUserLanguages(object):
-    """ Vocabulary that shows all languages that a user might
-        chose during registration
+    """Vocabulary that shows all languages that a user might
+    chose during registration
     """
 
     implements(IVocabularyFactory)
@@ -33,8 +33,8 @@ AvailableUserLanguagesFactory = AvailableUserLanguages()
 
 
 class AvailableContentLanguages(object):
-    """ Vocabulary that holds the languages defined in the recensio-settings
-        and which our content types support.
+    """Vocabulary that holds the languages defined in the recensio-settings
+    and which our content types support.
     """
 
     implements(IVocabularyFactory)

@@ -97,9 +97,7 @@ def titleOrShortname(obj):
 
 @indexer(IReview)
 def isbn(obj):
-    isbn = (
-        getattr(obj, "getIsbn", lambda: "")() or getattr(obj, "getIssn", lambda: "")()
-    )
+    isbn = getattr(obj, "getIsbn", lambda: "")() or getattr(obj, "getIssn", lambda: "")()
     isbn = "".join(isbn.split("-"))
     isbn = "".join(isbn.split(" "))
     isbn_online = (

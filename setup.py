@@ -1,4 +1,6 @@
-from setuptools import setup, find_packages
+from setuptools import find_packages
+from setuptools import setup
+
 
 version = "4.6.2.dev0"
 
@@ -7,7 +9,10 @@ setup(
     version=version,
     description="Policy Product for the Recensio project",
     long_description=open("README.txt").read() + "\n" + open("CHANGES.txt").read(),
-    classifiers=["Framework :: Plone", "Programming Language :: Python :: 2.7",],
+    classifiers=[
+        "Framework :: Plone",
+        "Programming Language :: Python :: 2.7",
+    ],
     keywords="plone zope recensio policy",
     author="Syslab.com GmbH",
     author_email="info@syslab.com",

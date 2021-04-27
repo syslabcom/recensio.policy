@@ -9,6 +9,7 @@ from zope.app.form.interfaces import ConversionError
 from zope.i18nmessageid import MessageFactory
 from zope.interface import implements
 
+
 _ = MessageFactory("recensio")
 
 UNWANTED_FIELDS_FOR_PERSONAL_PREFERENCES = (
@@ -23,8 +24,7 @@ class UserDataSchemaProvider(object):
     implements(IUserDataSchemaProvider)
 
     def getSchema(self):
-        """
-        """
+        """ """
         return IRecensioUserDataSchema
 
 
@@ -40,7 +40,7 @@ def validateAccept(value):
 
 
 class IRecensioUserDataSchema(IUserDataSchema):
-    """ Use all the fields from the default user data schema, and add various
+    """Use all the fields from the default user data schema, and add various
     extra fields.
     """
 
@@ -53,11 +53,13 @@ class IRecensioUserDataSchema(IUserDataSchema):
     )
 
     firstname = schema.TextLine(
-        title=_(u"label_firstname", default=u"First name"), required=True,
+        title=_(u"label_firstname", default=u"First name"),
+        required=True,
     )
 
     lastname = schema.TextLine(
-        title=_(u"label_lastname", default=u"Last name"), required=True,
+        title=_(u"label_lastname", default=u"Last name"),
+        required=True,
     )
 
     # Note: the available languages should come from a vocabulary!

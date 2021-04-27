@@ -1,8 +1,7 @@
 # taken from wildcard.pdfpal, thanks a lot!
 
-from os import fstat
-
 from DateTime import DateTime
+from os import fstat
 from Products.Archetypes.utils import contentDispositionHeader
 from Products.ATContentTypes.interface.file import IFileContent
 from Products.CMFCore.utils import getToolByName
@@ -41,9 +40,7 @@ except:
 
 
 class AsyncMonitor(BrowserView):
-    """
-    
-    """
+    """ """
 
     def get_job_data(self, job):
         lastused = DateTime(job._p_mtime)

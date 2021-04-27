@@ -1,23 +1,13 @@
 # -* coding: utf-8 *-
-import csv
-import logging
-import tempfile
+from Acquisition import aq_parent
 from base64 import b64encode
 from datetime import datetime
 from datetime import timedelta
+from DateTime import DateTime
 from io import FileIO
 from os import path
 from os import remove
 from os import stat
-from StringIO import StringIO
-from tempfile import NamedTemporaryFile
-from urllib2 import HTTPError
-from urllib2 import Request
-from urllib2 import urlopen
-from zipfile import ZipFile
-
-from Acquisition import aq_parent
-from DateTime import DateTime
 from plone import api
 from plone.app.controlpanel.mail import IMailSchema
 from plone.registry.interfaces import IRegistry
@@ -26,8 +16,14 @@ from Products.CMFPlone.utils import safe_unicode
 from recensio.contenttypes.interfaces.review import IParentGetter
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
+from StringIO import StringIO
+from tempfile import NamedTemporaryFile
 from Testing.makerequest import makerequest
+from urllib2 import HTTPError
+from urllib2 import Request
+from urllib2 import urlopen
 from zExceptions import NotFound
+from zipfile import ZipFile
 from zope.annotation import IAnnotations
 from zope.component import queryUtility
 from zope.component.factory import Factory
@@ -35,6 +31,11 @@ from zope.component.hooks import getSite
 from zope.component.interfaces import IFactory
 from zope.interface import implements
 from zope.pagetemplate.pagetemplatefile import PageTemplateFile
+
+import csv
+import logging
+import tempfile
+
 
 log = logging.getLogger(__name__)
 

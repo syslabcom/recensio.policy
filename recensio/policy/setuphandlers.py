@@ -1,9 +1,6 @@
 # -*- coding: utf-8 -*-
-import os
-from logging import getLogger
-
-import constants
 from collective.solr.interfaces import ISolrConnectionConfig
+from logging import getLogger
 from plone.app.controlpanel.security import SecurityControlPanelAdapter
 from Products.Archetypes.interfaces.base import IBaseFolder
 from Products.ATVocabularyManager.utils.vocabs import createSimpleVocabs
@@ -14,6 +11,10 @@ from recensio.policy.interfaces import INewsletterSource
 from zExceptions import BadRequest
 from zope.component import queryUtility
 from zope.interface import directlyProvides
+
+import constants
+import os
+
 
 log = getLogger("recensio.policy.setuphandlers.py")
 
@@ -210,8 +211,7 @@ def testSetUpCollections(context):
     configureCollection(
         digitool_export,
         tuple(
-            set(classic_reviews + self_reviews)
-            - set((u"Presentation Online Resource",))
+            set(classic_reviews + self_reviews) - set((u"Presentation Online Resource",))
         ),
         "/",
     )
@@ -349,8 +349,8 @@ def hideAllFolders(context):
 
 
 def hideAllFoldersUnguarded(context):
-    """ Unguarded version, so that it can also be called from
-    the recencio.contenttypes example_content profile. """
+    """Unguarded version, so that it can also be called from
+    the recencio.contenttypes example_content profile."""
     site = context.getSite()
     for id in ["Members", "news", "events", "imports", "RSS-feeds", "images"]:
         ob = getattr(site, id, None)
@@ -380,8 +380,8 @@ def setViewsOnFolders(context):
 
 
 def setViewsOnFoldersUnguarded(context):
-    """ Unguarded version, so that it can also be called from
-    the recencio.contenttypes example_content profile. """
+    """Unguarded version, so that it can also be called from
+    the recencio.contenttypes example_content profile."""
     portal = context.getSite()
 
     for autoren_id in ["autoren", "autoren-en", "autoren-fr"]:
@@ -550,7 +550,7 @@ def publishImportedContent(context):
 
 @guard
 def fixPortalTabs(self):
-    """ Remove index_html from the default portal_actions/portal_tabs """
+    """Remove index_html from the default portal_actions/portal_tabs"""
     site = self.getSite()
     pat = getToolByName(site, "portal_actions")
     tabs = pat.get("portal_tabs")

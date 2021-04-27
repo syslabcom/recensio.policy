@@ -1,13 +1,14 @@
 from plone.app.async.interfaces import IAsyncService
-from plone.app.testing import PLONE_FIXTURE
+from plone.app.testing import applyProfile
 from plone.app.testing import FunctionalTesting
 from plone.app.testing import IntegrationTesting
+from plone.app.testing import PLONE_FIXTURE
 from plone.app.testing import PloneSandboxLayer
-from plone.app.testing import applyProfile
 from plone.testing import z2
 from Products.CMFCore.utils import getToolByName
 from zope.configuration import xmlconfig
 from zope.interface import implements
+
 
 _async_layer_db = None
 
@@ -29,9 +30,7 @@ class RecensioPolicyWithoutContent(PloneSandboxLayer):
     def setUpZope(self, app, configurationContext):
         import plone.app.theming
 
-        xmlconfig.file(
-            "configure.zcml", plone.app.theming, context=configurationContext
-        )
+        xmlconfig.file("configure.zcml", plone.app.theming, context=configurationContext)
         import recensio.theme
 
         xmlconfig.file("configure.zcml", recensio.theme, context=configurationContext)

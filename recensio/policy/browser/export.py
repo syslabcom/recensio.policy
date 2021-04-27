@@ -1,8 +1,4 @@
-import logging
 from datetime import date
-from time import time
-
-import transaction
 from paramiko import SFTPClient
 from paramiko import Transport
 from paramiko.ssh_exception import SSHException
@@ -16,10 +12,15 @@ from recensio.policy.export import LZAExporter
 from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
+from time import time
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
 from zope.component import getUtility
 from zope.component.interfaces import IFactory
+
+import logging
+import transaction
+
 
 log = logging.getLogger(__name__)
 
@@ -42,8 +43,7 @@ class MetadataExport(BrowserView):
 
         try:
             exporters = [
-                (name, factory())
-                for name, factory in getFactoriesFor(IRecensioExporter)
+                (name, factory()) for name, factory in getFactoriesFor(IRecensioExporter)
             ]
             exporters_to_run = [(name, e) for name, e in exporters if e.needs_to_run()]
         except Exception as e:
@@ -92,9 +92,7 @@ class MetadataExport(BrowserView):
         if context is None:
             context = self.context
         parent_path = dict(query="/".join(context.getPhysicalPath()))
-        query = dict(
-            review_state="published", portal_type=portal_type, path=parent_path
-        )
+        query = dict(review_state="published", portal_type=portal_type, path=parent_path)
         results = pc(**query)
         if None in results:
             query["b_size"] = len(results)
@@ -119,7 +117,10 @@ class ChroniconExport(BrowserView):
         registry = getUtility(IRegistry)
         recensio_settings = registry.forInterface(IRecensioSettings)
         prefix = recensio_settings.xml_export_filename_prefix
-        return "%s_%s_all.zip" % (prefix, date.today().strftime("%d%m%y"),)
+        return "%s_%s_all.zip" % (
+            prefix,
+            date.today().strftime("%d%m%y"),
+        )
 
     def __call__(self):
         registry = getUtility(IRegistry)

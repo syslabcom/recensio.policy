@@ -8,10 +8,10 @@ from Products.LinguaPlone.interfaces import ITranslatable
 
 
 class RecensioLanguageSelector(TranslatableLanguageSelector):
-    """ Language selector for translatable content.
-        Reason for overwriting: We also have non-LP aware content types.
-        For them, we don't want to find the "closest" translation,
-        but only append the set_language
+    """Language selector for translatable content.
+    Reason for overwriting: We also have non-LP aware content types.
+    For them, we don't want to find the "closest" translation,
+    but only append the set_language
     """
 
     def _translations(self, missing):

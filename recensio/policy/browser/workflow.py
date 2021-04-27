@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import logging
-
 from DateTime import DateTime
 from plone.app.controlpanel.mail import IMailSchema
 from plone.registry.interfaces import IRegistry
@@ -14,6 +12,9 @@ from zope.component import queryUtility
 from zope.i18n import translate
 from zope.interface import implements
 
+import logging
+
+
 log = logging.getLogger("Recensio Workflow Helper:")
 
 submit_notification_template = """User %(user)s (mailto:%(email)s) has submitted a %(portal_type)s for review.
@@ -25,8 +26,7 @@ Please check it out a %(link)s.
 
 
 class WorkflowHelper(BrowserView):
-    """ Helper for the Recensio workflows
-    """
+    """Helper for the Recensio workflows"""
 
     implements(IWorkflowHelper)
 

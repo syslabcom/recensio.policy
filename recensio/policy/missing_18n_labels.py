@@ -2,6 +2,7 @@
 
 from recensio.policy import recensioMessageFactory as _
 
+
 _("About us")
 _("Cut PDF")
 _("Epoch")

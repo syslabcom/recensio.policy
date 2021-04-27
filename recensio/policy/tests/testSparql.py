@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
+from mock import patch
+from StringIO import StringIO
+from zope.testing.loggingsupport import InstalledHandler
+
 import logging
 import os
-from StringIO import StringIO
-
 import sparql
 import unittest2 as unittest
-from mock import patch
-from zope.testing.loggingsupport import InstalledHandler
 
 
 class MockResultFactory(object):
@@ -220,7 +220,7 @@ class TestSparqlStable(TestSparqlBase):
 
 @unittest.skip("This tests the old deprecated opac search")
 class TestSparqlUnstable(TestSparqlBase):
-    """ These tests break repeatedly, but may serve some use as
+    """These tests break repeatedly, but may serve some use as
     documentation. They can be run run with `./bin/test -all `"""
 
     level = 100

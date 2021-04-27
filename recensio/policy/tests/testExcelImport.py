@@ -2,26 +2,22 @@
 
 from doctest import ELLIPSIS
 from doctest import OutputChecker
-
-from pkg_resources import resource_filename
-
-import unittest2 as unittest
 from mock import Mock
+from pkg_resources import resource_filename
 from plone.app.controlpanel.mail import IMailSchema
+from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
-from plone.app.testing import setRoles
 from Products.CMFCore.utils import getToolByName
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
 from zope.component import getMultiAdapter
 from zope.interface import alsoProvides
 
+import unittest2 as unittest
+
+
 compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
-
-
-
-
 
 
 class FakeFile(file):

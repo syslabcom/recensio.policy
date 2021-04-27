@@ -1,13 +1,13 @@
-import urllib
 from HTMLParser import HTMLParser
-
-import BeautifulSoup
 from persistent.dict import PersistentDict
 from Products.Archetypes.event import ObjectEditedEvent
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser import BrowserView
 from recensio.policy.importOAI import perspektivia_parser
 from zope.event import notify
+
+import BeautifulSoup
+import urllib
 
 
 class Import(BrowserView):

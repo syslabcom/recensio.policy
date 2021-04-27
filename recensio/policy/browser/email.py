@@ -1,9 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
 
-import logging
-from smtplib import SMTPServerDisconnected
-
 from Acquisition import aq_parent
 from DateTime import DateTime
 from plone.app.controlpanel.mail import IMailSchema
@@ -18,7 +15,11 @@ from recensio.contenttypes.content.review import get_formatted_names
 from recensio.contenttypes.interfaces import IParentGetter
 from recensio.policy import recensioMessageFactory
 from recensio.policy.interfaces import INewsletterSettings
+from smtplib import SMTPServerDisconnected
 from zope.component import getUtility
+
+import logging
+
 
 logger = logging.getLogger("recensio.policy.browser.email")
 
@@ -477,7 +478,11 @@ class MailNewComment(BrowserView):
             self.sendMail(msg_template, mail_from, mail_to, subject)
 
     def sendMail(
-        self, msg, mail_from, mail_to, subject,
+        self,
+        msg,
+        mail_from,
+        mail_to,
+        subject,
     ):
 
         if mail_to:
@@ -593,7 +598,11 @@ class MailNewPublication(BrowserView):
             self.sendMail(msg_template, args["mail_to"], mail_from, subject)
 
     def sendMail(
-        self, msg, mail_to, mail_from, subject,
+        self,
+        msg,
+        mail_to,
+        mail_from,
+        subject,
     ):
 
         bcc_to = []

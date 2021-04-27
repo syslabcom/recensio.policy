@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
-import os
-
-import unittest2 as unittest
 from mock import patch
 from recensio.policy.srusearch import getMetadata
+
+import os
+import unittest2 as unittest
 
 
 class MockResultFactory(object):

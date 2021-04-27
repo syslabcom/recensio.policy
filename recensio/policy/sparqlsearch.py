@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
-import re
 from collections import defaultdict
 from logging import getLogger
-from time import time
-
-import sparql
 from plone.memoize import ram
 from rdflib.graph import Graph
 from rdflib.plugins.parsers.rdfa import RDFaError
 from rdflib.term import URIRef
 from sparql import IRI
+from time import time
+
+import re
+import sparql
+
 
 log = getLogger(__name__)
 

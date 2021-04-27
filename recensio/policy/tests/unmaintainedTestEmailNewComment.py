@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
+from Acquisition import aq_inner
 from doctest import ELLIPSIS
 from doctest import OutputChecker
-
-import unittest2 as unittest
-from Acquisition import aq_inner
 from plone.app.controlpanel.mail import IMailSchema
 from plone.app.discussion.comment import Comment
 from plone.app.discussion.interfaces import IConversation
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import login
 from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
 from Products.CMFCore.utils import getToolByName
 from recensio.policy.browser.email import MailNewComment
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
@@ -21,14 +19,10 @@ from zope.interface import alsoProvides
 from zope.interface import directlyProvides
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
+import unittest2 as unittest
+
+
 compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
-
-
-
-
-
-
-
 
 
 class TestEmailFormat(unittest.TestCase):
@@ -148,9 +142,7 @@ Ihr recensio.net-Team"""
             mail_schema.email_from_address = "fake"
 
             comment2 = conversation.items()[0][1]
-            view = getMultiAdapter(
-                (comment2, request), name="notify_author_new_comment"
-            )
+            view = getMultiAdapter((comment2, request), name="notify_author_new_comment")
 
             class MockMailHost(object):
                 sentMail = []

@@ -1,10 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
-from StringIO import StringIO
-from time import time
-from zipfile import ZipFile
-
-import unittest2 as unittest
 from collective.solr.interfaces import ISolrConnectionConfig
 from DateTime import DateTime
 from lxml import etree
@@ -24,14 +18,17 @@ from recensio.policy.export import ChroniconExporter
 from recensio.policy.export import DaraExporter
 from recensio.policy.export import LZAExporter
 from recensio.policy.export import MissingBVIDExporter
+from recensio.policy.export import register_doi
 from recensio.policy.export import StatusFailure
 from recensio.policy.export import StatusSuccess
 from recensio.policy.export import StatusSuccessFile
-from recensio.policy.export import register_doi
 from recensio.policy.interfaces import IRecensioExporter
 from recensio.policy.interfaces import IRecensioSettings
 from recensio.policy.tests.layer import RECENSIO_BARE_INTEGRATION_TESTING
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
+from StringIO import StringIO
+from time import time
+from zipfile import ZipFile
 from zope.annotation.interfaces import IAnnotations
 from zope.component import getFactoriesFor
 from zope.component import getGlobalSiteManager
@@ -40,6 +37,9 @@ from zope.component.factory import Factory
 from zope.component.interfaces import IFactory
 from zope.interface import alsoProvides
 from zope.interface import implements
+
+import os
+import unittest2 as unittest
 
 
 class BrokenExporter(object):
@@ -72,7 +72,10 @@ class TestExporter(unittest.TestCase):
             type="Publication",
         )
         self.vol_1 = api.content.create(
-            container=sammelband, title="Volume 1", id="volume-1", type="Volume",
+            container=sammelband,
+            title="Volume 1",
+            id="volume-1",
+            type="Volume",
         )
 
         summer_a = self.portal["sample-reviews"]["newspapera"]["summer"]
@@ -88,7 +91,10 @@ class TestExporter(unittest.TestCase):
         self.review_a2 = issue_2_a.objectValues()[1]
         self.review_a2.setEffectiveDate(DateTime("2013/03/09 11:42:52.827401 GMT+2"))
         self.review_a2.setBv("12345")
-        self.review_c = api.content.copy(source=self.review_a, target=self.vol_1,)
+        self.review_c = api.content.copy(
+            source=self.review_a,
+            target=self.vol_1,
+        )
 
         login(self.portal, TEST_USER_NAME)
 
@@ -114,9 +120,7 @@ class TestExporter(unittest.TestCase):
                     "/dara:resource/dara:resourceIdentifier/dara:identifier/text()"
                 ),
             )
-            self.assertEqual(
-                len(xpath_eval("/dara:resource/dara:titles/dara:title")), 1
-            )
+            self.assertEqual(len(xpath_eval("/dara:resource/dara:titles/dara:title")), 1)
             self.assertIn(
                 obj.getDoi(), xpath_eval("/dara:resource/dara:doiProposal/text()")
             )
@@ -348,7 +352,9 @@ class TestExporter(unittest.TestCase):
         recensio_settings = registry.forInterface(IRecensioSettings)
         recensio_settings.xml_export_filename_prefix = u"recensio2"
         chronicon_view = api.content.get_view(
-            context=self.portal, request=self.layer["request"], name="chronicon-export",
+            context=self.portal,
+            request=self.layer["request"],
+            name="chronicon-export",
         )
         self.assertTrue(
             chronicon_view.filename.startswith(u"recensio2_"),
@@ -575,7 +581,8 @@ class TestMetadataExport(unittest.TestCase):
         self.assertIn("Success", output)
 
         self.assertEqual(
-            len(reviews), len(set(reviews)),
+            len(reviews),
+            len(set(reviews)),
         )
 
         gsm.unregisterUtility(mock_exporter_factory, name="mock_exporter")

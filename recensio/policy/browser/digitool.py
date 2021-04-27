@@ -1,13 +1,14 @@
-import logging
 from datetime import datetime
 from os import path
-
 from plone.uuid.interfaces import IUUID
 from Products.Five.browser import BrowserView
 from recensio.policy.constants import EXPORT_MAX_ITEMS
 from recensio.policy.constants import EXPORT_OUTPUT_PATH
 from recensio.policy.constants import EXPORTABLE_CONTENT_TYPES
 from zope.app.pagetemplate import ViewPageTemplateFile
+
+import logging
+
 
 log = logging.getLogger(__name__)
 
@@ -53,9 +54,9 @@ class Review(object):
 
 
 class DigiToolRepresentation(BrowserView):
-    """ if this view is called, it iterates through the system and dumps every
+    """if this view is called, it iterates through the system and dumps every
     content type as xml to harddisk and marks it as exported with a little
-    flag. If the flag is set, it is not exported again. """
+    flag. If the flag is set, it is not exported again."""
 
     template = ViewPageTemplateFile("templates/digitool.pt")
 
@@ -64,12 +65,12 @@ class DigiToolRepresentation(BrowserView):
 
 
 class DigiToolExport(BrowserView):
-    """ if this view is called, it iterates through the system and dumps every
+    """if this view is called, it iterates through the system and dumps every
     content type as xml to harddisk and marks it as exported with a little
-    flag. If the flag is set, it is not exported again. """
+    flag. If the flag is set, it is not exported again."""
 
     def __call__(self):
-        """ run idempotent. Handle a number of records and return. """
+        """run idempotent. Handle a number of records and return."""
         portal = self.context.portal_url.getPortalObject()
 
         now = datetime.now()
@@ -99,7 +100,7 @@ class DigiToolExport(BrowserView):
         return "ok %s" % delta
 
     def dump_xml(self, item):
-        """ create an xml representation of the object and dump it to disk """
+        """create an xml representation of the object and dump it to disk"""
 
         data = item.unrestrictedTraverse("@@digitool-xml")
         filename = "%s/%s.xml" % (EXPORT_OUTPUT_PATH, IUUID(item))

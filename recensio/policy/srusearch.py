@@ -1,10 +1,11 @@
-import logging
 from HTMLParser import HTMLParser
-
-import pycountry
-import requests
 from marcxml_parser.record import record_iterator
 from Products.CMFPlone.utils import safe_unicode
+
+import logging
+import pycountry
+import requests
+
 
 log = logging.getLogger(__name__)
 
@@ -155,7 +156,9 @@ def getMetadata(isbn):
             "base_url": "http://swb.bsz-bw.de/sru/DB=2.1/username=/password=/",
             "query": "pica.isb={isbn}".format(isbn=isbn),
             "frontend_url": "http://swb.bsz-bw.de/DB=2.1/SET=2/TTL=1/CMD?ACT=SRCHA&IKT=1007&SRT=RLV&MATCFILTER=N&MATCSET=N&NOABS=Y&TRM=",
-            "skip": ["bv",],
+            "skip": [
+                "bv",
+            ],
         },
     ]
     base_params = {

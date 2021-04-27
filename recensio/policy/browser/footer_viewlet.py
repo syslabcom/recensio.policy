@@ -1,10 +1,10 @@
-import random
-
 from plone.app.layout.viewlets import ViewletBase
 from Products.CMFCore.utils import getToolByName
 from recensio.policy.utility import getSelectedQuery
 from zope.interface import implements
 from zope.viewlet.interfaces import IViewlet
+
+import random
 
 
 class Footer(ViewletBase):
@@ -16,9 +16,7 @@ class Footer(ViewletBase):
         zeitschriften = getattr(rezensionen, "zeitschriften", None)
         if zeitschriften:
             pubs = [
-                x
-                for x in zeitschriften.objectValues()
-                if x.portal_type == "Publication"
+                x for x in zeitschriften.objectValues() if x.portal_type == "Publication"
             ]
             random.shuffle(pubs)
             return pubs

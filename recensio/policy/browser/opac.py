@@ -1,12 +1,13 @@
-import json
-import logging
-
 from plone import api
 from Products.Five.browser import BrowserView
 from recensio.policy.srusearch import getMetadata
 from zope.component import getUtility
 from zope.i18n.locales import locales
 from zope.schema.interfaces import IVocabularyFactory
+
+import json
+import logging
+
 
 log = logging.getLogger(__name__)
 

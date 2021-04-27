@@ -9,7 +9,7 @@ from zope.formlib import form
 
 class RecensioUserDataPanel(UserDataPanel):
     def __init__(self, context, request):
-        """ Load the UserDataSchema at view time. 
+        """Load the UserDataSchema at view time.
         (Because doing getUtility for IUserDataSchemaProvider fails at startup
         time.)
 
@@ -24,6 +24,6 @@ class RecensioUserDataPanel(UserDataPanel):
 
 
 class RecensioUserDataConfiglet(UserDataConfiglet, RecensioUserDataPanel):
-    """ We override Plone's default, in order to filter out the unwanted fields
-            for the personal preferences form.
-        """
+    """We override Plone's default, in order to filter out the unwanted fields
+    for the personal preferences form.
+    """

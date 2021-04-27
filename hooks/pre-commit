@@ -5,6 +5,7 @@ import re
 import subprocess
 import sys
 
+
 modified = re.compile('^(?:M|A)(\s+)(?P<name>.*)')
 
 CHECKS = [

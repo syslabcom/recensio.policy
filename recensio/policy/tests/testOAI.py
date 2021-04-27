@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import datetime
-
-import unittest2 as unittest
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
+
+import datetime
+import unittest2 as unittest
 
 
 class TestOAI(unittest.TestCase):

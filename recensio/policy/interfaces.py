@@ -183,13 +183,13 @@ Zuletzt kommentiert am: / Last discussed on: %(last_comment_date)s
 
 class IWorkflowHelper(Interface):
     def handleTransition(wf_variable):
-        """ Action that is performed after a workflow change, e.g.
-            send a notification e-mail.
+        """Action that is performed after a workflow change, e.g.
+        send a notification e-mail.
         """
 
 
 class IRecensioSettings(Interface):
-    """ Global recensio settings. This describes records stored in the
+    """Global recensio settings. This describes records stored in the
     configuration registry and obtainable via plone.registry.
     """
 
@@ -244,9 +244,7 @@ class IRecensioSettings(Interface):
     )
 
     xml_export_server = schema.TextLine(
-        title=_(
-            u"label_xml_export_server", default=u"Server name for Chronicon export"
-        ),
+        title=_(u"label_xml_export_server", default=u"Server name for Chronicon export"),
         description=_(
             u"description_xml_export_server",
             default=u"Enter the server name that should be used for "
@@ -257,9 +255,7 @@ class IRecensioSettings(Interface):
     )
 
     xml_export_username = schema.TextLine(
-        title=_(
-            u"label_xml_export_username", default=u"User name for Chronicon export"
-        ),
+        title=_(u"label_xml_export_username", default=u"User name for Chronicon export"),
         description=_(
             u"description_xml_export_username",
             default=u"Enter the user name that should be used for "
@@ -342,25 +338,25 @@ class IRecensioSettings(Interface):
 
 class IRecensioView(Interface):
     def getSupportedLanguages():
-        """ Get the languages defines in the recensio-setting which our
+        """Get the languages defines in the recensio-setting which our
         content types support."""
 
 
 class IDigitoolView(Interface):
-    """ Supports exporting XML to digitool """
+    """Supports exporting XML to digitool"""
 
 
 class IRecensioExporter(Interface):
-    """ Interface for bulk exporting review data"""
+    """Interface for bulk exporting review data"""
 
     def needs_to_run():
-        """ True if the exporter needs to be run at the time of the call,
-            False if the exporter thinks it has nothing to do right now, e.g. a
-            recent export is still stored """
+        """True if the exporter needs to be run at the time of the call,
+        False if the exporter thinks it has nothing to do right now, e.g. a
+        recent export is still stored"""
 
     def add_review():
-        """ Accepts a review that is to be exported in the current run. """
+        """Accepts a review that is to be exported in the current run."""
 
     def export():
-        """ Finishes the current export run. This should store the exported
-        data in a way appropriate for the export. """
+        """Finishes the current export run. This should store the exported
+        data in a way appropriate for the export."""

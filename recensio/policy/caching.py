@@ -1,10 +1,11 @@
-import os
-import threading
-
-import memcache
 from plone.memoize.interfaces import ICacheChooser
 from plone.memoize.ram import MemcacheAdapter
 from zope.interface import directlyProvides
+
+import memcache
+import os
+import threading
+
 
 thread_local = threading.local()
 

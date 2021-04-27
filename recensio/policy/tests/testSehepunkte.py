@@ -1,9 +1,10 @@
-import pkg_resources
-
-import unittest2 as unittest
 from recensio.policy import importSehepunkte
 from recensio.policy.browser.sehepunkte import Import
 from recensio.policy.importSehepunkte import sehepunkte_parser
+
+import pkg_resources
+import unittest2 as unittest
+
 
 testdata_filename = pkg_resources.resource_filename(__name__, "testSehepunkte.xml")
 testdata_parsed = [
@@ -321,9 +322,7 @@ testdata_parsed = [
         "publisher": "Cambridge University Press",
         "reviewAuthors": [{"firstname": "Johannes", "lastname": "Engels"}],
         "series": "",
-        "subtitle": (
-            "The Politics of Satirical Comedy during the Peloponnesian " "War"
-        ),
+        "subtitle": ("The Politics of Satirical Comedy during the Peloponnesian " "War"),
         "title": "Aristophanes the Democrat",
         "volume": "10",
         "year": "2010",

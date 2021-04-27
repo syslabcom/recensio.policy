@@ -1,7 +1,6 @@
+from AccessControl import ClassSecurityInfo
 from copy import deepcopy
 from datetime import datetime
-
-from AccessControl import ClassSecurityInfo
 from lxml import etree
 from oaipmh.client import Client
 from oaipmh.metadata import MetadataRegistry
@@ -11,6 +10,7 @@ from recensio.policy.interfaces import IOAIUtility
 from zope.interface import implements
 from zope.site.hooks import getSite
 from ZTUtils import make_query
+
 
 browsing_facets = ["ddcPlace", "ddcTime", "ddcSubject"]
 filter_facets = ["languageReview"]
@@ -148,9 +148,7 @@ class OAIUtility(object):
         try:
             return self.known_providers[url]
         except KeyError:
-            return KeyError(
-                "There is no provider for the URL: " '"%s" registered' % url
-            )
+            return KeyError("There is no provider for the URL: " '"%s" registered' % url)
 
     def getKnownOAIProviders(self):
         return self.known_providers.keys()
@@ -159,9 +157,9 @@ class OAIUtility(object):
 def getSelectedQuery(
     selected, params=None, facet_fields=browsing_facets, queryparam="fq"
 ):
-    """ construct a query that gets faceting info with the specified fields selected,
-        i.e. set as fq (filter query) fields. Selected should be a dict with field
-        (=attribute) names mapped to lists of values
+    """construct a query that gets faceting info with the specified fields selected,
+    i.e. set as fq (filter query) fields. Selected should be a dict with field
+    (=attribute) names mapped to lists of values
     """
     if not params:
         params = {"facet": "true", "facet.field": facet_fields}
@@ -185,7 +183,7 @@ def convertFacets(
     facet_fields=browsing_facets,
     queryparam="fq",
 ):
-    """ convert facet info to a form easy to process in templates """
+    """convert facet info to a form easy to process in templates"""
     info = []
     params = request.copy()  # request needs to be a dict, i.e. request.form
     facets = facet_fields
@@ -231,7 +229,7 @@ def convertFacets(
 
 
 def getMemberInfo(memberId=None):
-    """ As in membership tool, but add academic title."""
+    """As in membership tool, but add academic title."""
     portal = getSite()
     mtool = getToolByName(portal, "portal_membership")
     if not memberId:

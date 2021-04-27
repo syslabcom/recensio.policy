@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-import unittest
-
 from mock import Mock
 from zope.interface import alsoProvides
+
+import unittest
 
 
 class TestNewsletter(unittest.TestCase):
@@ -69,9 +69,7 @@ class TestNewsletter(unittest.TestCase):
         for art_num in range(10):
             catalog_entry = Mock()
             presentation = Mock()
-            presentation.getDecoratedTitle = (
-                lambda: u"öDecorated title no: %i" % art_num
-            )
+            presentation.getDecoratedTitle = lambda: u"öDecorated title no: %i" % art_num
             catalog_entry.getObject = lambda: presentation
             catalog_entry.getURL = lambda: "http://www.example.com/"
             catalog_entry.portal_type = content_types[art_num % len(content_types)]

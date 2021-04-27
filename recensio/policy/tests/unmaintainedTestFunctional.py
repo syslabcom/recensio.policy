@@ -3,16 +3,16 @@
 Mainly testing recensio browser views, that no error is thrown when
 the view is accessed.
 """
-from urlparse import urljoin
-
-import unittest2 as unittest
+from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
-from plone.app.testing import setRoles
 from plone.testing.z2 import Browser
 from Products.SiteErrorLog.SiteErrorLog import SiteErrorLog
 from recensio.policy.tests.layer import RECENSIO_FUNCTIONAL_TESTING
+from urlparse import urljoin
+
+import unittest2 as unittest
 
 
 def raising(self, info):
@@ -22,12 +22,11 @@ def raising(self, info):
     print info[1]
 
 
-
 SiteErrorLog.raising = raising
 
 
 class TestMainSiteSections(unittest.TestCase):
-    """ Visit all the main sections of the site without getting an
+    """Visit all the main sections of the site without getting an
     error
     """
 
@@ -97,9 +96,7 @@ class TestMainSiteSections(unittest.TestCase):
         self.is_successful_status("sample-reviews/newspapera")
         self.assertTrue(
             "Summer" in self.browser.contents,
-            msg=(
-                "The example Volume is missing from the " "publicationlisting viewlet"
-            ),
+            msg=("The example Volume is missing from the " "publicationlisting viewlet"),
         )
         self.assertTrue(
             "Issue 2" in self.browser.contents,

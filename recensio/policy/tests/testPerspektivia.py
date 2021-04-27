@@ -1,10 +1,10 @@
-import datetime
-
-import pkg_resources
-
-import unittest2 as unittest
 from recensio.policy import importOAI
 from recensio.policy.importOAI import perspektivia_parser
+
+import datetime
+import pkg_resources
+import unittest2 as unittest
+
 
 testdata_filename = pkg_resources.resource_filename(__name__, "perspektivia.xml")
 testdata2_filename = pkg_resources.resource_filename(__name__, "perspektivia2.xml")

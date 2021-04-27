@@ -2,14 +2,14 @@
 
 from doctest import ELLIPSIS
 from doctest import OutputChecker
-
-import unittest2 as unittest
 from plone.app.controlpanel.mail import IMailSchema
 from Products.CMFCore.utils import getToolByName
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
 from recensio.theme.interfaces import IRecensioLayer
 from zope.component import getMultiAdapter
 from zope.interface import directlyProvides
+
+import unittest2 as unittest
 
 
 class TestAuthorSearch(unittest.TestCase):

@@ -2,6 +2,7 @@
 from recensio.contenttypes.config import PRESENTATION_TYPES
 from recensio.contenttypes.config import REVIEW_TYPES
 
+
 EXPORT_MAX_ITEMS = 10
 
 EXPORT_OUTPUT_PATH = "/tmp/recensio"

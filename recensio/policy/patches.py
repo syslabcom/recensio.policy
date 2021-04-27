@@ -54,4 +54,5 @@ def readFromStream(stream):
 
 from pyPdf.generic import NameObject
 
+
 NameObject.readFromStream = staticmethod(readFromStream)

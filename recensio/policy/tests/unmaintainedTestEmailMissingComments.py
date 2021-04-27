@@ -1,15 +1,13 @@
 # -*- coding: utf-8 -*-
 
+from DateTime import DateTime
 from doctest import ELLIPSIS
 from doctest import OutputChecker
-
-import unittest2 as unittest
-from DateTime import DateTime
 from plone.app.controlpanel.mail import IMailSchema
-from plone.app.testing import TEST_USER_ID
-from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import login
 from plone.app.testing import setRoles
+from plone.app.testing import TEST_USER_ID
+from plone.app.testing import TEST_USER_NAME
 from Products.CMFCore.utils import getToolByName
 from recensio.policy.interfaces import INewsletterSource
 from recensio.policy.tests.layer import RECENSIO_INTEGRATION_TESTING
@@ -19,11 +17,10 @@ from zope.interface import alsoProvides
 from zope.interface import directlyProvides
 from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
+import unittest2 as unittest
+
+
 compare = lambda x, y: OutputChecker().check_output(x, y, ELLIPSIS)
-
-
-
-
 
 
 class TestEmailFormat(unittest.TestCase):
@@ -68,9 +65,7 @@ The recensio.net editorial team"""
         view.mailhost = MockMailHost()
 
         presentation = feeds.aq_parent.Members["fake_member"].objectValues()[0]
-        criteria = (
-            feeds.discussion_three_months_old.crit__created_ATFriendlyDateCriteria
-        )
+        criteria = feeds.discussion_three_months_old.crit__created_ATFriendlyDateCriteria
         good_creation_time = DateTime() - criteria.value
         presentation.setCreationDate(good_creation_time)
         getMultiAdapter((presentation, request), name="solr-maintenance").reindex()
