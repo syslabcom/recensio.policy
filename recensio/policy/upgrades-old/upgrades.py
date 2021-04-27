@@ -57,7 +57,7 @@ def v9to10(portal_setup):
     cat = getToolByName(portal, "portal_catalog")
 
     pvm = getToolByName(portal, "portal_vocabularies")
-    path_tmpl = "../../vocabularies/ddc_%s"
+    path_tmpl = "../../../vocabularies/ddc_%s"
     for (filenamepart, vocabname) in (
         ("geo.vdex", "region_values"),
         ("sach.vdex", "topic_values"),

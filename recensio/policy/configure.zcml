@@ -1,9 +1,7 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:five="http://namespaces.zope.org/five"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="recensio.policy">
+    xmlns:browser="http://namespaces.zope.org/browser">
 
   <five:registerPackage
       package="."
@@ -12,150 +10,12 @@
   <includeDependencies package="." />
 
   <include package=".browser" />
+  <include file="profiles.zcml" />
+  <include package=".upgrades-old" />
 
   <subscriber
       for="zope.processlifetime.IProcessStarting"
       handler=".dbconfig.dbconfig" />
-
-  <genericsetup:registerProfile
-      name="default"
-      title="Recensio Policy"
-      directory="profiles/default"
-      description="Policy Profile for the Recensio project"
-      provides="Products.GenericSetup.interfaces.EXTENSION" />
-
-  <genericsetup:registerProfile
-      name="test"
-      title="Recensio Test Policy"
-      directory="profiles/test"
-      description="Policy Profile for the Recensio project"
-      provides="Products.GenericSetup.interfaces.EXTENSION" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="7"
-      destination="8"
-      title="Upgrade to 8, pageImage conversion"
-      description=""
-      profile="recensio.policy:default"
-      handler=".upgrades.v7to8" />
-
-  <genericsetup:upgradeStep
-      sortkey="2"
-      source="8"
-      destination="9"
-      title="Upgrade to 9"
-      description="Activate popup forms, show folder_contents tab on translations"
-      profile="recensio.policy:default"
-      handler=".upgrades.v8to9" />
-
-  <genericsetup:upgradeStep
-      sortkey="2"
-      source="9"
-      destination="10"
-      title="Upgrade to 10. RUN ONLY ONCE, else some categories are set wrong"
-      description="Activate popup forms, show folder_contents tab on translations. RUN ONLY ONCE, else some categories are set wrong"
-      profile="recensio.policy:default"
-      handler=".upgrades.v9to10" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="10"
-      destination="11"
-      title="Upgrade to 11"
-      description="Reload portal properties to exclude File and Publication from search"
-      profile="recensio.policy:default"
-      handler=".upgrades.v10to11" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="11"
-      destination="12"
-      title="Upgrade to 12"
-      description="Reload plone.app.registry to create xml_export_* and doi_* records"
-      profile="recensio.policy:default"
-      handler=".upgrades.v11to12" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="12"
-      destination="13"
-      title="Upgrade to 13"
-      description="Reload vocabularies to create new region_values_bsb"
-      profile="recensio.policy:default"
-      handler=".upgrades.v12to13" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="13"
-      destination="14"
-      title="Upgrade to 14"
-      description="Reload plone.app.registry to create external_portal_url record"
-      profile="recensio.policy:default"
-      handler=".upgrades.v13to14" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="14"
-      destination="15"
-      title="Upgrade to 15"
-      description="Reload solr config to deactivate atomic updates"
-      profile="recensio.policy:default"
-      handler=".upgrades.v14to15" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="15"
-      destination="16"
-      title="Upgrade to 16"
-      description="Reload plone.app.registry to create show_thematic_search and xml_export_filename_prefix records"
-      profile="recensio.policy:default"
-      handler=".upgrades.v15to16" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="16"
-      destination="17"
-      title="Update DDC vocabularies"
-      description="Reload vocabularies to update DDCs and migrate existing content"
-      profile="recensio.policy:default"
-      handler=".upgrades.v16to17" />
-
-  <genericsetup:upgradeStep
-      sortkey="1"
-      source="17"
-      destination="18"
-      title="Add punctuated_title_and_subtitle to catalog metadata"
-      profile="recensio.policy:default"
-      handler=".upgrades.v17to18" />
-
-  <genericsetup:upgradeStep
-      source="18"
-      destination="19"
-      title="Add new content types (raj, rac, re)"
-      profile="recensio.policy:default"
-      handler=".upgrades.v18to19" />
-
-  <genericsetup:upgradeStep
-      source="19"
-      destination="20"
-      title="Migrate content type Review Exhibiton to new schema"
-      profile="recensio.policy:default"
-      handler=".upgrades.v19to20" />
-
-  <genericsetup:upgradeStep
-      source="20"
-      destination="21"
-      title="Add and populate hide_from_listing index"
-      profile="recensio.policy:default"
-      handler=".upgrades.v20to21" />
-
-  <genericsetup:registerProfile
-      name="demo"
-      title="Recensio Demo Policy"
-      directory="profiles/demo"
-      description="Policy Profile for the Recensio project"
-      provides="Products.GenericSetup.interfaces.EXTENSION" />
 
   <utility
       component=".vocabularies.AvailableUserLanguagesFactory"
@@ -189,4 +49,5 @@
       for="recensio.contenttypes.interfaces.review.IReview
           Products.DCWorkflow.interfaces.IAfterTransitionEvent"
       handler=".eventhandlers.review_published_eventhandler" />
+
 </configure>
