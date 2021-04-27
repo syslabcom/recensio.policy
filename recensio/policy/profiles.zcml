@@ -3,22 +3,19 @@
     xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
     i18n_domain="osha.extranet">
 
-    <genericsetup:registerProfile
-        name="default"
-        title="Recensio Profile"
-        directory="profiles/default"
-        description=""
-        provides="Products.GenericSetup.interfaces.EXTENSION"
-        />
+  <genericsetup:registerProfile
+      name="default"
+      title="Recensio Profile"
+      directory="profiles/default"
+      description=""
+      provides="Products.GenericSetup.interfaces.EXTENSION" />
 
-    <genericsetup:upgradeStep
-        title="Upgrade viewlets"
-        source="9"
-        destionation="10"
-        handler=".setuphandlers.upgradeViewlets"
-        sortkey="1"
-        profile="recensio.policy:default"
-        />
-        
+  <genericsetup:upgradeStep
+      title="Upgrade viewlets"
+      source="9"
+      destionation="10"
+      handler=".setuphandlers.upgradeViewlets"
+      sortkey="1"
+      profile="recensio.policy:default" />
+
 </configure>
-

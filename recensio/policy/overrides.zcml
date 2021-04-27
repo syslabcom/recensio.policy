@@ -1,68 +1,83 @@
-<configure xmlns="http://namespaces.zope.org/zope"
-           xmlns:zcml="http://namespaces.zope.org/zcml"
-           xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-           xmlns:browser="http://namespaces.zope.org/browser"
-           i18n_domain="recensio">
-
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="recensio">
 
   <utility
-           provides="plone.app.users.userdataschema.IUserDataSchemaProvider"
-           factory=".userdataschema.UserDataSchemaProvider" />
+      provides="plone.app.users.userdataschema.IUserDataSchemaProvider"
+      factory=".userdataschema.UserDataSchemaProvider" />
 
   <adapter
-           provides=".userdataschema.IRecensioUserDataSchema"
-           for="Products.CMFCore.interfaces.ISiteRoot"
-           factory=".adapter.RecensioUserDataPanelAdapter" />
+      provides=".userdataschema.IRecensioUserDataSchema"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      factory=".adapter.RecensioUserDataPanelAdapter" />
 
-  <adapter factory=".indexer.ddcPlace" name="ddcPlace" />
-  <adapter factory=".indexer.ddcTime" name="ddcTime" />
-  <adapter factory=".indexer.authors" name="authors" />
-  <adapter factory=".indexer.authorsFulltext" name="authorsFulltext" />
-  <adapter factory=".indexer.titleOrShortname" name="titleOrShortname" />
-  <adapter factory=".indexer.isbn" name="isbn" />
-  <adapter factory=".indexer.year" name="year" />
-  <adapter factory=".indexer.place" name="place" />
-  <adapter factory=".indexer.publisher" name="publisher" />
+  <adapter
+      factory=".indexer.ddcPlace"
+      name="ddcPlace" />
+  <adapter
+      factory=".indexer.ddcTime"
+      name="ddcTime" />
+  <adapter
+      factory=".indexer.authors"
+      name="authors" />
+  <adapter
+      factory=".indexer.authorsFulltext"
+      name="authorsFulltext" />
+  <adapter
+      factory=".indexer.titleOrShortname"
+      name="titleOrShortname" />
+  <adapter
+      factory=".indexer.isbn"
+      name="isbn" />
+  <adapter
+      factory=".indexer.year"
+      name="year" />
+  <adapter
+      factory=".indexer.place"
+      name="place" />
+  <adapter
+      factory=".indexer.publisher"
+      name="publisher" />
+
   <adapter factory=".iteration.CustomCheckingCheckoutPolicyAdapter" />
 
-  <adapter factory=".adapter.SearchFeed"
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    provides="Products.CMFPlone.interfaces.syndication.ISearchFeed" />
+  <adapter
+      factory=".adapter.SearchFeed"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      provides="Products.CMFPlone.interfaces.syndication.ISearchFeed" />
 
   <browser:page
-    name="register"
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    class=".browser.register.RecensioRegistrationForm"
-    permission="cmf.AddPortalMember"
-    />
+      name="register"
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      class=".browser.register.RecensioRegistrationForm"
+      permission="cmf.AddPortalMember" />
 
   <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="personal-information"
-    class=".personalpreferences.RecensioUserDataPanel"
-    permission="cmf.SetOwnProperties"
-    />
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      name="personal-information"
+      class=".personalpreferences.RecensioUserDataPanel"
+      permission="cmf.SetOwnProperties" />
 
   <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="user-information"
-    class=".personalpreferences.RecensioUserDataConfiglet"
-    permission="plone.app.controlpanel.UsersAndGroups"
-    />
+      for="plone.app.layout.navigation.interfaces.INavigationRoot"
+      name="user-information"
+      class=".personalpreferences.RecensioUserDataConfiglet"
+      permission="plone.app.controlpanel.UsersAndGroups" />
 
   <browser:viewlet
-    name="plone.app.i18n.locales.languageselector"
-    manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
-    class=".browser.selector.RecensioLanguageSelector"
-    permission="zope2.View"
-    layer="Products.LinguaPlone.interfaces.ILinguaPloneProductLayer"
-    template="browser/templates/selector.pt"
-    />
+      name="plone.app.i18n.locales.languageselector"
+      manager="plone.app.layout.viewlets.interfaces.IPortalHeader"
+      class=".browser.selector.RecensioLanguageSelector"
+      permission="zope2.View"
+      layer="Products.LinguaPlone.interfaces.ILinguaPloneProductLayer"
+      template="browser/templates/selector.pt" />
 
   <utility
-    component=".caching.choose_cache"
-    provides="plone.memoize.interfaces.ICacheChooser"
-  />
+      component=".caching.choose_cache"
+      provides="plone.memoize.interfaces.ICacheChooser" />
 
 
 </configure>

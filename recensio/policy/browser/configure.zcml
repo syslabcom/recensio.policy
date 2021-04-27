@@ -1,276 +1,239 @@
 <configure
-    xmlns="http://namespaces.zope.org/zope"
-    xmlns:five="http://namespaces.zope.org/five"
-    xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
-    i18n_domain="recensio.policy">
+		xmlns="http://namespaces.zope.org/zope"
+		xmlns:five="http://namespaces.zope.org/five"
+		xmlns:browser="http://namespaces.zope.org/browser"
+		xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+		i18n_domain="recensio.policy">
 
-  <include package="plone.app.registry" />
+	<include package="plone.app.registry" />
 
-  <include package="Products.CMFCore" />
+	<include package="Products.CMFCore" />
 
-  <browser:page
-    name="async-monitor"
-    for="*"
-    class=".async_monitor.AsyncMonitor"
-    template="templates/async_monitor.pt"
-    permission="cmf.ManagePortal"
-  />
+	<browser:page
+			name="async-monitor"
+			for="*"
+			class=".async_monitor.AsyncMonitor"
+			template="templates/async_monitor.pt"
+			permission="cmf.ManagePortal" />
 
 
-  <browser:page
-    for="recensio.policy.interfaces.INewsletterSource"
-    name="mail_results"
-    class=".email.MailCollection"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="cmf.ManagePortal"
+	<browser:page
+			for="recensio.policy.interfaces.INewsletterSource"
+			name="mail_results"
+			class=".email.MailCollection"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="cmf.ManagePortal" />
 
-    />
+	<browser:page
+			for="recensio.contenttypes.interfaces.review.IReview"
+			name="cut_pdf"
+			class=".pdf_cut.PDFCutter"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="cmf.ModifyPortalContent"
+			template="templates/pdf_cut.pt" />
 
-  <browser:page
-    for="recensio.contenttypes.interfaces.review.IReview"
-    name="cut_pdf"
-    class=".pdf_cut.PDFCutter"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="cmf.ModifyPortalContent"
-    template="templates/pdf_cut.pt"
-    />
+	<browser:page
+			name="mail_new_presentation"
+			for="recensio.contenttypes.interfaces.review.IReview"
+			class=".email.MailNewPublication"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="zope2.View" />
 
-  <browser:page
-    name="mail_new_presentation"
-    for="recensio.contenttypes.interfaces.review.IReview"
-    class=".email.MailNewPublication"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="zope2.View"
-    />
+	<browser:page
+			name="notify_author_new_comment"
+			for="plone.app.discussion.interfaces.IComment"
+			class=".email.MailNewComment"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="zope2.View" />
 
-  <browser:page
-    name="notify_author_new_comment"
-    for="plone.app.discussion.interfaces.IComment"
-    class=".email.MailNewComment"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    for="recensio.policy.interfaces.INewsletterSource"
-    name="mail_uncommented_presentations"
-    class=".email.MailUncommented"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="zope2.View"
-    />
+	<browser:page
+			for="recensio.policy.interfaces.INewsletterSource"
+			name="mail_uncommented_presentations"
+			class=".email.MailUncommented"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="zope2.View" />
 
 	<!--    for="recensio.policy.interfaces.IDigitoolView"-->
 
-  <browser:page
-	for="*"
-    name="digitool-xml"
-    class=".digitool.DigiToolRepresentation"
-    permission="zope.Public"
-    />
+	<browser:page
+			for="*"
+			name="digitool-xml"
+			class=".digitool.DigiToolRepresentation"
+			permission="zope.Public" />
 
 
-  <!-- XML Representations for rj, rm and containers, which include the former -->
-  <browser:page
-	for="recensio.contenttypes.interfaces.publication.IPublication"
-    name="xml"
-    class=".xml.XMLRepresentationPublication"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.volume.IVolume"
-    name="xml"
-    class=".xml.XMLRepresentationVolume"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.issue.IIssue"
-    name="xml"
-    class=".xml.XMLRepresentationIssue"
-    template="templates/export_container.pt"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
-    name="xml"
-    class=".xml.XMLRepresentation"
-    template="templates/export_rm.pt"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
-    name="xml"
-    class=".xml.XMLRepresentation"
-    template="templates/export_rj.pt"
-    permission="zope.Public"
-    />
+	<!-- XML Representations for rj, rm and containers, which include the former -->
+	<browser:page
+			for="recensio.contenttypes.interfaces.publication.IPublication"
+			name="xml"
+			class=".xml.XMLRepresentationPublication"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.volume.IVolume"
+			name="xml"
+			class=".xml.XMLRepresentationVolume"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.issue.IIssue"
+			name="xml"
+			class=".xml.XMLRepresentationIssue"
+			template="templates/export_container.pt"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+			name="xml"
+			class=".xml.XMLRepresentation"
+			template="templates/export_rm.pt"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+			name="xml"
+			class=".xml.XMLRepresentation"
+			template="templates/export_rj.pt"
+			permission="zope.Public" />
 
-  <!-- XML Representations, dara versions  -->
-  <browser:page
-	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
-    name="xml-dara"
-    class=".xml.XMLRepresentation"
-    template="templates/export_rm_dara.pt"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
-    name="xml-dara"
-    class=".xml.XMLRepresentation"
-    template="templates/export_rj_dara.pt"
-    permission="zope.Public"
-    />
+	<!-- XML Representations, dara versions  -->
+	<browser:page
+			for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+			name="xml-dara"
+			class=".xml.XMLRepresentation"
+			template="templates/export_rm_dara.pt"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+			name="xml-dara"
+			class=".xml.XMLRepresentation"
+			template="templates/export_rj_dara.pt"
+			permission="zope.Public" />
 
-  <!-- XML Representations, LZA versions  -->
-  <browser:page
-	for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
-    name="xml-lza"
-    class=".xml.XMLRepresentationLZA"
-    template="templates/export_rm.pt"
-    permission="zope.Public"
-    />
-  <browser:page
-	for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
-    name="xml-lza"
-    class=".xml.XMLRepresentationLZA"
-    template="templates/export_rj.pt"
-    permission="zope.Public"
-    />
+	<!-- XML Representations, LZA versions  -->
+	<browser:page
+			for="recensio.contenttypes.interfaces.reviewmonograph.IReviewMonograph"
+			name="xml-lza"
+			class=".xml.XMLRepresentationLZA"
+			template="templates/export_rm.pt"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.reviewjournal.IReviewJournal"
+			name="xml-lza"
+			class=".xml.XMLRepresentationLZA"
+			template="templates/export_rj.pt"
+			permission="zope.Public" />
 
-  <!-- Export views and helpers -->
-  <browser:page
-	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    name="metadata-export"
-    class=".export.MetadataExport"
-    permission="zope2.View"
-    />
-  <browser:page
-	for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-    name="chronicon-export"
-    class=".export.ChroniconExport"
-    permission="cmf.ManagePortal"
-    />
-  <browser:page
-	for="*"
-    name="digitool-export"
-    class=".digitool.DigiToolExport"
-    permission="zope.Public"
-    />
-  <browser:page
-     for="recensio.contenttypes.interfaces.IReview"
-     name="dara_update"
-     class=".export.DaraUpdate"
-     permission="cmf.ModifyPortalContent"
-     />
-  <browser:page
-     for="*"
-     name="reset-lza-export-flag"
-     class=".export.ResetLZAExportFlag"
-     permission="cmf.ModifyPortalContent"
-     />
+	<!-- Export views and helpers -->
+	<browser:page
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			name="metadata-export"
+			class=".export.MetadataExport"
+			permission="zope2.View" />
+	<browser:page
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			name="chronicon-export"
+			class=".export.ChroniconExport"
+			permission="cmf.ManagePortal" />
+	<browser:page
+			for="*"
+			name="digitool-export"
+			class=".digitool.DigiToolExport"
+			permission="zope.Public" />
+	<browser:page
+			for="recensio.contenttypes.interfaces.IReview"
+			name="dara_update"
+			class=".export.DaraUpdate"
+			permission="cmf.ModifyPortalContent" />
+	<browser:page
+			for="*"
+			name="reset-lza-export-flag"
+			class=".export.ResetLZAExportFlag"
+			permission="cmf.ModifyPortalContent" />
 
 
-  <!-- Other helpers -->
-  <browser:page
-      for="*"
-      name="recensio_workflow_helper"
-      class=".workflow.WorkflowHelper"
-      permission="zope.Public"
-      allowed_interface="recensio.policy.interfaces.IWorkflowHelper"
-      />
+	<!-- Other helpers -->
+	<browser:page
+			for="*"
+			name="recensio_workflow_helper"
+			class=".workflow.WorkflowHelper"
+			permission="zope.Public"
+			allowed_interface="recensio.policy.interfaces.IWorkflowHelper" />
 
-  <browser:page
-      name="opac"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".opac.OPAC"
-      permission="zope.Public"
-      />
+	<browser:page
+			name="opac"
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			class=".opac.OPAC"
+			permission="zope.Public" />
 
-  <browser:page
-      name="metadata_query"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".opac.MetadataQuery"
-      permission="zope.Public"
-      />
+	<browser:page
+			name="metadata_query"
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			class=".opac.MetadataQuery"
+			permission="zope.Public" />
 
-  <browser:page
-      name="fixer1"
-      for="*"
-      class=".fixer.Fixer"
-      permission="cmf.ManagePortal"
-      />
+	<browser:page
+			name="fixer1"
+			for="*"
+			class=".fixer.Fixer"
+			permission="cmf.ManagePortal" />
 
-  <!-- Control panel -->
-  <browser:page
-      name="recensio-settings"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".controlpanel.RecensioSettingsControlPanel"
-      permission="cmf.ManagePortal"
-      />
+	<!-- Control panel -->
+	<browser:page
+			name="recensio-settings"
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			class=".controlpanel.RecensioSettingsControlPanel"
+			permission="cmf.ManagePortal" />
 
-  <browser:page
-      name="newsletter-settings"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".email.NewsletterSettingsControlPanel"
-      permission="cmf.ManagePortal"
-      />
+	<browser:page
+			name="newsletter-settings"
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			class=".email.NewsletterSettingsControlPanel"
+			permission="cmf.ManagePortal" />
 
-  <browser:page
-      name="sehepunkte-import"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".sehepunkte.Import"
-      permission="zope.Public"
-      />
+	<browser:page
+			name="sehepunkte-import"
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			class=".sehepunkte.Import"
+			permission="zope.Public" />
 
-  <browser:page
-      name="perspektivia-import"
-      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
-      class=".perspektivia.Import"
-      permission="cmf.ManagePortal"
-      />
+	<browser:page
+			name="perspektivia-import"
+			for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+			class=".perspektivia.Import"
+			permission="cmf.ManagePortal" />
 
+	<browser:viewlet
+			name="bottom_links"
+			manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+			class=".footer_viewlet.Footer"
+			template="templates/footer.pt"
+			permission="zope2.View" />
 
-  <browser:viewlet
-    name="bottom_links"
-    manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
-    class=".footer_viewlet.Footer"
-    template="templates/footer.pt"
-    permission="zope2.View"
-    />
+	<browser:viewlet
+			name="social_media"
+			manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+			template="templates/social_media.pt"
+			permission="zope2.View" />
 
-  <browser:viewlet
-    name="social_media"
-    manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
-    template="templates/social_media.pt"
-    permission="zope2.View"
-    />
+	<browser:viewlet
+			name="plone.comments2"
+			for="Products.CMFCore.interfaces.IContentish"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			manager="plone.app.layout.viewlets.interfaces.IBelowContent"
+			view="plone.app.layout.globals.interfaces.IViewView"
+			class=".comments.CommentsViewlet"
+			permission="zope2.View" />
 
-  <browser:viewlet
-    name="plone.comments2"
-    for="Products.CMFCore.interfaces.IContentish"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    manager="plone.app.layout.viewlets.interfaces.IBelowContent"
-    view="plone.app.layout.globals.interfaces.IViewView"
-    class=".comments.CommentsViewlet"
-    permission="zope2.View"
-    />
+	<browser:page
+			for="plone.app.layout.navigation.interfaces.INavigationRoot"
+			name="subject_list_json"
+			class=".jsonviews.SubjectList"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="zope2.View" />
 
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="subject_list_json"
-    class=".jsonviews.SubjectList"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="zope2.View"
-    />
-
-  <browser:page
-    for="plone.app.layout.navigation.interfaces.INavigationRoot"
-    name="bvid-update"
-    class=".bvid-update.BVIDUpdate"
-    template="templates/bvid-update.pt"
-    layer="recensio.theme.interfaces.IRecensioLayer"
-    permission="cmf.ManagePortal"
-    />
-
+	<browser:page
+			for="plone.app.layout.navigation.interfaces.INavigationRoot"
+			name="bvid-update"
+			class=".bvid-update.BVIDUpdate"
+			template="templates/bvid-update.pt"
+			layer="recensio.theme.interfaces.IRecensioLayer"
+			permission="cmf.ManagePortal" />
 
 </configure>
