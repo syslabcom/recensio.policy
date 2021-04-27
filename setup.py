@@ -67,6 +67,7 @@ setup(
         "zope.app.pagetemplate",
         "zope.keyreference",
         "five.intid",  # Bugfix for plone.app.async
+        "ftw.upgrade",
     ],
     extras_require={
         "test": ["plone.api", "plone.app.testing", "PILwoTk", "mock", "ipython"]

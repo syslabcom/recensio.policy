@@ -1,7 +1,8 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five"
-    xmlns:browser="http://namespaces.zope.org/browser">
+    xmlns:upgrade-step="http://namespaces.zope.org/ftw.upgrade">
 
   <five:registerPackage
       package="."
@@ -12,6 +13,15 @@
   <include package=".browser" />
   <include file="profiles.zcml" />
   <include package=".upgrades-old" />
+
+  <include
+      package="ftw.upgrade"
+      file="meta.zcml" />
+  <include package="ftw.upgrade" />
+  <upgrade-step:directory
+      directory="upgrades"
+      profile="recensio.policy:default"
+      />
 
   <subscriber
       for="zope.processlifetime.IProcessStarting"

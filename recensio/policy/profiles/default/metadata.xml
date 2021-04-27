@@ -1,6 +1,5 @@
 <metadata>
   <description>Recensio policy product</description>
-  <version>21</version>
   <dependencies>
     <dependency>profile-Products.ATVocabularyManager:default</dependency>
     <dependency>profile-Products.CMFPlacefulWorkflow:CMFPlacefulWorkflow</dependency>
@@ -14,5 +13,6 @@
     <dependency>profile-recensio.imports:default</dependency>
     <dependency>profile-recensio.theme:default</dependency>
     <dependency>profile-collective.logbook:default</dependency>
+    <dependency>profile-ftw.upgrade:default</dependency>
   </dependencies>
 </metadata>
