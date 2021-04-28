@@ -3,4 +3,7 @@
    <index name="last_comment_date" meta_type="DateIndex">
       <property name="index_naive_time_as_local">True</property>
    </index>
+   <index name="hide_from_listing" meta_type="BooleanIndex">
+      <property name="hide_from_listing">True</property>
+   </index>
 </object>

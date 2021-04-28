@@ -2,6 +2,7 @@ from plone.indexer.decorator import indexer
 from plone.memoize import ram
 from Products.CMFCore.utils import getToolByName
 from recensio.contenttypes.interfaces.review import IReview
+from recensio.contenttypes.interfaces.volume import IVolume
 from zope.interface import Interface
 
 
@@ -133,3 +134,8 @@ def place(obj):
 @indexer(IReview)
 def publisher(obj):
     return get_field_and_ebook_variant(obj, "getPublisher")
+
+
+@indexer(IVolume)
+def hide_from_listing(obj):
+    return "Issue" in [getattr(sub, "portal_type", None) for sub in obj.objectValues()]

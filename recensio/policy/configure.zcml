@@ -143,6 +143,13 @@
       profile="recensio.policy:default"
       handler=".upgrades.v19to20" />
 
+  <genericsetup:upgradeStep
+      source="20"
+      destination="21"
+      title="Add and populate hide_from_listing index"
+      profile="recensio.policy:default"
+      handler=".upgrades.v20to21" />
+
   <genericsetup:registerProfile
       name="demo"
       title="Recensio Demo Policy"

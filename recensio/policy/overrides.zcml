@@ -41,6 +41,9 @@
   <adapter
       factory=".indexer.publisher"
       name="publisher" />
+  <adapter
+      factory=".indexer.hide_from_listing"
+      name="hide_from_listing" />
 
   <adapter factory=".iteration.CustomCheckingCheckoutPolicyAdapter" />
 
