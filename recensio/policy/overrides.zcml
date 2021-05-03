@@ -36,6 +36,9 @@
       factory=".indexer.year"
       name="year" />
   <adapter
+      factory=".indexer.sortable_year"
+      name="sortable_year" />
+  <adapter
       factory=".indexer.place"
       name="place" />
   <adapter

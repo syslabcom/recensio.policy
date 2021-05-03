@@ -124,6 +124,19 @@ def year(obj):
 
 
 @indexer(IReview)
+def sortable_year(obj):
+    year = obj.getYearOfPublication()
+    if not year:
+        years = [y["year"] for y in obj.getYears()]
+        try:
+            years = [int(y) for y in years]
+        except ValueError:
+            pass
+        year = min(years)
+    return year
+
+
+@indexer(IReview)
 def place(obj):
     places = get_field_and_ebook_variant(obj, "getPlaceOfPublication") + [
         date["place"] for date in getattr(obj, "getDates", lambda: [])()
