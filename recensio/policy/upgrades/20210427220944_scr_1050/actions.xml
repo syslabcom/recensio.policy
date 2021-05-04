@@ -1,0 +1,114 @@
+<object purge="False" name="portal_actions" meta_type="Plone Actions Tool" xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+
+  <object purge="True" name="portal_tabs" meta_type="CMF Action Category">
+
+    <property name="title"></property>
+
+    <object name="rezensionen" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_reviews</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">string:${globals_view/navigationRootUrl}/latest-review-items</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions" />
+      <property name="visible">True</property>
+    </object>
+
+    <object name="journals" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_journals</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">string:${globals_view/navigationRootUrl}/rezensionen/zeitschriften</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions" />
+      <property name="visible">True</property>
+    </object>
+
+    <object name="authors" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_authors</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">python:portal.restrictedTraverse('autoren').getTranslation().absolute_url()</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions">
+        <element value="View" />
+      </property>
+      <property name="visible">True</property>
+    </object>
+
+    <object name="search" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_search</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">string:${globals_view/navigationRootUrl}/search_form</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions" />
+      <property name="visible">True</property>
+    </object>
+
+    <object name="themes" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_themes</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">python:portal.restrictedTraverse('themen-epochen-regionen').getTranslation().absolute_url()</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions">
+        <element value="View" />
+      </property>
+      <property name="visible">True</property>
+    </object>
+
+    <object name="aboutus" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_about_us</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">python:portal.restrictedTraverse('ueber-uns').getTranslation().absolute_url()</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions">
+        <element value="View" />
+      </property>
+      <property name="visible">True</property>
+    </object>
+
+    <object name="faq" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_participate</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">python:portal.restrictedTraverse('faq').getTranslation().absolute_url()</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions" />
+      <property name="visible">False</property>
+    </object>
+
+    <object name="press" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_press</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">python:portal.restrictedTraverse('presse').getTranslation().absolute_url()</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions" />
+      <property name="visible">False</property>
+    </object>
+
+    <object name="praesentations" meta_type="CMF Action" i18n:domain="recensio">
+      <property name="title" i18n:translate="">label_nav_presentations</property>
+      <property name="description" i18n:translate=""></property>
+      <property name="url_expr">python:portal.restrictedTraverse('praesentationen').getTranslation().absolute_url()</property>
+      <property name="link_target"></property>
+      <property name="icon_expr"></property>
+      <property name="available_expr"></property>
+      <property name="permissions" />
+      <property name="visible">False</property>
+    </object>
+
+  </object>
+
+</object>

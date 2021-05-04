@@ -57,7 +57,7 @@ def v9to10(portal_setup):
     cat = getToolByName(portal, "portal_catalog")
 
     pvm = getToolByName(portal, "portal_vocabularies")
-    path_tmpl = "../../vocabularies/ddc_%s"
+    path_tmpl = "../../../vocabularies/ddc_%s"
     for (filenamepart, vocabname) in (
         ("geo.vdex", "region_values"),
         ("sach.vdex", "topic_values"),
@@ -319,26 +319,3 @@ def v19to20(portal_setup):
             storage.unset("exhibitor", obj)
             storage.unset("exhibitor_gnd", obj)
             log.info("Migrated {}".format(brain.getPath()))
-
-
-def v20to21(portal_setup):
-    portal_setup.runImportStepFromProfile(
-        "profile-recensio.policy:default",
-        "catalog",
-    )
-
-    catalog = api.portal.get_tool("portal_catalog")
-    for brain in catalog(portal_type=["Volume"]):
-        try:
-            obj = brain.getObject()
-        except Exception as e:
-            log.exception(e)
-            continue
-        if not obj:
-            log.warn("Could not get object {}".format(brain.getPath()))
-            continue
-        try:
-            obj.reindexObject()
-        except Exception as e:
-            log.exception(e)
-            continue
