@@ -1,6 +1,7 @@
 from plone import api
 from recensio.contenttypes.config import REVIEW_TYPES
 from recensio.policy.browser.email import MailCollection
+from recensio.policy.browser.export import ChroniconExport
 from recensio.policy.browser.export import MetadataExport
 from recensio.policy.browser.sehepunkte import Import
 from recensio.policy.export import register_doi
@@ -16,6 +17,12 @@ class MetadataExportScript(ConsoleScript):
     def run(self):
         me = MetadataExport(self.portal, self.portal.REQUEST)
         me()
+
+
+class ChroniconExportScript(ConsoleScript):
+    def run(self):
+        ce = ChroniconExport(self.portal, self.portal.REQUEST)
+        print(ce())
 
 
 class NewsletterScript(ConsoleScript):
@@ -68,6 +75,7 @@ class RegisterAllDOIsScript(ConsoleScript):
 
 
 metadata_export = MetadataExportScript()
+chronicon_export = ChroniconExportScript()
 newsletter = NewsletterScript()
 sehepunkte_import = SehepunkteImportScript()
 register_all_dois = RegisterAllDOIsScript()

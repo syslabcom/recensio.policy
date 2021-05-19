@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 - Hide commenting functionality, only show existing comments. #HELP-2761
+- Made chronicon export available as a console script. #SCR-1104
 
 
 4.6.1 (2020-10-06)
