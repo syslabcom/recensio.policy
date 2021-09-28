@@ -350,7 +350,7 @@
     <object name="rezensionen" meta_type="CMF Action" i18n:domain="recensio">
       <property name="title" i18n:translate="">label_nav_reviews</property>
       <property name="description" i18n:translate=""></property>
-      <property name="url_expr">string:${globals_view/navigationRootUrl}/latest-review-items</property>
+      <property name="url_expr">string:${globals_view/navigationRootUrl}/rezensionen/latest-review-items</property>
       <property name="link_target"></property>
       <property name="icon_expr"></property>
       <property name="available_expr"></property>
