@@ -76,6 +76,11 @@ def authors(obj):
 
 
 @indexer(IReview)
+def authorsUID(obj):
+    return obj.getAllAuthorDataUID()
+
+
+@indexer(IReview)
 def titleOrShortname(obj):
     values = []
 

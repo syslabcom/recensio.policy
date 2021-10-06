@@ -27,6 +27,9 @@
       factory=".indexer.authorsFulltext"
       name="authorsFulltext" />
   <adapter
+      factory=".indexer.authorsUID"
+      name="authorsUID" />
+  <adapter
       factory=".indexer.titleOrShortname"
       name="titleOrShortname" />
   <adapter

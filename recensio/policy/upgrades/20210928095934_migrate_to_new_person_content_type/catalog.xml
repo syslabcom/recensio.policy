@@ -1,11 +1,5 @@
 <?xml version="1.0" ?>
 <object name="portal_catalog" meta_type="Plone Catalog Tool">
-   <index name="last_comment_date" meta_type="DateIndex">
-      <property name="index_naive_time_as_local">True</property>
-   </index>
-   <index name="hide_from_listing" meta_type="BooleanIndex">
-      <property name="hide_from_listing">True</property>
-   </index>
    <index name="gndId" meta_type="FieldIndex">
       <indexed_attr value="getGndId"/>
    </index>
@@ -13,3 +7,4 @@
       <indexed_attr value="getAllAuthorDataUID"/>
    </index>
 </object>
+
