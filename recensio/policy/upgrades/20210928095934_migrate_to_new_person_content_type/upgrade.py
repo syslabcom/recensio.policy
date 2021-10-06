@@ -29,10 +29,13 @@ class MigrateToNewPersonContentType(UpgradeStep):
 
         catalog = api.portal.get_tool("portal_catalog")
         b_start = 0
-        b_size = 1000
+        b_size = 2000
         while True:
             brains = catalog(
-                object_provides=IReview.__identifier__, b_start=b_start, b_size=b_size
+                object_provides=IReview.__identifier__,
+                b_start=b_start,
+                b_size=b_size,
+                path="/".join(self.portal.getPhysicalPath()),
             )
             for brain in brains[b_start : b_start + b_size]:
                 if not brain:
