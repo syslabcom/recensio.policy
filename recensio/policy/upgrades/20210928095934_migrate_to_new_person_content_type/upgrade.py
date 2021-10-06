@@ -1,7 +1,6 @@
 from ftw.upgrade import UpgradeStep
 from plone import api
 from plone.memoize.instance import memoize
-from Products.Archetypes.exceptions import ReferenceException
 from recensio.contenttypes.interfaces import IReview
 from recensio.contenttypes.setuphandlers import initGndContainer
 from zope.annotation.interfaces import IAnnotations
@@ -18,7 +17,7 @@ class MigrateToNewPersonContentType(UpgradeStep):
     @memoize
     def gnd_view(self):
         return api.content.get_view(
-            name="gnd",
+            name="gnd-view",
             context=self.portal,
             request=self.portal.REQUEST,
         )
@@ -97,9 +96,11 @@ class MigrateToNewPersonContentType(UpgradeStep):
                 try:
                     mutator(new_value)
                 except Exception:
-                    logger.warning("Could not set {} reference on {} to {}".format(
-                        fieldname, "/".join(obj.getPhysicalPath()), new_value
-                    ))
+                    logger.warning(
+                        "Could not set {} reference on {} to {}".format(
+                            fieldname, "/".join(obj.getPhysicalPath()), new_value
+                        )
+                    )
                     continue
                 changed = True
 
