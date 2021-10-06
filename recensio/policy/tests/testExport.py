@@ -131,13 +131,13 @@ class TestExporter(unittest.TestCase):
                 ),
             )
             self.assertIn(
-                obj.getReviewAuthors()[0]["firstname"],
+                obj.getReviewAuthors()[0]["firstname"].decode("utf-8"),
                 xpath_eval(
                     "/dara:resource/dara:creators/dara:creator/dara:person/dara:firstName/text()"
                 ),
             )
             self.assertIn(
-                obj.getReviewAuthors()[0]["lastname"],
+                obj.getReviewAuthors()[0]["lastname"].decode("utf-8"),
                 xpath_eval(
                     "/dara:resource/dara:creators/dara:creator/dara:person/dara:lastName/text()"
                 ),
