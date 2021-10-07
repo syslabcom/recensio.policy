@@ -67,8 +67,8 @@ class MigrateToNewPersonContentType(UpgradeStep):
             if not old_value:
                 continue
             for person in old_value:
-                lastname = person["lastname"]
-                firstname = person["firstname"]
+                lastname = person["lastname"].replace("(", '"("').replace(")", '")"')
+                firstname = person["firstname"].replace("(", '"("').replace(")", '")"')
                 if not (firstname or lastname):
                     continue
 
