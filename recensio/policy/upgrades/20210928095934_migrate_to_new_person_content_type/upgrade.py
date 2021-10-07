@@ -72,7 +72,7 @@ class MigrateToNewPersonContentType(UpgradeStep):
                 if not (firstname or lastname):
                     continue
 
-                results = self.gnd_view.find(
+                results = self.gnd_view.getByName(
                     firstname=firstname,
                     lastname=lastname,
                     solr=False,  # solr is only committed on transaction commit
