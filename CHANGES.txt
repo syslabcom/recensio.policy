@@ -1,11 +1,12 @@
 Changelog
 =========
 
-4.6.2 (unreleased)
+4.8.0 (2021-10-20)
 ------------------
 
 - Hide commenting functionality, only show existing comments. #HELP-2761
 - Made chronicon export available as a console script. #SCR-1104
+- GND support. #SCR-1422
 
 
 4.6.1 (2020-10-06)
