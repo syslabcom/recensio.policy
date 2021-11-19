@@ -4,8 +4,7 @@ Changelog
 4.8.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
-
+- Upgrade step that deletes all comments. #HELP-2761
 
 4.8.0 (2021-10-20)
 ------------------
