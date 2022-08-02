@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.8.2 (unreleased)
+4.8.2 (2022-08-02)
 ------------------
 
 - Uninstall artium if installed. #HELP-4596
