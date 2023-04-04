@@ -87,11 +87,13 @@ class MetadataExport(BrowserView):
 
         return "<br />\n".join([name + ": " + str(status) for name, status in statuses])
 
-    def items(self, portal_type=(), context=None):
+    def items(self, portal_type=(), context=None, depth=None):
         pc = api.portal.get_tool("portal_catalog")
         if context is None:
             context = self.context
         parent_path = dict(query="/".join(context.getPhysicalPath()))
+        if depth is not None:
+            parent_path["depth"] = depth
         query = dict(review_state="published", portal_type=portal_type, path=parent_path)
         results = pc(**query)
         if None in results:
@@ -108,7 +110,7 @@ class MetadataExport(BrowserView):
         return self.items(portal_type=("Issue", "Volume"))
 
     def reviews(self, issue):
-        return self.items(portal_type=REVIEW_TYPES, context=issue)
+        return self.items(portal_type=REVIEW_TYPES, context=issue, depth=1)
 
 
 class ChroniconExport(BrowserView):
