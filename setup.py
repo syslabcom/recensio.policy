@@ -2,7 +2,7 @@ from setuptools import find_packages
 from setuptools import setup
 
 
-version = "4.8.3"
+version = "4.8.4.dev0"
 
 setup(
     name="recensio.policy",
