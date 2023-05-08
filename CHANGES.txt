@@ -1,7 +1,7 @@
 Changelog
 =========
 
-4.8.3 (unreleased)
+4.8.3 (2023-05-08)
 ------------------
 
 - Export: Fix for missing reviews. #HELP-5866
