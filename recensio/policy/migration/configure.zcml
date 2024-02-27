@@ -1,0 +1,15 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    condition="installed collective.exportimport"
+    >
+
+  <browser:page
+      name="export_content"
+      for="zope.interface.Interface"
+      class=".custom_export.CustomExportContent"
+      permission="cmf.ManagePortal"
+      layer="recensio.theme.interfaces.IRecensioLayer"
+      />
+</configure>

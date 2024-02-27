@@ -10,6 +10,7 @@
 
   <includeDependencies package="." />
 
+  <include package=".migration" />
   <include package=".browser" />
   <include file="profiles.zcml" />
   <include package=".upgrades-old" />
