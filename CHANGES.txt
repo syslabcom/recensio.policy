@@ -4,7 +4,11 @@ Changelog
 4.8.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Export: Add @@export_page_pictures view to export generated PDF previews.
+  [thet, ale-rt]
+
+- Export: Do not export generated DOIs.
+  [reinhardt]
 
 
 4.8.3 (2023-05-08)
